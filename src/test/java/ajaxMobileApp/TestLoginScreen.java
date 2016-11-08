@@ -1,17 +1,12 @@
 package ajaxMobileApp;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.DeviceRotation;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
-import org.openqa.selenium.support.PageFactory;
-import io.appium.java_client.pagefactory.*;
-import ajaxMobileApp.AppiumSetup;
 
 /**
  * Created by installer on 11/7/16.
