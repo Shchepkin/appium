@@ -16,10 +16,11 @@ public class AppiumSetup{
 
     public AndroidDriver driver;
 
-    public AppiumSetup(AndroidDriver driver) {}
+    public void AppiumSetupDriver() throws MalformedURLException{
 
-    public AndroidDriver getDriver() throws MalformedURLException {
+    }
 
+    public AndroidDriver getDriver()  throws MalformedURLException{
         File app = new File("/home/installer/Android/AndroidApp/app-release2.7.2.apk");
 
         // Settings ajaxMobileApp AndroidDriver

@@ -8,21 +8,17 @@ import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 
-public  class TestLoginScreen extends AppiumSetup{
+public  class TestLoginScreen{
 
-    private static AndroidDriver driver;
-
-    public TestLoginScreen(AndroidDriver driver) {
-        super(driver);
-    }
+    private AndroidDriver driver;
 
     @BeforeTest
     public void setup() throws MalformedURLException {
-        driver = getDriver();
+        driver = (new AppiumSetup()).getDriver();
     }
 
     @Test
-    public static void All_Servers_Exist() {
+    public void All_Servers_Exist() {
         // Create objects of pages
         IntroScreen introScreen = new IntroScreen(driver);
         AuthorizationScreen authorizationScreen = new AuthorizationScreen(driver);
@@ -30,13 +26,14 @@ public  class TestLoginScreen extends AppiumSetup{
         // Go to the authorization page
         introScreen.goToAuthorization();
         authorizationScreen.longTapLoginButton();
+
+        // Check whether all the elements in place
         Assert.assertTrue(authorizationScreen.serverDebug.isDisplayed());
         Assert.assertTrue(authorizationScreen.serverDevelop.isDisplayed());
         Assert.assertTrue(authorizationScreen.serverProduction.isDisplayed());
         Assert.assertTrue(authorizationScreen.serverNewProduction.isDisplayed());
         Assert.assertTrue(authorizationScreen.serverEden.isDisplayed());
     }
-
 
     @AfterTest
     public void endSuit() {

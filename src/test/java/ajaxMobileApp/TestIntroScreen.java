@@ -1,17 +1,9 @@
 package ajaxMobileApp;
 
 import io.appium.java_client.android.AndroidDriver;
-
-import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
 
 public class TestIntroScreen {
     /**
@@ -26,25 +18,7 @@ public class TestIntroScreen {
 
     @BeforeTest
     public void setup() throws MalformedURLException {
-
-        File app = new File("/home/installer/Android/AndroidApp/" + APK);
-
-        // Settings ajaxMobileApp AndroidDriver
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(CapabilityType.BROWSER_NAME, "Android");
-        capabilities.setCapability("deviceName", "Prestigio");
-        capabilities.setCapability("platformVersion", "4.4.2");
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("app", app.getAbsolutePath());
-        capabilities.setCapability("appPackage", "com.ajaxsystems");
-        capabilities.setCapability("appActivity", "com.ajaxsystems.activity.DashboardActivity");
-
-        // Create AndroidDriver object and connect to ajaxMobileApp server
-        driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
-        System.out.println("Driver has been created successfully");
-
-        // Create delay timer before next action for finding elements
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver = (new AppiumSetup()).getDriver();
     }
 
     @Test
@@ -91,5 +65,4 @@ public class TestIntroScreen {
     public void endSuit() {
         driver.quit();
     }
-
 }
