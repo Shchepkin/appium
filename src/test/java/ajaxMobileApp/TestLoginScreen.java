@@ -22,7 +22,7 @@ public  class TestLoginScreen extends AppiumSetup{
     }
 
     @Test
-    public void All_Servers_Exist() {
+    public static void All_Servers_Exist() {
         // Create objects of pages
         IntroScreen introScreen = new IntroScreen(driver);
         AuthorizationScreen authorizationScreen = new AuthorizationScreen(driver);
