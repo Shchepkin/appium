@@ -18,7 +18,6 @@ public  class TestLoginScreen extends AppiumSetup{
 
     @BeforeTest
     public void setup() throws MalformedURLException {
-        AppiumSetup appiumSetup = new AppiumSetup(driver);
         driver = getDriver();
     }
 
