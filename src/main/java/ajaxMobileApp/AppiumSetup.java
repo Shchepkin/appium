@@ -12,18 +12,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by installer on 11/8/16.
  */
-public class AppiumSetup {
+public class AppiumSetup{
 
     public AndroidDriver driver;
-    public static String APK = "app-release2.7.2.apk";
 
-    public AppiumSetup(AndroidDriver driver) {
-        this.driver = driver;
-    }
+    public AppiumSetup(AndroidDriver driver) {}
 
-    public void runAppiumServer() throws MalformedURLException {
+    public AndroidDriver getDriver() throws MalformedURLException {
 
-        File app = new File("/home/installer/Android/AndroidApp/" + APK);
+        File app = new File("/home/installer/Android/AndroidApp/app-release2.7.2.apk");
 
         // Settings ajaxMobileApp AndroidDriver
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -41,6 +38,8 @@ public class AppiumSetup {
 
         // Create delay timer before next action for finding elements
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+        return driver;
     }
 }
 

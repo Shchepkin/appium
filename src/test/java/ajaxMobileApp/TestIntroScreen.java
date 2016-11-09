@@ -15,10 +15,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class TestIntroScreen {
     /**
-     * This test open the intro screen of Ajax app
-     * Verify whether appeared logo, build, buttons are correct
-     * Verify the Authorization button leads to a Authorization page
-     * Verify the Registration button leads to a Registration page
+     * 1. Verify whether appeared logo, build, buttons are correct
+     * 2. Verify the Authorization button leads to a Authorization page
+     * 3. Verify the Registration button leads to a Registration page
      */
 
 //    private static String OS = System.getProperty("os.name").toLowerCase();
