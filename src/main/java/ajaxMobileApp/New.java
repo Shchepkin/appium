@@ -1,10 +1,37 @@
 package ajaxMobileApp;
 
-/**
- * Created by installer on 11/9/16.
- */
 public class New {
       /*
+
+MTPB0252700596	    prestigio   4.4.2
+SWIVR8YHDI7TYTS8	lg          5.1
+
+-------------------------------------------------------------------------------------------------------
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Default Suite">
+  <test name="appium">
+    <classes>
+      <class name="ajaxMobileApp.TestLoginScreen"/>
+    </classes>
+  </test> <!-- appium -->
+</suite> <!-- Default Suite -->
+
+
+-------------------------------------------------------------------------------------------------------
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.BROWSER_NAME, "Android");
+        capabilities.setCapability("deviceName", "Prestigio");
+        capabilities.setCapability("platformVersion", "4.4.2");
+        capabilities.setCapability("platformName", "Android");
+        capabilities.setCapability("app", app.getAbsolutePath());
+        capabilities.setCapability("appPackage", "com.ajaxsystems");
+        capabilities.setCapability("appActivity", "com.ajaxsystems.activity.DashboardActivity");
+------------------------------------------------------------------------------------------------------
+        // Create AndroidDriver object and connect to ajaxMobileApp server
+        driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
+
         // Find and tap authorization button at start window
         driver.findElementById("com.ajaxsystems:id/login").click();
         System.out.println("Find and tap authorization button at start window");

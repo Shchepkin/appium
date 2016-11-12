@@ -1,5 +1,9 @@
-package ajaxMobileApp;
+package testAjaxMobileApp.introPage;
 
+import ajaxMobileApp.AppiumSetup;
+import ajaxMobileApp.AuthorizationScreen;
+import ajaxMobileApp.IntroScreen;
+import ajaxMobileApp.RegistrationScreen;
 import io.appium.java_client.android.AndroidDriver;
 import java.net.MalformedURLException;
 import org.testng.Assert;
@@ -12,29 +16,19 @@ public class TestIntroScreen {
      * 3. Verify the Registration button leads to a Registration page
      */
 
-//    private static String OS = System.getProperty("os.name").toLowerCase();
     private static AndroidDriver driver;
-    private static String APK = "app-release2.7.2.apk";
+
+    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_" })
 
     @BeforeTest
-    public void setup() throws MalformedURLException {
-        driver = (new AppiumSetup()).getDriver();
+    public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_) throws MalformedURLException, InterruptedException {
+        AppiumSetup appiumSetup = new AppiumSetup(deviceName_, UDID_, platformVersion_, URL_);
+        driver = appiumSetup.getDriver();
     }
 
-    @Test
-    public void Intro_Page_Appear_Correct() {
-        // Create Intro Page object
-        IntroScreen introScreen = new IntroScreen(driver);
-
-        // Verify existing elements on the page
-        Assert.assertTrue(introScreen.build.isDisplayed());
-        Assert.assertTrue(introScreen.logo.isDisplayed());
-        Assert.assertTrue(introScreen.authorizationBtn.isDisplayed());
-        Assert.assertTrue(introScreen.registrationBtn.isDisplayed());
-    }
 
     @Test
-    public void Authorization_Button_Leads_Correct() {
+    public void Authorization_Button_Leads_To_The_Login_Page() {
         // Create objects of pages
         IntroScreen introScreen = new IntroScreen(driver);
         AuthorizationScreen authorizationScreen = new AuthorizationScreen(driver);
@@ -48,7 +42,7 @@ public class TestIntroScreen {
     }
 
     @Test
-    public void Registration_Button_Leads_Correct() {
+    public void Registration_Button_Leads_To_The_Registration_Page() {
         // Create objects of pages
         IntroScreen introScreen = new IntroScreen(driver);
         RegistrationScreen registrationScreen = new RegistrationScreen(driver);

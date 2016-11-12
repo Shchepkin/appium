@@ -5,10 +5,9 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.Parameters;
 
-/**
- * Created by installer on 11/5/16.
- */
+
 public class AuthorizationScreen {
 
     public final AppiumDriver driver;
@@ -28,6 +27,31 @@ public class AuthorizationScreen {
     @AndroidFindBy(id = "com.ajaxsystems:id/forgot")
     public WebElement forgotPasswordBtn;
 
+
+// Server menu
+// version 2.8
+//---------------------------------------------------------------------------------------------------------------------
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Debug\")")
+    public WebElement serverDebug;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Develop\")")
+    public WebElement serverDevelop;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Production\")")
+    public WebElement serverProduction;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Amazon\")")
+    public WebElement serverAmazon;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Eden\")")
+    public WebElement serverEden;
+
+//---------------------------------------------------------------------------------------------------------------------
+
+// version < 2.8
+//---------------------------------------------------------------------------------------------------------------------
+/*
     @AndroidFindBy(id = "com.ajaxsystems:id/s1")
     public WebElement serverDebug;
 
@@ -38,10 +62,12 @@ public class AuthorizationScreen {
     public WebElement serverProduction;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/s4")
-    public WebElement serverNewProduction;
+    public WebElement serverAmazon;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/s5")
     public WebElement serverEden;
+*/
+//---------------------------------------------------------------------------------------------------------------------
 
     public AuthorizationScreen(AppiumDriver driver) {
         this.driver = driver;
@@ -49,24 +75,45 @@ public class AuthorizationScreen {
     }
 
 
-    public void loginAction(String login, String password) {
+    public void loginToDefaultServer(String login, String password) {
         loginField.sendKeys(login);
         passwordField.sendKeys(password);
         loginBtn.click();
     }
 
-    public void loginDebugServer(String login, String password) {
+    public void loginToDebugServer(String login, String password) {
         loginField.sendKeys(login);
         passwordField.sendKeys(password);
         longTapLoginButton();
         serverDebug.click();
     }
 
-    public void loginDevelopServer(String login, String password) {
+    public void loginToDevelopServer(String login, String password) {
         loginField.sendKeys(login);
         passwordField.sendKeys(password);
         longTapLoginButton();
         serverDevelop.click();
+    }
+
+    public void loginToProductionServer(String login, String password) {
+        loginField.sendKeys(login);
+        passwordField.sendKeys(password);
+        longTapLoginButton();
+        serverProduction.click();
+    }
+
+    public void loginToAmazonServer(String login, String password) {
+        loginField.sendKeys(login);
+        passwordField.sendKeys(password);
+        longTapLoginButton();
+        serverAmazon.click();
+    }
+
+    public void loginToEdenServer(String login, String password) {
+        loginField.sendKeys(login);
+        passwordField.sendKeys(password);
+        longTapLoginButton();
+        serverEden.click();
     }
 
     public void longTapLoginButton() {

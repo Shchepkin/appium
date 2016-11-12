@@ -9,33 +9,38 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by installer on 11/8/16.
- */
-public class AppiumSetup{
 
-    public AndroidDriver driver;
+public class AppiumSetup {
 
-    public void AppiumSetupDriver() throws MalformedURLException{
+    private AndroidDriver driver;
+    private String deviceName_, UDID_, platformVersion_, URL_;
 
+    public AppiumSetup(String deviceName_, String UDID_, String platformVersion_, String URL_) {
+        this.deviceName_ = deviceName_;
+        this.UDID_ = UDID_;
+        this.platformVersion_ = platformVersion_;
+        this.URL_ = URL_;
     }
 
-    public AndroidDriver getDriver()  throws MalformedURLException{
-        File app = new File("/home/installer/Android/AndroidApp/app-release2.7.2.apk");
+    public AndroidDriver getDriver() throws MalformedURLException, InterruptedException {
+
+        File app = new File("/home/installer/Android/AndroidApp/build.2.8.0.apk");
 
         // Settings ajaxMobileApp AndroidDriver
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.BROWSER_NAME, "Android");
-        capabilities.setCapability("deviceName", "Prestigio");
-        capabilities.setCapability("platformVersion", "4.4.2");
+        capabilities.setCapability("deviceName", deviceName_);
+        capabilities.setCapability("udid", UDID_);
+        capabilities.setCapability("platformVersion", platformVersion_);
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("app", app.getAbsolutePath());
         capabilities.setCapability("appPackage", "com.ajaxsystems");
-        capabilities.setCapability("appActivity", "com.ajaxsystems.activity.DashboardActivity");
+
+//        capabilities.setCapability("appActivity", "com.ajaxsystems.activity.DashboardActivity");
+        capabilities.setCapability("appActivity", "com.ajaxsystems.ui.activity.LauncherActivity");
 
         // Create AndroidDriver object and connect to ajaxMobileApp server
-        driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
-        System.out.println("Driver has been created successfully");
+        driver = new AndroidDriver(new URL("http://" + URL_), capabilities);
 
         // Create delay timer before next action for finding elements
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
