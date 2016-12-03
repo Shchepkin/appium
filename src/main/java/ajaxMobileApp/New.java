@@ -3,9 +3,6 @@ package ajaxMobileApp;
 public class New {
       /*
 
-MTPB0252700596	    prestigio   4.4.2
-SWIVR8YHDI7TYTS8	lg          5.1
-
 -------------------------------------------------------------------------------------------------------
 
 <?xml version="1.0" encoding="UTF-8"?>
