@@ -32,7 +32,7 @@ public class AuthorizationScreen {
 // version 2.8
 //---------------------------------------------------------------------------------------------------------------------
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Debug\")")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Debug1\")")
     public WebElement serverDebug;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Develop1\")")
