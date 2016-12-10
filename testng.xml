@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+
+<!--
 <suite name="Suite" parallel="tests" thread-count="1" >
-    <test name="Prestigio">
+ -->
+
+<suite name = "Suite">
+    <test name = "Prestigio">
         <parameter name="deviceName_" value="Prestigio"/>
         <parameter name="UDID_" value="MTPB0252700596"/>
         <parameter name="platformVersion_" value="4.2.2"/>
         <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
         <classes>
-            <class name="testAjaxMobileApp.authorizationPage.serverWindow"/>
+            <class name="testAjaxMobileApp.authorizationPage.forgotPassword.pageElementExisting"/>
         </classes>
     </test> <!--Test 1 -
     <test name="LG">

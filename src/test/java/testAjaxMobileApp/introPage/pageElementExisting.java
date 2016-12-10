@@ -1,14 +1,11 @@
 package testAjaxMobileApp.introPage;
 
 import ajaxMobileApp.AppiumSetup;
-import ajaxMobileApp.AuthorizationScreen;
-import ajaxMobileApp.IntroScreen;
+import ajaxMobileApp.Check;
+import ajaxMobileApp.IntroPage;
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
 
@@ -17,62 +14,52 @@ import java.net.MalformedURLException;
  */
 public class pageElementExisting {
     private AndroidDriver driver;
-    private IntroScreen introScreen;
-    private AuthorizationScreen authorizationScreen;
+    private IntroPage introPage;
+    private Check assertion;
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_" })
 
-    @BeforeTest
+    @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_) throws MalformedURLException, InterruptedException {
         AppiumSetup appiumSetup = new AppiumSetup(deviceName_, UDID_, platformVersion_, URL_);
         driver = appiumSetup.getDriver();
 
-        // Create objects of pages
-        introScreen = new IntroScreen(driver);
-        authorizationScreen = new AuthorizationScreen(driver);
+        // Create objects of Intro pages
+        introPage = new IntroPage(driver);
 
-        // Go to the authorization page
-        introScreen.goToAuthorization();
-        authorizationScreen.longTapLoginButton();
+        // Create assertion object
+        assertion = new Check(driver);
     }
-
 
     @Test()
     public void The_Build_exists_on_the_Intro_page() {
-        try {
-            Assert.assertTrue(introScreen.build.isDisplayed());
-        }catch (NoSuchElementException e){
-            Assert.assertEquals("Not exist", "Exist", "Selector is wrong or element is absent, so");
-        }
+        assertion.checkIsDisplayed(introPage.build);
     }
 
-
+/*
     @Test()
-    public void The_Logo_exists_on_the_Intro_page() {
-        try {
-            Assert.assertTrue(introScreen.logo.isDisplayed());
-        }catch (NoSuchElementException e){
-            Assert.assertEquals("Not exist", "Exist", "Selector is wrong or element is absent, so");
-        }
+    public void TheBuildExistsOnTheIntroPage() {
+        assertion.checkIsDisplayed(introPage.build);
     }
 
+        @Test()
+    public void TheBuildExistsOnTheIntroPage() {
+        Assert.assertTrue(introPage.build.isDisplayed(), "is not displayed");
+    }
+*/
 
     @Test()
     public void The_authorization_button_exists_on_the_Intro_page() {
-        try {
-            Assert.assertTrue(introScreen.authorizationBtn.isDisplayed());
-        }catch (NoSuchElementException e){
-            Assert.assertEquals("Not exist", "Exist", "Selector is wrong or element is absent, so");
-        }
+        assertion.checkIsDisplayed(introPage.authorizationBtn);
     }
-
 
     @Test()
     public void The_registration_button_exists_on_the_Intro_page() {
-        try {
-            Assert.assertTrue(introScreen.registrationBtn.isDisplayed());
-        }catch (NoSuchElementException e){
-            Assert.assertEquals("Not exist", "Exist", "Selector is wrong or element is absent, so");
-        }
+        assertion.checkIsDisplayed(introPage.registrationBtn);
+    }
+
+    @AfterClass
+    public void endSuit() {
+        driver.quit();
     }
 }

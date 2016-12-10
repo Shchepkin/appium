@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by installer on 11/5/16.
  */
-public class RegistrationScreen {
+public class RegistrationPage {
 
     public final AppiumDriver driver;
 
@@ -43,7 +43,7 @@ public class RegistrationScreen {
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
     public WebElement registrationBtn;
 
-    public RegistrationScreen(AppiumDriver driver) {
+    public RegistrationPage(AppiumDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }

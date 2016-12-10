@@ -2,18 +2,21 @@ package testAjaxMobileApp.authorizationPage;
 
 import ajaxMobileApp.AppiumSetup;
 import ajaxMobileApp.AuthorizationPage;
+import ajaxMobileApp.Check;
 import ajaxMobileApp.IntroPage;
 import io.appium.java_client.android.AndroidDriver;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
 
-public class pageElementsExisting {
+/**
+ * Created by installer on 12/3/16.
+ */
+public class emailField {
     private AndroidDriver driver;
     private IntroPage introScreen;
     private AuthorizationPage authorizationScreen;
+    private Check assertion;
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_" })
 
@@ -26,10 +29,22 @@ public class pageElementsExisting {
         introScreen = new IntroPage(driver);
         authorizationScreen = new AuthorizationPage(driver);
 
+        // Create assertion object
+        assertion = new Check(driver);
+
         // Go to the authorization page
         introScreen.goToAuthorization();
-        authorizationScreen.longTapLoginButton();
     }
 
+    @Test()
+    public void SneckBar() {
+        authorizationScreen.loginBtn.click();
+        assertion.checkIsDisplayed(authorizationScreen.snackBar);
+        System.out.println(authorizationScreen.snackBar.getText());
+    }
 
+    @AfterClass
+    public void endSuit() {
+        driver.quit();
+    }
 }

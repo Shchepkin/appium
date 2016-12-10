@@ -11,6 +11,7 @@ import java.io.IOException;
 public class Check {
     private AndroidDriver driver;
     private ScreenShot screenShot;
+//    private String pathOfScreenshot;
 
     public Check(AndroidDriver driver){
         this.driver = driver;
@@ -34,7 +35,12 @@ public class Check {
             }
 
             // creation report
-            Assert.assertEquals("Not exist", "Exist", "Selector is wrong or element is absent\n");
+            Assert.fail("Test failed\n" + e);
         }
     }
 }
+
+
+//            Assert.assertEquals("Not exist", "Exist", "Selector is wrong or element is absent\n");
+//            String df = screenShot.getPathScreenShot();
+//            Assert.fail("Test failed\n<a href='"+ screenShot.getPathScreenshot() + "'>Screenshot</a>\n" + e);

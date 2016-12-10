@@ -14,6 +14,7 @@ public class ScreenShot {
     private AndroidDriver driver;
     private String path_screenshot = "screenshot";
     private Date currentDate = new Date();
+    private String pathOfScreenshot;
 
     public ScreenShot(AndroidDriver driver) {
         this.driver = driver;
@@ -35,7 +36,13 @@ public class ScreenShot {
         // Move screenshot to the target folder
         FileUtils.copyFile(srcFile, targetFile);
 
-        System.out.println("\nScreenshot filename [" + filename + "]" +
-                            "\nScreenshot folder is [" + folder + "]\n\n");
+//        System.out.println("<a href='"+ targetFile.getAbsolutePath() + ".jpg'>Screenshot</a>");
+        pathOfScreenshot = targetFile.getAbsolutePath();
+        System.out.println("Path to screenshot:\n" + pathOfScreenshot);
+    }
+
+    public String getPathScreenshot(){
+        String pathScreenshot = pathOfScreenshot;
+        return pathScreenshot;
     }
 }

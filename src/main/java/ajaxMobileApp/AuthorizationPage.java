@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Parameters;
 
 
-public class AuthorizationScreen {
+public class AuthorizationPage {
 
     public final AppiumDriver driver;
 
@@ -27,15 +27,21 @@ public class AuthorizationScreen {
     @AndroidFindBy(id = "com.ajaxsystems:id/forgot")
     public WebElement forgotPasswordBtn;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/snackbar_text")
+    public WebElement snackBar;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/message")
+    public WebElement toast;
+
 
 // Server menu
 // version 2.8
 //---------------------------------------------------------------------------------------------------------------------
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Debug1\")")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Debug\")")
     public WebElement serverDebug;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Develop1\")")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Develop\")")
     public WebElement serverDevelop;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Production\")")
@@ -69,7 +75,7 @@ public class AuthorizationScreen {
 */
 //---------------------------------------------------------------------------------------------------------------------
 
-    public AuthorizationScreen(AppiumDriver driver) {
+    public AuthorizationPage(AppiumDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
