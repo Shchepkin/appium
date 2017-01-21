@@ -35,7 +35,7 @@ public class Check {
             }
 
             // creation report
-            Assert.fail("Test failed\n" + e);
+            Assert.fail("Test failed - no such element was found\n" + e);
         }
     }
 }

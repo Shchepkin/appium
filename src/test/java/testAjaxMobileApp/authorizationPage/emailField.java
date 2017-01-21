@@ -9,9 +9,6 @@ import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
 
-/**
- * Created by installer on 12/3/16.
- */
 public class emailField {
     private AndroidDriver driver;
     private IntroPage introScreen;

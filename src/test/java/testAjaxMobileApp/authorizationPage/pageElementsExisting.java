@@ -16,7 +16,6 @@ public class pageElementsExisting {
     private AuthorizationPage authorizationScreen;
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_" })
-
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_) throws MalformedURLException, InterruptedException {
         AppiumSetup appiumSetup = new AppiumSetup(deviceName_, UDID_, platformVersion_, URL_);

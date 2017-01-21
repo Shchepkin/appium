@@ -5,9 +5,6 @@ import org.testng.annotations.*;
 import static org.testng.AssertJUnit.assertTrue;
 
 
-/**
- * Created by installer on 12/4/16.
- */
 public class alliureTest {
 
     @BeforeMethod
