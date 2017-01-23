@@ -13,7 +13,7 @@
         <parameter name="platformVersion_" value="4.2.2"/>
         <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
         <classes>
-            <class name="testAjaxMobileApp.authorizationPage.forgotPassword.pageElementExisting"/>
+            <class name="testAjaxMobileApp.authorizationPage.emailField"/>
         </classes>
     </test> <!--Test 1 -
     <test name="LG">

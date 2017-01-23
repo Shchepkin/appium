@@ -11,8 +11,8 @@ import java.net.MalformedURLException;
 
 public class emailField {
     private AndroidDriver driver;
-    private IntroPage introScreen;
-    private AuthorizationPage authorizationScreen;
+    private IntroPage introPage;
+    private AuthorizationPage authorizationPage;
     private Check assertion;
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_" })
@@ -23,21 +23,20 @@ public class emailField {
         driver = appiumSetup.getDriver();
 
         // Create objects of pages
-        introScreen = new IntroPage(driver);
-        authorizationScreen = new AuthorizationPage(driver);
+        introPage = new IntroPage(driver);
+        authorizationPage = new AuthorizationPage(driver);
 
         // Create assertion object
         assertion = new Check(driver);
 
         // Go to the authorization page
-        introScreen.goToAuthorization();
+        introPage.goToAuthorization();
     }
 
     @Test()
     public void SneckBar() {
-        authorizationScreen.loginBtn.click();
-        assertion.checkIsDisplayed(authorizationScreen.snackBar);
-        System.out.println(authorizationScreen.snackBar.getText());
+        System.out.println(authorizationPage.loginBtn.getText());
+        System.out.println(authorizationPage.loginBtn);
     }
 
     @AfterClass

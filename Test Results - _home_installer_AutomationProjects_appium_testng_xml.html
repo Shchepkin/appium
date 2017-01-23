@@ -572,8 +572,8 @@ jQuery.cookie = function(name, value, options) {
 <body>
 <div id="container">
 <div id="header">
-<div class="time">32.94 s</div>
-<h1>/home/installer/AutomationProjects/appium/testng.xml: <strong><span class="total">8 total, </span><span class="failed">1 failed, </span><span class="passed">7 passed</span></strong>
+<div class="time">6 m 60 s</div>
+<h1>/home/installer/AutomationProjects/appium/testng.xml: <strong><span class="total">18 total, </span><span class="failed">2 failed, </span><span class="passed">16 passed</span></strong>
 </h1>
 <div id="treecontrol">
 <ul>
@@ -591,51 +591,93 @@ jQuery.cookie = function(name, value, options) {
 <ul id="tree">
 <li xmlns="" class="level top failed open">
 <span><em class="time">
-<div class="time">32.94 s</div>
+<div class="time">6 m 60 s</div>
 </em>Prestigio</span>
 <ul>
-<li class="level suite failed open">
+<li class="level suite open">
 <span><em class="time">
-<div class="time">32.94 s</div>
-</em>pageElementExisting</span>
+<div class="time">2 m 4 s</div>
+</em>negativeLogin</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">1.12 s</div>
-</em><em class="status">passed</em>pageElementExisting.The_Cancel_Button_exists_on_the_ForgotPassword_page</span>
+<div class="time">16.42 s</div>
+</em><em class="status">passed</em>negativeLogin.Capital_letters_in_Email</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">98 ms</div>
-</em><em class="status">passed</em>pageElementExisting.The_Country_Code_field_exists_on_the_ForgotPassword_page</span>
+<div class="time">17.96 s</div>
+</em><em class="status">passed</em>negativeLogin.Capital_letters_in_Password</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">68 ms</div>
-</em><em class="status">passed</em>pageElementExisting.The_Email_field_exists_on_the_ForgotPassword_page</span>
+<div class="time">13.08 s</div>
+</em><em class="status">passed</em>negativeLogin.Email_and_Password_is_empty</span>
 </li>
-<li class="level test failed open">
+<li class="level test">
 <span><em class="time">
-<div class="time">2.48 s</div>
-</em><em class="status">failed</em>pageElementExisting.The_OK_Button_exists_on_the_ForgotPassword_page</span>
-<ul>
-<li class="text">
-<span class="stdout">Path to screenshot:<br/>/home/installer/AutomationProjects/appium/screenshot/2016.12.10/2016.12.10_120934.png<br/></span>
+<div class="time">15.15 s</div>
+</em><em class="status">passed</em>negativeLogin.Email_includes_spaces</span>
 </li>
-<li class="text">
-<span class="stderr">java.lang.AssertionError: Test failed<br/>org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/>- native content: &quot;By.id: com.ajaxsystems:id/ok1&quot; <br/>- html content: &quot;by id or name &quot;okBtn&quot;&quot;<br/>For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/>Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/>System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/>Driver info: driver.version: unknown<br/>	at org.testng.Assert.fail(Assert.java:94)<br/>	at ajaxMobileApp.Check.checkIsDisplayed(Check.java:38)<br/>	at testAjaxMobileApp.authorizationPage.forgotPassword.pageElementExisting.The_OK_Button_exists_on_the_ForgotPassword_page(pageElementExisting.java:69)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)<br/>	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br/>	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br/>	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br/>	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br/>	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br/>	at org.testng.TestRunner.privateRun(TestRunner.java:767)<br/>	at org.testng.TestRunner.run(TestRunner.java:617)<br/>	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)<br/>	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)<br/>	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br/>	at org.testng.SuiteRunner.run(SuiteRunner.java:240)<br/>	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br/>	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br/>	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)<br/>	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)<br/>	at org.testng.TestNG.run(TestNG.java:1031)<br/>	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)<br/>	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:124)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)<br/></span>
+<li class="level test">
+<span><em class="time">
+<div class="time">13.64 s</div>
+</em><em class="status">passed</em>negativeLogin.Email_is_empty</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">13.14 s</div>
+</em><em class="status">passed</em>negativeLogin.Password_is_empty</span>
 </li>
 </ul>
 </li>
+<li class="level suite open">
+<span><em class="time">
+<div class="time">1 m 38 s</div>
+</em>positiveLoginWithCheckingFields</span>
+<ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">101 ms</div>
-</em><em class="status">passed</em>pageElementExisting.The_Phone_field_exists_on_the_ForgotPassword_page</span>
+<div class="time">21.15 s</div>
+</em><em class="status">passed</em>positiveLoginWithCheckingFields.Capital_letters_in_Email</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">72 ms</div>
-</em><em class="status">passed</em>pageElementExisting.The_Title_exists_on_the_ForgotPassword_page</span>
+<div class="time">23.16 s</div>
+</em><em class="status">passed</em>positiveLoginWithCheckingFields.Email_and_Pass_with_spaces</span>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">3 m 18 s</div>
+</em>positiveLoginLogoutEachServer</span>
+<ul>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">1 m 23 s</div>
+</em><em class="status">failed</em>positiveLoginLogoutEachServer.Login_to_the_Develop_with_correct_data</span>
+<ul>
+<li class="text">
+<span class="stdout">Path to screenshot:<br/>/home/installer/AutomationProjects/appium/screenshot/2017.01.21/2017.01.21_213826.png<br/></span>
+</li>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: Test failed - no such element was found<br/>org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/>- native content: &quot;By.id: com.ajaxsystems:id/menuDrawer&quot; <br/>- html content: &quot;by id or name &quot;menuDrawer&quot;&quot;<br/>For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/>Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/>System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/>Driver info: driver.version: unknown<br/>	at org.testng.Assert.fail(Assert.java:94)<br/>	at ajaxMobileApp.Check.checkIsDisplayed(Check.java:42)<br/>	at testAjaxMobileApp.authorizationPage.login.positiveLoginLogoutEachServer.Login_to_the_Develop_with_correct_data(positiveLoginLogoutEachServer.java:43)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)<br/>	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br/>	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br/>	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br/>	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br/>	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br/>	at org.testng.TestRunner.privateRun(TestRunner.java:767)<br/>	at org.testng.TestRunner.run(TestRunner.java:617)<br/>	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)<br/>	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)<br/>	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br/>	at org.testng.SuiteRunner.run(SuiteRunner.java:240)<br/>	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br/>	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br/>	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)<br/>	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)<br/>	at org.testng.TestNG.run(TestNG.java:1031)<br/>	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)<br/>	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:124)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)<br/></span>
+</li>
+</ul>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">1 m 22 s</div>
+</em><em class="status">failed</em>positiveLoginLogoutEachServer.Login_to_the_Release_with_correct_data</span>
+<ul>
+<li class="text">
+<span class="stdout">Path to screenshot:<br/>/home/installer/AutomationProjects/appium/screenshot/2017.01.21/2017.01.21_213948.png<br/></span>
+</li>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: Test failed - no such element was found<br/>org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/>- native content: &quot;By.id: com.ajaxsystems:id/menuDrawer&quot; <br/>- html content: &quot;by id or name &quot;menuDrawer&quot;&quot;<br/>For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/>Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/>System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/>Driver info: driver.version: unknown<br/>	at org.testng.Assert.fail(Assert.java:94)<br/>	at ajaxMobileApp.Check.checkIsDisplayed(Check.java:42)<br/>	at testAjaxMobileApp.authorizationPage.login.positiveLoginLogoutEachServer.Login_to_the_Release_with_correct_data(positiveLoginLogoutEachServer.java:52)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)<br/>	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br/>	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br/>	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br/>	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br/>	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br/>	at org.testng.TestRunner.privateRun(TestRunner.java:767)<br/>	at org.testng.TestRunner.run(TestRunner.java:617)<br/>	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)<br/>	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)<br/>	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br/>	at org.testng.SuiteRunner.run(SuiteRunner.java:240)<br/>	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br/>	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br/>	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)<br/>	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)<br/>	at org.testng.TestNG.run(TestNG.java:1031)<br/>	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)<br/>	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:124)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)<br/></span>
+</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -645,7 +687,7 @@ jQuery.cookie = function(name, value, options) {
 </div>
 </div>
 <div id="footer">
-<p>Generated by IntelliJ IDEA on 12/10/16 12:11 PM</p>
+<p>Generated by IntelliJ IDEA on 1/23/17 11:46 AM</p>
 </div>
 </body>
 </html>

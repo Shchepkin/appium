@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 
 public class pageElementExisting {
     private AndroidDriver driver;
-    private IntroPage introScreen;
+    private IntroPage introPage;
     private AuthorizationPage authorizationPage;
     private ForgotPasswordPage forgotPasswordPage;
     private Check assertion;
@@ -24,7 +24,7 @@ public class pageElementExisting {
         driver = appiumSetup.getDriver();
 
         // Create objects of pages
-        introScreen = new IntroPage(driver);
+        introPage = new IntroPage(driver);
         authorizationPage = new AuthorizationPage(driver);
         forgotPasswordPage = new ForgotPasswordPage(driver);
 
@@ -32,7 +32,7 @@ public class pageElementExisting {
         assertion = new Check(driver);
 
         // Go to the authorization page
-        introScreen.goToAuthorization();
+        introPage.goToAuthorization();
         authorizationPage.forgotPasswordBtn.click();
     }
 

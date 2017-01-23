@@ -25,7 +25,7 @@ public class AppiumSetup {
 
     public AndroidDriver getDriver() throws MalformedURLException, InterruptedException {
 
-        File app = new File("/home/installer/Android/AndroidApp/build.2.8.4.apk");
+        File app = new File("/home/installer/Android/AndroidApp/build.2.8.15.apk");
 
         // Settings ajaxMobileApp AndroidDriver
         DesiredCapabilities capabilities = new DesiredCapabilities();

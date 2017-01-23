@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
  * This test asserts whether the all server's links is exist on the ServerWindow screen
  */
 
-public class serverWindow {
+public class serversExisting {
     private AndroidDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;

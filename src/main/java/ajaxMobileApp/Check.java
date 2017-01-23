@@ -3,6 +3,8 @@ package ajaxMobileApp;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.io.IOException;
 public class Check {
     private AndroidDriver driver;
     private ScreenShot screenShot;
+    private DashboardActivePINPage dashboardActivePINPage;
 //    private String pathOfScreenshot;
 
     public Check(AndroidDriver driver){
@@ -23,7 +26,10 @@ public class Check {
 
         try {
             // assert is the element displayed on the page
+            WebDriverWait iWait = new WebDriverWait (driver, 180);
+            iWait.until(ExpectedConditions.visibilityOf(element));
             element.isDisplayed();
+            System.out.println("Element is displayed.\n" + element);
 
         } catch (NoSuchElementException e) {
 
@@ -35,12 +41,33 @@ public class Check {
             }
 
             // creation report
-            Assert.fail("Test failed - no such element was found\n" + e);
+            Assert.fail("Test failed - no such element was appeared during 3 min\n" + e);
+        }
+    }
+
+    public void closePinWindowIfDisplayed() {
+        dashboardActivePINPage = new DashboardActivePINPage(driver);
+        try {
+            // assert is the element displayed on the page
+            WebDriverWait iWait = new WebDriverWait (driver, 30);
+            iWait.until(ExpectedConditions.visibilityOf(dashboardActivePINPage.contentText));
+            dashboardActivePINPage.cancelBtn.click();
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Window with PIN acceptation isn't displayed.");
+        }
+    }
+
+    public void openPinWindowIfDisplayed() {
+        dashboardActivePINPage = new DashboardActivePINPage(driver);
+        try {
+            // assert is the element displayed on the page
+            WebDriverWait iWait = new WebDriverWait (driver, 30);
+            iWait.until(ExpectedConditions.visibilityOf(dashboardActivePINPage.contentText));
+            dashboardActivePINPage.confirmBtn.click();
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Window with PIN acceptation isn't displayed.");
         }
     }
 }
-
-
-//            Assert.assertEquals("Not exist", "Exist", "Selector is wrong or element is absent\n");
-//            String df = screenShot.getPathScreenShot();
-//            Assert.fail("Test failed\n<a href='"+ screenShot.getPathScreenshot() + "'>Screenshot</a>\n" + e);
