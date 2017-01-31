@@ -42,9 +42,7 @@ public class negativeLogin {
 
     @Test()
     public void Email_and_Password_is_empty() {
-        authorizationPage.loginField.sendKeys("");
-        authorizationPage.passwordField.sendKeys("");
-        authorizationPage.loginBtn.click();
+        authorizationPage.loginToTheServer("", "", "Develop");
         waitElement(authorizationPage.snackBar);
         expected = "Будь ласка, заповніть усі поля";
         actual = authorizationPage.snackBar.getText();
@@ -53,9 +51,7 @@ public class negativeLogin {
 
     @Test()
     public void Email_is_empty() {
-        authorizationPage.loginField.sendKeys("");
-        authorizationPage.passwordField.sendKeys("qwe123");
-        authorizationPage.loginBtn.click();
+        authorizationPage.loginToTheServer("", "qwe123", "Develop");
         waitElement(authorizationPage.snackBar);
         expected = "Будь ласка, заповніть усі поля";
         actual = authorizationPage.snackBar.getText();
@@ -64,9 +60,7 @@ public class negativeLogin {
 
     @Test()
     public void Password_is_empty() {
-        authorizationPage.loginField.sendKeys("ajax1@i.ua");
-        authorizationPage.passwordField.sendKeys("");
-        authorizationPage.loginBtn.click();
+        authorizationPage.loginToTheServer("ajax1@i.ua", "", "Develop");
         waitElement(authorizationPage.snackBar);
         expected = "Будь ласка, заповніть усі поля";
         actual = authorizationPage.snackBar.getText();
@@ -75,9 +69,7 @@ public class negativeLogin {
 
     @Test()
     public void Email_includes_spaces() {
-        authorizationPage.loginField.sendKeys("aj ax1@i.u a");
-        authorizationPage.passwordField.sendKeys("qwe123");
-        authorizationPage.loginBtn.click();
+        authorizationPage.loginToTheServer("aj ax1@i.u a", "qwe123", "Develop");
         waitElement(authorizationPage.snackBar);
         expected = "Невірний логін або пароль";
         actual = authorizationPage.snackBar.getText();
@@ -86,9 +78,7 @@ public class negativeLogin {
 
     @Test()
     public void Password_includes_spaces() {
-        authorizationPage.loginField.sendKeys("ajax1@i.ua");
-        authorizationPage.passwordField.sendKeys("q we1 23");
-        authorizationPage.loginBtn.click();
+        authorizationPage.loginToTheServer("ajax1@i.ua", "q we1 23", "Develop");
         waitElement(authorizationPage.snackBar);
         expected = "Невірний логін або пароль";
         actual = authorizationPage.snackBar.getText();
@@ -97,9 +87,16 @@ public class negativeLogin {
 
     @Test()
     public void Capital_letters_in_Password() {
-        authorizationPage.loginField.sendKeys("ajax1@i.ua");
-        authorizationPage.passwordField.sendKeys("QwE123");
-        authorizationPage.loginBtn.click();
+        authorizationPage.loginToTheServer("ajax1@i.ua", "QwE123", "Develop");
+        waitElement(authorizationPage.snackBar);
+        expected = "Невірний логін або пароль";
+        actual = authorizationPage.snackBar.getText();
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test()
+    public void Dots_in_Email() {
+        authorizationPage.loginToTheServer("aj..ax1@i.u..a", "qwe123", "Develop");
         waitElement(authorizationPage.snackBar);
         expected = "Невірний логін або пароль";
         actual = authorizationPage.snackBar.getText();

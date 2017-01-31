@@ -13,7 +13,7 @@
         <parameter name="platformVersion_" value="4.2.2"/>
         <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
         <classes>
-            <class name="tmp.alliureTest"/>
+            <class name="authorizationPage.login.positiveLoginWithCheckingFields"/>
         </classes>
     </test> <!--Test 1 -
     <test name="LG">

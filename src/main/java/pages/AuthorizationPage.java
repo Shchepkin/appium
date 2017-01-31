@@ -35,7 +35,7 @@ public class AuthorizationPage {
 
 
 // Server menu
-// version 2.8
+// version >= 2.8
 //---------------------------------------------------------------------------------------------------------------------
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Debug\")")
@@ -81,49 +81,24 @@ public class AuthorizationPage {
     }
 
 
-    public void loginToDefaultServer(String login, String password) {
-        loginField.sendKeys(login);
-        passwordField.sendKeys(password);
-        loginBtn.click();
-    }
-
-    public void loginToDebugServer(String login, String password) {
+    public void loginToTheServer(String login, String password, String server) {
         loginField.sendKeys(login);
         passwordField.sendKeys(password);
         longTapLoginButton();
-        serverDebug.click();
-        loginBtn.click();
-    }
-
-    public void loginToDevelopServer(String login, String password) {
-        loginField.sendKeys(login);
-        passwordField.sendKeys(password);
-        longTapLoginButton();
-        serverDevelop.click();
-        loginBtn.click();
-    }
-
-    public void loginToProductionServer(String login, String password) {
-        loginField.sendKeys(login);
-        passwordField.sendKeys(password);
-        longTapLoginButton();
-        serverProduction.click();
-        loginBtn.click();
-    }
-
-    public void loginToAmazonServer(String login, String password) {
-        loginField.sendKeys(login);
-        passwordField.sendKeys(password);
-        longTapLoginButton();
-        serverAmazon.click();
-        loginBtn.click();
-    }
-
-    public void loginToEdenServer(String login, String password) {
-        loginField.sendKeys(login);
-        passwordField.sendKeys(password);
-        longTapLoginButton();
-        serverEden.click();
+        switch (server) {
+            case "Debug":  serverDebug.click();
+                break;
+            case "Develop":  serverDevelop.click();
+                break;
+            case "Production": serverProduction.click();
+                break;
+            case "Amazon":  serverAmazon.click();
+                break;
+            case "Eden":  serverEden.click();
+                break;
+            default: serverProduction.click();
+                break;
+        }
         loginBtn.click();
     }
 

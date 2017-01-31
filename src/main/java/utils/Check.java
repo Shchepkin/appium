@@ -45,4 +45,11 @@ public class Check {
             Assert.fail("Test failed - no such element was appeared during 3 min\n" + e);
         }
     }
+
+
+    public void waitElement (WebElement element) {
+        WebDriverWait iWait = new WebDriverWait (driver, 60);
+        iWait.until(ExpectedConditions.visibilityOf(element));
+    }
+
 }

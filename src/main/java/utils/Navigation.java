@@ -7,9 +7,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-/**
- * Created by installer on 1/21/17.
- */
+
 public class Navigation {
     public final AppiumDriver driver;
 

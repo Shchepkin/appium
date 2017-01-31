@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 
 public class ValidationCodePage {
     public final AppiumDriver driver;
+    public boolean autoLoadResult;
+    public String fieldValue;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/smsCode")
     public WebElement smsCode;
@@ -40,15 +42,14 @@ public class ValidationCodePage {
             fieldValue = element.getText();
             timer--;
 //debug            System.out.println("" + timer + "  " + element.getText() + " --> " + pattern.matcher(fieldValue).matches());
-//            if (timer == 0) {break;}
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        boolean result = timer > 0 ? true : false;
-        Assert.assertTrue(result, "\nTimeout exception\nValue of SMS field is not valid: [" + fieldValue + "]\n");
+        boolean autoLoadResult = timer > 0 ? true : false;
+        Assert.assertTrue(autoLoadResult, "\nTimeout exception\nValue of SMS field is not valid: [" + fieldValue + "]\n");
         System.out.println("Done");
     }
 

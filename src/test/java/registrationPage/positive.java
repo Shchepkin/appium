@@ -1,14 +1,20 @@
 package registrationPage;
 
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.*;
-import utils.AppiumSetup;
-import utils.Check;
+import utils.*;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 public class positive {
@@ -22,6 +28,8 @@ public class positive {
     private Check assertion;
     private AddImagePage addImagePage;
     private ValidationCodePage validationCodePage;
+    private Navigation navigation;
+    private Email email;
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_" })
     @BeforeClass
@@ -29,7 +37,7 @@ public class positive {
         AppiumSetup appiumSetup = new AppiumSetup(deviceName_, UDID_, platformVersion_, URL_);
         driver = appiumSetup.getDriver();
 
-        // Create objects of pages
+        Reporter.log("Create objects of pages", true);
         introPage = new IntroPage(driver);
         authorizationPage = new AuthorizationPage(driver);
         dashboardHeader = new DashboardHeader(driver);
@@ -38,70 +46,89 @@ public class positive {
         registrationPage = new RegistrationPage(driver);
         addImagePage = new AddImagePage(driver);
         validationCodePage = new ValidationCodePage(driver);
-
-        // Create assertion object
+        navigation = new Navigation(driver);
         assertion = new Check(driver);
-
     }
 
     @Test()
-    public void Registration_with_correct_data_to_the_Develop_server() {
+    public void Registration_with_correct_data_to_the_Develop_server() throws IOException, MessagingException {
 
-        System.out.print("Precondition:\n1. Go to the authorization page and set server type to Develop ... ");
+        Reporter.log("Precondition:\n1. Go to the authorization page and set server type to Develop ... ", true);
         introPage.goToAuthorization();
         authorizationPage.longTapLoginButton();
         authorizationPage.serverDevelop.click();
-        System.out.println("Done");
+        Reporter.log("Done", true);
 
-        System.out.print("2. Comeback to the Registration Page ... ");
+        Reporter.log("2. Comeback to the Registration Page ... ", true);
         authorizationPage.backBtn.click();
         introPage.registrationBtn.click();
-        System.out.println("Done");
+        Reporter.log("Done", true);
 
-        System.out.print("\nSteps:\n1. Set UserPic icon ... ");
+        Reporter.log("\nSteps:\n1. Set UserPic icon ... ", true);
         registrationPage.userPic.click();
         addImagePage.thumbnail.get(3).click();
         addImagePage.saveBtn.click();
-        System.out.println("Done");
+        Reporter.log("Done", true);
 
-
-        System.out.print("2. Fill the Name field ... ");
+        Reporter.log("2. Fill the Name field ... ", true);
         registrationPage.nameField.sendKeys("Test name");
-        System.out.println("Done");
+        Reporter.log("Done", true);
 
-        System.out.print("3. Fill the e-mail field with correct data and confirm it ... ");
+        Reporter.log("3. Fill the e-mail field with correct data and confirm it ... ", true);
         registrationPage.emailField.sendKeys("develop.ajax.sys@i.ua");
         registrationPage.emailConfirmField.sendKeys("develop.ajax.sys@i.ua");
-        System.out.println("Done");
+        Reporter.log("Done", true);
 
-        System.out.print("4. Fill the phone number field with correct data ... ");
+        Reporter.log("4. Fill the phone number field with correct data ... ", true);
         registrationPage.phoneField.sendKeys("979901726");
-        System.out.println("Done");
+        Reporter.log("Done", true);
 
-
-
-        System.out.println("5. Fill the password field with correct data and confirm it ... ");
-        registrationPage.swipeUp();
+        Reporter.log("5. Fill the password field with correct data and confirm it ... ", true);
+        navigation.swipeUp();
         registrationPage.passwordField.sendKeys("qwe123");
-        registrationPage.swipeUp();
+        navigation.swipeUp();
         registrationPage.passwordConfirmField.sendKeys("qwe123");
-        System.out.println("Done");
+        Reporter.log("Done", true);
 
-        System.out.print("6. Tap the registration button ... ");
+        Reporter.log("6. Tap the registration button ... ", true);
         registrationPage.registrationBtn.click();
-        System.out.println("Done");
+        Reporter.log("Done", true);
 
         // Assert is Validation Code page opened
+        Reporter.log("7. Check the Validation Code page is opened ... ", true);
         assertion.checkIsDisplayed(validationCodePage.smsCode);
+        Reporter.log("Done", true);
 
         // check auto Loading Code From Sms
-        validationCodePage.autoLoadCode(validationCodePage.smsCode, 30);
+        Reporter.log("8. Check the Code From Sms is auto Loaded in the SmsCode field ... ", true);
+        validationCodePage.autoLoadCode(validationCodePage.smsCode, 180);
+        Reporter.log("Done", true);
 
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Reporter.log("9. Start email test", true);
+        email = new Email("pop.i.ua", "develop.ajax.sys@i.ua", "ajax123");
+        email.checkNewMessage();
+        String emailCode = email.getValidationCode();
+
+        Reporter.log("Fill the emailCode field and tap registration button", true);
+        validationCodePage.emailCode.sendKeys(emailCode);
+        validationCodePage.okBtn.click();
+        Reporter.log("Done", true);
+        email.deleteAllMessage();
+        assertion.checkIsDisplayed(registrationPage.dashboard);
+    }
+
+    @Test()
+    public void Registration_without_validation() {
+        String login = "qweqweqweqweqwe@i.ua";
+        String pass = "qwe123";
+        String phone = "683669947";
+        registrationPage.fakeRegistration(login, pass, phone);
+        waitElement(validationCodePage.smsCode);
+        validationCodePage.cancelBtn.click();
+        waitElement(authorizationPage.forgotPasswordBtn);
+        String actual = authorizationPage.loginField.getText();
+        String expected = login;
+        Assert.assertEquals(expected, actual);
     }
 
 
@@ -110,6 +137,12 @@ public class positive {
         menuPage.accountBtn.click();
         accountPage.logoutBtn.click();
         assertion.checkIsDisplayed(authorizationPage.loginBtn);
+    }
+
+
+    public void waitElement (WebElement element) {
+        WebDriverWait iWait = new WebDriverWait (driver, 60);
+        iWait.until(ExpectedConditions.visibilityOf(element));
     }
 
     @AfterClass

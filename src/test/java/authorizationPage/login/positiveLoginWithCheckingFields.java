@@ -1,6 +1,7 @@
 package authorizationPage.login;
 
 import io.appium.java_client.android.AndroidDriver;
+import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.*;
 import utils.AppiumSetup;
@@ -11,13 +12,15 @@ import java.net.MalformedURLException;
 public class positiveLoginWithCheckingFields {
     private AndroidDriver driver;
     private IntroPage introPage;
+    private RegistrationPage registrationPage;
+    private ValidationCodePage validationCodePage;
     private AuthorizationPage authorizationPage;
     private DashboardHeader dashboardHeader;
     private MenuMainPage menuPage;
     private MenuAccountPage accountPage;
     private Check assertion;
 
-    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_" })
+    @Parameters({"deviceName_", "UDID_", "platformVersion_", "URL_"})
     @BeforeMethod
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_) throws MalformedURLException, InterruptedException {
         AppiumSetup appiumSetup = new AppiumSetup(deviceName_, UDID_, platformVersion_, URL_);
@@ -33,26 +36,36 @@ public class positiveLoginWithCheckingFields {
 
         // Go to the authorization page
         introPage.goToAuthorization();
-        authorizationPage.longTapLoginButton();
-        authorizationPage.serverDevelop.click();
     }
 
     @Test()
     public void Email_and_Pass_with_spaces() {
-        authorizationPage.loginField.sendKeys("  ajax1@i.ua  ");
-        authorizationPage.passwordField.sendKeys("  qwe123  ");
-        authorizationPage.loginBtn.click();
+        authorizationPage.loginToTheServer("  ajax1@i.ua  ", "  qwe123  ", "Production");
         assertion.checkIsDisplayed(dashboardHeader.menuDrawer);
-        assertion.checkIsDisplayed(authorizationPage.loginBtn);
     }
 
     @Test()
     public void Capital_letters_in_Email() {
-        authorizationPage.loginField.sendKeys("AjaX1@i.Ua");
-        authorizationPage.passwordField.sendKeys("qwe123");
-        authorizationPage.loginBtn.click();
+        authorizationPage.loginToTheServer("AjaX1@i.Ua", "qwe123", "Production");
         assertion.checkIsDisplayed(dashboardHeader.menuDrawer);
-        assertion.checkIsDisplayed(authorizationPage.loginBtn);
+    }
+
+    @Test()
+    public void Login_to_Account_without_accepting_validation_codes() {
+        registrationPage = new RegistrationPage(driver);
+        validationCodePage = new ValidationCodePage(driver);
+        String login = "qweqweqweqweqwe@i.ua";
+        String pass = "qwe123";
+        String phone = "683669947";
+        registrationPage.fakeRegistration(login, pass, phone);
+        assertion.waitElement(validationCodePage.smsCode);
+        validationCodePage.cancelBtn.click();
+        assertion.waitElement(authorizationPage.forgotPasswordBtn);
+        authorizationPage.passwordField.sendKeys(pass);
+
+//        String actual = authorizationPage.loginField.getText();
+//        String expected = login;
+//        Assert.assertEquals(expected, actual);
     }
 
 

@@ -8,12 +8,18 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Reporter;
+import utils.Navigation;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegistrationPage {
 
     public final AppiumDriver driver;
+    private IntroPage introPage;
+    private Navigation navigation;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
     public WebElement backBtn;
@@ -48,30 +54,23 @@ public class RegistrationPage {
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
     public WebElement registrationBtn;
 
-    public void swipeUp() {
-        Dimension screenSize = driver.manage().window().getSize();
-        System.out.println("   Screen dimension is " + screenSize);
-        int startX = (int)(screenSize.width / 2.00);
-        int startY = (int)(screenSize.height / 3.00);
-        int endX = startX;
-        int endY = (int)(screenSize.height / 10.00);
-        int duration = 1500;
-        System.out.print("   swipe(startX, startY, endX, endY, duration) {" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "} ... ");
-        driver.swipe(startX, startY, endX, endY, duration);
-        System.out.println("Done");
-    }
+    @AndroidFindBy(id = "com.ajaxsystems:id/dashboard")
+    public WebElement dashboard;
 
-    public void swipeDown() {
-        Dimension screenSize = driver.manage().window().getSize();
-        System.out.println("   Screen dimension is " + screenSize);
-        int startX = (int)(screenSize.width / 2.00);
-        int startY = (int)(screenSize.height / 3.00);
-        int endX = startX;
-        int endY = (int)(screenSize.height / 1.5);
-        int duration = 1500;
-        System.out.print("   swipe(startX, startY, endX, endY, duration) {" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "} ... ");
-        driver.swipe(startX, startY, endX, endY, duration);
-        System.out.println("Done");
+    public void fakeRegistration(String email, String password, String phone) {
+        Reporter.log("\n=== Start process for getting Validation code.", true);
+        introPage = new IntroPage(driver);
+        navigation = new Navigation(driver);
+        introPage.goToRegistration();
+        nameField.sendKeys("quick test");
+        emailField.sendKeys(email);
+        emailConfirmField.sendKeys(email);
+        phoneField.sendKeys(phone);
+        navigation.swipeUp();
+        passwordField.sendKeys(password);
+        navigation.swipeUp();
+        passwordConfirmField.sendKeys(password);
+        registrationBtn.click();
     }
 
     public RegistrationPage(AppiumDriver driver) {

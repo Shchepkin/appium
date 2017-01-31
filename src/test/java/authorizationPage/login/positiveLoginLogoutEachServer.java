@@ -41,7 +41,7 @@ public class positiveLoginLogoutEachServer {
 
     @Test()
     public void Login_to_the_Develop_with_correct_data() {
-        authorizationPage.loginToDevelopServer("ajax1@i.ua", "qwe123");
+        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Develop");
         pinPage.closePinWindowIfDisplayed();
         assertion.checkIsDisplayed(dashboardHeader.menuDrawer);
         logOut();
@@ -49,7 +49,7 @@ public class positiveLoginLogoutEachServer {
 
     @Test()
     public void Login_to_the_Production_with_correct_data() {
-        authorizationPage.loginToProductionServer("ajax1@i.ua", "qwe123");
+        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Production");
         pinPage.closePinWindowIfDisplayed();
         assertion.checkIsDisplayed(dashboardHeader.menuDrawer);
         logOut();
@@ -57,7 +57,7 @@ public class positiveLoginLogoutEachServer {
 
     @Test(enabled = false)
     public void Login_to_the_Debug_with_correct_data() {
-        authorizationPage.loginToDebugServer("ajax1@i.ua", "qwe123");
+        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Debug");
         pinPage.closePinWindowIfDisplayed();
         assertion.checkIsDisplayed(dashboardHeader.menuDrawer);
         logOut();
@@ -65,7 +65,7 @@ public class positiveLoginLogoutEachServer {
 
     @Test(enabled = false)
     public void Login_to_the_Eden_with_correct_data() {
-        authorizationPage.loginToEdenServer("ajax1@i.ua", "qwe123");
+        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Eden");
         pinPage.closePinWindowIfDisplayed();
         assertion.checkIsDisplayed(dashboardHeader.menuDrawer);
         logOut();
@@ -73,7 +73,7 @@ public class positiveLoginLogoutEachServer {
 
     @Test(enabled = false)
     public void Login_to_the_Amazon_with_correct_data() {
-        authorizationPage.loginToAmazonServer("ajax1@i.ua", "qwe123");
+        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Amazon");
         pinPage.closePinWindowIfDisplayed();
         assertion.checkIsDisplayed(dashboardHeader.menuDrawer);
         logOut();
