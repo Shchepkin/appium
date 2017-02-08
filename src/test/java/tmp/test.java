@@ -1,19 +1,36 @@
-package registrationPage;
+package tmp;
 
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.*;
 
 
+import java.util.Map;
+
+
 public class test {
     private Email email;
+    private Map localizeKeys;
 
+    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeClass
-    public void setup(){
-        Reporter.log("Create objects of pages", true);
-        email = new Email("pop.i.ua", "develop.ajax.sys@i.ua", "ajax123");
+    public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
+        Reporter.log("Create setup", true);
+        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+
+        localizeKeys = setup.getLocalizeKeys();
+//        email = new Email("pop.i.ua", "develop.ajax.sys@i.ua", "ajax123");
+    }
+
+    @Test(priority = 1, enabled = true)
+    public void get_Path() {
+        Reporter.log("===== Start get_Path test", true);
+        System.out.println(localizeKeys.get("CFBundleName"));
+
+
     }
 
     @Test(priority = 1, enabled = false)
@@ -31,7 +48,7 @@ public class test {
         String emailCode = email.getValidationCode();
     }
 
-    @Test(priority = 0)
+    @Test(priority = 0, enabled = false)
     public void checkEmail() {
         Reporter.log("===== Start checkEmail test", true);
 //        email = new Email("pop.i.ua", "develop.ajax.sys@i.ua", "ajax123");
@@ -55,6 +72,6 @@ public class test {
     public void endSuit() {
         Reporter.log("===== Close all folders and stores", true);
 //        email = new Email("pop.i.ua", "develop.ajax.sys@i.ua", "ajax123");
-        email.closeAll();
+//        email.closeAll();
     }
 }

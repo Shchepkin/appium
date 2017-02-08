@@ -29,7 +29,7 @@ public class Navigation {
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / 3.00);
         int endX = startX;
-        int endY = (int)(screenSize.height / 10.00);
+        int endY = (int)(screenSize.height / 20.00);
         int duration = 1500;
         System.out.print("   swipe(startX, startY, endX, endY, duration) {" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "} ... ");
         driver.swipe(startX, startY, endX, endY, duration);
@@ -42,7 +42,7 @@ public class Navigation {
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / 3.00);
         int endX = startX;
-        int endY = (int)(screenSize.height / 1.5);
+        int endY = (int)(screenSize.height / 1.3);
         int duration = 1500;
         System.out.print("   swipe(startX, startY, endX, endY, duration) {" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "} ... ");
         driver.swipe(startX, startY, endX, endY, duration);

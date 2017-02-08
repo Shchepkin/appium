@@ -47,8 +47,8 @@ public class Check {
     }
 
 
-    public void waitElement (WebElement element) {
-        WebDriverWait iWait = new WebDriverWait (driver, 60);
+    public void waitElement (WebElement element, int timer) {
+        WebDriverWait iWait = new WebDriverWait (driver, timer);
         iWait.until(ExpectedConditions.visibilityOf(element));
     }
 

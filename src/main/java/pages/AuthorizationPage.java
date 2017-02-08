@@ -33,6 +33,9 @@ public class AuthorizationPage {
     @AndroidFindBy(id = "com.ajaxsystems:id/message")
     public WebElement toast;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
+    public WebElement dialogMessage;
+
 
 // Server menu
 // version >= 2.8
@@ -102,7 +105,13 @@ public class AuthorizationPage {
         loginBtn.click();
     }
 
+    public void loginToTheServer(String login, String password) {
+        loginField.sendKeys(login);
+        passwordField.sendKeys(password);
+        loginBtn.click();
+    }
+
     public void longTapLoginButton() {
-        driver.tap(1, loginBtn, 3000);
+        driver.tap(1, loginBtn, 2000);
     }
 }
