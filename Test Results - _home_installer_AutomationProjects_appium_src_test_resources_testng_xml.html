@@ -572,8 +572,8 @@ jQuery.cookie = function(name, value, options) {
 <body>
 <div id="container">
 <div id="header">
-<div class="time">2 m 4 s</div>
-<h1>/home/installer/AutomationProjects/appium/src/test/resources/testng.xml: <strong><span class="total">6 total, </span><span class="passed">6 passed</span></strong>
+<div class="time">44.95 s</div>
+<h1>/home/installer/AutomationProjects/appium/src/test/resources/testng.xml: <strong><span class="total">3 total, </span><span class="failed">1 failed, </span><span class="passed">2 passed</span></strong>
 </h1>
 <div id="treecontrol">
 <ul>
@@ -589,33 +589,74 @@ jQuery.cookie = function(name, value, options) {
 </div>
 <div id="content">
 <ul id="tree">
-<li xmlns="" class="level top open">
+<li xmlns="" class="level top failed open">
 <span><em class="time">
-<div class="time">2 m 4 s</div>
+<div class="time">44.95 s</div>
 </em>Prestigio</span>
 <ul>
-<li class="level suite open">
+<li class="level suite failed open">
 <span><em class="time">
-<div class="time">2 m 4 s</div>
-</em>positiveLoginWithCheckingFields</span>
+<div class="time">44.95 s</div>
+</em>popUp</span>
 <ul>
-<li class="level test">
+<li class="level test failed open">
 <span><em class="time">
-<div class="time">30.30 s</div>
-</em><em class="status">passed</em>positiveLoginWithCheckingFields.Capital_letters_in_Email</span>
-<ul>
-<li class="text">
-<span class="stdout">Element is displayed. [[AndroidDriver: Android on LINUX (f390ba39-3254-4db1-9347-e1c02fd3c473)] -&gt; id: com.ajaxsystems:id/menuDrawer]<br/></span>
-</li>
-</ul>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">30.70 s</div>
-</em><em class="status">passed</em>positiveLoginWithCheckingFields.Email_and_Pass_with_spaces</span>
+<div class="time">23.89 s</div>
+</em><em class="status">failed</em>popUp.PopUp_Test</span>
 <ul>
 <li class="text">
-<span class="stdout">Element is displayed. [[AndroidDriver: Android on LINUX (b521eeba-1849-4973-bc1a-dc15d0787e5c)] -&gt; id: com.ajaxsystems:id/menuDrawer]<br/></span>
+<span class="stdout">[14.02.2017 18:50:38.210] [INFO ] where:{ tmp.popUp.PopUp_Test }[58], what:{ == Method is started }<br/>[14.02.2017 18:50:38.211] [INFO ] where:{ pages.AuthorizationPage.loginToTheServer }[93], what:{ Method is started }<br/>[14.02.2017 18:50:38.211] [DEBUG] where:{ pages.AuthorizationPage.loginToTheServer }[95], what:{ fill the login field }<br/>[14.02.2017 18:50:44.625] [DEBUG] where:{ pages.AuthorizationPage.loginToTheServer }[98], what:{ fill the password field }<br/>[14.02.2017 18:50:50.515] [DEBUG] where:{ pages.AuthorizationPage.loginToTheServer }[101], what:{ select server type as Production }<br/>[14.02.2017 18:50:50.515] [INFO ] where:{ utils.Navigation.longTapButton }[56], what:{ Method is started }<br/>[14.02.2017 18:50:50.516] [DEBUG] where:{ utils.Navigation.longTapButton }[57], what:{ long tap for 2 seconds }<br/>[14.02.2017 18:50:53.138] [INFO ] where:{ utils.Navigation.longTapButton }[60], what:{ Method is finished }<br/>[14.02.2017 18:50:56.329] [DEBUG] where:{ pages.AuthorizationPage.loginToTheServer }[119], what:{ click login button }<br/>[14.02.2017 18:50:56.542] [INFO ] where:{ pages.AuthorizationPage.loginToTheServer }[122], what:{ Method is finished }<br/>[14.02.2017 18:50:56.542] [INFO ] where:{ utils.Check.waitElements }[113], what:{ Method is started }<br/>[14.02.2017 18:50:56.542] [DEBUG] where:{ utils.Check.waitElements }[120], what:{ waiting for the element #1 }<br/></span>
+</li>
+<li class="text">
+<span class="stdout">[14.02.2017 18:50:57.976] [WARN ] where:{ utils.Check.waitElements }[126], what:{ NoSuchElementException, element 1 is not shown }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[14.02.2017 18:50:57.976] [DEBUG] where:{ utils.Check.waitElements }[120], what:{ waiting for the element #2 }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[14.02.2017 18:50:59.407] [WARN ] where:{ utils.Check.waitElements }[126], what:{ NoSuchElementException, element 2 is not shown }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[14.02.2017 18:50:59.407] [DEBUG] where:{ utils.Check.waitElements }[120], what:{ waiting for the element #3 }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[14.02.2017 18:51:00.857] [WARN ] where:{ utils.Check.waitElements }[126], what:{ NoSuchElementException, element 3 is not shown }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[14.02.2017 18:51:00.857] [DEBUG] where:{ utils.Check.waitElements }[120], what:{ waiting for the element #1 }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[14.02.2017 18:51:01.951] [DEBUG] where:{ utils.Check.waitElements }[121], what:{ element [[AndroidDriver: Android on LINUX (69622414-5118-4854-ac3f-abacbaf82f42)] -&gt; id: com.ajaxsystems:id/snackbar_text] is shown with text: &quot;Невірний логін або пароль&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[14.02.2017 18:51:02.031] [WARN ] where:{ tmp.popUp.PopUp_Test }[65], what:{ snackBar with text: &quot;Невірний логін або пароль&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: Login failed!<br/>snackBar with text: &quot;Невірний логін або пароль&quot;<br/>	at org.testng.Assert.fail(Assert.java:94)<br/>	at tmp.popUp.PopUp_Test(popUp.java:66)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)<br/>	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br/>	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br/>	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br/>	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br/>	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br/>	at org.testng.TestRunner.privateRun(TestRunner.java:767)<br/>	at org.testng.TestRunner.run(TestRunner.java:617)<br/>	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)<br/>	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)<br/>	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br/>	at org.testng.SuiteRunner.run(SuiteRunner.java:240)<br/>	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br/>	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br/>	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)<br/>	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)<br/>	at org.testng.TestNG.run(TestNG.java:1031)<br/>	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)<br/>	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:124)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)<br/></span>
 </li>
 </ul>
 </li>
@@ -627,7 +668,7 @@ jQuery.cookie = function(name, value, options) {
 </div>
 </div>
 <div id="footer">
-<p>Generated by IntelliJ IDEA on 1/30/17 8:46 PM</p>
+<p>Generated by IntelliJ IDEA on 2/14/17 6:51 PM</p>
 </div>
 </body>
 </html>

@@ -6,11 +6,15 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Parameters;
+import utils.Navigation;
+import utils.Setup;
 
 
 public class AuthorizationPage {
 
     public final AppiumDriver driver;
+    private Setup s = new Setup();
+    private Navigation nav;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
     public WebElement backBtn;
@@ -32,6 +36,9 @@ public class AuthorizationPage {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/message")
     public WebElement toast;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
+    public WebElement dialogMessage;
 
 
 // Server menu
@@ -77,14 +84,23 @@ public class AuthorizationPage {
 
     public AuthorizationPage(AppiumDriver driver) {
         this.driver = driver;
+        this.nav = new Navigation(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
 
     public void loginToTheServer(String login, String password, String server) {
+        s.log("Method is started");
+
+        s.log(2, "fill the login field with data: [" + login + "]");
         loginField.sendKeys(login);
+
+        s.log(2, "fill the password field with data: [" + password + "]");
         passwordField.sendKeys(password);
-        longTapLoginButton();
+
+        s.log(2, "select server type: [" + server + "]");
+        nav.longTapButton(loginBtn, 2);
+
         switch (server) {
             case "Debug":  serverDebug.click();
                 break;
@@ -99,10 +115,11 @@ public class AuthorizationPage {
             default: serverProduction.click();
                 break;
         }
+
+        s.log(2, "click login button");
         loginBtn.click();
+
+        s.log("Method is finished");
     }
 
-    public void longTapLoginButton() {
-        driver.tap(1, loginBtn, 3000);
-    }
 }

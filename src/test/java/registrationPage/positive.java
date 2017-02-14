@@ -31,11 +31,12 @@ public class positive {
     private Navigation navigation;
     private Email email;
 
-    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_" })
+    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeClass
-    public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_) throws MalformedURLException, InterruptedException {
-        AppiumSetup appiumSetup = new AppiumSetup(deviceName_, UDID_, platformVersion_, URL_);
-        driver = appiumSetup.getDriver();
+    public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
+        Reporter.log("Create setup", true);
+        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        driver = setup.getDriver();
 
         Reporter.log("Create objects of pages", true);
         introPage = new IntroPage(driver);
@@ -123,9 +124,9 @@ public class positive {
         String pass = "qwe123";
         String phone = "683669947";
         registrationPage.fakeRegistration(login, pass, phone);
-        waitElement(validationCodePage.smsCode);
+        assertion.waitElement(validationCodePage.smsCode, 60);
         validationCodePage.cancelBtn.click();
-        waitElement(authorizationPage.forgotPasswordBtn);
+        assertion.waitElement(authorizationPage.forgotPasswordBtn, 60);
         String actual = authorizationPage.loginField.getText();
         String expected = login;
         Assert.assertEquals(expected, actual);
@@ -140,10 +141,10 @@ public class positive {
     }
 
 
-    public void waitElement (WebElement element) {
-        WebDriverWait iWait = new WebDriverWait (driver, 60);
-        iWait.until(ExpectedConditions.visibilityOf(element));
-    }
+//    public void waitElement (WebElement element) {
+//        WebDriverWait iWait = new WebDriverWait (driver, 60);
+//        iWait.until(ExpectedConditions.visibilityOf(element));
+//    }
 
     @AfterClass
     public void endSuit() {

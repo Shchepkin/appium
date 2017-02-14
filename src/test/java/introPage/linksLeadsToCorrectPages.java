@@ -3,12 +3,14 @@ package introPage;
 import io.appium.java_client.android.AndroidDriver;
 import java.net.MalformedURLException;
 
+import org.testng.Reporter;
 import org.testng.annotations.*;
 import pages.AuthorizationPage;
 import pages.IntroPage;
 import pages.RegistrationPage;
 import utils.AppiumSetup;
 import utils.Check;
+import utils.Setup;
 
 public class linksLeadsToCorrectPages {
     /**
@@ -23,11 +25,12 @@ public class linksLeadsToCorrectPages {
     private RegistrationPage registrationPage;
     private Check assertion;
 
-    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_" })
+    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeClass
-    public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_) throws MalformedURLException, InterruptedException {
-        AppiumSetup appiumSetup = new AppiumSetup(deviceName_, UDID_, platformVersion_, URL_);
-        driver = appiumSetup.getDriver();
+    public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
+        Reporter.log("Create setup", true);
+        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        driver = setup.getDriver();
 
         // Create objects of pages
         introPage = new IntroPage(driver);

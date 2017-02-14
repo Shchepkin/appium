@@ -25,3 +25,8 @@ If you want to run more then one class with node, you have to use "--session-ove
 --------------------------------------------------------------------------------------------------------
 <= 2.7.9    capabilities.setCapability("appActivity", "com.ajaxsystems.activity.DashboardActivity");
 >= 2.8.0    capabilities.setCapability("appActivity", "com.ajaxsystems.ui.activity.LauncherActivity");
+--------------------------------------------------------------------------------------------------------
+how now package and launchable-activity
+installer@ajaxGod ~/Android/Sdk/build-tools/25.0.0 $ ./aapt dump badging ~/Android/AndroidApp/build.2.9.0.apk | grep "package"
+installer@ajaxGod ~/Android/Sdk/build-tools/25.0.0 $ ./aapt dump badging ~/Android/AndroidApp/build.2.9.0.apk | grep "launchable-activity"
+
