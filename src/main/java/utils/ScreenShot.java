@@ -15,12 +15,14 @@ public class ScreenShot {
     private String path_screenshot = "screenshot";
     private Date currentDate = new Date();
     private String pathOfScreenshot;
+    private Setup s = new Setup();
 
     public ScreenShot(AndroidDriver driver) {
         this.driver = driver;
     }
 
     public void getScreenShot() throws IOException{
+        s.log("Method is started");
         // Create formatted date and time for folders and filenames
         SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd");
         SimpleDateFormat time = new SimpleDateFormat("HHmmss");
@@ -36,13 +38,9 @@ public class ScreenShot {
         // Move screenshot to the target folder
         FileUtils.copyFile(srcFile, targetFile);
 
-//        System.out.println("<a href='"+ targetFile.getAbsolutePath() + ".jpg'>Screenshot</a>");
         pathOfScreenshot = targetFile.getAbsolutePath();
-        System.out.println("Path to screenshot:\n" + pathOfScreenshot);
+        s.log("Path to screenshot: " + pathOfScreenshot);
+        s.log("Method is finished");
     }
 
-    public String getPathScreenshot(){
-        String pathScreenshot = pathOfScreenshot;
-        return pathScreenshot;
-    }
 }

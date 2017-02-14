@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Navigation {
     public final AppiumDriver driver;
+    Setup s = new Setup();
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
     public WebElement backBtn;
@@ -24,6 +25,7 @@ public class Navigation {
     public WebElement okBtnd;
 
     public void swipeUp() {
+        s.log(1,"Method is started");
         Dimension screenSize = driver.manage().window().getSize();
         System.out.println("   Screen dimension is " + screenSize);
         int startX = (int)(screenSize.width / 2.00);
@@ -37,6 +39,7 @@ public class Navigation {
     }
 
     public void swipeDown() {
+        s.log(1,"Method is started");
         Dimension screenSize = driver.manage().window().getSize();
         System.out.println("   Screen dimension is " + screenSize);
         int startX = (int)(screenSize.width / 2.00);
@@ -47,6 +50,14 @@ public class Navigation {
         System.out.print("   swipe(startX, startY, endX, endY, duration) {" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "} ... ");
         driver.swipe(startX, startY, endX, endY, duration);
         System.out.println("Done");
+    }
+
+    public void longTapButton(WebElement element, int timer) {
+        s.log("Method is started");
+        s.log(2, "long tap for " + timer + " seconds");
+        timer = timer * 1000;
+        driver.tap(1, element, timer);
+        s.log("Method is finished");
     }
 
     public Navigation(AppiumDriver driver) {
