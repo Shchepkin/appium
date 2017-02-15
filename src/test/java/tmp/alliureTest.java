@@ -6,10 +6,11 @@ import static org.testng.AssertJUnit.assertTrue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.testng.Reporter;
+import utils.Setup;
 
 
 public class alliureTest {
-
+    private Setup s = new Setup();
     @BeforeMethod
     public void setUp() throws Exception {
         System.out.println("start");
@@ -22,6 +23,11 @@ public class alliureTest {
         Reporter.log("level 2", 2, true);
         Reporter.log("level 3", 3, true);
         Reporter.log("level 4", 4, true);
+        s.log("Method is started");
+        s.log(2,"Method is started");
+        s.log(3,"Method is started");
+        s.log(4,"Method is started");
+        s.log(5,"Method is started");
 
 //        assertTrue("Result not equals to 4", 2 * 2 == 4);
         String regularExpression = "[\\d]{6}";
@@ -38,7 +44,7 @@ public class alliureTest {
         Matcher match3 = pattern.matcher(inputString3);
         Matcher match4 = pattern.matcher(inputString4);
         Matcher match6 = pattern.matcher(inputString6);
-        Reporter.log("Application started", true);
+        s.log(1,"== create objects of pages");
         System.out.println(match1.matches());
         System.out.println(match2.matches());
         System.out.println(match3.matches());
