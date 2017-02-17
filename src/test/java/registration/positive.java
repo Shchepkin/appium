@@ -1,9 +1,6 @@
-package registrationPage;
+package registration;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -15,7 +12,8 @@ import utils.*;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class positive {
     private AndroidDriver driver;
@@ -25,18 +23,27 @@ public class positive {
     private DashboardHeader dashboardHeader;
     private MenuMainPage menuPage;
     private MenuAccountPage accountPage;
-    private Check assertion;
+    private Check check;
     private AddImagePage addImagePage;
     private ValidationCodePage validationCodePage;
-    private Navigation navigation;
+    private Navigation nav;
     private Email email;
+    private PopUp popUp;
+    private Map tokenMap;
+    private Setup s = new Setup();
+    private Sql sql = new Sql();
+
+    private static final String login = "qweqweqweqweqwe@i.ua";
+    private static final String pass = "qwe123";
+    private static final String phone = "683669947";
+    private static final String server = "Develop";
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
         Reporter.log("Create setup", true);
-        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
-        driver = setup.getDriver();
+        s = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        driver = s.getDriver();
 
         Reporter.log("Create objects of pages", true);
         introPage = new IntroPage(driver);
@@ -47,16 +54,17 @@ public class positive {
         registrationPage = new RegistrationPage(driver);
         addImagePage = new AddImagePage(driver);
         validationCodePage = new ValidationCodePage(driver);
-        navigation = new Navigation(driver);
-        assertion = new Check(driver);
+        nav = new Navigation(driver);
+        check = new Check(driver);
+        popUp = new PopUp(driver);
     }
 
-    @Test()
+    @Test(enabled = false)
     public void Registration_with_correct_data_to_the_Develop_server() throws IOException, MessagingException {
 
         Reporter.log("Precondition:\n1. Go to the authorization page and set server type to Develop ... ", true);
         introPage.goToAuthorization();
-        authorizationPage.longTapLoginButton();
+        nav.longTapButton(authorizationPage.loginBtn, 2);
         authorizationPage.serverDevelop.click();
         Reporter.log("Done", true);
 
@@ -85,9 +93,9 @@ public class positive {
         Reporter.log("Done", true);
 
         Reporter.log("5. Fill the password field with correct data and confirm it ... ", true);
-        navigation.swipeUp();
+        nav.swipeUp();
         registrationPage.passwordField.sendKeys("qwe123");
-        navigation.swipeUp();
+        nav.swipeUp();
         registrationPage.passwordConfirmField.sendKeys("qwe123");
         Reporter.log("Done", true);
 
@@ -97,7 +105,7 @@ public class positive {
 
         // Assert is Validation Code page opened
         Reporter.log("7. Check the Validation Code page is opened ... ", true);
-        assertion.checkIsDisplayed(validationCodePage.smsCode);
+        check.isElementDisplayed(validationCodePage.smsCode);
         Reporter.log("Done", true);
 
         // check auto Loading Code From Sms
@@ -115,29 +123,73 @@ public class positive {
         validationCodePage.okBtn.click();
         Reporter.log("Done", true);
         email.deleteAllMessage();
-        assertion.checkIsDisplayed(registrationPage.dashboard);
+        check.isElementDisplayed(registrationPage.dashboard);
     }
 
-    @Test()
+    @Test(enabled = false)
     public void Registration_without_validation() {
-        String login = "qweqweqweqweqwe@i.ua";
-        String pass = "qwe123";
-        String phone = "683669947";
-        registrationPage.fakeRegistration(login, pass, phone);
-        assertion.waitElement(validationCodePage.smsCode, 60);
+        s.log("Method is started");
+
+        s.log("start fakeRegistration");
+        registrationPage.fakeRegistration(login, pass, phone, server);
+
+        s.log("wait for Validation Cod Page and tap Cancel button");
+        Assert.assertTrue(check.waitElement(validationCodePage.smsCode, 60, true));
         validationCodePage.cancelBtn.click();
-        assertion.waitElement(authorizationPage.forgotPasswordBtn, 60);
-        String actual = authorizationPage.loginField.getText();
-        String expected = login;
+
+        s.log("come back to the Intro Page and go to the Authorization Page");
+        nav.backBtn.click();
+        introPage.loginBtn.click();
+
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("wait for message about con");
+        Assert.assertTrue(check.waitElement(popUp.dialogMessage, 60, true));
+
+        String expected = s.getLocalizeKeys().get("this_account_was_not_yet_validated").toString();
+        String actual = popUp.dialogMessage.getText();
+        System.out.println(expected);
+        System.out.println(actual);
         Assert.assertEquals(expected, actual);
+
     }
+
+    @Test(priority = 1, enabled = true)
+    public void Login_to_the_not_validated_account() {
+        s.log("TEST IS STARTED");
+
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("wait for message this_account_was_not_yet_validated");
+        Assert.assertTrue(check.waitElement(popUp.dialogMessage, 60, true));
+
+        String expected = s.getLocalizeKeys().get("this_account_was_not_yet_validated").toString();
+        String actual = popUp.dialogMessage.getText();
+        s.log("actual: " + actual);
+        s.log("expected: " + expected);
+        Assert.assertEquals(expected, actual);
+
+        s.log("additional validation of text on the popUp for key \"confirm\"");
+        Assert.assertEquals(s.getLocalizeKeys().get("confirm").toString(), popUp.okBtn.getText());
+
+        s.log("additional validation of text on the popUp for key \"cancel\"");
+        Assert.assertEquals(s.getLocalizeKeys().get("cancel").toString(), popUp.cancelBtn.getText());
+
+        tokenMap = sql.getTokenMap("Phone", "%" + phone + "%");
+        System.out.println("SMS: " + tokenMap.get("smsToken"));
+        System.out.println("Email: " + tokenMap.get("emailToken"));
+
+        s.log("TEST IS FINISHED");
+    }
+
 
 
     private void logOut() {
         dashboardHeader.menuDrawer.click();
         menuPage.accountBtn.click();
         accountPage.logoutBtn.click();
-        assertion.checkIsDisplayed(authorizationPage.loginBtn);
+        check.isElementDisplayed(authorizationPage.loginBtn);
     }
 
 

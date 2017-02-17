@@ -1,25 +1,23 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Reporter;
 import utils.Navigation;
+import utils.Setup;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegistrationPage {
 
     public final AppiumDriver driver;
     private IntroPage introPage;
-    private Navigation navigation;
+    private AuthorizationPage authorizationPage;
+    private Navigation nav;
+    private Setup s = new Setup();
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
     public WebElement backBtn;
@@ -57,18 +55,23 @@ public class RegistrationPage {
     @AndroidFindBy(id = "com.ajaxsystems:id/dashboard")
     public WebElement dashboard;
 
-    public void fakeRegistration(String email, String password, String phone) {
-        Reporter.log("\n=== Start process for getting Validation code.", true);
+    public void fakeRegistration(String email, String password, String phone, String server) {
+        s.log("Method is started");
         introPage = new IntroPage(driver);
-        navigation = new Navigation(driver);
+        nav = new Navigation(driver);
+        authorizationPage = new AuthorizationPage(driver);
+        introPage.loginBtn.click();
+        nav.longTapButton(authorizationPage.loginBtn, 2);
+        authorizationPage.serverDevelop.click();
+        nav.backBtn.click();
         introPage.goToRegistration();
-        nameField.sendKeys("quick test");
+        nameField.sendKeys("fakeRegistration");
         emailField.sendKeys(email);
         emailConfirmField.sendKeys(email);
         phoneField.sendKeys(phone);
-        navigation.swipeUp();
+        nav.swipeUp();
         passwordField.sendKeys(password);
-        navigation.swipeUp();
+        nav.swipeUp();
         passwordConfirmField.sendKeys(password);
         registrationBtn.click();
     }

@@ -1,4 +1,4 @@
-package authorizationPage.forgotPassword;
+package authorization.forgotPassword;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.Reporter;
@@ -9,11 +9,8 @@ import org.testng.annotations.Test;
 import pages.AuthorizationPage;
 import pages.ForgotPasswordPage;
 import pages.IntroPage;
-import utils.AppiumSetup;
 import utils.Check;
 import utils.Setup;
-
-import java.net.MalformedURLException;
 
 public class pageElementExisting {
     private AndroidDriver driver;
@@ -44,32 +41,32 @@ public class pageElementExisting {
 
     @Test()
     public void The_Title_exists_on_the_ForgotPassword_page() {
-        assertion.checkIsDisplayed(forgotPasswordPage.emailField);
+        assertion.isElementDisplayed(forgotPasswordPage.emailField);
     }
 
     @Test()
     public void The_Email_field_exists_on_the_ForgotPassword_page() {
-        assertion.checkIsDisplayed(forgotPasswordPage.emailField);
+        assertion.isElementDisplayed(forgotPasswordPage.emailField);
     }
 
     @Test()
     public void The_Country_Code_field_exists_on_the_ForgotPassword_page() {
-        assertion.checkIsDisplayed(forgotPasswordPage.countryCode);
+        assertion.isElementDisplayed(forgotPasswordPage.countryCode);
     }
 
     @Test()
     public void The_Phone_field_exists_on_the_ForgotPassword_page() {
-        assertion.checkIsDisplayed(forgotPasswordPage.phoneField);
+        assertion.isElementDisplayed(forgotPasswordPage.phoneField);
     }
 
     @Test()
     public void The_Cancel_Button_exists_on_the_ForgotPassword_page() {
-        assertion.checkIsDisplayed(forgotPasswordPage.canselBtn);
+        assertion.isElementDisplayed(forgotPasswordPage.canselBtn);
     }
 
     @Test()
     public void The_OK_Button_exists_on_the_ForgotPassword_page() {
-        assertion.checkIsDisplayed(forgotPasswordPage.okBtn);
+        assertion.isElementDisplayed(forgotPasswordPage.okBtn);
     }
 
     @AfterClass

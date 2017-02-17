@@ -16,9 +16,9 @@ public class Check {
     private Setup s = new Setup();
     private AndroidDriver driver;
     private ScreenShot screenShot;
+    private int element;
+
     public boolean result;
-    int element;
-//    private String pathOfScreenshot;
 
     public Check(AndroidDriver driver) {
         this.driver = driver;
@@ -35,8 +35,7 @@ public class Check {
             WebDriverWait iWait = new WebDriverWait(driver, 15);
             iWait.until(ExpectedConditions.visibilityOf(element));
             element.isDisplayed();
-            s.log(2, "element is shown with text: \"" + element.getText() + "\"");
-//            System.out.println("Element is displayed. " + element);
+            s.log("element is shown with text: \"" + element.getText() + "\"");
 
         } catch (NoSuchElementException e) {
 
@@ -52,6 +51,15 @@ public class Check {
         }
     }
 
+    /**
+        * @param element           - element which we want to wait
+        * @param timer             - how long time we want to wait for the element (in seconds)
+        * @param makeScreenShot    - make screenshot if method was failed (true)
+        * @return                  - result true or false about successfully execute this method
+
+         example:
+            waitElement(element, 5, true)
+     */
     public boolean waitElement(WebElement element, int timer, boolean makeScreenShot) {
         s.log("Method is started");
 
@@ -62,16 +70,7 @@ public class Check {
             s.log(2, "element " + element + " is shown with text: \"" + element.getText() + "\"");
             result = true;
         } catch (NoSuchElementException e) {
-            result = false;
-            if (makeScreenShot){
-                try {
-                    screenShot.getScreenShot();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
             s.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
-        } catch (TimeoutException e) {
             result = false;
             if (makeScreenShot){
                 try {
@@ -80,14 +79,24 @@ public class Check {
                     e1.printStackTrace();
                 }
             }
+        } catch (TimeoutException e) {
             s.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            result = false;
+            if (makeScreenShot){
+                try {
+                    screenShot.getScreenShot();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
         }
         return result;
     }
 
+
     /**
-         * @param elements - list of locators for checking
-         * @param period   - how many iterations of checking we have to make, each iterations approximately 1.2 sec
+         * @param elements - selectList of locators for checking
+         * @param period   - how many iterations of checking we have to make, each iterations approximately 1.3 sec
          * @return         - number of element which was shown (if there is no elements it returns 0)
 
       example:
@@ -105,8 +114,8 @@ public class Check {
 
             for (WebElement el : elements) {
                 try {
-                    WebDriverWait iWait = new WebDriverWait(driver, 0);
-                    iWait.until(ExpectedConditions.visibilityOf(el));
+//                    WebDriverWait iWait = new WebDriverWait(driver, 0);
+//                    iWait.until(ExpectedConditions.visibilityOf(el));
                     s.log(2, "element " + el + " is shown with text: \"" + el.getText() + "\"");
                     result = true;
                     element = counter;

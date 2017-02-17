@@ -13,12 +13,12 @@ public class IntroPage {
     public final AppiumDriver driver;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/login")
-    public WebElement authorizationBtn;
+    public WebElement loginBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/registration")
     public WebElement registrationBtn;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/build1")
+    @AndroidFindBy(id = "com.ajaxsystems:id/build")
     public WebElement build;
 
     public IntroPage(AppiumDriver driver) {
@@ -28,7 +28,7 @@ public class IntroPage {
 
     public void goToAuthorization() {
         Reporter.log("> goToAuthorization ", true);
-        authorizationBtn.click();
+        loginBtn.click();
     }
 
     public void goToRegistration() {

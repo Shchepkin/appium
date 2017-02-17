@@ -1,14 +1,11 @@
 package introPage;
 
 import org.testng.Reporter;
-import utils.AppiumSetup;
 import utils.Check;
 import pages.IntroPage;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.*;
 import utils.Setup;
-
-import java.net.MalformedURLException;
 
 /**
  * This test asserts whether the all elements of the Intro Page is exist
@@ -34,17 +31,17 @@ public class pageElementExisting {
 
     @Test()
     public void The_Build_exists_on_the_Intro_page() {
-        assertion.checkIsDisplayed(introPage.build);
+        assertion.isElementDisplayed(introPage.build);
     }
 
     @Test()
     public void The_authorization_button_exists_on_the_Intro_page() {
-        assertion.checkIsDisplayed(introPage.authorizationBtn);
+        assertion.isElementDisplayed(introPage.loginBtn);
     }
 
     @Test()
     public void The_registration_button_exists_on_the_Intro_page() {
-        assertion.checkIsDisplayed(introPage.registrationBtn);
+        assertion.isElementDisplayed(introPage.registrationBtn);
     }
 
     @AfterClass

@@ -1,16 +1,14 @@
-package authorizationPage.login;
+package authorization.login;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.*;
 import pages.*;
-import utils.AppiumSetup;
 import utils.Check;
 import utils.Navigation;
 import utils.Setup;
 
-import java.net.MalformedURLException;
 
 public class positiveLoginWithCheckingFields {
     private AndroidDriver driver;
@@ -52,7 +50,7 @@ public class positiveLoginWithCheckingFields {
         authorizationPage.loginToTheServer("  ajax1@i.ua  ", "  qwe123  ", "Production");
 
         Reporter.log("> Check login", true);
-        assertion.checkIsDisplayed(dashboardHeader.menuDrawer);
+        assertion.isElementDisplayed(dashboardHeader.menuDrawer);
         Reporter.log("> Done", true);
     }
 
@@ -69,7 +67,7 @@ public class positiveLoginWithCheckingFields {
         authorizationPage.loginToTheServer("AjaX1@i.Ua", "qwe123", "Production");
 
         Reporter.log("> Check login", true);
-        assertion.checkIsDisplayed(dashboardHeader.menuDrawer);
+        assertion.isElementDisplayed(dashboardHeader.menuDrawer);
         Reporter.log("> Done", true);
     }
 
@@ -86,18 +84,19 @@ public class positiveLoginWithCheckingFields {
         String login = "qweqweqweqweqwe@i.ua";
         String pass = "qwe123";
         String phone = "683669947";
+        String server = "Develop";
 
         Reporter.log("> call method for fake registration", true);
-        registrationPage.fakeRegistration(login, pass, phone);
+        registrationPage.fakeRegistration(login, pass, phone, server);
 
         Reporter.log("> wait for appearing Validation Code page", true);
-        assertion.waitElement(validationCodePage.smsCode, 60);
+        assertion.waitElement(validationCodePage.smsCode, 60, false);
 
         Reporter.log("> tap on Cancel button", true);
         validationCodePage.cancelBtn.click();
 
         Reporter.log("> wait for appearing Authorization page", true);
-        assertion.waitElement(authorizationPage.forgotPasswordBtn, 60);
+        assertion.waitElement(authorizationPage.forgotPasswordBtn, 60, false);
         String actual = authorizationPage.loginField.getText();
         String expected = login;
 
@@ -109,7 +108,7 @@ public class positiveLoginWithCheckingFields {
         nav.nextBtn.click();
 
         Reporter.log("> wait for appearing Dialog message", true);
-        assertion.waitElement(authorizationPage.dialogMessage, 15);
+        assertion.waitElement(authorizationPage.dialogMessage, 15, false);
 
         try {
             Thread.sleep(10000);

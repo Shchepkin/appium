@@ -1,14 +1,12 @@
 package introPage;
 
 import io.appium.java_client.android.AndroidDriver;
-import java.net.MalformedURLException;
 
 import org.testng.Reporter;
 import org.testng.annotations.*;
 import pages.AuthorizationPage;
 import pages.IntroPage;
 import pages.RegistrationPage;
-import utils.AppiumSetup;
 import utils.Check;
 import utils.Setup;
 
@@ -46,10 +44,10 @@ public class linksLeadsToCorrectPages {
     public void Login_Button_Leads_To_The_Login_Page() {
 
         // Go to the authorization page
-        introPage.authorizationBtn.click();
+        introPage.loginBtn.click();
 
         // Check whether the authorization page is open (Login button is exist)
-        assertion.checkIsDisplayed(authorizationPage.loginBtn);
+        assertion.isElementDisplayed(authorizationPage.loginBtn);
 
         // Back to the previous page
         authorizationPage.backBtn.click();
@@ -62,7 +60,7 @@ public class linksLeadsToCorrectPages {
         introPage.registrationBtn.click();
 
         // Check whether the registration page is open (registration button is exist)
-        assertion.checkIsDisplayed(registrationPage.registrationBtn);
+        assertion.isElementDisplayed(registrationPage.registrationBtn);
 
         // Back to the previous page
         registrationPage.backBtn.click();

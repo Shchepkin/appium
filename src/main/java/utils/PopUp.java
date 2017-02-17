@@ -55,6 +55,10 @@ public class PopUp {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
     public WebElement confirmButton;
+//================================ dialogMessage =====================================
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
+    public WebElement dialogMessage;
 
 //================================ QR ================================================
     @AndroidFindBy(id = "com.ajaxsystems:id/zxing_viewfinder_view")
