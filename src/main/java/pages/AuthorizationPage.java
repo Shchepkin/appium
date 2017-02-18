@@ -89,6 +89,21 @@ public class AuthorizationPage {
     }
 
 
+    public void loginToTheServer(String login, String password) {
+        s.log("Method is started");
+
+        s.log(2, "fill the login field with data: [" + login + "]");
+        loginField.sendKeys(login);
+
+        s.log(2, "fill the password field with data: [" + password + "]");
+        passwordField.sendKeys(password);
+
+        s.log(2, "click login button");
+        loginBtn.click();
+
+        s.log("Method is finished");
+    }
+
     public void loginToTheServer(String login, String password, String server) {
         s.log("Method is started");
 
@@ -98,7 +113,19 @@ public class AuthorizationPage {
         s.log(2, "fill the password field with data: [" + password + "]");
         passwordField.sendKeys(password);
 
-        s.log(2, "select server type: [" + server + "]");
+        chooseServer(server);
+
+        s.log(2, "click login button");
+        loginBtn.click();
+
+        s.log("Method is finished");
+    }
+
+
+    public void chooseServer(String server) {
+        s.log("Method is started");
+
+        s.log("select server type: [" + server + "]");
         nav.longTapButton(loginBtn, 2);
 
         switch (server) {
@@ -115,10 +142,6 @@ public class AuthorizationPage {
             default: serverProduction.click();
                 break;
         }
-
-        s.log(2, "click login button");
-        loginBtn.click();
-
         s.log("Method is finished");
     }
 

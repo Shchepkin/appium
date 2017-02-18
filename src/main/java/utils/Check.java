@@ -1,7 +1,6 @@
 package utils;
 
 import org.openqa.selenium.TimeoutException;
-import pages.DashboardActivePINPage;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -16,13 +15,15 @@ public class Check {
     private Setup s = new Setup();
     private AndroidDriver driver;
     private ScreenShot screenShot;
-    private int element;
+    private PopUp popUp;
+    private int element = 0;
 
     public boolean result;
 
     public Check(AndroidDriver driver) {
         this.driver = driver;
         this.screenShot = new ScreenShot(driver);
+        this.popUp = new PopUp(driver);
     }
 
     public void isElementDisplayed(WebElement element) {
@@ -107,6 +108,7 @@ public class Check {
      */
     public int waitElements (WebElement[] elements, int period) {
         s.log("Method is started");
+        element = 0;
         result = false;
         for (int i = 1; i <= period; i++) {
             int counter = 1;
@@ -128,6 +130,26 @@ public class Check {
                 counter ++;
             }
             if (result) {break;}
+        }
+        s.log("Method is finished");
+        return element;
+    }
+
+    public int waitAllPopUp (int period){
+        s.log("Method is started");
+        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin, popUp.errorPic};
+
+        s.log("waiting for: 1.snackBar  2.error  3.loadingWin");
+        element = waitElements(elements, period);
+        switch (element){
+            case 0: s.log(3, "no PopUp is shown"); break;
+            case 1: s.log(3, "snackBar is shown with text: \"" + popUp.snackBar.getText() + "\""); break;
+            case 2:
+                s.log(4, "loader is shown with text: \"" + popUp.contentText.getText() + "\"");
+                if (waitElement(popUp.errorPic, 15, true)) {element = 3;}
+                break;
+            case 3: s.log(3, "ERROR is shown with text: \"" + popUp.contentText.getText() + "\""); break;
+            default: s.log(3, "default"); break;
         }
         return element;
     }

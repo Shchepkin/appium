@@ -17,7 +17,9 @@ public class RegistrationPage {
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
     private Navigation nav;
+    private AddImagePage addImagePage;
     private Setup s = new Setup();
+
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
     public WebElement backBtn;
@@ -55,11 +57,10 @@ public class RegistrationPage {
     @AndroidFindBy(id = "com.ajaxsystems:id/dashboard")
     public WebElement dashboard;
 
+//====================================================================================
+
     public void fakeRegistration(String email, String password, String phone, String server) {
         s.log("Method is started");
-        introPage = new IntroPage(driver);
-        nav = new Navigation(driver);
-        authorizationPage = new AuthorizationPage(driver);
         introPage.loginBtn.click();
         nav.longTapButton(authorizationPage.loginBtn, 2);
         authorizationPage.serverDevelop.click();
@@ -76,8 +77,54 @@ public class RegistrationPage {
         registrationBtn.click();
     }
 
+    public void fillFields(String name, String email, String password, String phone, String server) {
+        s.log("Method is started");
+        introPage.loginBtn.click();
+        authorizationPage.chooseServer(server);
+        nav.backBtn.click();
+        introPage.registrationBtn.click();
+        nameField.sendKeys(name);
+        emailField.sendKeys(email);
+        emailConfirmField.sendKeys(email);
+        phoneField.sendKeys(phone);
+        nav.swipeUp();
+        passwordField.sendKeys(password);
+        nav.swipeUp();
+        passwordConfirmField.sendKeys(password);
+    }
+
+    public void fillFields(String name, String email, String password, String phone) {
+        s.log("Method is started");
+        nameField.sendKeys(name);
+        emailField.sendKeys(email);
+        emailConfirmField.sendKeys(email);
+        phoneField.sendKeys(phone);
+        nav.swipeUp();
+        passwordField.sendKeys(password);
+        nav.swipeUp();
+        passwordConfirmField.sendKeys(password);
+    }
+
+    public void setUserPic(int numberOfPhoto) {
+        s.log("Method is started");
+        userPic.click();
+        addImagePage.thumbnail.get(2 + numberOfPhoto).click();
+        addImagePage.saveBtn.click();
+        s.log("Method is finished");
+    }
+
+    public void setPhoneCountryCode() {
+        s.log("Method is started");
+
+
+    }
+
     public RegistrationPage(AppiumDriver driver) {
         this.driver = driver;
+        nav = new Navigation(driver);
+        introPage = new IntroPage(driver);
+        addImagePage = new AddImagePage(driver);
+        authorizationPage = new AuthorizationPage(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 }

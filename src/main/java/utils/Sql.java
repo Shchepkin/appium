@@ -48,16 +48,17 @@ public class Sql {
         String query = "DELETE FROM csa_accounts WHERE " + row + " LIKE '" + value + "'";
 
         selectList = getSelect(row, value);
-        s.log(3, "this objects will be deleted: ");
-        for (Object sqlResult : selectList) {
-            System.out.println("\033[31;49m" + sqlResult + "\033[39;49m");
-        }
 
         try {
             connection = getConnection();
 
             s.log(2, "getting Statement object to execute query");
             stmt = connection.createStatement();
+
+            s.log(3, "this objects will be deleted: ");
+            for (Object sqlResult : selectList) {
+                System.out.println("\033[31;49m" + sqlResult + "\033[39;49m");
+            }
 
             s.log(3, "delete objects");
             stmt.executeUpdate(query);
@@ -89,7 +90,7 @@ public class Sql {
     public ArrayList getSelect(String row, String value) {
         s.log("Method is started");
 
-        String query = "SELECT id,Role,Phone,ConfirmationToken,Login FROM csa_accounts WHERE " + row + " LIKE '" + value + "' ORDER BY id ASC";
+        String query = "SELECT id,Role,Phone,ConfirmationToken,Login FROM csa_accounts WHERE " + row + " LIKE '%" + value + "%' ORDER BY id ASC";
 
         try {
             connection = getConnection();
@@ -145,7 +146,19 @@ public class Sql {
      */
     public Map getTokenMap(String row, String value) {
         s.log("Method is started");
-        getSelect(row, value);
+        int counter = 1;
+        while (validationToken.size() < 1 || validationToken.get(0) == null) {
+            s.log(3, "Try to get Tokens from database. Attempt #" + counter);
+            getSelect(row, value);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (counter == 5){
+                break;
+            }else {counter++;}
+        }
 
         if (validationToken.size() != 1) {
             Assert.fail("Check whether your credentials are correct! Wrong number of found elements: " + validationToken.size());

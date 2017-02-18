@@ -4,6 +4,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import io.appium.java_client.pagefactory.*;
 import org.testng.Reporter;
+import utils.Navigation;
+import utils.Setup;
 
 /**
  *
@@ -11,6 +13,8 @@ import org.testng.Reporter;
 public class IntroPage {
 
     public final AppiumDriver driver;
+    private AuthorizationPage authorizationPage;
+    private Setup s = new Setup();
 
     @AndroidFindBy(id = "com.ajaxsystems:id/login")
     public WebElement loginBtn;
@@ -23,17 +27,26 @@ public class IntroPage {
 
     public IntroPage(AppiumDriver driver) {
         this.driver = driver;
+        authorizationPage = new AuthorizationPage(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
     public void goToAuthorization() {
-        Reporter.log("> goToAuthorization ", true);
+        s.log("Method is started");
         loginBtn.click();
     }
 
     public void goToRegistration() {
-
-        Reporter.log("> goToRegistration ", true);
+        s.log("Method is started");
         registrationBtn.click();
     }
+
+    public void setServer(String server) {
+        s.log("Method is started");
+        loginBtn.click();
+        authorizationPage.chooseServer(server);
+        authorizationPage.backBtn.click();
+        s.log("Method is finished");
+    }
+
 }

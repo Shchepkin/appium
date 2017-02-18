@@ -6,13 +6,14 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import utils.Setup;
 
 import java.util.regex.Pattern;
 
 public class ValidationCodePage {
     public final AppiumDriver driver;
     public boolean autoLoadResult;
-    public String fieldValue;
+    private Setup s = new Setup();
 
     @AndroidFindBy(id = "com.ajaxsystems:id/smsCode")
     public WebElement smsCode;
@@ -28,6 +29,7 @@ public class ValidationCodePage {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/ok")
     public WebElement okBtn;
+
 
     public void autoLoadCode(WebElement element, int timer){
         System.out.print("  - Create matcher for checking  ... ");
