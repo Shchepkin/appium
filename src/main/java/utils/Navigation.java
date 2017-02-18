@@ -7,6 +7,9 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Navigation {
     public final AppiumDriver driver;
@@ -25,31 +28,60 @@ public class Navigation {
     public WebElement okBtnd;
 
     public void swipeUp() {
-        s.log(1,"Method is started");
+        s.log("Method is started");
+
         Dimension screenSize = driver.manage().window().getSize();
-        System.out.println("   Screen dimension is " + screenSize);
+        s.log("Screen dimension is " + screenSize);
+
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / 3.00);
         int endX = startX;
         int endY = (int)(screenSize.height / 20.00);
         int duration = 1500;
-        System.out.print("   swipe(startX, startY, endX, endY, duration) {" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "} ... ");
+
+        s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
-        System.out.println("Done");
+
+        s.log("Method is finished");
+    }
+
+    public void scrollToElement() {
+        s.log("Method is started");
+
+        Dimension screenSize = driver.manage().window().getSize();
+        s.log("Screen dimension is " + screenSize);
+
+
+//        driver.switchTo(element);
+//        driver.executeScript("mobile: scroll", new HashMap<String, Double>() {
+//            {
+//                put("direction", "down");
+//            }
+//        });
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("direction", "down");
+        driver.executeScript("mobile: scroll", params);
+
+        s.log("Method is finished");
     }
 
     public void swipeDown() {
-        s.log(1,"Method is started");
+        s.log("Method is started");
+
         Dimension screenSize = driver.manage().window().getSize();
-        System.out.println("   Screen dimension is " + screenSize);
+        s.log("Screen dimension is " + screenSize);
+
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / 3.00);
         int endX = startX;
         int endY = (int)(screenSize.height / 1.3);
         int duration = 1500;
-        System.out.print("   swipe(startX, startY, endX, endY, duration) {" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "} ... ");
+
+        s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
-        System.out.println("Done");
+
+        s.log("Method is finished");
     }
 
     public void longTapButton(WebElement element, int timer) {

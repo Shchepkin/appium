@@ -1,25 +1,25 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Reporter;
 import utils.Navigation;
+import utils.Setup;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegistrationPage {
 
     public final AppiumDriver driver;
     private IntroPage introPage;
-    private Navigation navigation;
+    private AuthorizationPage authorizationPage;
+    private Navigation nav;
+    private AddImagePage addImagePage;
+    private Setup s = new Setup();
+
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
     public WebElement backBtn;
@@ -57,24 +57,74 @@ public class RegistrationPage {
     @AndroidFindBy(id = "com.ajaxsystems:id/dashboard")
     public WebElement dashboard;
 
-    public void fakeRegistration(String email, String password, String phone) {
-        Reporter.log("\n=== Start process for getting Validation code.", true);
-        introPage = new IntroPage(driver);
-        navigation = new Navigation(driver);
+//====================================================================================
+
+    public void fakeRegistration(String email, String password, String phone, String server) {
+        s.log("Method is started");
+        introPage.loginBtn.click();
+        nav.longTapButton(authorizationPage.loginBtn, 2);
+        authorizationPage.serverDevelop.click();
+        nav.backBtn.click();
         introPage.goToRegistration();
-        nameField.sendKeys("quick test");
+        nameField.sendKeys("fakeRegistration");
         emailField.sendKeys(email);
         emailConfirmField.sendKeys(email);
         phoneField.sendKeys(phone);
-        navigation.swipeUp();
+        nav.swipeUp();
         passwordField.sendKeys(password);
-        navigation.swipeUp();
+        nav.swipeUp();
         passwordConfirmField.sendKeys(password);
         registrationBtn.click();
     }
 
+    public void fillFields(String name, String email, String password, String phone, String server) {
+        s.log("Method is started");
+        introPage.loginBtn.click();
+        authorizationPage.chooseServer(server);
+        nav.backBtn.click();
+        introPage.registrationBtn.click();
+        nameField.sendKeys(name);
+        emailField.sendKeys(email);
+        emailConfirmField.sendKeys(email);
+        phoneField.sendKeys(phone);
+        nav.swipeUp();
+        passwordField.sendKeys(password);
+        nav.swipeUp();
+        passwordConfirmField.sendKeys(password);
+    }
+
+    public void fillFields(String name, String email, String password, String phone) {
+        s.log("Method is started");
+        nameField.sendKeys(name);
+        emailField.sendKeys(email);
+        emailConfirmField.sendKeys(email);
+        phoneField.sendKeys(phone);
+        nav.swipeUp();
+        passwordField.sendKeys(password);
+        nav.swipeUp();
+        passwordConfirmField.sendKeys(password);
+    }
+
+    public void setUserPic(int numberOfPhoto) {
+        s.log("Method is started");
+        userPic.click();
+        addImagePage.thumbnail.get(2 + numberOfPhoto).click();
+        addImagePage.saveBtn.click();
+        s.log("Method is finished");
+    }
+
+    public void setPhoneCountryCode() {
+        s.log("Method is started");
+
+
+    }
+
     public RegistrationPage(AppiumDriver driver) {
         this.driver = driver;
+        nav = new Navigation(driver);
+        introPage = new IntroPage(driver);
+        addImagePage = new AddImagePage(driver);
+        authorizationPage = new AuthorizationPage(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 }

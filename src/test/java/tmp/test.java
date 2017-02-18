@@ -14,11 +14,12 @@ import java.util.Map;
 public class test {
     private Email email;
     private Map localizeKeys;
+    private Setup s = new Setup();
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
-        Reporter.log("Create setup", true);
+        s.log("Method is started");
         Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
 
         localizeKeys = setup.getLocalizeKeys();

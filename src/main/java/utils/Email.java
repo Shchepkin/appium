@@ -18,6 +18,7 @@ public class Email {
     private Folder folder;
     private Store store;
     private Message message[];
+    private Setup s = new Setup();
 
     public String emailCode;
     public String emailText;
@@ -103,7 +104,7 @@ public class Email {
     }
 
     public String getValidationCode() {
-        Reporter.log("\n=== Start process for getting Validation code.", true);
+        s.log("Method is started");
         String input = getEmailTextFromNewMessage();
         if (emailText != null) {
             Pattern pattern = Pattern.compile("[\\d]{6}");

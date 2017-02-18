@@ -56,6 +56,11 @@ public class PopUp {
     @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
     public WebElement confirmButton;
 
+//================================ dialogMessage =====================================
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
+    public WebElement dialogMessage;
+
 //================================ QR ================================================
     @AndroidFindBy(id = "com.ajaxsystems:id/zxing_viewfinder_view")
     public WebElement qrFinderView;
@@ -81,6 +86,11 @@ public class PopUp {
 
     @AndroidFindBy(id = "com.android.packageinstaller:id/permission_allow_button")
     public WebElement allowButton;
+
+//================================ User_Agreement_Dialog ==============================
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/web")
+    public WebElement userAgreement;
 
 //=====================================================================================
 
