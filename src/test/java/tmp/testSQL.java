@@ -27,7 +27,8 @@ public class testSQL {
     public void get_SELECT() {
         s.log("TEST IS STARTED");
         s.log(3, "print ValidationTokens");
-        tokenMap = sql.getTokenMap("Phone", "%+380681513888%");
+        sql.getDelete("Phone", "%683669947%");
+        tokenMap = sql.getTokenMap("Phone", "683669947");
         System.out.println("SMS: " + tokenMap.get("smsToken"));
         System.out.println("Email: " + tokenMap.get("emailToken"));
         s.log("TEST IS FINISHED");

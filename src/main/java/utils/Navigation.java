@@ -7,6 +7,9 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Navigation {
     public final AppiumDriver driver;
@@ -38,6 +41,27 @@ public class Navigation {
 
         s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
+
+        s.log("Method is finished");
+    }
+
+    public void scrollToElement() {
+        s.log("Method is started");
+
+        Dimension screenSize = driver.manage().window().getSize();
+        s.log("Screen dimension is " + screenSize);
+
+
+//        driver.switchTo(element);
+//        driver.executeScript("mobile: scroll", new HashMap<String, Double>() {
+//            {
+//                put("direction", "down");
+//            }
+//        });
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("direction", "down");
+        driver.executeScript("mobile: scroll", params);
 
         s.log("Method is finished");
     }

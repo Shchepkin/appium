@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 public class Setup {
@@ -62,8 +63,8 @@ public class Setup {
             log(2, "implement Android driver");
             driver = new AndroidDriver(new URL("http://" + URL_), capabilities);
 
-//            log(2, "set timeouts");
-//            driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
+            log(2, "set timeouts");
+            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 
         } catch (MalformedURLException e) {
             log(4, "MalformedURLException\n" + e);
