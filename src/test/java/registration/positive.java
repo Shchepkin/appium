@@ -55,8 +55,8 @@ public class positive {
         validationCodePage = new ValidationCodePage(driver);
     }
 
-
-    @Test(priority = 1, enabled = true)
+// C29030 =================================================================================================
+    @Test(priority = 1, enabled = false)
     public void C29030_New_user_registration_with_validation() {
         s.log("TEST IS STARTED");
 
@@ -97,12 +97,10 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
+// C29047 =================================================================================================
     @Test(priority = 2, enabled = false)
     public void C29047_Login_to_the_existing_account() {
         s.log("TEST IS STARTED");
-
-        s.log(3, "check if app already logged in ");
-        Assert.assertTrue(!check.waitElement(dashboardHeader.menuDrawer, 5, true), "App already logged in!");
 
         s.log("start from IntroPage");
         introPage.loginBtn.click();
@@ -122,6 +120,25 @@ public class positive {
         Assert.assertTrue(check.waitElement(dashboardHeader.menuDrawer, 60, true));
         s.log("TEST IS FINISHED");
     }
+
+// C29051 =================================================================================================
+    @Test(priority = 1, enabled = true)
+    public void C29051_Add_new_Hub_manually  () {
+        s.log("TEST IS STARTED");
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        if(check.waitElement(popUp.cancelButton, 15, true)) {
+            s.log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
+            popUp.cancelButton.click();
+        }
+
+        s.log("TEST IS FINISHED");
+    }
+
 
     @Test(priority = 2, enabled = false)
     public void Login_to_the_not_validated_account() {
@@ -150,6 +167,8 @@ public class positive {
 
         s.log("TEST IS FINISHED");
     }
+
+
 
     @Test(priority = 1, enabled = false)
     public void Test() {
