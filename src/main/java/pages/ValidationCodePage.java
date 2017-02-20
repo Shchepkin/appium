@@ -7,12 +7,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import utils.Setup;
+import utils.Sql;
 
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class ValidationCodePage {
     public final AppiumDriver driver;
     public boolean autoLoadResult;
+
+    private Map tokenMap;
+    private Sql sql = new Sql();
     private Setup s = new Setup();
 
     @AndroidFindBy(id = "com.ajaxsystems:id/smsCode")
@@ -55,8 +60,18 @@ public class ValidationCodePage {
         System.out.println("Done");
     }
 
-    public void getCodeFromSms(){
-        System.out.println("Done");
+    public void getAndFillValidationCodes(String row, String value){
+        s.log("Method is started");
+
+        tokenMap = sql.getTokenMap(row, "%" + value + "%");
+        s.log(2, "SMS token: " + tokenMap.get("smsToken"));
+        s.log(2, "Email token: " + tokenMap.get("emailToken"));
+
+        s.log("fill tokens to the fields");
+        smsCode.sendKeys(tokenMap.get("smsToken").toString());
+        emailCode.sendKeys(tokenMap.get("emailToken").toString());
+        s.log("Method is finished");
+
     }
 
     public void getCodeFromEmail(){

@@ -143,10 +143,11 @@ public class Check {
         element = waitElements(elements, period);
         switch (element){
             case 0: s.log(3, "no PopUp is shown"); break;
-            case 1: s.log(3, "snackBar is shown with text: \"" + popUp.snackBar.getText() + "\""); break;
+            case 1: // s.log(3, "snackBar is shown with text: \"" + popUp.snackBar.getText() + "\"");
+                break;
             case 2:
                 s.log(4, "loader is shown with text: \"" + popUp.contentText.getText() + "\"");
-                if (waitElement(popUp.errorPic, 15, true)) {element = 3;}
+                if (waitElement(popUp.errorPic, 10, true)) {element = 3;}
                 break;
             case 3: s.log(3, "ERROR is shown with text: \"" + popUp.contentText.getText() + "\""); break;
             default: s.log(3, "default"); break;
