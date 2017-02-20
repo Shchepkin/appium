@@ -1,16 +1,11 @@
 package registration;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.By;
 import org.testng.Assert;
-import org.testng.Reporter;
 import org.testng.annotations.*;
 import pages.*;
 import utils.*;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class positive {
@@ -34,7 +29,7 @@ public class positive {
     private boolean result;
 
     private static final String name = "qwertyuiopqwertyuiop";
-    private static final String login = "qweqweqweqweqwe@i.ua";
+    private static final String login = "test.email.ajax@i.ua";
     private static final String pass = "qwe123";
     private static final String phone = "683669947";
     private static final String server = "Develop";
@@ -65,62 +60,44 @@ public class positive {
     public void C29030_New_user_registration_with_validation() {
         s.log("TEST IS STARTED");
 
+        s.log("start from Intro Page and click Registration button");
         introPage.setServer(server);
         introPage.registrationBtn.click();
 
-        s.log("wait for User Agreement Dialog and tap OK");
+        s.log("waiting for User Agreement Dialog and tap OK");
         Assert.assertTrue(check.waitElement(popUp.userAgreement, 30, true));
         nav.nextBtn.click();
 
         s.log("registration process");
         registrationPage.setUserPic(1);
         registrationPage.fillFields(name, login, pass, phone);
-        registrationPage.registrationBtn.click();
 
-        s.log("wait all PopUps");
-        switch (check.waitAllPopUp(15)){
-            case 0: break;
-            case 1: s.log(3, "try one more time for click registration button"); registrationPage.registrationBtn.click(); break;
-            case 2: s.log(3, "loader is shown, but without error"); break;
-            case 3: Assert.fail(popUp.contentText.getText()); break;
-            default: break;
-        }
+        check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5);
 
-        s.log("wait for Validation Code Page");
+        s.log("waiting for Validation Code Page");
         Assert.assertTrue(check.waitElement(validationCodePage.smsCode, 60, true));
 
         s.log("get and fill Validation Codes");
         validationCodePage.getAndFillValidationCodes("Phone", "%" + phone + "%");
         validationCodePage.okBtn.click();
 
-        s.log("wait for Welcome Page with dashboard link");
+        s.log("waiting for Welcome Page with dashboard link");
         Assert.assertTrue(check.waitElement(registrationPage.dashboard, 30, true));
 
         s.log("Welcome Page is shown, so go to the dashboard");
-        registrationPage.dashboard.click();
+        check.clickElementAndWaitingPopup(registrationPage.dashboard, 5);
 
-        s.log("wait all PopUps");
-        switch (check.waitAllPopUp(15)){
-            case 0:
-                s.log(3, "one more check for dashboard link ");
-                if(check.waitElement(registrationPage.dashboard, 10, true)) {
-                    registrationPage.dashboard.click();
-                }
-                break;
-            case 1: s.log(3, "try one more time to go to the dashboard"); registrationPage.dashboard.click(); break;
-            case 2: s.log(3, "loader is shown, but without error"); break;
-            case 3: Assert.fail(popUp.contentText.getText()); break;
-            default: break;
+        s.log("waiting for Pincode PopUp");
+        if(check.waitElement(popUp.cancelButton, 15, true)) {
+            s.log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
+            popUp.cancelButton.click();
         }
 
-
-        // need check for pin popup
-
-        Assert.assertTrue(check.waitElement(dashboardHeader.menuDrawer, 15, true));
+        Assert.assertTrue(check.waitElement(dashboardHeader.menuDrawer, 15, true), "Login failed!\n");
         s.log("TEST IS FINISHED");
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = false)
     public void C29047_Login_to_the_existing_account() {
         s.log("TEST IS STARTED");
 
@@ -130,6 +107,16 @@ public class positive {
         s.log("start from IntroPage");
         introPage.loginBtn.click();
         authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        if(check.waitElement(popUp.cancelButton, 15, true)) {
+            s.log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
+
+            expected = s.getLocalizeKeys().get("do_you_want_to_enable_passcode").toString();
+            actual = popUp.contentText.getText();
+            Assert.assertEquals(expected, actual, "Text on Pincode PopUp is wrong!");
+            popUp.cancelButton.click();
+        }
 
         s.log("check whether login was successfully");
         Assert.assertTrue(check.waitElement(dashboardHeader.menuDrawer, 60, true));

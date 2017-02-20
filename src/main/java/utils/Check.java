@@ -116,8 +116,6 @@ public class Check {
 
             for (WebElement el : elements) {
                 try {
-//                    WebDriverWait iWait = new WebDriverWait(driver, 0);
-//                    iWait.until(ExpectedConditions.visibilityOf(el));
                     s.log(2, "element " + el + " is shown with text: \"" + el.getText() + "\"");
                     result = true;
                     element = counter;
@@ -135,24 +133,34 @@ public class Check {
         return element;
     }
 
-    public int waitAllPopUp (int period){
+    public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period){
         s.log("Method is started");
+        result = false;
         WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin, popUp.errorPic};
 
-        s.log("waiting for: 1.snackBar  2.error  3.loadingWin");
-        element = waitElements(elements, period);
-        switch (element){
-            case 0: s.log(3, "no PopUp is shown"); break;
-            case 1: // s.log(3, "snackBar is shown with text: \"" + popUp.snackBar.getText() + "\"");
+        for (int i = 1; i < 5; i++) {
+            s.log(3, "click the element link, attempt #" +i);
+            elementForClick.click();
+
+            s.log("waiting for: 1.snackBar  2.error  3.loadingWin");
+            element = waitElements(elements, period);
+            switch (element){
+                case 0: s.log(3, "no PopUp is shown or we missed this moment"); break;
+                case 1: s.log(3, "snackBar is shown, the text was previously displayed"); break;
+                case 2:
+                    s.log(3, "loader is shown with text: \"" + popUp.contentText.getText() + "\", so wait for error message");
+                    if (!waitElement(popUp.errorPic, 15, true)) {s.log("loader is shown, but without error"); break;}
+                case 3: Assert.fail(popUp.contentText.getText()); break;
+                default: break;
+            }
+            if (!waitElement(elementForClick, 15, true)) {
+                s.log(3, "element for click is not shown now, maybe click was successfully!");
+                result = true;
                 break;
-            case 2:
-                s.log(4, "loader is shown with text: \"" + popUp.contentText.getText() + "\"");
-                if (waitElement(popUp.errorPic, 10, true)) {element = 3;}
-                break;
-            case 3: s.log(3, "ERROR is shown with text: \"" + popUp.contentText.getText() + "\""); break;
-            default: s.log(3, "default"); break;
+            }
+            s.log(3, "click element failed and it's shown again, so click it");
         }
-        return element;
+        return result;
     }
 
 }
