@@ -81,7 +81,7 @@ public class positive {
         switch (check.waitAllPopUp(15)){
             case 0: break;
             case 1: s.log(3, "try one more time for click registration button"); registrationPage.registrationBtn.click(); break;
-            case 2: break;
+            case 2: s.log(3, "loader is shown, but without error"); break;
             case 3: Assert.fail(popUp.contentText.getText()); break;
             default: break;
         }
@@ -89,30 +89,30 @@ public class positive {
         s.log("wait for Validation Code Page");
         Assert.assertTrue(check.waitElement(validationCodePage.smsCode, 60, true));
 
-// getToken methods and fill it to fields in other class ====================
-        tokenMap = sql.getTokenMap("Phone", "%" + phone + "%");
-        s.log(2, "SMS token: " + tokenMap.get("smsToken"));
-        s.log(2, "Email token: " + tokenMap.get("emailToken"));
-
-        s.log("fill tokens to the fields");
-        validationCodePage.smsCode.sendKeys(tokenMap.get("smsToken").toString());
-        validationCodePage.emailCode.sendKeys(tokenMap.get("emailToken").toString());
+        s.log("get and fill Validation Codes");
+        validationCodePage.getAndFillValidationCodes("Phone", "%" + phone + "%");
         validationCodePage.okBtn.click();
-//===========================================================================
-        s.log("check whether registration was successfully");
+
+        s.log("wait for Welcome Page with dashboard link");
         Assert.assertTrue(check.waitElement(registrationPage.dashboard, 30, true));
 
-        s.log("go to the dashboard");
+        s.log("Welcome Page is shown, so go to the dashboard");
         registrationPage.dashboard.click();
 
         s.log("wait all PopUps");
         switch (check.waitAllPopUp(15)){
-            case 0: break;
+            case 0:
+                s.log(3, "one more check for dashboard link ");
+                if(check.waitElement(registrationPage.dashboard, 10, true)) {
+                    registrationPage.dashboard.click();
+                }
+                break;
             case 1: s.log(3, "try one more time to go to the dashboard"); registrationPage.dashboard.click(); break;
-            case 2: break;
+            case 2: s.log(3, "loader is shown, but without error"); break;
             case 3: Assert.fail(popUp.contentText.getText()); break;
             default: break;
         }
+
 
         // need check for pin popup
 
@@ -123,9 +123,12 @@ public class positive {
     @Test(priority = 2, enabled = true)
     public void C29047_Login_to_the_existing_account() {
         s.log("TEST IS STARTED");
-        check.waitElement(dashboardHeader.menuDrawer, 5, true);
-        introPage.loginBtn.click();
 
+        s.log(3, "check if app already logged in");
+        Assert.assertTrue(!check.waitElement(dashboardHeader.menuDrawer, 5, true), "App already logged in!");
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("check whether login was successfully");
@@ -186,6 +189,7 @@ public class positive {
 
     @AfterMethod
     public void endSuit() {
+        s.log("close driver");
         driver.quit();
     }
 }
