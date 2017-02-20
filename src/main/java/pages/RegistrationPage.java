@@ -101,12 +101,13 @@ public class RegistrationPage {
 
         s.log("fill and confirm email with: \"" + email + "\"");
         emailField.sendKeys(email);
+        nav.swipeUp();
         emailConfirmField.sendKeys(email);
 
         s.log("fill phone with: \"" + phone + "\"");
         phoneField.sendKeys(phone);
 
-        s.log("fill nd confirm password with: \"" + password + "\"");
+        s.log("fill and confirm password with: \"" + password + "\"");
         nav.swipeUp();
         passwordField.sendKeys(password);
         nav.swipeUp();
