@@ -124,7 +124,7 @@ public class positive {
     public void C29047_Login_to_the_existing_account() {
         s.log("TEST IS STARTED");
 
-        s.log(3, "check if app already logged in");
+        s.log(3, "check if app already logged in ");
         Assert.assertTrue(!check.waitElement(dashboardHeader.menuDrawer, 5, true), "App already logged in!");
 
         s.log("start from IntroPage");
