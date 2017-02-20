@@ -95,14 +95,23 @@ public class RegistrationPage {
 
     public void fillFields(String name, String email, String password, String phone) {
         s.log("Method is started");
+
+        s.log("fill name with: \"" + name + "\"");
         nameField.sendKeys(name);
+
+        s.log("fill and confirm email with: \"" + email + "\"");
         emailField.sendKeys(email);
         emailConfirmField.sendKeys(email);
+
+        s.log("fill phone with: \"" + phone + "\"");
         phoneField.sendKeys(phone);
+
+        s.log("fill nd confirm password with: \"" + password + "\"");
         nav.swipeUp();
         passwordField.sendKeys(password);
         nav.swipeUp();
         passwordConfirmField.sendKeys(password);
+        s.log("Method is finished");
     }
 
     public void setUserPic(int numberOfPhoto) {
