@@ -101,7 +101,12 @@ public class positive {
 
         s.log("wait all PopUps");
         switch (check.waitAllPopUp(15)){
-            case 0: s.log(3, "one more check for dashboard link "); if(check.waitElement(registrationPage.dashboard, 10, true)) {registrationPage.dashboard.click();} break;
+            case 0:
+                s.log(3, "one more check for dashboard link ");
+                if(check.waitElement(registrationPage.dashboard, 10, true)) {
+                    registrationPage.dashboard.click();
+                }
+                break;
             case 1: s.log(3, "try one more time to go to the dashboard"); registrationPage.dashboard.click(); break;
             case 2: s.log(3, "loader is shown, but without error"); break;
             case 3: Assert.fail(popUp.contentText.getText()); break;
