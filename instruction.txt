@@ -15,10 +15,22 @@ node appium -a IP_ADDRESS -p PORT -cp CALLBACK_PORT -bp BOOTSTRAP_PORT
 
  After that we have to write IP_ADDRESS and PORT in testng.xml
 
-If you want to run not one class with node, you have to use "--session-override" flag as bellow
+If you want to run more then one class with node, you have to use "--session-override" flag as bellow
  node /usr/local/bin/appium -a 127.0.0.1 -p 1234 -cp 1234 -bp 2345 --session-override
 --------------------------------------------------------------------------------------------------------
  * 0123456789ABCDEF	    JiaYu       4.2.1
  * MTPB0252700596	    prestigio   4.4.2
  * SWIVR8YHDI7TYTS8	    lg          5.1
- */
+ * 81c6da4a7d63         Xiaomi R3S  6.0.1
+--------------------------------------------------------------------------------------------------------
+<= 2.7.9    capabilities.setCapability("appActivity", "com.ajaxsystems.activity.DashboardActivity");
+>= 2.8.0    capabilities.setCapability("appActivity", "com.ajaxsystems.ui.activity.LauncherActivity");
+--------------------------------------------------------------------------------------------------------
+how now package and launchable-activity
+installer@ajaxGod ~/Android/Sdk/build-tools/25.0.0 $ ./aapt dump badging ~/Android/AndroidApp/build.2.9.0.apk | grep "package"
+installer@ajaxGod ~/Android/Sdk/build-tools/25.0.0 $ ./aapt dump badging ~/Android/AndroidApp/build.2.9.0.apk | grep "launchable-activity"
+--------------------------------------------------------------------------------------------------------
+    private static final String url = "jdbc:mysql://dbcsamain.cczwem0pzosv.eu-west-1.rds.amazonaws.com:3306/debug_models_csa";
+    private static final String user = "testUserDeletion";
+    private static final String password = "d3l3T10n";
+
