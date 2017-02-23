@@ -89,6 +89,8 @@ public class Sql {
      */
     public ArrayList getSelect(String row, String value) {
         s.log("Method is started");
+        validationToken.clear();
+        selectList.clear();
 
         String query = "SELECT id,Role,Phone,ConfirmationToken,Login FROM csa_accounts WHERE " + row + " LIKE '%" + value + "%' ORDER BY id ASC";
 

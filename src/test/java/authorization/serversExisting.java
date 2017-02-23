@@ -1,5 +1,6 @@
 package authorization;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.Reporter;
 import org.testng.annotations.*;
@@ -14,7 +15,7 @@ import utils.Setup;
  */
 
 public class serversExisting {
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
     private Check assertion;

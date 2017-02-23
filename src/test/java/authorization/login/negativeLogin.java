@@ -1,5 +1,6 @@
 package authorization.login;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 
 public class negativeLogin {
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
     private Check check;

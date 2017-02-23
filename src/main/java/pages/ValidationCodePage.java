@@ -63,7 +63,7 @@ public class ValidationCodePage {
     public void getAndFillValidationCodes(String row, String value){
         s.log("Method is started");
 
-        tokenMap = sql.getTokenMap(row, "%" + value + "%");
+        tokenMap = sql.getTokenMap(row, value);
         s.log(2, "SMS token: " + tokenMap.get("smsToken"));
         s.log(2, "Email token: " + tokenMap.get("emailToken"));
 

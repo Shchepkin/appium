@@ -1,6 +1,7 @@
 package utils;
 
 import com.google.gson.*;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.CapabilityType;
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Setup {
 
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     private Path path;
     private String deviceName_, UDID_, platformVersion_, URL_, appPath_, jsonString, collection, locale_;
 
@@ -39,7 +40,7 @@ public class Setup {
         this.locale_ = locale_;
     }
 
-    public AndroidDriver getDriver() {
+    public AppiumDriver getDriver() {
         log("Method is started");
         try {
             log(2, "get .apk file");

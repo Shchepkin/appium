@@ -1,5 +1,6 @@
 package utils;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -11,13 +12,13 @@ import java.util.Date;
 
 public class ScreenShot {
 
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     private String path_screenshot = "screenshot";
     private Date currentDate = new Date();
     private String pathOfScreenshot;
     private Setup s = new Setup();
 
-    public ScreenShot(AndroidDriver driver) {
+    public ScreenShot(AppiumDriver driver) {
         this.driver = driver;
     }
 

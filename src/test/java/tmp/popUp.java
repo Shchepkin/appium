@@ -1,5 +1,6 @@
 package tmp;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -19,7 +20,7 @@ import utils.Setup;
  */
 
 public class popUp {
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
     private PopUp popUp;

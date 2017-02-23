@@ -1,6 +1,8 @@
 package registration;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.*;
@@ -9,30 +11,34 @@ import utils.*;
 import java.util.Map;
 
 public class positive {
-    private AndroidDriver driver;
-    private IntroPage introPage;
-    private AuthorizationPage authorizationPage;
-    private RegistrationPage registrationPage;
-    private DashboardHeader dashboardHeader;
-    private MenuMainPage menuPage;
-    private MenuAccountPage accountPage;
+    private AppiumDriver driver;
+    private Map tokenMap;
     private Check check;
-    private AddImagePage addImagePage;
-    private ValidationCodePage validationCodePage;
-    private Navigation nav;
     private Email email;
     private PopUp popUp;
-    private Map tokenMap;
+    private IntroPage introPage;
+    private Dashboard dashboard;
+    private Navigation nav;
+    private MenuMainPage menuPage;
+    private AddImagePage addImagePage;
+    private DashboardHeader dashboardHeader;
+    private MenuAccountPage accountPage;
+    private RegistrationPage registrationPage;
+    private AuthorizationPage authorizationPage;
+    private ValidationCodePage validationCodePage;
+    private String expected, actual;
+    private WebElement[] elements;
+    private boolean result;
     private Setup s = new Setup();
     private Sql sql = new Sql();
-    private String expected, actual;
-    private boolean result;
 
-    private static final String name = "qwertyuiopqwertyuiop";
-    private static final String login = "test.email.ajax@i.ua";
-    private static final String pass = "qwe123";
-    private static final String phone = "683669947";
-    private static final String server = "Develop";
+//    private static final String name = "qwertyuiopqwertyuiop";
+//    private static final String login = "test.email.ajax@i.ua";
+//    private static final String pass = "qwe123";
+//    private static final String phone = "683669947";
+//    private static final String server = "Develop";
+
+    private String name, login, pass, phone, server;
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeMethod
@@ -47,6 +53,7 @@ public class positive {
         popUp = new PopUp(driver);
         menuPage = new MenuMainPage(driver);
         introPage = new IntroPage(driver);
+        dashboard = new Dashboard(driver);
         accountPage = new MenuAccountPage(driver);
         addImagePage = new AddImagePage(driver);
         dashboardHeader = new DashboardHeader(driver);
@@ -126,16 +133,34 @@ public class positive {
     public void C29051_Add_new_Hub_manually  () {
         s.log("TEST IS STARTED");
 
+        login = "ajax1@i.ua";
+        pass = "qwe";
+        server = "Develop";
+        String hubName = "1495";
+        String hubKey = "00001495DDFB55691000";
+
         s.log("start from IntroPage");
         introPage.loginBtn.click();
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("waiting for Pincode PopUp");
-        if(check.waitElement(popUp.cancelButton, 15, true)) {
-            s.log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
-            popUp.cancelButton.click();
-        }
+//        if(check.waitElement(popUp.cancelButton, 15, true)) {
+//            s.log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
+//            popUp.cancelButton.click();
+//        }
+        elements = new WebElement[]{dashboardHeader.menuDrawer, popUp.cancelButton};
+        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
 
+        dashboard.plusBtn.click();
+        nav.nextBtn.click();
+        dashboard.hubName.sendKeys(hubName);
+        dashboard.hubKey.sendKeys(hubKey);
+        dashboard.addHubBtn.click();
+
+        elements = new WebElement[]{dashboardHeader.hubImage, popUp.cancelButton};
+        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
+        Assert.assertTrue(check.waitElement(dashboardHeader.hubImage, 15, true));
+        s.log("hub successfully added!");
         s.log("TEST IS FINISHED");
     }
 
@@ -184,15 +209,62 @@ public class positive {
         dashboardHeader.menuDrawer.click();
         menuPage.accountBtn.click();
         accountPage.logoutBtn.click();
-        check.isElementDisplayed(introPage.loginBtn);
+        check.waitElement(introPage.registrationBtn, 20, true);
     }
 
+    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
+    @Test(priority = 1, enabled = false)
+    public void reg_100_users(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_) {
+        s.log("TEST IS STARTED");
+        pass = "qwe123";
+        server = "Develop";
 
-//    public void waitElement (WebElement element) {
-//        WebDriverWait iWait = new WebDriverWait (driver, 60);
-//        iWait.until(ExpectedConditions.visibilityOf(element));
-//    }
+        s.log("start from Intro Page and click Registration button");
 
+        for (int i = 42; i <= 100; i++) {
+            if (i > 42){
+                setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+            }
+            introPage.setServer(server);
+            s.log(3, "Registration user #" + i);
+
+            s.log(3, "Click to the Registration button");
+            introPage.registrationBtn.click();
+
+            s.log("waiting for User Agreement Dialog and tap OK");
+            check.waitElement(nav.nextBtn, 5, true);
+            nav.nextBtn.click();
+
+            s.log("registration process");
+            name = "test.user." + i;
+            login = "test.email.ajax" + i + "@i.ua";
+
+            if (i < 10) {phone = "68000000" + i;}
+            else if (i >= 10 && i < 100) {phone = "6800000" + i;}
+            else if (i >= 100 && i < 1000) {phone = "680000" + i;}
+            else if (i >= 1000 && i < 10000) {phone = "68000" + i;}
+            else if (i >= 10000 && i < 100000) {phone = "6800" + i;}
+            else if (i >= 100000 && i < 1000000) {phone = "680" + i;}
+            else {phone = "68" + i;}
+
+            registrationPage.fillFields(name, login, pass, phone);
+            check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5);
+
+            s.log("waiting for Validation Code Page");
+            check.waitElement(validationCodePage.smsCode, 30, true);
+
+            s.log("get and fill Validation Codes");
+            validationCodePage.getAndFillValidationCodes("Login", login);
+            validationCodePage.okBtn.click();
+
+            s.log("waiting for Welcome Page with dashboard link");
+            check.waitElement(registrationPage.dashboard, 30, true);
+
+            s.log("close driver");
+            driver.quit();
+        }
+        s.log("TEST IS FINISHED");
+    }
     @AfterMethod
     public void endSuit() {
         s.log("close driver");

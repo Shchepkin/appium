@@ -1,7 +1,7 @@
 package utils;
 
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.TimeoutException;
-import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,18 +12,18 @@ import java.io.IOException;
 
 
 public class Check {
+    private AppiumDriver driver;
     private Setup s = new Setup();
-    private AndroidDriver driver;
     private ScreenShot screenShot;
     private PopUp popUp;
     private int element = 0;
 
     public boolean result;
 
-    public Check(AndroidDriver driver) {
+    public Check(AppiumDriver driver) {
         this.driver = driver;
-        this.screenShot = new ScreenShot(driver);
         this.popUp = new PopUp(driver);
+        this.screenShot = new ScreenShot(driver);
     }
 
     public void isElementDisplayed(WebElement element) {
@@ -55,7 +55,7 @@ public class Check {
     /**
         * @param element           - element which we want to wait
         * @param timer             - how long time we want to wait for the element (in seconds)
-        * @param makeScreenShot    - make screenshot if method was failed (true)
+        * @param makeScreenShot    - make screenshot if element is not found (true)
         * @return                  - result true or false about successfully execute this method
 
          example:
@@ -103,7 +103,7 @@ public class Check {
       example:
         waitElements(new WebElement[]{element1, element2, element3}, 5)
       or
-        WebElement elements = new WebElement[]{element1, element2, element3};
+        WebElement[] elements = new WebElement[]{element1, element2, element3};
         waitElements(elements, 5));
      */
     public int waitElements (WebElement[] elements, int period) {
@@ -145,20 +145,20 @@ public class Check {
             s.log("waiting for: 1.snackBar  2.error  3.loadingWin");
             element = waitElements(elements, period);
             switch (element){
-                case 0: s.log(3, "no PopUp is shown or we missed this moment"); break;
+                case 0: s.log(3, "no PopUp is shown or this moment is missed"); break;
                 case 1: s.log(3, "snackBar is shown, the text was previously displayed"); break;
                 case 2:
                     s.log(3, "loader is shown with text: \"" + popUp.contentText.getText() + "\", so wait for error message");
-                    if (!waitElement(popUp.errorPic, 15, true)) {s.log("loader is shown, but without error"); break;}
+                    if (!waitElement(popUp.errorPic, 10, true)) {s.log("loader is shown, but without error"); break;}
                 case 3: Assert.fail(popUp.contentText.getText()); break;
                 default: break;
             }
-            if (!waitElement(elementForClick, 15, true)) {
+            if (!waitElement(elementForClick, 5, true)) {
                 s.log(3, "element for click is not shown now, maybe click was successfully!");
                 result = true;
                 break;
             }
-            s.log(3, "click element failed and it's shown again, so click it");
+            s.log(3, "previous click element is failed and it's shown again, so click it one more time");
         }
         return result;
     }

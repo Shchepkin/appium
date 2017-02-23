@@ -6,6 +6,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Parameters;
+import utils.Check;
 import utils.Navigation;
 import utils.Setup;
 
@@ -15,6 +16,7 @@ public class AuthorizationPage {
     public final AppiumDriver driver;
     private Setup s = new Setup();
     private Navigation nav;
+    private Check check;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
     public WebElement backBtn;
@@ -85,6 +87,7 @@ public class AuthorizationPage {
     public AuthorizationPage(AppiumDriver driver) {
         this.driver = driver;
         this.nav = new Navigation(driver);
+        this.check = new Check(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -107,16 +110,18 @@ public class AuthorizationPage {
     public void loginToTheServer(String login, String password, String server) {
         s.log("Method is started");
 
-        s.log(2, "fill the login field with data: [" + login + "]");
+        s.log(2, "fill the login field with data: \"" + login + "\"");
         loginField.sendKeys(login);
 
-        s.log(2, "fill the password field with data: [" + password + "]");
+        s.log(2, "fill the password field with data: \"" + password + "\"");
         passwordField.sendKeys(password);
 
         chooseServer(server);
 
         s.log(2, "click login button");
         loginBtn.click();
+
+
 
         s.log("Method is finished");
     }
@@ -125,7 +130,7 @@ public class AuthorizationPage {
     public void chooseServer(String server) {
         s.log("Method is started");
 
-        s.log("select server type: [" + server + "]");
+        s.log("select server type: \"" + server + "\"");
         nav.longTapButton(loginBtn, 2);
 
         switch (server) {

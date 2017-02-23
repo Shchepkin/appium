@@ -4,7 +4,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -13,12 +12,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
-import java.io.IOException;
-
 
 public class PopUp {
     private Setup s = new Setup();
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     public boolean result = false;
 
 //================================ Loading ===========================================
@@ -98,7 +95,7 @@ public class PopUp {
 
     }
 
-    public PopUp(AndroidDriver driver) {
+    public PopUp(AppiumDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }

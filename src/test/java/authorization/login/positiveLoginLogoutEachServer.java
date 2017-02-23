@@ -1,5 +1,6 @@
 package authorization.login;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.Reporter;
 import org.testng.annotations.*;
@@ -8,7 +9,7 @@ import utils.Check;
 import utils.Setup;
 
 public class positiveLoginLogoutEachServer {
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
     private DashboardHeader dashboardHeader;
