@@ -1,5 +1,6 @@
 package authorization.forgotPassword;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -13,7 +14,7 @@ import utils.Check;
 import utils.Setup;
 
 public class pageElementExisting {
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
     private ForgotPasswordPage forgotPasswordPage;

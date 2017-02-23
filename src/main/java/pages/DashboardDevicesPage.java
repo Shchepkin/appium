@@ -12,8 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 public class DashboardDevicesPage {
     public final AppiumDriver driver;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/mail")
-    public WebElement emailField;
+    @AndroidFindBy(id = "com.ajaxsystems:id/plus")
+    public WebElement plusBtn;
 
     public DashboardDevicesPage(AppiumDriver driver) {
         this.driver = driver;

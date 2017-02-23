@@ -1,5 +1,6 @@
 package introPage;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 
 import org.testng.Reporter;
@@ -17,7 +18,7 @@ public class linksLeadsToCorrectPages {
      * 3. Verify the Registration button leads to a Registration page
      */
 
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
     private RegistrationPage registrationPage;

@@ -1,5 +1,6 @@
 package authorization.login;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
@@ -11,7 +12,7 @@ import utils.Setup;
 
 
 public class positiveLoginWithCheckingFields {
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     private IntroPage introPage;
     private RegistrationPage registrationPage;
     private ValidationCodePage validationCodePage;

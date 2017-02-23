@@ -1,5 +1,6 @@
 package introPage;
 
+import io.appium.java_client.AppiumDriver;
 import org.testng.Reporter;
 import utils.Check;
 import pages.IntroPage;
@@ -11,7 +12,7 @@ import utils.Setup;
  * This test asserts whether the all elements of the Intro Page is exist
  */
 public class pageElementExisting {
-    private AndroidDriver driver;
+    private AppiumDriver driver;
     private IntroPage introPage;
     private Check assertion;
 
