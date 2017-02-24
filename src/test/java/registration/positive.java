@@ -8,6 +8,7 @@ import org.testng.annotations.*;
 import pages.*;
 import utils.*;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class positive {
@@ -164,6 +165,53 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
+// C29109 =================================================================================================
+    @Test(priority = 1, enabled = false)
+    public void C29109_Add_new_room  () throws IOException {
+        s.log("TEST IS STARTED");
+
+        login = "ajax1@i.ua";
+        pass = "qwe";
+        server = "Develop";
+        name = "room_number_";
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        elements = new WebElement[]{dashboardHeader.menuDrawer, popUp.cancelButton};
+        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
+
+        s.log("dashboard.footerRooms.click();");
+        dashboard.footerRooms.click();
+
+        s.log("dashboardRoomsPage.addRoomBtn.click();");
+        dashboardRoomsPage.addRoomBtn.click();
+
+        s.log("dashboard.nameField.sendKeys(name + \"1\"); " + name + "1");
+        dashboard.nameField.sendKeys(name + "1");
+
+        driver.hideKeyboard();
+
+//        dashboard.addBtn.click();
+//        addImagePage.thumbnail.get(3).click();
+//        addImagePage.nextBtn.click();
+
+        s.log("dashboard.nextBtn.click();");
+        dashboard.saveBtn.click();
+
+        s.log("waiting for Pincode PopUp");
+        elements = new WebElement[]{dashboard.roomName, popUp.cancelButton};
+        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
+
+        s.log("room name: " + name + "1");
+        Assert.assertTrue(dashboard.roomName.getText().equals(name + "1"));
+        ScreenShot screenShot = new ScreenShot(driver);
+        screenShot.getScreenShot();
+        s.log("room successfully added!");
+        s.log("TEST IS FINISHED");
+    }
 
     @Test(priority = 2, enabled = false)
     public void Login_to_the_not_validated_account() {
