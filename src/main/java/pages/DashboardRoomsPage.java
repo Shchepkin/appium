@@ -12,8 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 public class DashboardRoomsPage {
     public final AppiumDriver driver;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/mail")
-    public WebElement emailField;
+    @AndroidFindBy(id = "com.ajaxsystems:id/add")
+    public WebElement addRoomBtn;
 
     public DashboardRoomsPage(AppiumDriver driver) {
         this.driver = driver;

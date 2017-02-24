@@ -1,7 +1,7 @@
 package registration;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.MobileElement;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -27,6 +27,7 @@ public class positive {
     private RegistrationPage registrationPage;
     private AuthorizationPage authorizationPage;
     private ValidationCodePage validationCodePage;
+    private DashboardRoomsPage dashboardRoomsPage;
     private String expected, actual;
     private WebElement[] elements;
     private boolean result;
@@ -61,9 +62,10 @@ public class positive {
         registrationPage = new RegistrationPage(driver);
         authorizationPage = new AuthorizationPage(driver);
         validationCodePage = new ValidationCodePage(driver);
+        dashboardRoomsPage = new DashboardRoomsPage(driver);
     }
 
-// C29030 =================================================================================================
+    // C29030 =================================================================================================
     @Test(priority = 1, enabled = false)
     public void C29030_New_user_registration_with_validation() {
         s.log("TEST IS STARTED");
@@ -105,10 +107,13 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-// C29047 =================================================================================================
+    // C29047 =================================================================================================
     @Test(priority = 2, enabled = false)
     public void C29047_Login_to_the_existing_account() {
         s.log("TEST IS STARTED");
+        login = "ajax1@i.ua";
+        pass = "qwe";
+        server = "Develop";
 
         s.log("start from IntroPage");
         introPage.loginBtn.click();
@@ -129,8 +134,8 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-// C29051 =================================================================================================
-    @Test(priority = 1, enabled = true)
+    // C29051 =================================================================================================
+    @Test(priority = 1, enabled = false)
     public void C29051_Add_new_Hub_manually  () {
         s.log("TEST IS STARTED");
 
@@ -145,18 +150,15 @@ public class positive {
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("waiting for Pincode PopUp");
-//        if(check.waitElement(popUp.cancelButton, 15, true)) {
-//            s.log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
-//            popUp.cancelButton.click();
-//        }
+
         elements = new WebElement[]{dashboardHeader.menuDrawer, popUp.cancelButton};
         if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
 
         dashboard.plusBtn.click();
         nav.nextBtn.click();
-        dashboard.hubName.sendKeys(hubName);
+        dashboard.nameField.sendKeys(hubName);
         dashboard.hubKey.sendKeys(hubKey);
-        dashboard.addHubBtn.click();
+        dashboard.addBtn.click();
 
         elements = new WebElement[]{dashboardHeader.hubImage, popUp.cancelButton};
         if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
@@ -165,8 +167,8 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-// C29109 =================================================================================================
-    @Test(priority = 1, enabled = false)
+    // C29109 =================================================================================================
+    @Test(priority = 1, enabled = true)
     public void C29109_Add_new_room  () throws IOException {
         s.log("TEST IS STARTED");
 
@@ -212,6 +214,7 @@ public class positive {
         s.log("room successfully added!");
         s.log("TEST IS FINISHED");
     }
+
 
     @Test(priority = 2, enabled = false)
     public void Login_to_the_not_validated_account() {
