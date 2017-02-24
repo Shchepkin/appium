@@ -119,7 +119,7 @@ public class RegistrationPage {
         s.log("Method is started");
         userPic.click();
         addImagePage.thumbnail.get(2 + numberOfPhoto).click();
-        addImagePage.saveBtn.click();
+        addImagePage.nextBtn.click();
         s.log("Method is finished");
     }
 

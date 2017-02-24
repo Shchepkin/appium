@@ -1,6 +1,8 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
@@ -32,12 +34,6 @@ public class AuthorizationPage {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/forgot")
     public WebElement forgotPasswordBtn;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/snackbar_text")
-    public WebElement snackBar;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/message")
-    public WebElement toast;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
     public WebElement dialogMessage;
@@ -97,10 +93,11 @@ public class AuthorizationPage {
 
         s.log(2, "fill the login field with data: [" + login + "]");
         loginField.sendKeys(login);
+//        ((MobileElement)loginField).setValue(login);
 
         s.log(2, "fill the password field with data: [" + password + "]");
         passwordField.sendKeys(password);
-
+//        ((MobileElement)passwordField).setValue(password);
         s.log(2, "click login button");
         loginBtn.click();
 
@@ -108,17 +105,20 @@ public class AuthorizationPage {
     }
 
     public void loginToTheServer(String login, String password, String server) {
+
         s.log("Method is started");
 
         s.log(2, "fill the login field with data: \"" + login + "\"");
         loginField.sendKeys(login);
+//        ((MobileElement)loginField).setValue(login);
 
         s.log(2, "fill the password field with data: \"" + password + "\"");
         passwordField.sendKeys(password);
-
+//        ((MobileElement)passwordField).setValue(password);
         chooseServer(server);
 
         s.log(2, "click login button");
+//        driver.tap(1, loginBtn,1);
         loginBtn.click();
 
 

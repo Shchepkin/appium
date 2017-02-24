@@ -36,7 +36,9 @@ public class popUp {
         s.log("Method is started");
         String query = "DELETE FROM csa_accounts WHERE Login LIKE '%" + locale_ + "%'";
         s.log(query);
-        System.exit(0);
+
+//        System.exit(0);
+
         Setup s = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
         driver = s.getDriver();
 
@@ -81,7 +83,7 @@ public class popUp {
     }
 
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void sql(String locale_) {
         s.log(1,"Method is started");
         String query = "DELETE FROM csa_accounts WHERE Login LIKE '%" + locale_ + "%'";
@@ -89,7 +91,7 @@ public class popUp {
         s.log(1,"Method is finished");
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void Check() {
         s.log(1,"Method is started");
         authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Release");

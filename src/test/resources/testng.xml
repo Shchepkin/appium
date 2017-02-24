@@ -15,7 +15,7 @@
         <parameter name="platformVersion_" value="4.2.2"/>
         <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
         <classes>
-            <class name="registration.positive"/>
+            <class name="tmp.popUp"/>
             <!--<class name="tmp.testSQL"/>-->
         </classes>
     </test>
