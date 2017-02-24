@@ -1,6 +1,7 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
@@ -119,7 +120,7 @@ public class RegistrationPage {
         s.log("Method is started");
         userPic.click();
         addImagePage.thumbnail.get(2 + numberOfPhoto).click();
-        addImagePage.saveBtn.click();
+        addImagePage.nextBtn.click();
         s.log("Method is finished");
     }
 
