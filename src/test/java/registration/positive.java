@@ -235,6 +235,17 @@ public class positive {
         s.log("tap the Room Page button in the footer");
         dashboard.footerRooms.click();
 
+        s.log("add Room without image");
+        dashboardRoomsPage.addRoom("Without image", 0);
+
+        s.log("add Room with image from new popup gallery");
+        dashboardRoomsPage.addRoom("Gallery image", 1);
+
+        s.log("add Room with image from camera");
+        dashboardRoomsPage.addRoom("Camera image", -2);
+
+
+
         for (int i = 0; i < 3; i++) {
             dashboardRoomsPage.addRoom(name + i, i);
         }
