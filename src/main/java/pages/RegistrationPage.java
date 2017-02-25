@@ -118,11 +118,28 @@ public class RegistrationPage {
         s.log("Method is finished");
     }
 
-    public void setUserPic(int numberOfPhoto) {
+    public void setUserPic(int imageNumber) {
         s.log("Method is started");
         userPic.click();
-        addImagePage.thumbnail.get(2 + numberOfPhoto).click();
-        addImagePage.nextBtn.click();
+        addImagePage.setImageFromGallery(imageNumber);
+        s.log("Method is finished");
+    }
+
+    public void setUserPic(int type, int imageNumber) {
+        s.log("Method is started");
+
+        switch (type){
+            case 1: s.log("add image from camera");
+                userPic.click();
+                addImagePage.setImageFromCamera();
+                break;
+            case 2: s.log("add image from gallery");
+                userPic.click();
+                addImagePage.setImageFromGallery(imageNumber);
+                break;
+            default: s.log("without image");
+                break;
+        }
         s.log("Method is finished");
     }
 
