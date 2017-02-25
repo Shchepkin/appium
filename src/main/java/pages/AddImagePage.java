@@ -31,7 +31,7 @@ public class AddImagePage {
     public WebElement backBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
-    public WebElement saveBtn;
+    public WebElement nextBtn;
 
     public AddImagePage(AppiumDriver driver) {
         this.driver = driver;

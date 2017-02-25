@@ -1,13 +1,14 @@
 package registration;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.MobileElement;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.*;
 import utils.*;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class positive {
@@ -26,6 +27,7 @@ public class positive {
     private RegistrationPage registrationPage;
     private AuthorizationPage authorizationPage;
     private ValidationCodePage validationCodePage;
+    private DashboardRoomsPage dashboardRoomsPage;
     private String expected, actual;
     private WebElement[] elements;
     private boolean result;
@@ -60,9 +62,10 @@ public class positive {
         registrationPage = new RegistrationPage(driver);
         authorizationPage = new AuthorizationPage(driver);
         validationCodePage = new ValidationCodePage(driver);
+        dashboardRoomsPage = new DashboardRoomsPage(driver);
     }
 
-// C29030 =================================================================================================
+    // C29030 =================================================================================================
     @Test(priority = 1, enabled = false)
     public void C29030_New_user_registration_with_validation() {
         s.log("TEST IS STARTED");
@@ -104,10 +107,13 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-// C29047 =================================================================================================
+    // C29047 =================================================================================================
     @Test(priority = 2, enabled = false)
     public void C29047_Login_to_the_existing_account() {
         s.log("TEST IS STARTED");
+        login = "ajax1@i.ua";
+        pass = "qwe";
+        server = "Develop";
 
         s.log("start from IntroPage");
         introPage.loginBtn.click();
@@ -128,8 +134,8 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-// C29051 =================================================================================================
-    @Test(priority = 1, enabled = true)
+    // C29051 =================================================================================================
+    @Test(priority = 1, enabled = false)
     public void C29051_Add_new_Hub_manually  () {
         s.log("TEST IS STARTED");
 
@@ -144,18 +150,15 @@ public class positive {
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("waiting for Pincode PopUp");
-//        if(check.waitElement(popUp.cancelButton, 15, true)) {
-//            s.log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
-//            popUp.cancelButton.click();
-//        }
+
         elements = new WebElement[]{dashboardHeader.menuDrawer, popUp.cancelButton};
         if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
 
         dashboard.plusBtn.click();
         nav.nextBtn.click();
-        dashboard.hubName.sendKeys(hubName);
+        dashboard.nameField.sendKeys(hubName);
         dashboard.hubKey.sendKeys(hubKey);
-        dashboard.addHubBtn.click();
+        dashboard.addBtn.click();
 
         elements = new WebElement[]{dashboardHeader.hubImage, popUp.cancelButton};
         if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
@@ -163,6 +166,82 @@ public class positive {
         s.log("hub successfully added!");
         s.log("TEST IS FINISHED");
     }
+
+    // C29109 =================================================================================================
+    @Test(priority = 1, enabled = false)
+    public void C29109_Add_new_room  () throws IOException {
+        s.log("TEST IS STARTED");
+
+        login = "ajax1@i.ua";
+        pass = "qwe";
+        server = "Develop";
+        name = "room_number_";
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+//        elements = new WebElement[]{dashboardHeader.menuDrawer, popUp.cancelButton};
+//        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
+
+        s.log("dashboard.footerRooms.click();");
+        dashboard.footerRooms.click();
+
+        s.log("dashboardRoomsPage.addRoomBtn.click();");
+//        dashboardRoomsPage.addRoomBtn.click();
+
+        s.log("dashboard.nameField.sendKeys(name + \"1\"); " + name + "1");
+        dashboard.nameField.sendKeys(name + "1");
+
+        driver.hideKeyboard();
+
+//        dashboard.addBtn.click();
+//        addImagePage.thumbnail.get(3).click();
+//        addImagePage.nextBtn.click();
+
+        s.log("dashboard.nextBtn.click();");
+        dashboard.saveBtn.click();
+
+        s.log("waiting for Pincode PopUp");
+        elements = new WebElement[]{dashboard.roomName, popUp.cancelButton};
+        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
+
+        s.log("room name: " + name + "1");
+        Assert.assertTrue(dashboard.roomName.getText().equals(name + "1"));
+        ScreenShot screenShot = new ScreenShot(driver);
+        screenShot.getScreenShot();
+        s.log("room successfully added!");
+        s.log("TEST IS FINISHED");
+    }
+
+
+    @Test(priority = 1, enabled = true)
+    public void TestAddRoom() {
+        s.log("TEST IS STARTED");
+        pass = "qwe123";
+        name = "room_number_";
+        login = "ajax1@i.ua";
+        server = "Production";
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+
+        s.log("tap the Room Page button in the footer");
+        dashboard.footerRooms.click();
+
+        for (int i = 0; i < 3; i++) {
+            dashboardRoomsPage.addRoom(name + i, i);
+        }
+
+        s.log("TEST IS FINISHED");
+    }
+
 
 
     @Test(priority = 2, enabled = false)
