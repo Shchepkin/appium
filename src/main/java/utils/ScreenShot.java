@@ -22,26 +22,31 @@ public class ScreenShot {
         this.driver = driver;
     }
 
-    public void getScreenShot() throws IOException{
-        s.log("Method is started");
-        // Create formatted date and time for folders and filenames
-        SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd");
-        SimpleDateFormat time = new SimpleDateFormat("HHmmss");
+    public void getScreenShot(){
+        try {
+            s.log("Method is started");
+            // Create formatted date and time for folders and filenames
+            SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd");
+            SimpleDateFormat time = new SimpleDateFormat("HHmmss");
 
-        // Make screenshot
-        File srcFile = driver.getScreenshotAs(OutputType.FILE);
+            // Make screenshot
+            File srcFile = driver.getScreenshotAs(OutputType.FILE);
 
-        // Creating folder and filename for screenshot
-        String folder = path_screenshot + "/" + date.format(currentDate);
-        String filename = date.format(currentDate) + "_" + time.format(currentDate) + ".png";
-        File targetFile = new File(folder + "/" + filename);
+            // Creating folder and filename for screenshot
+            String folder = path_screenshot + "/" + date.format(currentDate);
+            String filename = date.format(currentDate) + "_" + time.format(currentDate) + ".png";
+            File targetFile = new File(folder + "/" + filename);
 
-        // Move screenshot to the target folder
-        FileUtils.copyFile(srcFile, targetFile);
+            // Move screenshot to the target folder
+            FileUtils.copyFile(srcFile, targetFile);
 
-        pathOfScreenshot = targetFile.getAbsolutePath();
-        s.log("Path to screenshot: " + pathOfScreenshot);
-        s.log("Method is finished");
+            pathOfScreenshot = targetFile.getAbsolutePath();
+            s.log("Path to screenshot: " + pathOfScreenshot);
+            s.log("Method is finished");
+        }
+        catch (IOException e1) {
+            s.log(4, "IOException:\n\n" + e1 + "\n");
+        }
     }
 
 }

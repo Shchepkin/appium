@@ -168,7 +168,7 @@ public class positive {
     }
 
     // C29109 =================================================================================================
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void C29109_Add_new_room  () throws IOException {
         s.log("TEST IS STARTED");
 
@@ -182,14 +182,15 @@ public class positive {
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("waiting for Pincode PopUp");
-        elements = new WebElement[]{dashboardHeader.menuDrawer, popUp.cancelButton};
-        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+//        elements = new WebElement[]{dashboardHeader.menuDrawer, popUp.cancelButton};
+//        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
 
         s.log("dashboard.footerRooms.click();");
         dashboard.footerRooms.click();
 
         s.log("dashboardRoomsPage.addRoomBtn.click();");
-        dashboardRoomsPage.addRoomBtn.click();
+//        dashboardRoomsPage.addRoomBtn.click();
 
         s.log("dashboard.nameField.sendKeys(name + \"1\"); " + name + "1");
         dashboard.nameField.sendKeys(name + "1");
@@ -214,6 +215,33 @@ public class positive {
         s.log("room successfully added!");
         s.log("TEST IS FINISHED");
     }
+
+
+    @Test(priority = 1, enabled = true)
+    public void TestAddRoom() {
+        s.log("TEST IS STARTED");
+        pass = "qwe123";
+        name = "room_number_";
+        login = "ajax1@i.ua";
+        server = "Production";
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+
+        s.log("tap the Room Page button in the footer");
+        dashboard.footerRooms.click();
+
+        for (int i = 0; i < 3; i++) {
+            dashboardRoomsPage.addRoom(name + i, i);
+        }
+
+        s.log("TEST IS FINISHED");
+    }
+
 
 
     @Test(priority = 2, enabled = false)
