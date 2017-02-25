@@ -1,7 +1,6 @@
 package registration;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -27,7 +26,7 @@ public class positive {
     private RegistrationPage registrationPage;
     private AuthorizationPage authorizationPage;
     private ValidationCodePage validationCodePage;
-    private DashboardRoomsPage dashboardRoomsPage;
+    private DashboardRoomsPage roomsPage;
     private String expected, actual;
     private WebElement[] elements;
     private boolean result;
@@ -62,7 +61,7 @@ public class positive {
         registrationPage = new RegistrationPage(driver);
         authorizationPage = new AuthorizationPage(driver);
         validationCodePage = new ValidationCodePage(driver);
-        dashboardRoomsPage = new DashboardRoomsPage(driver);
+        roomsPage = new DashboardRoomsPage(driver);
     }
 
     // C29030 =================================================================================================
@@ -168,57 +167,8 @@ public class positive {
     }
 
     // C29109 =================================================================================================
-    @Test(priority = 1, enabled = false)
-    public void C29109_Add_new_room  () throws IOException {
-        s.log("TEST IS STARTED");
-
-        login = "ajax1@i.ua";
-        pass = "qwe";
-        server = "Develop";
-        name = "room_number_";
-
-        s.log("start from IntroPage");
-        introPage.loginBtn.click();
-        authorizationPage.loginToTheServer(login, pass, server);
-
-        s.log("waiting for Pincode PopUp");
-        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
-//        elements = new WebElement[]{dashboardHeader.menuDrawer, popUp.cancelButton};
-//        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
-
-        s.log("dashboard.footerRooms.click();");
-        dashboard.footerRooms.click();
-
-        s.log("dashboardRoomsPage.addRoomBtn.click();");
-//        dashboardRoomsPage.addRoomBtn.click();
-
-        s.log("dashboard.nameField.sendKeys(name + \"1\"); " + name + "1");
-        dashboard.nameField.sendKeys(name + "1");
-
-        driver.hideKeyboard();
-
-//        dashboard.addBtn.click();
-//        addImagePage.thumbnail.get(3).click();
-//        addImagePage.nextBtn.click();
-
-        s.log("dashboard.nextBtn.click();");
-        dashboard.saveBtn.click();
-
-        s.log("waiting for Pincode PopUp");
-        elements = new WebElement[]{dashboard.roomName, popUp.cancelButton};
-        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
-
-        s.log("room name: " + name + "1");
-        Assert.assertTrue(dashboard.roomName.getText().equals(name + "1"));
-        ScreenShot screenShot = new ScreenShot(driver);
-        screenShot.getScreenShot();
-        s.log("room successfully added!");
-        s.log("TEST IS FINISHED");
-    }
-
-
     @Test(priority = 1, enabled = true)
-    public void TestAddRoom() {
+    public void C29109_Add_new_room() {
         s.log("TEST IS STARTED");
         pass = "qwe123";
         name = "room_number_";
@@ -236,24 +186,16 @@ public class positive {
         dashboard.footerRooms.click();
 
         s.log("add Room without image");
-        dashboardRoomsPage.addRoom("Without image", 0);
-
-        s.log("add Room with image from new popup gallery");
-        dashboardRoomsPage.addRoom("Gallery image", 1);
+        roomsPage.addRoom("Without image", 0);
 
         s.log("add Room with image from camera");
-        dashboardRoomsPage.addRoom("Camera image", -2);
+        roomsPage.addRoom("Camera image", 1);
 
-
-
-        for (int i = 0; i < 3; i++) {
-            dashboardRoomsPage.addRoom(name + i, i);
-        }
+        s.log("add Room with image from popup gallery");
+        roomsPage.addRoom("Gallery image", 2, 2);
 
         s.log("TEST IS FINISHED");
     }
-
-
 
     @Test(priority = 2, enabled = false)
     public void Login_to_the_not_validated_account() {

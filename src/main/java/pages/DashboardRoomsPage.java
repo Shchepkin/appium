@@ -69,26 +69,19 @@ public class DashboardRoomsPage {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
-    /**
+    /******************************************************************************************************************
      *
-     * @param name          - Room name (24 byte)
-     * @param type          - for default type set as 0 (room without image)
+     * @param name        - Room name (24 byte)
+     * @param type        - for default type set as 0 (room without image)
      *                          0. room without image
      *                          1. add image from camera
      *                          2. add image from gallery
-     * @param numberOfImage - if use room with type 2 y can set 1, 2 or 3 image from PopUp, other values set number to 1 for default
+     * @param imageNumber - if use room with type 2 y can set 1, 2 or 3 image from PopUp, other values set number to 1 for default
      */
-    public void addRoom(String name, int type, int numberOfImage) {
+    public void addRoom(String name, int type, int imageNumber) {
         s.log("Method is started");
 
-        elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
-        s.log("check for existing Add Room button");
-        switch (check.waitElements(elements, 3)){
-            case 1: addRoomBtn.click(); break;
-            case 2: addRoomPlusBtn.click(); break;
-            // make here scroll to element with text if there are a lot of rooms
-            default: s.log(3, "Something was wrong!"); break;
-        }
+        clickAddRoomButton();
 
         s.log("fill Room name field with: \"" + name + "\"");
         roomName.sendKeys(name);
@@ -100,25 +93,73 @@ public class DashboardRoomsPage {
                 break;
             case 2: s.log("add image from gallery");
                 addRoomImageBtn.click();
-                addImagePage.setImageFromGallery(numberOfImage);
+                addImagePage.setImageFromGallery(imageNumber);
                 break;
             default: s.log("add room without image");
                 driver.hideKeyboard();
                 break;
         }
-        s.log("save room");
+
+        saveRoom (name);
+        s.log("Method is finished");
+
+    }
+
+    public void addRoom(String name, int type) {
+        s.log("Method is started");
+
+        clickAddRoomButton();
+
+        s.log("fill Room name field with: \"" + name + "\"");
+        roomName.sendKeys(name);
+
+        switch (type){
+            case 1: s.log("add image from camera");
+                addRoomImageBtn.click();
+                addImagePage.setImageFromCamera();
+                break;
+            case 2: s.log("add image from gallery");
+                addRoomImageBtn.click();
+                addImagePage.setImageFromGallery(1);
+                break;
+            default: s.log("add room without image");
+                driver.hideKeyboard();
+                break;
+        }
+
+        saveRoom (name);
+        s.log("Method is finished");
+    }
+
+    private void clickAddRoomButton (){
+        s.log("Method is started");
+
+        elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
+        s.log("choice the Add Room button");
+        switch (check.waitElements(elements, 3)){
+            case 1: addRoomBtn.click(); break;
+            case 2: addRoomPlusBtn.click(); break;
+            // make here scroll to element with text if there are a lot of rooms
+            default: s.log(3, "Something was wrong!"); break;
+        }
+        s.log("Method is finished");
+    }
+
+    private void saveRoom (String name){
+        s.log("Method is started");
         result = false;
-        
+
         if(check.clickElementAndWaitingPopup(saveBtn, 3, 2, false)){
             check.waitElement(roomName,3,true);
-            s.log("check list of rooms for existing new room");
+
+            s.log("check whether new room is exist in the list of rooms");
             for (WebElement roomNameElement: roomNameList) {
                 System.out.println(roomNameElement.getText());
                 if(roomNameElement.getText().equals(name)) {result = true;}
             }
             Assert.assertTrue(result);
-            s.log("room with name \"" + name + "\" successfully added!");
         }
+        s.log("room with name \"" + name + "\" successfully added!");
         s.log("Method is finished");
     }
 }
