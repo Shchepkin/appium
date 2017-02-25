@@ -78,6 +78,8 @@ public class RegistrationPage {
         registrationBtn.click();
     }
 
+
+
     public void fillFields(String name, String email, String password, String phone, String server) {
         s.log("Method is started");
         introPage.loginBtn.click();

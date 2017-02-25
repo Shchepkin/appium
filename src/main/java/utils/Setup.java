@@ -50,6 +50,11 @@ public class Setup {
             log(2, "set capabilities settings");
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability(MobileCapabilityType.TAKES_SCREENSHOT, "true");
+
+            // Set appium keyboard and disable it
+            capabilities.setCapability("unicodekeyboard", true);
+            capabilities.setCapability("resetkeyboard", true);
+
             capabilities.setCapability(CapabilityType.BROWSER_NAME, "Android");
             capabilities.setCapability("deviceName", deviceName_);
             capabilities.setCapability("udid", UDID_);
