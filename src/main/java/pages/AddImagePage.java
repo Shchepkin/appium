@@ -76,4 +76,5 @@ public class AddImagePage {
         thumbnail.get(imageNumber + 2).click();
         nextBtn.click();
     }
+
 }
