@@ -69,8 +69,16 @@ public class DashboardRoomsPage {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
-
-    public void addRoom(String name, int numOfImage) {
+    /**
+     *
+     * @param name          - Room name (24 byte)
+     * @param type          - for default type set as 0 (room without image)
+     *                          0. room without image
+     *                          1. add image from camera
+     *                          2. add image from gallery
+     * @param numberOfImage - if use room with type 2 y can set 1, 2 or 3 image from PopUp, other values set number to 1 for default
+     */
+    public void addRoom(String name, int type, int numberOfImage) {
         s.log("Method is started");
 
         elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
@@ -85,16 +93,19 @@ public class DashboardRoomsPage {
         s.log("fill Room name field with: \"" + name + "\"");
         roomName.sendKeys(name);
 
-        if (numOfImage > 0){
-            s.log("add room image");
-            addRoomImageBtn.click();
-            addImagePage.thumbnail.get(numOfImage + 2).click();
-            addImagePage.nextBtn.click();
-        }else {
-            s.log("add room without image");
-            driver.hideKeyboard();
+        switch (type){
+            case 1: s.log("add image from camera");
+                addRoomImageBtn.click();
+                addImagePage.setImageFromCamera();
+                break;
+            case 2: s.log("add image from gallery");
+                addRoomImageBtn.click();
+                addImagePage.setImageFromGallery(numberOfImage);
+                break;
+            default: s.log("add room without image");
+                driver.hideKeyboard();
+                break;
         }
-
         s.log("save room");
         result = false;
         
