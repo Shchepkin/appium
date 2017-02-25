@@ -79,9 +79,10 @@ public class Check {
 
 
     /********************************************************************************************
+     *
          * @param elements - selectList of locators for checking
          * @param period   - how many iterations of checking we have to make, each iterations approximately 1.3 sec
-         * @return         - number of element which was shown (if there is no elements it returns 0)
+         * @return         - int numOfFoundElement - number of element which was shown (if there is no elements it returns 0)
 
       example:
         waitElements(new WebElement[]{element1, element2, element3}, 5)
@@ -116,40 +117,17 @@ public class Check {
         return numOfFoundElement;
     }
 
+    /********************************************************************************************
+     *
+        @param elementForClick           - element which we want to click
+        @param period                    - how many iterations of checking PopUp we have to do, each iterations approximately 1.3 sec
+        @param tryCount                  - number of attempts for trying click the elementForClick
+        @param confirmPopupProposition   - set true if you want confirm proposition from PopUp window and set false if you don't
+        @return                          - return true if element for click is not shown now
 
-
-    public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period){
-        s.log("Method is started");
-        result = false;
-        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin, popUp.errorPic};
-
-        for (int i = 1; i < 5; i++) {
-            s.log(3, "click the element link, attempt #" +i);
-            elementForClick.click();
-
-            s.log("waiting for: 1.snackBar  2.error  3.loadingWin");
-            numOfFoundElement = waitElements(elements, period);
-            switch (numOfFoundElement){
-                case 0: s.log(3, "no PopUp is shown or this moment is missed"); break;
-                case 1: s.log(3, "snackBar is shown, the text was previously displayed"); break;
-                case 2:
-                    s.log(3, "loader is shown with text: \"" + popUp.contentText.getText() + "\", so wait for error message");
-                    if (!waitElement(popUp.errorPic, 5, true)) {s.log("loader is shown, but without error"); break;}
-                case 3: Assert.fail(popUp.contentText.getText()); break;
-                default: break;
-            }
-            if (!waitElement(elementForClick, 3, true)) {
-                s.log(3, "element for click is not shown now, maybe click was successfully!");
-                result = true;
-                break;
-            }
-            s.log(3, "previous click element is failed and it's shown again, so click it one more time");
-        }
-        return result;
-    }
-
-
-
+       example:
+          clickElementAndWaitingPopup(popUp.cancelButton, 3, 3, false)
+     */
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period, int tryCount, boolean confirmPopupProposition){
         s.log("Method is started");
         result = false;
@@ -209,6 +187,7 @@ public class Check {
 
             s.log(2, "element " + element + " is shown with text: \"" + element.getText() + "\"");
             result = true;
+
         } catch (NoSuchElementException e) {
             s.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
@@ -218,7 +197,6 @@ public class Check {
             s.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             screenShot.getScreenShot();
-
         }
         return result;
     }
