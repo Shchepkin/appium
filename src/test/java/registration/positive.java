@@ -82,7 +82,7 @@ public class positive {
         registrationPage.setUserPic(1);
         registrationPage.fillFields(name, login, pass, phone);
 
-        check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5);
+        check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5, 3, false);
 
         s.log("waiting for Validation Code Page");
         Assert.assertTrue(check.waitElement(validationCodePage.smsCode, 60, true));
@@ -95,7 +95,7 @@ public class positive {
         Assert.assertTrue(check.waitElement(registrationPage.dashboard, 30, true));
 
         s.log("Welcome Page is shown, so go to the dashboard");
-        check.clickElementAndWaitingPopup(registrationPage.dashboard, 5);
+        check.clickElementAndWaitingPopup(registrationPage.dashboard, 5, 3, false);
 
         s.log("waiting for Pincode PopUp");
         if(check.waitElement(popUp.cancelButton, 15, true)) {
@@ -327,7 +327,7 @@ public class positive {
             else {phone = "68" + i;}
 
             registrationPage.fillFields(name, login, pass, phone);
-            check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5);
+            check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5, 2, false);
 
             s.log("waiting for Validation Code Page");
             check.waitElement(validationCodePage.smsCode, 30, true);
