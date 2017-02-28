@@ -1,10 +1,12 @@
 package tmp;
 
+import io.appium.java_client.AppiumDriver;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pages.Hub;
 import utils.*;
 
 
@@ -12,26 +14,28 @@ import java.util.Map;
 
 
 public class test {
+    private AppiumDriver driver;
     private Email email;
     private Map localizeKeys;
     private Setup s = new Setup();
+    private Hub hub;
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
         s.log("Method is started");
-        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        Setup s = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        driver = s.getDriver();
 
-        localizeKeys = setup.getLocalizeKeys();
+        localizeKeys = s.getLocalizeKeys();
+        hub = new Hub(driver);
 //        email = new Email("pop.i.ua", "develop.ajax.sys@i.ua", "ajax123");
     }
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void get_Path() {
         Reporter.log("===== Start get_Path test", true);
         System.out.println(localizeKeys.get("CFBundleName"));
-
-
     }
 
     @Test(priority = 1, enabled = false)

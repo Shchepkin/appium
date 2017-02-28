@@ -20,6 +20,12 @@ public class Dashboard {
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
     public WebElement nameField;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/image")
+    public WebElement image;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/settings")
+    public WebElement settingsBtn;
+
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
     public WebElement cancelBtn;
 
@@ -81,10 +87,11 @@ public class Dashboard {
     @AndroidFindBy(id = "com.ajaxsystems:id/remote")
     public WebElement footerRemote;
 
-
+//=====================================================================================================================
 
     public Dashboard(AppiumDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 }
+

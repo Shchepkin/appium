@@ -63,6 +63,11 @@ public class AuthorizationPage {
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Eden\")")
     public WebElement serverEden;
 
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Glimmering_dev\")")
+    public WebElement serverGlim;
+
+
+
 //---------------------------------------------------------------------------------------------------------------------
 
 // version < 2.8
@@ -142,6 +147,8 @@ public class AuthorizationPage {
             case "Amazon":  serverAmazon.click();
                 break;
             case "Eden":  serverEden.click();
+                break;
+            case "Glim":  serverGlim.click();
                 break;
             default: serverProduction.click();
                 break;
