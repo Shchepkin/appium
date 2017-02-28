@@ -1,6 +1,9 @@
 package registration;
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -8,11 +11,13 @@ import pages.*;
 import utils.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class positive {
     private AppiumDriver driver;
     private Map tokenMap;
+    private Hub hub;
     private Check check;
     private Email email;
     private PopUp popUp;
@@ -49,6 +54,7 @@ public class positive {
         driver = s.getDriver();
 
         s.log("Create objects of pages");
+        hub = new Hub(driver);
         nav = new Navigation(driver);
         check = new Check(driver);
         popUp = new PopUp(driver);
@@ -63,6 +69,7 @@ public class positive {
         validationCodePage = new ValidationCodePage(driver);
         roomsPage = new DashboardRoomsPage(driver);
     }
+
 
     // C29030 =================================================================================================
     @Test(priority = 1, enabled = false)
@@ -167,7 +174,7 @@ public class positive {
     }
 
     // C29109 =================================================================================================
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void C29109_Add_new_room() {
         s.log("TEST IS STARTED");
         pass = "qwe123";
@@ -193,6 +200,29 @@ public class positive {
 
         s.log("add Room with image from popup gallery");
         roomsPage.addRoom("Gallery image", 2, 2);
+
+        s.log("TEST IS FINISHED");
+    }
+
+    // C29109 =================================================================================================
+    @Test(priority = 1, enabled = true)
+    public void C29116_Add_new_guest_user() {
+        s.log("TEST IS STARTED");
+        pass = "qwe";
+        login = "ajax1@i.ua";
+        server = "Glim";
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+
+        hub.goToTheUserList();
+
+        String text = s.getLocalizeKeys().get("send_invites").toString();
+        Assert.assertTrue(nav.scrollUpToElementWithText(text));
 
         s.log("TEST IS FINISHED");
     }
@@ -242,6 +272,12 @@ public class positive {
         menuPage.accountBtn.click();
         accountPage.logoutBtn.click();
         check.waitElement(introPage.registrationBtn, 20, true);
+    }
+
+    private void logIn() {
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
     }
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })

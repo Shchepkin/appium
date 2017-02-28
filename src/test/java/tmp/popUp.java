@@ -4,12 +4,14 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.AuthorizationPage;
 import pages.DashboardHeader;
+import pages.Hub;
 import pages.IntroPage;
 import utils.Check;
 import utils.PopUp;
@@ -29,6 +31,7 @@ public class popUp {
     private DashboardHeader header;
     private boolean result;
     private WebElement[] elements;
+    private Hub hub;
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeClass
@@ -36,12 +39,13 @@ public class popUp {
         s.log("Method is started");
         String query = "DELETE FROM csa_accounts WHERE Login LIKE '%" + locale_ + "%'";
         s.log(query);
-        System.exit(0);
+//        System.exit(0);
         Setup s = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
         driver = s.getDriver();
 
         // Create objects of pages
         s.log("create objects of pages");
+        hub = new Hub(driver);
         popUp = new PopUp(driver);
         check = new Check(driver);
         introPage = new IntroPage(driver);
@@ -52,6 +56,8 @@ public class popUp {
         s.log("introPage.loginBtn.click()");
         introPage.loginBtn.click();
     }
+
+
 
     @Test(enabled = false)
     public void PopUp_Test() {
@@ -81,7 +87,7 @@ public class popUp {
     }
 
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void sql(String locale_) {
         s.log(1,"Method is started");
         String query = "DELETE FROM csa_accounts WHERE Login LIKE '%" + locale_ + "%'";
