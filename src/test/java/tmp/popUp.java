@@ -45,7 +45,7 @@ public class popUp {
 
         // Create objects of pages
         s.log("create objects of pages");
-        hub = new Hub(driver);
+        hub = new Hub(driver, locale_);
         popUp = new PopUp(driver);
         check = new Check(driver);
         introPage = new IntroPage(driver);

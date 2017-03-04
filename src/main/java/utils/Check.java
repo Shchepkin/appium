@@ -47,7 +47,7 @@ public class Check {
         }
     }
 
-    /********************************************************************************************
+    /*******************************************************************************************************************
         * @param element           - element which we want to wait
         * @param timer             - how long time we want to wait for the element (in seconds)
         * @param makeScreenShot    - make screenshot if element is not found (true)
@@ -78,7 +78,7 @@ public class Check {
     }
 
 
-    /********************************************************************************************
+    /*******************************************************************************************************************
      *
          * @param elements - selectList of locators for checking
          * @param period   - how many iterations of checking we have to make, each iterations approximately 1.3 sec
@@ -117,7 +117,7 @@ public class Check {
         return numOfFoundElement;
     }
 
-    /********************************************************************************************
+    /*******************************************************************************************************************
      *
         @param elementForClick           - element which we want to click
         @param period                    - how many iterations of checking PopUp we have to do, each iterations approximately 1.3 sec
@@ -162,13 +162,53 @@ public class Check {
                         }
                 default: break;
             }
-            if (!waitElement(elementForClick, 3, true)) {
+            if (!waitElement(elementForClick, 1, true)) {
                 s.log(3, "element for click is not shown now");
                 result = true;
                 break;
             }
             s.log(3, "element for click is shown again");
         }
+        s.log("Method is finished");
+        return result;
+    }
+
+//======================================================================================================================
+
+    public boolean clickElementAndWaitingPopup(WebElement elementForClick, boolean confirmPopupProposition){
+        s.log("Method is started");
+        result = false;
+        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin};
+
+            s.log(3, "click the element link");
+            elementForClick.click();
+
+            s.log("waiting for: 1.snackBar  2.loadingWin");
+            numOfFoundElement = waitElements(elements, 5);
+            switch (numOfFoundElement){
+                case 0: s.log(3, "no PopUp is shown or this moment is missed"); break;
+                case 1: s.log(3, "snackBar is shown, the text was previously displayed"); break;
+                case 2: s.log(3, "PopUp is shown with text: \"" + popUp.contentText.getText() + "\"");
+                    elements = new WebElement[]{popUp.cancelButton, popUp.errorPic};
+                    numOfFoundElement = waitElements(elements, 5);
+                    switch (numOfFoundElement){
+                        case 0: s.log(3, "PopUp is shown, but without errors and any propositions"); break;
+                        case 1:
+                            if (confirmPopupProposition){
+                                s.log("confirm Popup Proposition");
+                                popUp.confirmButton.click();
+                            }
+                            else {
+                                s.log("cancel Popup Proposition");
+                                popUp.cancelButton.click();
+                            }
+                            break;
+                        case 2: s.log(4, "ERROR is shown with text: \"" + popUp.contentText.getText() + "\""); break;
+                        default: break;
+                    }
+                default: break;
+            }
+        s.log("Method is finished");
         return result;
     }
 

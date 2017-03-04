@@ -32,6 +32,10 @@ public class Setup {
     public Setup() {
     }
 
+    public Setup(String locale_) {
+        this.locale_ = locale_;
+    }
+
     public Setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_) {
         this.deviceName_ = deviceName_;
         this.UDID_ = UDID_;
@@ -39,6 +43,11 @@ public class Setup {
         this.URL_ = URL_;
         this.appPath_ = appPath_;
         this.locale_ = locale_;
+    }
+
+    public String getLocale_() {
+        String locale = this.locale_;
+        return locale;
     }
 
     public AppiumDriver getDriver() {

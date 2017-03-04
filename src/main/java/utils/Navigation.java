@@ -205,8 +205,13 @@ public class Navigation {
             if (current.contains(textOfSearchingElement)){
                 try {
                     WebElement searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
-                    s.log("element was found");
-                    if (click) searchingElement.click();
+
+                    if (click) {
+                        searchingElement.click();
+                        s.log("element with text \"" + textOfSearchingElement + "\" was found and clicked");
+                    } else {
+                        s.log("element with text \"" + textOfSearchingElement + "\" was found");
+                    }
                     result = true;
                     break;
                 }catch (NoSuchElementException e){
