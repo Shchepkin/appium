@@ -17,7 +17,7 @@ import static jdk.nashorn.internal.objects.NativeString.substring;
 public class User {
     public final AppiumDriver driver;
     private Navigation nav;
-    private Setup s = new Setup();
+    private Setup s;
     private Check check;
     private PopUp popUp;
 
@@ -30,10 +30,10 @@ public class User {
 
     public User(AppiumDriver driver, String locale_) {
         this.driver = driver;
+        s = new Setup(locale_);
         nav = new Navigation(driver);
         check = new Check(driver);
         popUp = new PopUp(driver);
-        s = new Setup(locale_);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -44,13 +44,16 @@ public class User {
     }
 
     public void addUserWithEmail(String inviteEmail) {
+        s.log("Method is started");
         String tmp = s.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
         String inviteFailText = tmp.substring(0, tmp.length() - 5);
 
+        s.log("fill email field with \"" + inviteEmail + "\"");
         inviteUsersField.sendKeys(inviteEmail);
+
         check.clickElementAndWaitingPopup(nav.nextBtn, true);
 
         popUp.waitLoaderPopUpWithText(inviteFailText, 10, true);
-
+        s.log("Method is finished");
     }
 }

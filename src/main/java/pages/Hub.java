@@ -18,7 +18,6 @@ public class Hub {
     private Navigation nav;
     private Setup s = new Setup();
     private Check check;
-    private String locale;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/usersImage")
     private WebElement hubSettingsUsersImage;
