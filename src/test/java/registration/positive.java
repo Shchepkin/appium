@@ -13,6 +13,7 @@ public class positive {
     private AppiumDriver driver;
     private Map tokenMap;
     private Hub hub;
+    private User user;
     private Check check;
     private Email email;
     private PopUp popUp;
@@ -49,8 +50,10 @@ public class positive {
         driver = s.getDriver();
 
         s.log("Create objects of pages");
-        hub = new Hub(driver);
+        hub = new Hub(driver, locale_);
+        System.out.println(locale_);
         nav = new Navigation(driver);
+        user = new User(driver, locale_);
         check = new Check(driver);
         popUp = new PopUp(driver);
         menuPage = new MenuMainPage(driver);
@@ -204,8 +207,7 @@ public class positive {
         s.log("TEST IS STARTED");
         pass = "qwe";
         login = "ajax1@i.ua";
-        server = "Glim";
-        String sendInvitesButtonText = s.getLocalizeTextForKey("send_invites");
+        server = "Develop";
 
         s.log("start from IntroPage");
         introPage.loginBtn.click();
@@ -214,11 +216,15 @@ public class positive {
         s.log("waiting for Pincode PopUp");
         check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
 
-        hub.goToTheUserList();
-//        nav.scrollScreenToTheEnd("up");
-        nav.scrollToElementWithText("up", sendInvitesButtonText, true);
+        hub.goToTheUserInvitationPage();
 
+        user.addUserWithEmail("test.email.ajax87@i.ua");
         System.exit(0);
+
+        user.fillUserEmailsField("test.email.ajax87@i.ua");
+        if(check.waitElement(popUp.confirmButton, 10, true)) popUp.confirmButton.click();
+//        if (popUp.contentText.getText().contains(inviteFailText)) s.log(4, "FAIL");
+
 
 
         s.log("TEST IS FINISHED");

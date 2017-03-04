@@ -18,6 +18,7 @@ public class Hub {
     private Navigation nav;
     private Setup s = new Setup();
     private Check check;
+    private String locale;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/usersImage")
     private WebElement hubSettingsUsersImage;
@@ -30,20 +31,20 @@ public class Hub {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/settings")
     private WebElement hubSettingsBtn;
-    String text;
 
 
 
-    public Hub(AppiumDriver driver) {
+    public Hub(AppiumDriver driver, String locale_) {
         this.driver = driver;
         nav = new Navigation(driver);
         check = new Check(driver);
+        s = new Setup(locale_);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
-
-    public void goToTheUserList() {
+    public void goToTheUserInvitationPage() {
         s.log("method is started");
+        String sendInvitesButtonText = s.getLocalizeTextForKey("send_invites");
 
         s.log("click on hub");
         hubImageOnDeviceList.click();
@@ -55,6 +56,7 @@ public class Hub {
         hubSettingsUsersImage.click();
 
         check.waitElement(nav.backBtn, 10, true);
+        nav.scrollToElementWithText("up", sendInvitesButtonText, true);
         s.log("method is finished");
     }
 }
