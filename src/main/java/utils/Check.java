@@ -144,7 +144,7 @@ public class Check {
                 case 1: s.log(3, "snackBar is shown, the text was previously displayed"); break;
                 case 2: s.log(3, "PopUp is shown with text: \"" + popUp.contentText.getText() + "\"");
                         elements = new WebElement[]{popUp.cancelButton, popUp.errorPic};
-                        numOfFoundElement = waitElements(elements, 3);
+                        numOfFoundElement = waitElements(elements, 5);
                         switch (numOfFoundElement){
                             case 0: s.log(3, "PopUp is shown, but without errors and any propositions"); break;
                             case 1:
@@ -180,7 +180,7 @@ public class Check {
             s.log(2, "waiting " + timer + " seconds for the element ");
 
             WebElement[] elements = new WebElement[]{element, popUp.cancelButton};
-            if (waitElements(elements, 3) == 2){
+            if (waitElements(elements, 5) == 2){
                 s.log("Pincode PopUp is shown - cancel it!");
                 popUp.cancelButton.click();
             }

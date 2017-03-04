@@ -27,7 +27,6 @@ public class test {
         Setup s = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
         driver = s.getDriver();
 
-        localizeKeys = s.getLocalizeKeys();
         hub = new Hub(driver);
 //        email = new Email("pop.i.ua", "develop.ajax.sys@i.ua", "ajax123");
     }
