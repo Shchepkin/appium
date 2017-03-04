@@ -24,11 +24,16 @@ public class Setup {
 
     private AppiumDriver driver;
     private Path path;
+    private String localizeTextForKey;
     private String deviceName_, UDID_, platformVersion_, URL_, appPath_, jsonString, collection, locale_;
 
-    public Map localizeKeys;
+    private Map localizeKeys;
 
     public Setup() {
+    }
+
+    public Setup(String locale_) {
+        this.locale_ = locale_;
     }
 
     public Setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_) {
@@ -38,6 +43,11 @@ public class Setup {
         this.URL_ = URL_;
         this.appPath_ = appPath_;
         this.locale_ = locale_;
+    }
+
+    public String getLocale_() {
+        String locale = this.locale_;
+        return locale;
     }
 
     public AppiumDriver getDriver() {
@@ -52,8 +62,8 @@ public class Setup {
             capabilities.setCapability(MobileCapabilityType.TAKES_SCREENSHOT, "true");
 
             // Set appium keyboard and disable it
-            capabilities.setCapability("unicodekeyboard", true);
-            capabilities.setCapability("resetkeyboard", true);
+//            capabilities.setCapability("unicodekeyboard", true);
+//            capabilities.setCapability("resetkeyboard", true);
 
             capabilities.setCapability(CapabilityType.BROWSER_NAME, "Android");
             capabilities.setCapability("deviceName", deviceName_);
@@ -79,7 +89,13 @@ public class Setup {
         return driver;
     }
 
-    public Map getLocalizeKeys() {
+    public String getLocalizeTextForKey(String key){
+        localizeTextForKey = getLocalizeKeys().get(key).toString();
+        return localizeTextForKey;
+    }
+
+
+    private Map getLocalizeKeys() {
         log("Method is started");
         try {
             localizeKeys = new HashMap<>();

@@ -1,23 +1,19 @@
 package registration;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.*;
 import utils.*;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class positive {
     private AppiumDriver driver;
     private Map tokenMap;
     private Hub hub;
+    private User user;
     private Check check;
     private Email email;
     private PopUp popUp;
@@ -54,8 +50,10 @@ public class positive {
         driver = s.getDriver();
 
         s.log("Create objects of pages");
-        hub = new Hub(driver);
+        hub = new Hub(driver, locale_);
+        System.out.println(locale_);
         nav = new Navigation(driver);
+        user = new User(driver, locale_);
         check = new Check(driver);
         popUp = new PopUp(driver);
         menuPage = new MenuMainPage(driver);
@@ -128,8 +126,7 @@ public class positive {
         s.log("waiting for Pincode PopUp");
         if(check.waitElement(popUp.cancelButton, 15, true)) {
             s.log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
-
-            expected = s.getLocalizeKeys().get("do_you_want_to_enable_passcode").toString();
+            expected = s.getLocalizeTextForKey("do_you_want_to_enable_passcode");
             actual = popUp.contentText.getText();
             Assert.assertEquals(expected, actual, "Text on Pincode PopUp is wrong!");
             popUp.cancelButton.click();
@@ -210,7 +207,7 @@ public class positive {
         s.log("TEST IS STARTED");
         pass = "qwe";
         login = "ajax1@i.ua";
-        server = "Glim";
+        server = "Develop";
 
         s.log("start from IntroPage");
         introPage.loginBtn.click();
@@ -219,10 +216,16 @@ public class positive {
         s.log("waiting for Pincode PopUp");
         check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
 
-        hub.goToTheUserList();
+        hub.goToTheUserInvitationPage();
 
-        String text = s.getLocalizeKeys().get("send_invites").toString();
-        Assert.assertTrue(nav.scrollUpToElementWithText(text));
+        user.addUserWithEmail("test.email.ajax87@i.ua");
+        System.exit(0);
+
+        user.fillUserEmailsField("test.email.ajax87@i.ua");
+        if(check.waitElement(popUp.confirmButton, 10, true)) popUp.confirmButton.click();
+//        if (popUp.contentText.getText().contains(inviteFailText)) s.log(4, "FAIL");
+
+
 
         s.log("TEST IS FINISHED");
     }
@@ -236,17 +239,17 @@ public class positive {
         s.log("wait for message this_account_was_not_yet_validated");
         Assert.assertTrue(check.waitElement(popUp.dialogMessage, 60, true));
 
-        String expected = s.getLocalizeKeys().get("this_account_was_not_yet_validated").toString();
+        String expected = s.getLocalizeTextForKey("this_account_was_not_yet_validated");
         String actual = popUp.dialogMessage.getText();
         s.log("actual: " + actual);
         s.log("expected: " + expected);
         Assert.assertEquals(expected, actual);
 
         s.log("additional validation of text on the popUp for key \"confirm\"");
-        Assert.assertEquals(s.getLocalizeKeys().get("confirm").toString(), popUp.okBtn.getText());
+        Assert.assertEquals(s.getLocalizeTextForKey("confirm"), popUp.okBtn.getText());
 
         s.log("additional validation of text on the popUp for key \"cancel\"");
-        Assert.assertEquals(s.getLocalizeKeys().get("cancel").toString(), popUp.cancelBtn.getText());
+        Assert.assertEquals(s.getLocalizeTextForKey("cancel"), popUp.cancelBtn.getText());
 
         tokenMap = sql.getTokenMap("Phone", phone);
         System.out.println("SMS: " + tokenMap.get("smsToken"));
