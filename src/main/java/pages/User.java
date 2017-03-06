@@ -51,8 +51,10 @@ public class User {
         s.log("fill email field with \"" + inviteEmail + "\"");
         inviteUsersField.sendKeys(inviteEmail);
 
+        s.log("click add button and waiting popUp");
         check.clickElementAndWaitingPopup(nav.nextBtn, true);
 
+        s.log("click add button and waiting popUp");
         popUp.waitLoaderPopUpWithText(inviteFailText, 10, true);
         s.log("Method is finished");
     }

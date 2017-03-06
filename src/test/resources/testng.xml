@@ -13,7 +13,7 @@
         <parameter name="locale_" value="uk"/>
         <parameter name="UDID_" value="MTPB0252700596"/>
         <parameter name="platformVersion_" value="4.2.2"/>
-        <parameter name="URL_" value="127.0.0.1:1235/wd/hub"/>
+        <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
         <classes>
             <class name="registration.positive"/>
             <!--<class name="tmp.testSQL"/>-->

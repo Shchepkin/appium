@@ -50,7 +50,7 @@ public class Dashboard {
 //    public WebElement hubName;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/key")
-    public WebElement hubKey;
+    public WebElement hubKeyField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/nameInfo")
     public WebElement nameInfo;
