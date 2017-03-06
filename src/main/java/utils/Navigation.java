@@ -24,11 +24,7 @@ public class Navigation {
     private ArrayList<String> etalon = new ArrayList<>();
     private ArrayList<String> current = new ArrayList<>();
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/back")
-    public WebElement backBtn;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/next")
-    public WebElement nextBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
     public WebElement cancelBtn;
@@ -52,8 +48,59 @@ public class Navigation {
     private ArrayList<WebElement> allTextObjects;
 
 
+//======================================================================================================================
+// Header
+//======================================================================================================================
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/back")
+    public WebElement backBtn;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/next")
+    public WebElement nextBtn;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/add")
+    private WebElement addBtn;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/name")
+    private WebElement nameField;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/image")
+    private WebElement image;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/settings")
+    private WebElement settingsBtn;
+
+//======================================================================================================================
+// Footer
+//======================================================================================================================
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/devices")
+    private WebElement footerDevices;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/rooms")
+    private WebElement footerRooms;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/notifications")
+    private WebElement footerNotifications;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/remote")
+    private WebElement footerRemote;
+
+//======================================================================================================================
+// Anchors
+//======================================================================================================================
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/spaceControl")
+    private WebElement spaceControlImageOnRemotePage;
 
 
+
+
+//======================================================================================================================
+    public Navigation(AppiumDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    }
 
 //======================================================================================================================
 // Swipe
@@ -245,6 +292,9 @@ public class Navigation {
 //======================================================================================================================
 
     private ArrayList <String> compare(ArrayList<String> etalon, ArrayList<String> current){
+        s.log("Method is started");
+        flag = false;
+
         if (etalon.containsAll(current) && counter < 2) {
             counter++;
             s.log(3, "nothing was changed, swipe try count = " + counter);
@@ -256,10 +306,11 @@ public class Navigation {
             etalon.clear();
             etalon.addAll(current);
         }
+        s.log("Method is finished");
        return etalon;
     }
 
-    public List<WebElement> getScrollList() {
+    public ArrayList<WebElement> getScrollList() {
         return scrollList;
     }
 
@@ -269,16 +320,50 @@ public class Navigation {
 
     public void longTapButton(WebElement element, int timer) {
         s.log("Method is started");
+
         s.log(2, "long tap for " + timer + " seconds");
         timer = timer * 1000;
         driver.tap(1, element, timer);
+
         s.log("Method is finished");
     }
 
 
+    public void tapCancelButton() {cancelBtn.click();}
 
-    public Navigation(AppiumDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    public void tapOkButton() {okBtnd.click();}
+
+//======================================================================================================================
+// GO
+//======================================================================================================================
+
+    public void goBack() {
+        backBtn.click();
     }
+
+    public void goNext() {
+        nextBtn.click();
+    }
+
+    public boolean goToTheRemotePage(){
+        s.log("method is started");
+        result = false;
+
+        try {
+            while (backBtn.isDisplayed()) {
+                backBtn.click();
+            }
+        }catch (NoSuchElementException e){
+            s.log(3, "BackButton is not shown");
+        }
+
+        footerRemote.click();
+
+        if (spaceControlImageOnRemotePage.isDisplayed()) {
+            result = true;
+        }
+        s.log("Method is finished");
+        return result;
+    }
+
 }
