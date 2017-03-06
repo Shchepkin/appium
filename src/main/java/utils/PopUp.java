@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -16,6 +17,9 @@ import org.testng.Reporter;
 public class PopUp {
     private Setup s = new Setup();
     private AppiumDriver driver;
+    private ScreenShot screenShot;
+    private long start, finish;
+
     public boolean result = false;
 
 //================================ Loading ===========================================
@@ -97,6 +101,7 @@ public class PopUp {
 
     public PopUp(AppiumDriver driver) {
         this.driver = driver;
+        screenShot = new ScreenShot(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -126,50 +131,28 @@ public class PopUp {
         }
     }
 
-    public void waitPopUps () {
+
+    public boolean waitLoaderPopUpWithText(String searchingText, int timer, boolean makeScreenShot) {
         s.log("Method is started");
-        boolean loading = false;
-        boolean desc = false;
-        WebDriverWait iWait = new WebDriverWait (driver, 1);
-        for (int i = 0; i < 10; i++) {
-            s.log("Wait loading PopUp");
-            if (loading) {
-//                Reporter.log("> loadingWin - already shown early", true);
-            } else {
-                try {
-                    // assert is the element displayed on the page
-                    iWait.until(ExpectedConditions.visibilityOf(loadingWin));
-                    Reporter.log("> cancelButton.click()", true);
-                    cancelButton.click();
-                    Reporter.log("> loading = true", true);
-                    loading = true;
 
-                } catch (NoSuchElementException e) {
-                    Reporter.log("> loadingWin - NoSuchElementException", true);
-                }
-                catch (TimeoutException e) {
-                    Reporter.log("> descContainer - TimeoutException\n" + e, true);
-                }
-            }
-            /*
-            Reporter.log("== descContainer", true);
-            if (desc) {
-                Reporter.log("> descContainer - already shown early", true);
-            }else {
-                try {
-                    // assert is the element displayed on the page
-                    iWait.until(ExpectedConditions.visibilityOf(descContainer));
-                    allowButton.click();
-                    desc = true;
+        try {
+            s.log(2, "waiting " + timer + " seconds for the element ");
+            WebDriverWait iWait = new WebDriverWait(driver, timer);
+            iWait.until(ExpectedConditions.textToBePresentInElement(contentText, searchingText));
 
-                } catch (NoSuchElementException e) {
-                    Reporter.log("> descContainer - NoSuchElementException", true);
-                } catch (TimeoutException e) {
-                    Reporter.log("> descContainer - TimeoutException" + e, true);
-                }
-
-            }
-            */
+            s.log(2, "element is shown with text: \"" + contentText.getText() + "\"");
+            result = true;
+        } catch (NoSuchElementException e) {
+            s.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            result = false;
+            if (makeScreenShot){screenShot.getScreenShot();}
+        } catch (TimeoutException e) {
+            s.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            result = false;
+            if (makeScreenShot){screenShot.getScreenShot();}
         }
+        return result;
     }
+
+
 }

@@ -1,21 +1,24 @@
 package registration;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.*;
 import utils.*;
+import utils.Wait;
 
 import java.util.Map;
 
 public class positive {
     private AppiumDriver driver;
     private Map tokenMap;
+    private Hub hub;
+    private User user;
     private Check check;
     private Email email;
     private PopUp popUp;
+    private Wait wait;
     private IntroPage introPage;
     private Dashboard dashboard;
     private Navigation nav;
@@ -26,6 +29,8 @@ public class positive {
     private RegistrationPage registrationPage;
     private AuthorizationPage authorizationPage;
     private ValidationCodePage validationCodePage;
+    private DashboardRoomsPage roomsPage;
+    private DashboardRemotePage remotePage;
     private String expected, actual;
     private WebElement[] elements;
     private boolean result;
@@ -48,23 +53,29 @@ public class positive {
         driver = s.getDriver();
 
         s.log("Create objects of pages");
+        hub = new Hub(driver, locale_);
+        System.out.println(locale_);
         nav = new Navigation(driver);
+        user = new User(driver, locale_);
+        wait = new Wait(driver);
         check = new Check(driver);
         popUp = new PopUp(driver);
         menuPage = new MenuMainPage(driver);
         introPage = new IntroPage(driver);
         dashboard = new Dashboard(driver);
+        remotePage = new DashboardRemotePage(driver);
         accountPage = new MenuAccountPage(driver);
         addImagePage = new AddImagePage(driver);
         dashboardHeader = new DashboardHeader(driver);
         registrationPage = new RegistrationPage(driver);
         authorizationPage = new AuthorizationPage(driver);
         validationCodePage = new ValidationCodePage(driver);
+        roomsPage = new DashboardRoomsPage(driver);
     }
 
-// C29030 =================================================================================================
+    // C42097 =================================================================================================
     @Test(priority = 1, enabled = false)
-    public void C29030_New_user_registration_with_validation() {
+    public void C42097_New_user_registration_with_validation() {
         s.log("TEST IS STARTED");
 
         s.log("start from Intro Page and click Registration button");
@@ -79,7 +90,7 @@ public class positive {
         registrationPage.setUserPic(1);
         registrationPage.fillFields(name, login, pass, phone);
 
-        check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5);
+        check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5, 3, false);
 
         s.log("waiting for Validation Code Page");
         Assert.assertTrue(check.waitElement(validationCodePage.smsCode, 60, true));
@@ -92,7 +103,7 @@ public class positive {
         Assert.assertTrue(check.waitElement(registrationPage.dashboard, 30, true));
 
         s.log("Welcome Page is shown, so go to the dashboard");
-        check.clickElementAndWaitingPopup(registrationPage.dashboard, 5);
+        check.clickElementAndWaitingPopup(registrationPage.dashboard, 5, 3, false);
 
         s.log("waiting for Pincode PopUp");
         if(check.waitElement(popUp.cancelButton, 15, true)) {
@@ -104,10 +115,13 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-// C29047 =================================================================================================
+    // C42098 =================================================================================================
     @Test(priority = 2, enabled = false)
-    public void C29047_Login_to_the_existing_account() {
+    public void C42098_Login_to_the_existing_account() {
         s.log("TEST IS STARTED");
+        login = "ajax1@i.ua";
+        pass = "qwe";
+        server = "Develop";
 
         s.log("start from IntroPage");
         introPage.loginBtn.click();
@@ -116,8 +130,7 @@ public class positive {
         s.log("waiting for Pincode PopUp");
         if(check.waitElement(popUp.cancelButton, 15, true)) {
             s.log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
-
-            expected = s.getLocalizeKeys().get("do_you_want_to_enable_passcode").toString();
+            expected = s.getLocalizeTextForKey("do_you_want_to_enable_passcode");
             actual = popUp.contentText.getText();
             Assert.assertEquals(expected, actual, "Text on Pincode PopUp is wrong!");
             popUp.cancelButton.click();
@@ -128,9 +141,9 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-// C29051 =================================================================================================
-    @Test(priority = 1, enabled = true)
-    public void C29051_Add_new_Hub_manually  () {
+    // C42099 =================================================================================================
+    @Test(priority = 1, enabled = false)
+    public void C42099_Add_new_Hub_manually  () {
         s.log("TEST IS STARTED");
 
         login = "ajax1@i.ua";
@@ -144,18 +157,15 @@ public class positive {
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("waiting for Pincode PopUp");
-//        if(check.waitElement(popUp.cancelButton, 15, true)) {
-//            s.log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
-//            popUp.cancelButton.click();
-//        }
+
         elements = new WebElement[]{dashboardHeader.menuDrawer, popUp.cancelButton};
         if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
 
         dashboard.plusBtn.click();
         nav.nextBtn.click();
-        dashboard.hubName.sendKeys(hubName);
-        dashboard.hubKey.sendKeys(hubKey);
-        dashboard.addHubBtn.click();
+        dashboard.nameField.sendKeys(hubName);
+        dashboard.hubKeyField.sendKeys(hubKey);
+        dashboard.addBtn.click();
 
         elements = new WebElement[]{dashboardHeader.hubImage, popUp.cancelButton};
         if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
@@ -164,6 +174,103 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
+    // C42100 =================================================================================================
+    @Test(priority = 1, enabled = false)
+    public void C42100_Add_new_room() {
+        s.log("TEST IS STARTED");
+        pass = "qwe123";
+        name = "room_number_";
+        login = "ajax1@i.ua";
+        server = "Production";
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+
+        s.log("tap the Room Page button in the footer");
+        dashboard.footerRooms.click();
+
+        s.log("add Room without image");
+        roomsPage.addRoom("Without image", 0);
+
+        s.log("add Room with image from camera");
+        roomsPage.addRoom("Camera image", 1);
+
+        s.log("add Room with image from popup gallery");
+        roomsPage.addRoom("Gallery image", 2, 2);
+
+        s.log("TEST IS FINISHED");
+    }
+
+    // C42102 =================================================================================================
+    @Test(priority = 1, enabled = false)
+    public void C42102_Add_new_guest_user() {
+        s.log("TEST IS STARTED");
+        pass = "qwe";
+        login = "ajax1@i.ua";
+        server = "Develop";
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+
+        hub.goToTheUserInvitationPage();
+
+        user.addUserWithEmail("test.email.ajax87@i.ua");
+        System.exit(0);
+
+        user.fillUserEmailsField("test.email.ajax87@i.ua");
+        if(check.waitElement(popUp.confirmButton, 10, true)) popUp.confirmButton.click();
+//        if (popUp.contentText.getText().contains(inviteFailText)) s.log(4, "FAIL");
+
+
+        s.log("TEST IS FINISHED");
+    }
+    // C42176 =================================================================================================
+    @Test(priority = 1, enabled = true)
+    public void C42176_Virtual_Space_Control() {
+        s.log("TEST IS STARTED");
+        pass = "qwe";
+        login = "ajax1@i.ua";
+        server = "Develop";
+        String armedText = s.getLocalizeTextForKey("armed");
+        String disarmedText = s.getLocalizeTextForKey("disarmed");
+        String patrialArmedText = s.getLocalizeTextForKey("partially_armed");
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+
+        s.log("go to the Remote Page");
+        remotePage.goToTheRemotePage();
+        
+        s.log("click Disarm Button");
+        remotePage.disarmBtn.click();
+        Assert.assertTrue(wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found");
+
+        s.log("click Arm Button and confirm if there is shown popUp");
+        check.clickElementAndWaitingPopup(remotePage.armBtn, true);
+        Assert.assertTrue(wait.elementWithText(armedText, 10, true), "Text \"" + armedText + "\" is not found");
+
+        s.log("click Partial Arm Button and confirm if there is shown popUp");
+        check.clickElementAndWaitingPopup(remotePage.partialArmBtn, true);
+        Assert.assertTrue(wait.elementWithText(patrialArmedText, 10, true), "Text \"" + patrialArmedText + "\" is not found");
+
+        s.log("click Disarm Button");
+        remotePage.disarmBtn.click();
+        Assert.assertTrue(wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found");
+
+        s.log("TEST IS FINISHED");
+    }
 
     @Test(priority = 2, enabled = false)
     public void Login_to_the_not_validated_account() {
@@ -174,17 +281,17 @@ public class positive {
         s.log("wait for message this_account_was_not_yet_validated");
         Assert.assertTrue(check.waitElement(popUp.dialogMessage, 60, true));
 
-        String expected = s.getLocalizeKeys().get("this_account_was_not_yet_validated").toString();
+        String expected = s.getLocalizeTextForKey("this_account_was_not_yet_validated");
         String actual = popUp.dialogMessage.getText();
         s.log("actual: " + actual);
         s.log("expected: " + expected);
         Assert.assertEquals(expected, actual);
 
         s.log("additional validation of text on the popUp for key \"confirm\"");
-        Assert.assertEquals(s.getLocalizeKeys().get("confirm").toString(), popUp.okBtn.getText());
+        Assert.assertEquals(s.getLocalizeTextForKey("confirm"), popUp.okBtn.getText());
 
         s.log("additional validation of text on the popUp for key \"cancel\"");
-        Assert.assertEquals(s.getLocalizeKeys().get("cancel").toString(), popUp.cancelBtn.getText());
+        Assert.assertEquals(s.getLocalizeTextForKey("cancel"), popUp.cancelBtn.getText());
 
         tokenMap = sql.getTokenMap("Phone", phone);
         System.out.println("SMS: " + tokenMap.get("smsToken"));
@@ -210,6 +317,12 @@ public class positive {
         menuPage.accountBtn.click();
         accountPage.logoutBtn.click();
         check.waitElement(introPage.registrationBtn, 20, true);
+    }
+
+    private void logIn() {
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
     }
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
@@ -248,7 +361,7 @@ public class positive {
             else {phone = "68" + i;}
 
             registrationPage.fillFields(name, login, pass, phone);
-            check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5);
+            check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5, 2, false);
 
             s.log("waiting for Validation Code Page");
             check.waitElement(validationCodePage.smsCode, 30, true);

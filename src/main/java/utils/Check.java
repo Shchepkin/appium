@@ -16,7 +16,7 @@ public class Check {
     private Setup s = new Setup();
     private ScreenShot screenShot;
     private PopUp popUp;
-    private int element = 0;
+    private int numOfFoundElement;
 
     public boolean result;
 
@@ -39,20 +39,15 @@ public class Check {
             s.log("element is shown with text: \"" + element.getText() + "\"");
 
         } catch (NoSuchElementException e) {
-
             // is failed - make screenshot
-            try {
-                screenShot.getScreenShot();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            screenShot.getScreenShot();
 
             // creation report
             Assert.fail("Test failed - no such element was appeared during 3 min\n" + e);
         }
     }
 
-    /**
+    /*******************************************************************************************************************
         * @param element           - element which we want to wait
         * @param timer             - how long time we want to wait for the element (in seconds)
         * @param makeScreenShot    - make screenshot if element is not found (true)
@@ -73,32 +68,21 @@ public class Check {
         } catch (NoSuchElementException e) {
             s.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){
-                try {
-                    screenShot.getScreenShot();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
+            if (makeScreenShot){screenShot.getScreenShot();}
         } catch (TimeoutException e) {
             s.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){
-                try {
-                    screenShot.getScreenShot();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
+            if (makeScreenShot){screenShot.getScreenShot();}
         }
         return result;
     }
 
 
-    /**
+    /*******************************************************************************************************************
+     *
          * @param elements - selectList of locators for checking
          * @param period   - how many iterations of checking we have to make, each iterations approximately 1.3 sec
-         * @return         - number of element which was shown (if there is no elements it returns 0)
+         * @return         - int numOfFoundElement - number of element which was shown (if there is no elements it returns 0)
 
       example:
         waitElements(new WebElement[]{element1, element2, element3}, 5)
@@ -108,57 +92,151 @@ public class Check {
      */
     public int waitElements (WebElement[] elements, int period) {
         s.log("Method is started");
-        element = 0;
+        numOfFoundElement = 0;
         result = false;
         for (int i = 1; i <= period; i++) {
             int counter = 1;
-            s.log(2, "start waiting period #" + i);
+            s.log("start waiting period #" + i);
 
             for (WebElement el : elements) {
                 try {
-                    s.log(2, "element " + el + " is shown with text: \"" + el.getText() + "\"");
+                    s.log("element " + el + " is shown with text: \"" + el.getText() + "\"");
                     result = true;
-                    element = counter;
+                    numOfFoundElement = counter;
                     break;
                 } catch (NoSuchElementException e) {
-                    s.log(3, "NoSuchElementException, element " + counter + " is not shown");
+                    s.log(4, "NoSuchElementException, element " + counter + " is not shown");
                 } catch (TimeoutException e) {
-                    s.log(3, "Timeout Exception, element " + counter + " is not shown");
+                    s.log(4, "Timeout Exception, element " + counter + " is not shown");
                 }
                 counter ++;
             }
             if (result) {break;}
         }
         s.log("Method is finished");
-        return element;
+        return numOfFoundElement;
     }
 
-    public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period){
+    /*******************************************************************************************************************
+     *
+        @param elementForClick           - element which we want to click
+        @param period                    - how many iterations of checking PopUp we have to do, each iterations approximately 1.3 sec
+        @param tryCount                  - number of attempts for trying click the elementForClick
+        @param confirmPopupProposition   - set true if you want confirm proposition from PopUp window and set false if you don't
+        @return                          - return true if element for click is not shown now
+
+       example:
+          clickElementAndWaitingPopup(popUp.cancelButton, 3, 3, false)
+     */
+    public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period, int tryCount, boolean confirmPopupProposition){
         s.log("Method is started");
         result = false;
-        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin, popUp.errorPic};
+        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin};
 
-        for (int i = 1; i < 5; i++) {
-            s.log(3, "click the element link, attempt #" +i);
+        for (int i = 1; i <= tryCount; i++) {
+            s.log(3, "click the element link, try count #" +i);
             elementForClick.click();
 
-            s.log("waiting for: 1.snackBar  2.error  3.loadingWin");
-            element = waitElements(elements, period);
-            switch (element){
+            s.log("waiting for: 1.snackBar  2.loadingWin");
+            numOfFoundElement = waitElements(elements, period);
+            switch (numOfFoundElement){
                 case 0: s.log(3, "no PopUp is shown or this moment is missed"); break;
                 case 1: s.log(3, "snackBar is shown, the text was previously displayed"); break;
-                case 2:
-                    s.log(3, "loader is shown with text: \"" + popUp.contentText.getText() + "\", so wait for error message");
-                    if (!waitElement(popUp.errorPic, 10, true)) {s.log("loader is shown, but without error"); break;}
-                case 3: Assert.fail(popUp.contentText.getText()); break;
+                case 2: s.log(3, "PopUp is shown with text: \"" + popUp.contentText.getText() + "\"");
+                        elements = new WebElement[]{popUp.cancelButton, popUp.errorPic};
+                        numOfFoundElement = waitElements(elements, 5);
+                        switch (numOfFoundElement){
+                            case 0: s.log(3, "PopUp is shown, but without errors and any propositions"); break;
+                            case 1:
+                                if (confirmPopupProposition){
+                                    s.log("confirm Popup Proposition");
+                                    popUp.confirmButton.click();
+                                }
+                                else {
+                                    s.log("cancel Popup Proposition");
+                                    popUp.cancelButton.click();
+                                }
+                                break;
+                            case 2: s.log(4, "ERROR is shown with text: \"" + popUp.contentText.getText() + "\""); break;
+                            default: break;
+                        }
                 default: break;
             }
-            if (!waitElement(elementForClick, 5, true)) {
-                s.log(3, "element for click is not shown now, maybe click was successfully!");
+            if (!waitElement(elementForClick, 1, true)) {
+                s.log(3, "element for click is not shown now");
                 result = true;
                 break;
             }
-            s.log(3, "previous click element is failed and it's shown again, so click it one more time");
+            s.log(3, "element for click is shown again");
+        }
+        s.log("Method is finished");
+        return result;
+    }
+
+//======================================================================================================================
+
+    public boolean clickElementAndWaitingPopup(WebElement elementForClick, boolean confirmPopupProposition){
+        s.log("Method is started");
+        result = false;
+        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin};
+
+            s.log(3, "click the element link");
+            elementForClick.click();
+
+            s.log("waiting for: 1.snackBar  2.loadingWin");
+            numOfFoundElement = waitElements(elements, 5);
+            switch (numOfFoundElement){
+                case 0: s.log(3, "no PopUp is shown or this moment is missed"); break;
+                case 1: s.log(3, "snackBar is shown, the text was previously displayed"); break;
+                case 2: s.log(3, "PopUp is shown with text: \"" + popUp.contentText.getText() + "\"");
+                    elements = new WebElement[]{popUp.cancelButton, popUp.errorPic};
+                    numOfFoundElement = waitElements(elements, 5);
+                    switch (numOfFoundElement){
+                        case 0: s.log(3, "PopUp is shown, but without errors and any propositions"); break;
+                        case 1:
+                            if (confirmPopupProposition){
+                                s.log("confirm Popup Proposition");
+                                popUp.confirmButton.click();
+                            }
+                            else {
+                                s.log("cancel Popup Proposition");
+                                popUp.cancelButton.click();
+                            }
+                            break;
+                        case 2: s.log(4, "ERROR is shown with text: \"" + popUp.contentText.getText() + "\""); break;
+                        default: break;
+                    }
+                default: break;
+            }
+        s.log("Method is finished");
+        return result;
+    }
+
+
+    public boolean waitElementWithoutPin(WebElement element, int timer) {
+        s.log("Method is started");
+
+        try {
+            s.log(2, "waiting " + timer + " seconds for the element ");
+
+            WebElement[] elements = new WebElement[]{element, popUp.cancelButton};
+            if (waitElements(elements, 5) == 2){
+                s.log("Pincode PopUp is shown - cancel it!");
+                popUp.cancelButton.click();
+            }
+
+            s.log(2, "element " + element + " is shown with text: \"" + element.getText() + "\"");
+            result = true;
+
+        } catch (NoSuchElementException e) {
+            s.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            result = false;
+            screenShot.getScreenShot();
+
+        } catch (TimeoutException e) {
+            s.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            result = false;
+            screenShot.getScreenShot();
         }
         return result;
     }

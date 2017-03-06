@@ -1,11 +1,12 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.Parameters;
 import utils.Check;
 import utils.Navigation;
 import utils.Setup;
@@ -61,6 +62,11 @@ public class AuthorizationPage {
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Eden\")")
     public WebElement serverEden;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Glimmering_dev\")")
+    public WebElement serverGlim;
+
+
 
 //---------------------------------------------------------------------------------------------------------------------
 
@@ -121,8 +127,6 @@ public class AuthorizationPage {
         s.log(2, "click login button");
         loginBtn.click();
 
-
-
         s.log("Method is finished");
     }
 
@@ -143,6 +147,8 @@ public class AuthorizationPage {
             case "Amazon":  serverAmazon.click();
                 break;
             case "Eden":  serverEden.click();
+                break;
+            case "Glim":  serverGlim.click();
                 break;
             default: serverProduction.click();
                 break;
