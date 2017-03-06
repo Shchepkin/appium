@@ -15,9 +15,9 @@ import utils.Setup;
  */
 public class Hub {
     public final AppiumDriver driver;
-    private Navigation nav;
     private Setup s = new Setup();
     private Check check;
+    private Navigation nav;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/usersImage")
     private WebElement hubSettingsUsersImage;
@@ -38,6 +38,13 @@ public class Hub {
         nav = new Navigation(driver);
         check = new Check(driver);
         s = new Setup(locale_);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    }
+
+    public Hub(AppiumDriver driver) {
+        this.driver = driver;
+        this.nav = new Navigation(driver);
+        this.check = new Check(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 

@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.*;
 import utils.*;
+import utils.Wait;
 
 import java.util.Map;
 
@@ -17,6 +18,7 @@ public class positive {
     private Check check;
     private Email email;
     private PopUp popUp;
+    private Wait wait;
     private IntroPage introPage;
     private Dashboard dashboard;
     private Navigation nav;
@@ -28,6 +30,7 @@ public class positive {
     private AuthorizationPage authorizationPage;
     private ValidationCodePage validationCodePage;
     private DashboardRoomsPage roomsPage;
+    private DashboardRemotePage remotePage;
     private String expected, actual;
     private WebElement[] elements;
     private boolean result;
@@ -54,11 +57,13 @@ public class positive {
         System.out.println(locale_);
         nav = new Navigation(driver);
         user = new User(driver, locale_);
+        wait = new Wait(driver);
         check = new Check(driver);
         popUp = new PopUp(driver);
         menuPage = new MenuMainPage(driver);
         introPage = new IntroPage(driver);
         dashboard = new Dashboard(driver);
+        remotePage = new DashboardRemotePage(driver);
         accountPage = new MenuAccountPage(driver);
         addImagePage = new AddImagePage(driver);
         dashboardHeader = new DashboardHeader(driver);
@@ -68,10 +73,9 @@ public class positive {
         roomsPage = new DashboardRoomsPage(driver);
     }
 
-
-    // C29030 =================================================================================================
+    // C42097 =================================================================================================
     @Test(priority = 1, enabled = false)
-    public void C29030_New_user_registration_with_validation() {
+    public void C42097_New_user_registration_with_validation() {
         s.log("TEST IS STARTED");
 
         s.log("start from Intro Page and click Registration button");
@@ -111,9 +115,9 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-    // C29047 =================================================================================================
+    // C42098 =================================================================================================
     @Test(priority = 2, enabled = false)
-    public void C29047_Login_to_the_existing_account() {
+    public void C42098_Login_to_the_existing_account() {
         s.log("TEST IS STARTED");
         login = "ajax1@i.ua";
         pass = "qwe";
@@ -137,9 +141,9 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-    // C29051 =================================================================================================
+    // C42099 =================================================================================================
     @Test(priority = 1, enabled = false)
-    public void C29051_Add_new_Hub_manually  () {
+    public void C42099_Add_new_Hub_manually  () {
         s.log("TEST IS STARTED");
 
         login = "ajax1@i.ua";
@@ -160,7 +164,7 @@ public class positive {
         dashboard.plusBtn.click();
         nav.nextBtn.click();
         dashboard.nameField.sendKeys(hubName);
-        dashboard.hubKey.sendKeys(hubKey);
+        dashboard.hubKeyField.sendKeys(hubKey);
         dashboard.addBtn.click();
 
         elements = new WebElement[]{dashboardHeader.hubImage, popUp.cancelButton};
@@ -170,9 +174,9 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-    // C29109 =================================================================================================
+    // C42100 =================================================================================================
     @Test(priority = 1, enabled = false)
-    public void C29109_Add_new_room() {
+    public void C42100_Add_new_room() {
         s.log("TEST IS STARTED");
         pass = "qwe123";
         name = "room_number_";
@@ -201,9 +205,9 @@ public class positive {
         s.log("TEST IS FINISHED");
     }
 
-    // C29109 =================================================================================================
-    @Test(priority = 1, enabled = true)
-    public void C29116_Add_new_guest_user() {
+    // C42102 =================================================================================================
+    @Test(priority = 1, enabled = false)
+    public void C42102_Add_new_guest_user() {
         s.log("TEST IS STARTED");
         pass = "qwe";
         login = "ajax1@i.ua";
@@ -226,6 +230,44 @@ public class positive {
 //        if (popUp.contentText.getText().contains(inviteFailText)) s.log(4, "FAIL");
 
 
+        s.log("TEST IS FINISHED");
+    }
+    // C42176 =================================================================================================
+    @Test(priority = 1, enabled = true)
+    public void C42176_Virtual_Space_Control() {
+        s.log("TEST IS STARTED");
+        pass = "qwe";
+        login = "ajax1@i.ua";
+        server = "Develop";
+        String armedText = s.getLocalizeTextForKey("armed");
+        String disarmedText = s.getLocalizeTextForKey("disarmed");
+        String patrialArmedText = s.getLocalizeTextForKey("partially_armed");
+
+        s.log("start from IntroPage");
+        introPage.loginBtn.click();
+        authorizationPage.loginToTheServer(login, pass, server);
+
+        s.log("waiting for Pincode PopUp");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+
+        s.log("go to the Remote Page");
+        remotePage.goToTheRemotePage();
+        
+        s.log("click Disarm Button");
+        remotePage.disarmBtn.click();
+        Assert.assertTrue(wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found");
+
+        s.log("click Arm Button and confirm if there is shown popUp");
+        check.clickElementAndWaitingPopup(remotePage.armBtn, true);
+        Assert.assertTrue(wait.elementWithText(armedText, 10, true), "Text \"" + armedText + "\" is not found");
+
+        s.log("click Partial Arm Button and confirm if there is shown popUp");
+        check.clickElementAndWaitingPopup(remotePage.partialArmBtn, true);
+        Assert.assertTrue(wait.elementWithText(patrialArmedText, 10, true), "Text \"" + patrialArmedText + "\" is not found");
+
+        s.log("click Disarm Button");
+        remotePage.disarmBtn.click();
+        Assert.assertTrue(wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found");
 
         s.log("TEST IS FINISHED");
     }
