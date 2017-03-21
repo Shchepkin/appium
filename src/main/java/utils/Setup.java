@@ -37,12 +37,12 @@ public class Setup {
     }
 
     public Setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_) {
-        this.deviceName_ = deviceName_;
-        this.UDID_ = UDID_;
-        this.platformVersion_ = platformVersion_;
         this.URL_ = URL_;
-        this.appPath_ = appPath_;
+        this.UDID_ = UDID_;
         this.locale_ = locale_;
+        this.appPath_ = appPath_;
+        this.deviceName_ = deviceName_;
+        this.platformVersion_ = platformVersion_;
     }
 
     public String getLocale_() {
