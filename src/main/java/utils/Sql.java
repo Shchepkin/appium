@@ -92,7 +92,7 @@ public class Sql {
         validationToken.clear();
         selectList.clear();
 
-        String query = "SELECT id,Role,Phone,ConfirmationToken,Login FROM csa_accounts WHERE " + row + " LIKE '%" + value + "%' ORDER BY id ASC";
+        String query = "SELECT id,InnerID,Role,Phone,ConfirmationToken,Login FROM csa_accounts WHERE " + row + " LIKE '" + value + "' ORDER BY id ASC";
 
         try {
             connection = getConnection();
@@ -105,13 +105,14 @@ public class Sql {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
+                String innerID = rs.getString("InnerID");
                 String role = rs.getString("Role");
                 String phone = rs.getString("Phone");
                 String confirmationToken = rs.getString("ConfirmationToken");
                 String login = rs.getString("Login");
 
                 validationToken.add(confirmationToken);
-                f.format("%-5d %-8s %-20s %-20s %-1s\n", id, role, phone, confirmationToken, login);
+                f.format("%-5d %-12s %-8s %-20s %-20s %-1s\n", id, innerID, role, phone, confirmationToken, login);
             }
 
             selectList.add(f);

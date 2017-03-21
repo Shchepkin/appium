@@ -36,13 +36,6 @@ public class positive {
     private boolean result;
     private Setup s = new Setup();
     private Sql sql = new Sql();
-
-//    private static final String name = "qwertyuiopqwertyuiop";
-//    private static final String login = "test.email.ajax@i.ua";
-//    private static final String pass = "qwe123";
-//    private static final String phone = "683669947";
-//    private static final String server = "Develop";
-
     private String name, login, pass, phone, server;
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
@@ -54,15 +47,15 @@ public class positive {
 
         s.log("Create objects of pages");
         hub = new Hub(driver, locale_);
-        System.out.println(locale_);
         nav = new Navigation(driver);
         user = new User(driver, locale_);
-        wait = new Wait(driver);
+        wait = new Wait(driver, locale_);
         check = new Check(driver);
         popUp = new PopUp(driver);
         menuPage = new MenuMainPage(driver);
         introPage = new IntroPage(driver);
         dashboard = new Dashboard(driver);
+        roomsPage = new DashboardRoomsPage(driver);
         remotePage = new DashboardRemotePage(driver);
         accountPage = new MenuAccountPage(driver);
         addImagePage = new AddImagePage(driver);
@@ -70,21 +63,25 @@ public class positive {
         registrationPage = new RegistrationPage(driver);
         authorizationPage = new AuthorizationPage(driver);
         validationCodePage = new ValidationCodePage(driver);
-        roomsPage = new DashboardRoomsPage(driver);
     }
 
     // C42097 =================================================================================================
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void C42097_New_user_registration_with_validation() {
         s.log("TEST IS STARTED");
+        login = "ajaxsys32@bigmir.net";
+        phone = "977275625";
+        pass = "qwe";
+        name = "name";
+        server = "Develop";
 
         s.log("start from Intro Page and click Registration button");
         introPage.setServer(server);
         introPage.registrationBtn.click();
 
-        s.log("waiting for User Agreement Dialog and tap OK");
-        Assert.assertTrue(check.waitElement(popUp.userAgreement, 30, true));
-        nav.nextBtn.click();
+//        s.log("waiting for User Agreement Dialog and tap OK");
+//        Assert.assertTrue(check.waitElement(popUp.userAgreement, 30, true));
+//        nav.nextBtn.click();
 
         s.log("registration process");
         registrationPage.setUserPic(1);
@@ -220,20 +217,18 @@ public class positive {
         s.log("waiting for Pincode PopUp");
         check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
 
-        hub.goToTheUserInvitationPage();
+        hub.goToTheUserlistPage();
 
-        user.addUserWithEmail("test.email.ajax87@i.ua");
-        System.exit(0);
-
-        user.fillUserEmailsField("test.email.ajax87@i.ua");
-        if(check.waitElement(popUp.confirmButton, 10, true)) popUp.confirmButton.click();
-//        if (popUp.contentText.getText().contains(inviteFailText)) s.log(4, "FAIL");
-
+        s.log("waiting for Pincode PopUp");
+//        Assert.assertTrue(user.addOneFromEmailField(), "Add one user from email field is failed");
+//        Assert.assertTrue(user.addOneFromContactList(), "Add one user from Contact List is failed");
+//        Assert.assertTrue(user.addManyFromEmailField(), "Add many users from email field is failed");
+        Assert.assertTrue(user.addManyFromContactList(), "Add many users from Contact List is failed");
 
         s.log("TEST IS FINISHED");
     }
     // C42176 =================================================================================================
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void C42176_Virtual_Space_Control() {
         s.log("TEST IS STARTED");
         pass = "qwe";
@@ -334,8 +329,8 @@ public class positive {
 
         s.log("start from Intro Page and click Registration button");
 
-        for (int i = 42; i <= 100; i++) {
-            if (i > 42){
+        for (int i = 1; i <= 100; i++) {
+            if (i > 1){
                 setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
             }
             introPage.setServer(server);
@@ -349,15 +344,15 @@ public class positive {
             nav.nextBtn.click();
 
             s.log("registration process");
-            name = "test.user." + i;
-            login = "test.email.ajax" + i + "@i.ua";
+            name = "autotest_user" + i;
+            login = "autotest_ajax" + i + "@i.ua";
 
-            if (i < 10) {phone = "68000000" + i;}
-            else if (i >= 10 && i < 100) {phone = "6800000" + i;}
-            else if (i >= 100 && i < 1000) {phone = "680000" + i;}
-            else if (i >= 1000 && i < 10000) {phone = "68000" + i;}
-            else if (i >= 10000 && i < 100000) {phone = "6800" + i;}
-            else if (i >= 100000 && i < 1000000) {phone = "680" + i;}
+            if (i < 10) {phone = "68100000" + i;}
+            else if (i >= 10 && i < 100) {phone = "6810000" + i;}
+            else if (i >= 100 && i < 1000) {phone = "681000" + i;}
+            else if (i >= 1000 && i < 10000) {phone = "68100" + i;}
+            else if (i >= 10000 && i < 100000) {phone = "6810" + i;}
+            else if (i >= 100000 && i < 1000000) {phone = "681" + i;}
             else {phone = "68" + i;}
 
             registrationPage.fillFields(name, login, pass, phone);

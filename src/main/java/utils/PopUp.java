@@ -93,6 +93,9 @@ public class PopUp {
     @AndroidFindBy(id = "com.ajaxsystems:id/web")
     public WebElement userAgreement;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/agreement")
+    public WebElement userAgreementCheckbox;
+
 //=====================================================================================
 
     public PopUp() {

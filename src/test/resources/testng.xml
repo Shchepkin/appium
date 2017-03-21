@@ -8,7 +8,7 @@
 <suite name = "Suite">
     <test name = "Prestigio">
         <parameter name="deviceName_" value="Prestigio"/>
-        <parameter name="appPath_" value="/home/installer/Android/AndroidApp/ajax.2.9.6.apk"/>
+        <parameter name="appPath_" value="/home/installer/Android/AndroidApp/ajax.2.9.9.apk"/>
 
         <parameter name="locale_" value="uk"/>
         <parameter name="UDID_" value="MTPB0252700596"/>

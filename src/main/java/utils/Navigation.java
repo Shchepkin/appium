@@ -30,7 +30,13 @@ public class Navigation {
     public WebElement cancelBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/ok")
-    public WebElement okBtnd;
+    public WebElement okBtn;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
+    private WebElement confirmButton;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
+    private WebElement cancelButton;
 
     @AndroidFindBy(xpath = "//*[@resource-id='com.ajaxsystems:id/rrv_recycler_view']//android.widget.RelativeLayout/android.widget.TextView")
     private List<WebElement> userList;
@@ -264,7 +270,7 @@ public class Navigation {
                 }catch (NoSuchElementException e){
                     s.log(3, "NoSuchElementException, element is not found on this screen!");
                 }
-            }else s.log(3, "element is not found on this screen!");
+            }else s.log(3, "element with text \"" + textOfSearchingElement + "\" is not found on this screen!");
 
             if (direction.equals("down")) {
                 swipeDown(800, 2);
@@ -331,7 +337,8 @@ public class Navigation {
 
     public void tapCancelButton() {cancelBtn.click();}
 
-    public void tapOkButton() {okBtnd.click();}
+    public void tapOkButton() {
+        okBtn.click();}
 
 //======================================================================================================================
 // GO
@@ -365,5 +372,42 @@ public class Navigation {
         s.log("Method is finished");
         return result;
     }
+
+//======================================================================================================================
+// CONFIRMATION
+//======================================================================================================================
+    public void confirmIt() {
+        try {
+            okBtn.click();
+            s.log("OK button is pressed");
+        }catch (Exception e){
+            s.log(3, "\nOK Button selector was not found\n" + e.getMessage());
+
+            try {
+                confirmButton.click();
+                s.log("Confirm button is pressed");
+            }catch (Exception e1){
+                s.log(3, "\nConfirm button selector was not found\n" + e1.getMessage());
+            }
+        }
+    }
+
+    public void cancelIt() {
+        try {
+            cancelBtn.click();
+            s.log("Cancel button is pressed");
+        }catch (Exception e){
+            s.log(3, "\nfirst Cancel Button selector was not found\n" + e.getMessage());
+
+            try {
+                cancelButton.click();
+                s.log("Cancel button is pressed");
+            }catch (Exception e1){
+                s.log(3, "\nsecond Cancel Button selector was not found\n" + e.getMessage());
+            }
+        }
+    }
+
+
 
 }

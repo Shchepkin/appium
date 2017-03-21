@@ -1,7 +1,6 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
@@ -12,14 +11,9 @@ import utils.Setup;
 
 import java.util.List;
 
-public class RegistrationPage {
+public class RegistrationPage1 extends Base{
 
     public final AppiumDriver driver;
-    private IntroPage introPage;
-    private AuthorizationPage authorizationPage;
-    private Navigation nav;
-    private AddImagePage addImagePage;
-    private Setup s = new Setup();
 
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
@@ -156,12 +150,9 @@ public class RegistrationPage {
 
     }
 
-    public RegistrationPage(AppiumDriver driver) {
+    public RegistrationPage1(AppiumDriver driver) {
+        super(driver);
         this.driver = driver;
-        nav = new Navigation(driver);
-        introPage = new IntroPage(driver);
-        addImagePage = new AddImagePage(driver);
-        authorizationPage = new AuthorizationPage(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 }

@@ -18,7 +18,7 @@ public class Check {
     private PopUp popUp;
     private int numOfFoundElement;
 
-    public boolean result;
+    private boolean result;
 
     public Check(AppiumDriver driver) {
         this.driver = driver;
@@ -139,29 +139,9 @@ public class Check {
 
             s.log("waiting for: 1.snackBar  2.loadingWin");
             numOfFoundElement = waitElements(elements, period);
-            switch (numOfFoundElement){
-                case 0: s.log(3, "no PopUp is shown or this moment is missed"); break;
-                case 1: s.log(3, "snackBar is shown, the text was previously displayed"); break;
-                case 2: s.log(3, "PopUp is shown with text: \"" + popUp.contentText.getText() + "\"");
-                        elements = new WebElement[]{popUp.cancelButton, popUp.errorPic};
-                        numOfFoundElement = waitElements(elements, 5);
-                        switch (numOfFoundElement){
-                            case 0: s.log(3, "PopUp is shown, but without errors and any propositions"); break;
-                            case 1:
-                                if (confirmPopupProposition){
-                                    s.log("confirm Popup Proposition");
-                                    popUp.confirmButton.click();
-                                }
-                                else {
-                                    s.log("cancel Popup Proposition");
-                                    popUp.cancelButton.click();
-                                }
-                                break;
-                            case 2: s.log(4, "ERROR is shown with text: \"" + popUp.contentText.getText() + "\""); break;
-                            default: break;
-                        }
-                default: break;
-            }
+
+            checkNum(numOfFoundElement, confirmPopupProposition);
+
             if (!waitElement(elementForClick, 1, true)) {
                 s.log(3, "element for click is not shown now");
                 result = true;
@@ -180,38 +160,48 @@ public class Check {
         result = false;
         WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin};
 
-            s.log(3, "click the element link");
-            elementForClick.click();
+        s.log(3, "click the element link");
+        elementForClick.click();
 
-            s.log("waiting for: 1.snackBar  2.loadingWin");
-            numOfFoundElement = waitElements(elements, 5);
-            switch (numOfFoundElement){
-                case 0: s.log(3, "no PopUp is shown or this moment is missed"); break;
-                case 1: s.log(3, "snackBar is shown, the text was previously displayed"); break;
-                case 2: s.log(3, "PopUp is shown with text: \"" + popUp.contentText.getText() + "\"");
-                    elements = new WebElement[]{popUp.cancelButton, popUp.errorPic};
-                    numOfFoundElement = waitElements(elements, 5);
-                    switch (numOfFoundElement){
-                        case 0: s.log(3, "PopUp is shown, but without errors and any propositions"); break;
-                        case 1:
-                            if (confirmPopupProposition){
-                                s.log("confirm Popup Proposition");
-                                popUp.confirmButton.click();
-                            }
-                            else {
-                                s.log("cancel Popup Proposition");
-                                popUp.cancelButton.click();
-                            }
-                            break;
-                        case 2: s.log(4, "ERROR is shown with text: \"" + popUp.contentText.getText() + "\""); break;
-                        default: break;
-                    }
-                default: break;
-            }
+        s.log("waiting for: 1.snackBar  2.loadingWin");
+        numOfFoundElement = waitElements(elements, 4);
+
+        checkNum(numOfFoundElement, confirmPopupProposition);
+
         s.log("Method is finished");
         return result;
     }
 
+//======================================================================================================================
+
+    private void checkNum (int numOfFoundElement, boolean confirmPopupProposition) {
+
+        switch (numOfFoundElement){
+            case 0: s.log(3, "no PopUp is shown or this moment is missed"); break;
+            case 1: s.log(3, "snackBar is shown, the text was previously displayed"); break;
+            case 2: s.log(3, "PopUp is shown with text: \"" + popUp.contentText.getText() + "\"");
+                WebElement[] elements = new WebElement[]{popUp.cancelButton, popUp.errorPic};
+                numOfFoundElement = waitElements(elements, 5);
+                switch (numOfFoundElement){
+                    case 0: s.log(3, "PopUp is shown, but without errors and any propositions"); break;
+                    case 1:
+                        if (confirmPopupProposition){
+                            s.log("confirm Popup Proposition");
+                            popUp.confirmButton.click();
+                        }
+                        else {
+                            s.log("cancel Popup Proposition");
+                            popUp.cancelButton.click();
+                        }
+                        break;
+                    case 2: s.log(4, "ERROR is shown with text: \"" + popUp.contentText.getText() + "\""); break;
+                    default: break;
+                }
+            default: break;
+        }
+    }
+
+//======================================================================================================================
 
     public boolean waitElementWithoutPin(WebElement element, int timer) {
         s.log("Method is started");
@@ -220,7 +210,7 @@ public class Check {
             s.log(2, "waiting " + timer + " seconds for the element ");
 
             WebElement[] elements = new WebElement[]{element, popUp.cancelButton};
-            if (waitElements(elements, 5) == 2){
+            if (waitElements(elements, 5) == 2) {
                 s.log("Pincode PopUp is shown - cancel it!");
                 popUp.cancelButton.click();
             }
@@ -241,4 +231,24 @@ public class Check {
         return result;
     }
 
+//======================================================================================================================
+
+    public boolean forSnackBarIsPresent(int timer) {
+        s.log("Method is started");
+        result = false;
+
+        try {
+            s.log(2, "waiting " + timer + " seconds for SnackBar");
+            WebDriverWait iWait = new WebDriverWait(driver, timer);
+            iWait.until(ExpectedConditions.visibilityOf(popUp.snackBar));
+
+            s.log(3, "SnackBar is shown with text: \"" + popUp.snackBar.getText() + "\"");
+            result = true;
+
+        } catch (Exception e) {
+            s.log(4, "SnackBar is not shown:\n\n" + e + "\n");
+            screenShot.getScreenShot();
+        }
+        return result;
+    }
 }

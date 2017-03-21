@@ -18,6 +18,7 @@ public class Hub {
     private Setup s = new Setup();
     private Check check;
     private Navigation nav;
+    private String sendInvitesButtonText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/usersImage")
     private WebElement hubSettingsUsersImage;
@@ -38,6 +39,7 @@ public class Hub {
         nav = new Navigation(driver);
         check = new Check(driver);
         s = new Setup(locale_);
+        sendInvitesButtonText = s.getLocalizeTextForKey("send_invites");
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -50,7 +52,6 @@ public class Hub {
 
     public void goToTheUserInvitationPage() {
         s.log("method is started");
-        String sendInvitesButtonText = s.getLocalizeTextForKey("send_invites");
 
         s.log("click on hub");
         hubImageOnDeviceList.click();
@@ -63,6 +64,22 @@ public class Hub {
 
         check.waitElement(nav.backBtn, 10, true);
         nav.scrollToElementWithText("up", sendInvitesButtonText, true);
+        s.log("method is finished");
+    }
+
+    public void goToTheUserlistPage() {
+        s.log("method is started");
+
+        s.log("click on hub");
+        hubImageOnDeviceList.click();
+
+        s.log("click Hub Settings button");
+        hubSettingsBtn.click();
+
+        s.log("click Users tab");
+        hubSettingsUsersImage.click();
+
+        check.waitElement(nav.backBtn, 10, true);
         s.log("method is finished");
     }
 }
