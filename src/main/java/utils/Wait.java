@@ -16,10 +16,13 @@ public class Wait {
     private AppiumDriver driver;
     private boolean result;
     private ScreenShot screenShot;
-    private Setup s = new Setup();
+    private String waiterText;
+    private Setup s;
 
-    public Wait(AppiumDriver driver) {
+    public Wait(AppiumDriver driver, String locale_){
         this.driver = driver;
+        s = new Setup(locale_);
+        waiterText = s.getLocalizeTextForKey("request_send");
     }
 
     public boolean elementWithText(String searchingText, int timer, boolean makeScreenShot) {
@@ -29,7 +32,6 @@ public class Wait {
         try {
             s.log(2, "waiting " + timer + " seconds for the element with text \"" + searchingText + "\"");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
-//            iWait.until(ExpectedConditions.textToBePresentInElement(searchingElement, searchingText));
             iWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//android.widget.TextView[@text='" + searchingText + "']"))));
 
             s.log(2, "element is shown with text: \"" + searchingText + "\"");
@@ -45,5 +47,30 @@ public class Wait {
         }
         return result;
     }
+
+
+    public boolean invisibilityOfWaiter(boolean makeScreenShot) {
+        s.log("Method is started");
+        result = false;
+
+        try {
+            s.log(2, "waiting 90 seconds while Waiter Is Invisible");
+            WebDriverWait iWait = new WebDriverWait(driver, 90);
+            iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='" + waiterText + "']")));
+
+            s.log(2, "waiter is gone");
+            result = true;
+        } catch (NoSuchElementException e) {
+            s.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            result = false;
+            if (makeScreenShot){screenShot.getScreenShot();}
+        } catch (TimeoutException e) {
+            s.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            result = false;
+            if (makeScreenShot){screenShot.getScreenShot();}
+        }
+        return result;
+    }
+
 
 }
