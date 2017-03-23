@@ -1,15 +1,17 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import utils.*;
 
 import java.util.Map;
 
-public class Base {
+public class Base{
+
+ /*
+
+
     public final AppiumDriver driver;
     public Map tokenMap;
     public Hub hub;
@@ -17,7 +19,7 @@ public class Base {
     public Check check;
     public Email email;
     public PopUp popUp;
-    public Wait wait;
+    public DashboardHeader header;
     public IntroPage introPage;
     public Dashboard dashboard;
     public Navigation nav;
@@ -34,15 +36,10 @@ public class Base {
     public Sql sql;
 
 
-
-
-
     public Base(AppiumDriver driver) {
         this.driver = driver;
         hub = new Hub(driver);
         nav = new Navigation(driver);
-        user = new User(driver, "");
-        wait = new Wait(driver, "");
         check = new Check(driver);
         popUp = new PopUp(driver);
         menuPage = new MenuMainPage(driver);
@@ -62,4 +59,7 @@ public class Base {
 //        page1 = PageFactory.initElements(driver, Page1.class);
 
     }
+
+*/
+
 }
