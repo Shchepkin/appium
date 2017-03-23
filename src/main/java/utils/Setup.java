@@ -28,6 +28,7 @@ public class Setup {
     private String deviceName_, UDID_, platformVersion_, URL_, appPath_, jsonString, collection, locale_;
 
     private Map localizeKeys;
+    private Map dbSettings;
 
     public Setup() {
     }
@@ -135,6 +136,45 @@ public class Setup {
         return localizeKeys;
     }
 
+
+    public Map getDbSettings() {
+        log("Method is started");
+        try {
+            dbSettings = new HashMap<>();
+
+            log(2, "get Application start up path");
+            path = getApplicationStartUp();
+
+            log(2, "get json content ");
+            jsonString = loadJSON(path + "/classes/db.json");
+
+            JsonParser parser = new JsonParser();
+            JsonObject jo = parser.parse(jsonString).getAsJsonObject();
+            Gson gson = new Gson();
+
+            log(2, "create DB settings map ");
+            Map map = gson.fromJson(jo.get("DB").getAsJsonObject(), HashMap.class);
+            dbSettings.putAll(map);
+
+
+        } catch (UnsupportedEncodingException e) {
+            log(4, "UnsupportedEncodingException" + e);
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            log(4, "MalformedURLException" + e);
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            log(4, "FileNotFoundException" + e);
+            e.printStackTrace();
+        } catch (IOException e) {
+            log(4, "IOException" + e);
+            e.printStackTrace();
+        }
+        log("Method is finished");
+        return dbSettings;
+    }
+
+
     private Path getApplicationStartUp() throws UnsupportedEncodingException, MalformedURLException {
         log("Method is started");
         URL startupUrl = getClass().getProtectionDomain().getCodeSource()
@@ -170,7 +210,9 @@ public class Setup {
         return new String(buf);
     }
 
-
+//**********************************************************************************************************************
+// LOG
+//**********************************************************************************************************************
     public void log(int type, String message) {
         Throwable t = new Throwable();
         StackTraceElement trace[] = t.getStackTrace();

@@ -56,7 +56,7 @@ public class RegistrationPage1 extends Base{
     public WebElement dashboard;
 
 //====================================================================================
-
+/*
     public void fakeRegistration(String email, String password, String phone, String server) {
         s.log("Method is started");
         introPage.loginBtn.click();
@@ -74,7 +74,6 @@ public class RegistrationPage1 extends Base{
         passwordConfirmField.sendKeys(password);
         registrationBtn.click();
     }
-
 
 
     public void fillFields(String name, String email, String password, String phone, String server) {
@@ -150,8 +149,10 @@ public class RegistrationPage1 extends Base{
 
     }
 
+    */
+
     public RegistrationPage1(AppiumDriver driver) {
-        super(driver);
+//        super(driver);
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }

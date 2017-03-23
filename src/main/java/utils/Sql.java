@@ -12,19 +12,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Sql {
+
+    private Setup s = new Setup();
+    private Formatter f = new Formatter();
+    private ArrayList validationToken = new ArrayList();
+
     // JDBC URL, username and password of MySQL server
-    private static final String url = "jdbc:mysql://dbcsamain.cczwem0pzosv.eu-west-1.rds.amazonaws.com:3306/debug_models_csa";
-    private static final String user = "testUserDeletion";
-    private static final String password = "d3l3T10n";
+    private String url = s.getDbSettings().get("url").toString();
+    private String user = s.getDbSettings().get("user").toString();
+    private String password = s.getDbSettings().get("password").toString();
 
     // JDBC variables for opening and managing connection
     private static Connection connection;
     private static Statement stmt;
     private static ResultSet rs;
-
-    private Setup s = new Setup();
-    private Formatter f = new Formatter();
-    private ArrayList validationToken = new ArrayList();
 
     public ArrayList selectList = new ArrayList();
     public Map tokenMap = new HashMap();
@@ -32,7 +33,6 @@ public class Sql {
 
     public Sql() {
     }
-
 
     /**
      *  REQUIRED getConnection()
@@ -131,7 +131,6 @@ public class Sql {
     }
 
 
-
     /**
      *  REQUIRED getConnection()
         @param row   - name of row for searching element in database (Login, Phone)
@@ -197,7 +196,7 @@ public class Sql {
 
 
     /**
-     * This method for getting Connection to the SQL server
+     * This method for getting Connection to the SQL server with 10 attempts
      * Must be used with other methods.
      * @return Connection connection
      */
@@ -212,7 +211,7 @@ public class Sql {
 
             }catch (Exception e){
                 s.log(3, "opening database connection fail: " + e.getClass());
-                s.log(3, "Cause of problem: "+ e.getCause().toString());
+                s.log(3, "cause of problem: "+ e.getCause().toString());
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e1) {
