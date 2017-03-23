@@ -11,6 +11,8 @@ import utils.Setup;
 
 public class alliureTest {
     private Setup s = new Setup();
+
+
     @BeforeMethod
     public void setUp() throws Exception {
         System.out.println("start");

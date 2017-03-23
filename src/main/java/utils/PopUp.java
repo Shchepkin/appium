@@ -40,7 +40,7 @@ public class PopUp {
     public WebElement loadingWin;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/progress")
-    public WebElement progressCircle;
+    public WebElement progressImage;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/shadow")
     public WebElement shadow;
@@ -92,6 +92,9 @@ public class PopUp {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/web")
     public WebElement userAgreement;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/agreement")
+    public WebElement userAgreementCheckbox;
 
 //=====================================================================================
 
