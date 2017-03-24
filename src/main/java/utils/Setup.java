@@ -7,16 +7,19 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -24,11 +27,11 @@ public class Setup {
 
     private AppiumDriver driver;
     private Path path;
-    private String localizeTextForKey;
+    private String localizeTextForKey, oneUser;
     private String deviceName_, UDID_, platformVersion_, URL_, appPath_, jsonString, collection, locale_;
 
-    private Map localizeKeys;
-    private Map dbSettings;
+    private Map localizeKeys, dbSettings, jsonCollection;
+    private ArrayList<String> jsonStringArray = new ArrayList<>();
 
     public Setup() {
     }
@@ -156,24 +159,63 @@ public class Setup {
             Map map = gson.fromJson(jo.get("DB").getAsJsonObject(), HashMap.class);
             dbSettings.putAll(map);
 
-
-        } catch (UnsupportedEncodingException e) {
-            log(4, "UnsupportedEncodingException" + e);
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            log(4, "MalformedURLException" + e);
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            log(4, "FileNotFoundException" + e);
-            e.printStackTrace();
-        } catch (IOException e) {
-            log(4, "IOException" + e);
-            e.printStackTrace();
+        } catch (Exception e) {
+            log(4, "Exception\n" + e + "\n");
         }
         log("Method is finished");
         return dbSettings;
     }
 
+
+    public Map getJsonCollection(String filePath, String collection) {
+        log("Method is started");
+        try {
+
+            log(2, "get Application start up path");
+            path = getApplicationStartUp();
+
+            log(2, "get json content ");
+            jsonString = loadJSON(path + "/classes/" + filePath);
+
+            JsonParser parser = new JsonParser();
+            JsonObject jo = parser.parse(jsonString).getAsJsonObject();
+            Gson gson = new Gson();
+
+            log(2, "create collection map ");
+            Map map = gson.fromJson(jo.get(collection).getAsJsonObject(), HashMap.class);
+            jsonCollection.putAll(map);
+
+        } catch (Exception e) {
+            log(4, "Exception\n" + e + "\n");
+        }
+        log("Method is finished");
+        return jsonCollection;
+    }
+
+    public ArrayList <String> getJsonStringArray(String filePath, String collection) {
+        log("Method is started");
+        try {
+
+            log(2, "get Application start up path");
+            path = getApplicationStartUp();
+
+            log(2, "get json content from file");
+            FileReader reader = new FileReader(path + "/classes/" + filePath);
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+
+            log(2, "create collection array ");
+            jsonStringArray.addAll((JSONArray) jsonObject.get(collection));
+
+        } catch (Exception e) {
+            log(4, "Exception\n" + e.getMessage() + "\n");
+        }
+        log("created " + jsonStringArray.size() + "elements in arrayList");
+        log("Method is finished");
+        return jsonStringArray;
+    }
+
+//**********************************************************************************************************************
 
     private Path getApplicationStartUp() throws UnsupportedEncodingException, MalformedURLException {
         log("Method is started");

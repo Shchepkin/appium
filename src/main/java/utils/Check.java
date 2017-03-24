@@ -26,16 +26,16 @@ public class Check {
         this.screenShot = new ScreenShot(driver);
     }
 
-    public void isElementDisplayed(WebElement element) {
+//**********************************************************************************************************************
+    public void isElementDisplayed(WebElement element, int timer) {
         s.log("Method is started");
         // create ScreenShot object for making screenshots
 //        screenShot = new ScreenShot(driver);
 
         try {
             // assert is the element displayed on the page
-            WebDriverWait iWait = new WebDriverWait(driver, 15);
+            WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(element));
-            element.isDisplayed();
             s.log("element is shown with text: \"" + element.getText() + "\"");
 
         } catch (NoSuchElementException e) {

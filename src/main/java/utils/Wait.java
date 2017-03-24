@@ -54,7 +54,7 @@ public class Wait {
         result = false;
 
         try {
-            s.log(2, "waiting 90 seconds while Waiter Is Invisible");
+            s.log(2, "waiting 90 seconds while Waiter become Invisible");
             WebDriverWait iWait = new WebDriverWait(driver, 90);
             iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='" + waiterText + "']")));
 

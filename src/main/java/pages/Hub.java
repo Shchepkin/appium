@@ -32,6 +32,9 @@ public class Hub {
     @AndroidFindBy(id = "com.ajaxsystems:id/settings")
     private WebElement hubSettingsBtn;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/status")
+    private WebElement userStatus;
+
 
 
     public Hub(AppiumDriver driver, String locale_) {
@@ -70,7 +73,7 @@ public class Hub {
     public void goToTheUserlistPage() {
         s.log("method is started");
 
-        s.log("click on hub");
+        s.log("click on Hub tab");
         hubImageOnDeviceList.click();
 
         s.log("click Hub Settings button");
@@ -79,7 +82,7 @@ public class Hub {
         s.log("click Users tab");
         hubSettingsUsersImage.click();
 
-        check.waitElement(nav.backBtn, 10, true);
+        check.waitElement(userStatus, 10, true);
         s.log("method is finished");
     }
 }
