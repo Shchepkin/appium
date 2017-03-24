@@ -45,14 +45,14 @@ public class Imitator {
     public void sendCommand(String command){
         s.log("send command");
         try {
-            serialPort.writeString(command +"\r\n");
+            serialPort.writeString(command +"\n");
         }catch (Exception e) {
             s.log(3, "Exception \n" + e + "\n");
         }
     }
 
     public void addDevice(int dev_id, int dev_numb, int dev_type){
-        String command = String.format("add %d %d %d\r\n", dev_id, dev_numb, dev_type);
+        String command = String.format("add %d %d %d\n", dev_id, dev_numb, dev_type);
         try {
             serialPort.writeString(command);
             Thread.sleep(2000);
@@ -63,7 +63,7 @@ public class Imitator {
 
     public void getDeviceList(){
         try {
-            serialPort.writeString("lst\r\n");
+            serialPort.writeString("lst\n");
             Thread.sleep(2000);
         }catch (Exception e) {
             s.log(3, "Exception \n" + e + "\n");
@@ -72,7 +72,7 @@ public class Imitator {
 
     public void clearMemory(){
         try {
-            serialPort.writeString("cln\r\n");
+            serialPort.writeString("cln\n");
             Thread.sleep(2000);
         }catch (Exception e) {
             s.log(3, "Exception \n" + e + "\n");
@@ -81,7 +81,7 @@ public class Imitator {
 
     public void registerDevice(int dev_id){
         try {
-            serialPort.writeString("reg " + dev_id + "\r\n");
+            serialPort.writeString("reg " + dev_id + "\n");
             Thread.sleep(2000);
         }catch (Exception e) {
             s.log(3, "Exception \n" + e + "\n");
