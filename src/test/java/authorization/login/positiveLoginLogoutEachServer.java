@@ -44,7 +44,7 @@ public class positiveLoginLogoutEachServer {
     public void Login_to_the_Develop_with_correct_data() {
         authorizationPage.loginToTheServer("ajax1@i.ua", "qwe", "Develop");
         pinPage.closePinWindowIfDisplayed();
-        check.isElementDisplayed(dashboardHeader.menuDrawer);
+        check.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         logOut();
     }
 
@@ -52,7 +52,7 @@ public class positiveLoginLogoutEachServer {
     public void Login_to_the_Production_with_correct_data() {
         authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Production");
         pinPage.closePinWindowIfDisplayed();
-        check.isElementDisplayed(dashboardHeader.menuDrawer);
+        check.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         logOut();
     }
 
@@ -60,7 +60,7 @@ public class positiveLoginLogoutEachServer {
     public void Login_to_the_Debug_with_correct_data() {
         authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Debug");
         pinPage.closePinWindowIfDisplayed();
-        check.isElementDisplayed(dashboardHeader.menuDrawer);
+        check.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         logOut();
     }
 
@@ -68,7 +68,7 @@ public class positiveLoginLogoutEachServer {
     public void Login_to_the_Eden_with_correct_data() {
         authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Eden");
         pinPage.closePinWindowIfDisplayed();
-        check.isElementDisplayed(dashboardHeader.menuDrawer);
+        check.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         logOut();
     }
 
@@ -76,7 +76,7 @@ public class positiveLoginLogoutEachServer {
     public void Login_to_the_Amazon_with_correct_data() {
         authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Amazon");
         pinPage.closePinWindowIfDisplayed();
-        check.isElementDisplayed(dashboardHeader.menuDrawer);
+        check.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         logOut();
     }
 
@@ -84,7 +84,7 @@ public class positiveLoginLogoutEachServer {
         dashboardHeader.menuDrawer.click();
         menuPage.accountBtn.click();
         accountPage.logoutBtn.click();
-        check.isElementDisplayed(introPage.loginBtn);
+        check.isElementDisplayed(introPage.loginBtn, 15);
     }
 
     @AfterClass

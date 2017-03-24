@@ -42,32 +42,32 @@ public class pageElementExisting {
 
     @Test()
     public void The_Title_exists_on_the_ForgotPassword_page() {
-        assertion.isElementDisplayed(forgotPasswordPage.emailField);
+        assertion.isElementDisplayed(forgotPasswordPage.emailField, 15);
     }
 
     @Test()
     public void The_Email_field_exists_on_the_ForgotPassword_page() {
-        assertion.isElementDisplayed(forgotPasswordPage.emailField);
+        assertion.isElementDisplayed(forgotPasswordPage.emailField, 15);
     }
 
     @Test()
     public void The_Country_Code_field_exists_on_the_ForgotPassword_page() {
-        assertion.isElementDisplayed(forgotPasswordPage.countryCode);
+        assertion.isElementDisplayed(forgotPasswordPage.countryCode, 15);
     }
 
     @Test()
     public void The_Phone_field_exists_on_the_ForgotPassword_page() {
-        assertion.isElementDisplayed(forgotPasswordPage.phoneField);
+        assertion.isElementDisplayed(forgotPasswordPage.phoneField, 15);
     }
 
     @Test()
     public void The_Cancel_Button_exists_on_the_ForgotPassword_page() {
-        assertion.isElementDisplayed(forgotPasswordPage.canselBtn);
+        assertion.isElementDisplayed(forgotPasswordPage.canselBtn, 15);
     }
 
     @Test()
     public void The_OK_Button_exists_on_the_ForgotPassword_page() {
-        assertion.isElementDisplayed(forgotPasswordPage.okBtn);
+        assertion.isElementDisplayed(forgotPasswordPage.okBtn, 15);
     }
 
     @AfterClass

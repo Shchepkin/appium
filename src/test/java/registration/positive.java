@@ -66,7 +66,7 @@ public class positive {
     }
 
     // C42097 =================================================================================================
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void C42097_New_user_registration_with_validation() {
         s.log("TEST IS STARTED");
         login = "ajaxsys32@bigmir.net";
@@ -86,6 +86,7 @@ public class positive {
         s.log("registration process");
         registrationPage.setUserPic(1);
         registrationPage.fillFields(name, login, pass, phone);
+        registrationPage.confirmAgriment();
 
         check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5, 3, false);
 
@@ -206,6 +207,7 @@ public class positive {
     @Test(priority = 1, enabled = false)
     public void C42102_Add_new_guest_user() {
         s.log("TEST IS STARTED");
+
         pass = "qwe";
         login = "ajax1@i.ua";
         server = "Develop";
@@ -227,6 +229,7 @@ public class positive {
 
         s.log("TEST IS FINISHED");
     }
+
     // C42176 =================================================================================================
     @Test(priority = 1, enabled = false)
     public void C42176_Virtual_Space_Control() {
@@ -296,6 +299,18 @@ public class positive {
     }
 
 
+
+    @Test(priority = 1, enabled = true)
+    public void com() {
+        s.log("TEST IS STARTED");
+        Imitator imitator = new Imitator();
+        imitator.sendCommand("ver\r\n");
+        imitator.addDevice(203060, 2, 1);
+        imitator.getDeviceList();
+        imitator.registerDevice(203060);
+
+        s.log("TEST IS FINISHED");
+    }
 
     @Test(priority = 1, enabled = false)
     public void Test() {
