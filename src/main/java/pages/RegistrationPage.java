@@ -125,6 +125,14 @@ public class RegistrationPage {
         s.log("Method is finished");
     }
 
+
+    public void confirmAgriment() {
+        s.log("Method is started");
+        nav.swipeUp();
+        userAgreementCheckbox.click();
+        s.log("Method is finished");
+    }
+
     public void setUserPic(int imageNumber) {
         s.log("Method is started");
         userPic.click();

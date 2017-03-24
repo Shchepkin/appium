@@ -51,7 +51,7 @@ public class positiveLoginWithCheckingFields {
         authorizationPage.loginToTheServer("  ajax1@i.ua  ", "  qwe123  ", "Production");
 
         Reporter.log("> Check login", true);
-        assertion.isElementDisplayed(dashboardHeader.menuDrawer);
+        assertion.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         Reporter.log("> Done", true);
     }
 
@@ -68,7 +68,7 @@ public class positiveLoginWithCheckingFields {
         authorizationPage.loginToTheServer("AjaX1@i.Ua", "qwe123", "Production");
 
         Reporter.log("> Check login", true);
-        assertion.isElementDisplayed(dashboardHeader.menuDrawer);
+        assertion.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         Reporter.log("> Done", true);
     }
 

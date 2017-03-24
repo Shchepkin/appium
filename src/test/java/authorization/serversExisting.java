@@ -43,31 +43,31 @@ public class serversExisting {
 
     @Test()
     public void The_Debug_server_link_exists_on_the_Server_Selection_Window() {
-        assertion.isElementDisplayed(authorizationPage.serverDebug);
+        assertion.isElementDisplayed(authorizationPage.serverDebug, 15);
     }
 
 
     @Test
     public void The_Develop_server_link_exists_on_the_Server_Selection_Window() {
-        assertion.isElementDisplayed(authorizationPage.serverDevelop);
+        assertion.isElementDisplayed(authorizationPage.serverDevelop, 15);
     }
 
 
     @Test()
     public void The_Production_server_link_exists_on_the_Server_Selection_Window() {
-        assertion.isElementDisplayed(authorizationPage.serverProduction);
+        assertion.isElementDisplayed(authorizationPage.serverProduction, 15);
     }
 
 
     @Test()
     public void The_Amazon_server_link_exists_on_the_Server_Selection_Window() {
-        assertion.isElementDisplayed(authorizationPage.serverAmazon);
+        assertion.isElementDisplayed(authorizationPage.serverAmazon, 15);
     }
 
 
     @Test()
     public void The_Eden_server_link_exists_on_the_Server_Selection_Window() {
-        assertion.isElementDisplayed(authorizationPage.serverEden);
+        assertion.isElementDisplayed(authorizationPage.serverEden, 15);
     }
 
 

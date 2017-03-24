@@ -75,8 +75,6 @@ public class Sql {
     }
 
 
-
-
     /**
      *  REQUIRED getConnection()
         @param row      - name of row for searching element in database (Login, Phone)

@@ -48,7 +48,7 @@ public class linksLeadsToCorrectPages {
         introPage.loginBtn.click();
 
         // Check whether the authorization page is open (Login button is exist)
-        assertion.isElementDisplayed(authorizationPage.loginBtn);
+        assertion.isElementDisplayed(authorizationPage.loginBtn, 15);
 
         // Back to the previous page
         authorizationPage.backBtn.click();
@@ -61,7 +61,7 @@ public class linksLeadsToCorrectPages {
         introPage.registrationBtn.click();
 
         // Check whether the registration page is open (registration button is exist)
-        assertion.isElementDisplayed(registrationPage.registrationBtn);
+        assertion.isElementDisplayed(registrationPage.registrationBtn, 15);
 
         // Back to the previous page
         registrationPage.backBtn.click();
