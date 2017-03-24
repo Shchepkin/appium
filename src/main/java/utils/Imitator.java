@@ -22,6 +22,7 @@ public class Imitator {
             for (String portName: SerialPortList.getPortNames()) {
                 System.out.println(portName);
             }
+
             s.log("open port ");
             serialPort.openPort();
 
@@ -46,8 +47,8 @@ public class Imitator {
         s.log("send command");
         try {
             serialPort.writeString(command +"\n");
-        }catch (Exception e) {
-            s.log(3, "Exception \n" + e + "\n");
+        }catch (Exception ex) {
+            s.log(3, "Exception \n" + ex + "\n");
         }
     }
 
