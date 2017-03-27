@@ -235,7 +235,9 @@ public class Navigation {
         s.log(2, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
         s.log("Method is finished");
     }
+
 //======================================================================================================================
+
     /**
      * This method scrolls current screen to the element with needed text and direction ("up" or "down") and gives you
      * the opportunity to click this element if you want
@@ -247,10 +249,11 @@ public class Navigation {
      * @return true if method found the element (and click them if it required)
      */
 
-    public boolean scrollToElementWithText(String direction, String textOfSearchingElement, boolean click) {
+    public boolean scrollToElementWith(String typeOfElement, String direction, String textOfSearchingElement, boolean click) {
         start = System.nanoTime();
         s.log("Method is started");
         result = false;
+        WebElement searchingElement;
 
         counter = 0;
         etalon.clear();
@@ -266,7 +269,17 @@ public class Navigation {
 
             if (current.contains(textOfSearchingElement)){
                 try {
-                    WebElement searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
+                    switch (typeOfElement){
+                        case "text":
+                            searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
+                            break;
+                        case "email":
+                            searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + textOfSearchingElement + "']"));
+                            break;
+                        default:
+                            searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
+                            break;
+                    }
 
                     if (click) {
                         searchingElement.click();

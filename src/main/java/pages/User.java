@@ -3,6 +3,8 @@ package pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
@@ -21,11 +23,11 @@ public class User {
     private String sendInvitesButtonText;
     private String inviteFailText;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/active")
+    private WebElement active;
+
     @AndroidFindBy(id = "com.ajaxsystems:id/status")
     private WebElement userStatus;
-
-    private String oneUserForEmailField = "test.email.ajax1@i.ua";
-    private String oneUserForContactList = "test.email.ajax2@i.ua";
 
     private ArrayList<String> usersForContactList = s.getJsonStringArray("emails.json", "usersForContactList");
 
@@ -33,23 +35,6 @@ public class User {
         return usersForContactList;
     }
 
-
-
-//    private String [] manyUsersForEmailField = {
-//            "test.email.ajax3@i.ua",
-//            "test.email.ajax4@i.ua",
-//            "test.email.ajax5@i.ua"
-//    };
-
-
-//    private String [] manyUsersForContactList = {
-//            "test.email.ajax6@i.ua",
-//            "test.email.ajax7@i.ua",
-//            "test.email.ajax8@i.ua"
-//    };
-
-//    private String oneUserForEmailField = s.getDbSettings().get("oneUserForEmailField").toString();
-//    private Map oneUser = s.getJsonCollection("emails.json", "one");
 
     @AndroidFindBy(id = "com.ajaxsystems:id/invites")
     private WebElement inviteUsersField;
@@ -86,14 +71,14 @@ public class User {
     }
 
 //**********************************************************************************************************************
-    public boolean addOneFromEmailField() {
+    public boolean addFromEmailField(String userEmail) {
         s.log("Method is started");
         result = false;
 
-        nav.scrollToElementWithText("up", sendInvitesButtonText, true);
+        nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
-        s.log("fill email field with \"" + oneUserForEmailField + "\"");
-        inviteUsersField.sendKeys(oneUserForEmailField);
+        s.log("fill email field with \"" + userEmail + "\"");
+        inviteUsersField.sendKeys(userEmail);
 
         s.log("click add button and confirm proposition");
         check.clickElementAndWaitingPopup(nav.getNextButton(), true);
@@ -103,7 +88,7 @@ public class User {
             s.log("there is no ERROR message");
 
             s.log("check whether new user is added");
-            if(nav.scrollToElementWithText("up", oneUserForEmailField,false)){
+            if(nav.scrollToElementWith("text", "up", userEmail,false)){
                 result = true;
             }
 
@@ -117,17 +102,17 @@ public class User {
     }
 
 //**********************************************************************************************************************
-    public boolean addOneFromContactList() {
+    public boolean addFromContactList(String userEmail) {
         s.log("Method is started");
         result = false;
 
         s.log("searching and clicking the Send Invites Button");
-        nav.scrollToElementWithText("up", sendInvitesButtonText, true);
+        nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
         s.log("click the Add From Contact List Button");
         addButtonFromContactList.click();
 
-        nav.scrollToElementWithText("up", oneUserForContactList, true);
+        nav.scrollToElementWith("text", "up", userEmail, true);
         nav.nextButtonClick();
 
         s.log("click add button and confirm proposition");
@@ -138,7 +123,7 @@ public class User {
             s.log("there is no ERROR message");
 
             s.log("check whether new user is added");
-            if(nav.scrollToElementWithText("up", oneUserForContactList,false)){
+            if(nav.scrollToElementWith("text", "up", userEmail,false)){
                 result = true;
             }
         } else {
@@ -160,7 +145,7 @@ public class User {
         ArrayList<String> manyUsersForEmailField = s.getJsonStringArray("emails.json", "usersForEmailField");
 
         s.log("click send Invites Button");
-        nav.scrollToElementWithText("up", sendInvitesButtonText, true);
+        nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
         s.log("concat all emails from array to the one string");
         for (String userEmail : manyUsersForEmailField) {
@@ -183,7 +168,7 @@ public class User {
 
             s.log("check whether new user is added");
             for (String userEmail : manyUsersForEmailField) {
-                if (nav.scrollToElementWithText("up", userEmail, false)) {
+                if (nav.scrollToElementWith("text", "up", userEmail, false)) {
                     counter++;
                 }
             }
@@ -206,19 +191,38 @@ public class User {
         result = false;
 
         s.log("searching and clicking the Send Invites Button");
-        nav.scrollToElementWithText("up", sendInvitesButtonText, true);
+        nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
         s.log("click the Add From Contact List Button");
         addButtonFromContactList.click();
 
         s.log("start Add user process");
+        int counter = 0;
         for (String userEmail : usersForContactList) {
+            if(counter > 0){
+                s.log("scrolling to the start of list");
+                nav.scrollTop();
+            }
+            counter++;
 
-            s.log("scrolling to the start of list");
-            nav.scrollTop();
+            s.log("search email \"" + userEmail + "\" in the Contacts List and tap them");
+            for (int i = 1; i <3 ; i++) {
+                if(nav.scrollToElementWith("email", "up", userEmail, true)) {
 
-            s.log("search email \"" + userEmail + "\" in the Contacts List and click them");
-            nav.scrollToElementWithText("up", userEmail, true);
+                    if(check.forSnackBarIsPresent(2)){
+                        wait.element(nav.getNextButton(), 10, true);
+                        break;
+                    }
+
+                    if(!checkIsActive(userEmail)){
+                        s.log(3, "search email \"" + userEmail + "\" in the Contacts List and tap them, try count " + i);
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+
         }
 
         s.log("click Save button");
@@ -236,6 +240,25 @@ public class User {
 
 //**********************************************************************************************************************
 
+    private boolean checkIsActive(String userEmail) {
+            String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
+            String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
+
+        try {
+            wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
+            s.log("element is activated successfully");
+            result = true;
+
+        }catch (NoSuchElementException e){
+            s.log(3, "element activation failed");
+            e.printStackTrace();
+            result = false;
+        }
+
+        return result;
+    }
+//**********************************************************************************************************************
+
     public boolean checkIsNewUsersAdded(ArrayList<String> userList) {
         result = false;
         int counter = 0;
@@ -245,7 +268,7 @@ public class User {
             s.log("scrolling to the start of list");
             nav.scrollTop();
 
-            if (nav.scrollToElementWithText("up", userEmail, false)) {
+            if (nav.scrollToElementWith("text", "up", userEmail, false)) {
                 s.log("new user with email \"" + userEmail + "\" is added successfully");
                 counter++;
             }
