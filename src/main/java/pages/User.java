@@ -5,6 +5,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import utils.*;
 
 import java.util.ArrayList;
@@ -25,6 +26,13 @@ public class User {
 
     private String oneUserForEmailField = "test.email.ajax1@i.ua";
     private String oneUserForContactList = "test.email.ajax2@i.ua";
+
+    private ArrayList<String> usersForContactList = s.getJsonStringArray("emails.json", "usersForContactList");
+
+    public ArrayList<String> getUsersForContactList() {
+        return usersForContactList;
+    }
+
 
 
 //    private String [] manyUsersForEmailField = {
@@ -74,7 +82,7 @@ public class User {
 
     public void fillUserEmailsField(String inviteEmail) {
         inviteUsersField.sendKeys(inviteEmail);
-        nav.nextBtn.click();
+        nav.nextButtonClick();
     }
 
 //**********************************************************************************************************************
@@ -88,7 +96,7 @@ public class User {
         inviteUsersField.sendKeys(oneUserForEmailField);
 
         s.log("click add button and confirm proposition");
-        check.clickElementAndWaitingPopup(nav.nextBtn, true);
+        check.clickElementAndWaitingPopup(nav.getNextButton(), true);
 
         s.log("wait PopUp with ERROR text");
         if (!popUp.waitLoaderPopUpWithText(inviteFailText, 20, true)) {
@@ -120,10 +128,10 @@ public class User {
         addButtonFromContactList.click();
 
         nav.scrollToElementWithText("up", oneUserForContactList, true);
-        nav.nextBtn.click();
+        nav.nextButtonClick();
 
         s.log("click add button and confirm proposition");
-        check.clickElementAndWaitingPopup(nav.nextBtn, true);
+        check.clickElementAndWaitingPopup(nav.getNextButton(), true);
 
         s.log("wait PopUp with ERROR text");
         if (!popUp.waitLoaderPopUpWithText(inviteFailText, 20, true)) {
@@ -143,13 +151,13 @@ public class User {
     }
 
 //**********************************************************************************************************************
-    public boolean addManyFromEmailField() {
+    public boolean addFromEmailField() {
         s.log("Method is started");
         result = false;
         String emailListString = "";
         int counter = 0;
 
-        ArrayList<String> manyUsersForEmailField = s.getJsonStringArray("emails.json", "manyUsersForEmailField");
+        ArrayList<String> manyUsersForEmailField = s.getJsonStringArray("emails.json", "usersForEmailField");
 
         s.log("click send Invites Button");
         nav.scrollToElementWithText("up", sendInvitesButtonText, true);
@@ -164,7 +172,7 @@ public class User {
         inviteUsersField.sendKeys(emailListString);
 
         s.log("click Add button");
-        nav.nextBtn.click();
+        nav.nextButtonClick();
         if(!check.forSnackBarIsPresent(3)) {
 
             s.log("confirm proposition");
@@ -192,12 +200,10 @@ public class User {
     }
 
 //**********************************************************************************************************************
-    public boolean addManyFromContactList() {
+
+    public void addFromContactList() {
         s.log("Method is started");
         result = false;
-        int counter = 0;
-
-        ArrayList<String> manyUsersForContactList = s.getJsonStringArray("emails.json", "manyUsersForContactList");
 
         s.log("searching and clicking the Send Invites Button");
         nav.scrollToElementWithText("up", sendInvitesButtonText, true);
@@ -206,7 +212,7 @@ public class User {
         addButtonFromContactList.click();
 
         s.log("start Add user process");
-        for (String userEmail : manyUsersForContactList) {
+        for (String userEmail : usersForContactList) {
 
             s.log("scrolling to the start of list");
             nav.scrollTop();
@@ -216,98 +222,44 @@ public class User {
         }
 
         s.log("click Save button");
-        nav.nextBtn.click();
+        nav.nextButtonClick();
 
         s.log("click add button and confirm proposition");
-        check.clickElementAndWaitingPopup(nav.nextBtn, true);
+        check.clickElementAndWaitingPopup(nav.getNextButton(), true);
 
-        s.log("wait PopUp with ERROR text");
-        if (!popUp.waitLoaderPopUpWithText(inviteFailText, 15, true)) {
-            s.log("there is no ERROR message");
-
-            s.log("check whether new user is added");
-            for (String userEmail : manyUsersForContactList) {
-
-                s.log("scrolling to the start of list");
-                nav.scrollTop();
-
-                if(nav.scrollToElementWithText("up", userEmail,false)) {
-                    s.log("new user with email \"" + userEmail + "\" is added successfully");
-                    counter++;
-                }
-            }
-
-            s.log(3, "added " + counter + " new users from " + manyUsersForContactList.size());
-            if(counter == manyUsersForContactList.size()) {
-                s.log("all users are added");
-                result = true;
-            }else {
-                s.log(3, "not all users are added");
-                result = false;
-            }
-
-        } else  {
-            s.log(3, "ERROR text is shown");
-            result = false;
-        }
+        Assert.assertFalse(check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        wait.invisibilityOfWaiter(true);
+        Assert.assertTrue(wait.element(userStatus, 10, true), "User page is not shown \n");
 
         s.log("Method is finished");
-        return result;
     }
 
 //**********************************************************************************************************************
-    public boolean addUserWithEmail(String inviteEmail) {
-        s.log("Method is started");
 
+    public boolean checkIsNewUsersAdded(ArrayList<String> userList) {
         result = false;
-        String tmp = s.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
-        String inviteFailText = tmp.substring(0, tmp.length() - 5);
+        int counter = 0;
 
-        s.log("fill email field with \"" + inviteEmail + "\"");
-        inviteUsersField.sendKeys(inviteEmail);
+        for (String userEmail : userList) {
 
-        s.log("click add button and waiting popUp");
-        check.clickElementAndWaitingPopup(nav.nextBtn, true);
+            s.log("scrolling to the start of list");
+            nav.scrollTop();
 
-        s.log("wait PopUp with ERROR text");
-        if (!popUp.waitLoaderPopUpWithText(inviteFailText, 20, true)) {
-            s.log("there is no ERROR message");
-            result = true;
-        } else  {
-            s.log(3, "ERROR text is shown");
-            result = false;
+            if (nav.scrollToElementWithText("up", userEmail, false)) {
+                s.log("new user with email \"" + userEmail + "\" is added successfully");
+                counter++;
+            }
         }
 
-        s.log("Method is finished");
+        s.log(3, "added " + counter + " new users from " + userList.size());
+        if (counter == userList.size()) {
+            s.log("all users are added");
+            result = true;
+        } else {
+            s.log(3, "not all users are added");
+            result = false;
+        }
         return result;
     }
 
-//**********************************************************************************************************************
-    public boolean addUserFromContactList(String [] inviteEmail) {
-        s.log("Method is started");
-
-        result = false;
-        String tmp = s.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
-        String inviteFailText = tmp.substring(0, tmp.length() - 5);
-
-        s.log("fill email field with \"" + inviteEmail + "\"");
-
-        s.log("fill email field with \"" + inviteEmail + "\"");
-        inviteUsersField.sendKeys(inviteEmail);
-
-        s.log("click add button and waiting popUp");
-        check.clickElementAndWaitingPopup(nav.nextBtn, true);
-
-        s.log("wait PopUp with ERROR text");
-        if (!popUp.waitLoaderPopUpWithText(inviteFailText, 15, true)) {
-            s.log("there is no ERROR message");
-            result = true;
-        } else  {
-            s.log(3, "ERROR text is shown");
-            result = false;
-        }
-
-        s.log("Method is finished");
-        return result;
-    }
 }

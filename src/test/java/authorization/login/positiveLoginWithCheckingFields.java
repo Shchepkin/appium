@@ -106,7 +106,7 @@ public class positiveLoginWithCheckingFields {
 
         Reporter.log("> fill password to the Password field and tap authorization button", true);
         authorizationPage.passwordField.sendKeys(pass);
-        nav.nextBtn.click();
+        nav.nextButtonClick();
 
         Reporter.log("> wait for appearing Dialog message", true);
         assertion.waitElement(authorizationPage.dialogMessage, 15, false);

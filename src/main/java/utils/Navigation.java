@@ -65,7 +65,10 @@ public class Navigation {
     public WebElement backBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
-    public WebElement nextBtn;
+    private WebElement nextButton;
+
+    public void nextButtonClick(){nextButton.click();}
+    public WebElement getNextButton() {return nextButton;}
 
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
     private WebElement addBtn;
@@ -200,8 +203,6 @@ public class Navigation {
         s.log("Method is started");
         start = System.nanoTime();
         flag = false;
-
-        counter = 0;
         etalon.clear();
         current.clear();
 
@@ -280,8 +281,8 @@ public class Navigation {
             }else s.log(3, "element with text \"" + textOfSearchingElement + "\" is not found on this screen!");
 
             if (direction.equals("down")) {
-                swipeDown(800, 2);
-            }else swipeUp(800, 2);
+                swipeDown(1000, 2);
+            }else swipeUp(1000, 2);
 
             current.clear();
             s.log("put new text objects to the current list after swipe");
@@ -307,6 +308,7 @@ public class Navigation {
     private ArrayList <String> compare(ArrayList<String> etalon, ArrayList<String> current){
         s.log("Method is started");
         flag = false;
+        counter = 0;
 
         if (etalon.containsAll(current) && counter < 2) {
             counter++;
@@ -353,7 +355,7 @@ public class Navigation {
     }
 
     public void goNext() {
-        nextBtn.click();
+        nextButton.click();
     }
 
     public boolean goToTheRemotePage(){
