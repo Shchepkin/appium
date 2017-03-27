@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RegistrationPage {
 
-    public final AppiumDriver driver;
+    private final AppiumDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
     private Navigation nav;
@@ -65,7 +65,7 @@ public class RegistrationPage {
 
     public void fakeRegistration(String email, String password, String phone, String server) {
         s.log("Method is started");
-        introPage.loginBtn.click();
+        introPage.goToAuthorization();
         nav.longTapButton(authorizationPage.loginBtn, 2);
         authorizationPage.serverDevelop.click();
         nav.backBtn.click();
@@ -85,10 +85,10 @@ public class RegistrationPage {
 
     public void fillFields(String name, String email, String password, String phone, String server) {
         s.log("Method is started");
-        introPage.loginBtn.click();
+        introPage.goToAuthorization();
         authorizationPage.chooseServer(server);
         nav.backBtn.click();
-        introPage.registrationBtn.click();
+        introPage.goToRegistration();
         nameField.sendKeys(name);
         emailField.sendKeys(email);
         emailConfirmField.sendKeys(email);

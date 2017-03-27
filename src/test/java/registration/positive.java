@@ -77,7 +77,7 @@ public class positive {
 
         s.log("start from Intro Page and click Registration button");
         introPage.setServer(server);
-        introPage.registrationBtn.click();
+        introPage.goToRegistration();
 
 //        s.log("waiting for User Agreement Dialog and tap OK");
 //        Assert.assertTrue(check.waitElement(popUp.userAgreement, 30, true));
@@ -122,7 +122,7 @@ public class positive {
         server = "Develop";
 
         s.log("start from IntroPage");
-        introPage.loginBtn.click();
+        introPage.goToAuthorization();
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("waiting for Pincode PopUp");
@@ -151,7 +151,7 @@ public class positive {
         String hubKey = "00001495DDFB55691000";
 
         s.log("start from IntroPage");
-        introPage.loginBtn.click();
+        introPage.goToAuthorization();
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("waiting for Pincode PopUp");
@@ -182,7 +182,7 @@ public class positive {
         server = "Production";
 
         s.log("start from IntroPage");
-        introPage.loginBtn.click();
+        introPage.goToAuthorization();
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("waiting for Pincode PopUp");
@@ -204,7 +204,7 @@ public class positive {
     }
 
     // C42102 =================================================================================================
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void C42102_Add_new_guest_user() {
         s.log("TEST IS STARTED");
 
@@ -213,7 +213,7 @@ public class positive {
         server = "Develop";
 
         s.log("start from IntroPage");
-        introPage.loginBtn.click();
+        introPage.goToAuthorization();
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("waiting for Pincode PopUp");
@@ -242,7 +242,7 @@ public class positive {
         String patrialArmedText = s.getLocalizeTextForKey("partially_armed");
 
         s.log("start from IntroPage");
-        introPage.loginBtn.click();
+        introPage.goToAuthorization();
         authorizationPage.loginToTheServer(login, pass, server);
 
         s.log("waiting for Pincode PopUp");
@@ -300,7 +300,7 @@ public class positive {
 
 
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void com() {
         s.log("TEST IS STARTED");
         Imitator imitator = new Imitator();
@@ -326,12 +326,12 @@ public class positive {
         dashboardHeader.menuDrawer.click();
         menuPage.accountBtn.click();
         accountPage.logoutBtn.click();
-        check.waitElement(introPage.registrationBtn, 20, true);
+        check.waitElement(introPage.getRegistrationBtn(), 20, true);
     }
 
     private void logIn() {
         s.log("start from IntroPage");
-        introPage.loginBtn.click();
+        introPage.goToAuthorization();
         authorizationPage.loginToTheServer(login, pass, server);
     }
 
@@ -352,7 +352,7 @@ public class positive {
             s.log(3, "Registration user #" + i);
 
             s.log(3, "Click to the Registration button");
-            introPage.registrationBtn.click();
+            introPage.goToRegistration();
 
             s.log("waiting for User Agreement Dialog and tap OK");
             check.waitElement(nav.nextBtn, 5, true);

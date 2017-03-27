@@ -13,18 +13,18 @@ import utils.Setup;
  */
 public class IntroPage {
 
-    public final AppiumDriver driver;
+    private final AppiumDriver driver;
     private AuthorizationPage authorizationPage;
     private Setup s = new Setup();
 
     @AndroidFindBy(id = "com.ajaxsystems:id/login")
-    public WebElement loginBtn;
+    private WebElement loginBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/registration")
-    public WebElement registrationBtn;
+    private WebElement registrationBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/build")
-    public WebElement build;
+    private WebElement build;
 
     public IntroPage(AppiumDriver driver) {
         this.driver = driver;
@@ -48,6 +48,18 @@ public class IntroPage {
         authorizationPage.chooseServer(server);
         authorizationPage.backBtn.click();
         s.log("Method is finished");
+    }
+
+    public WebElement getLoginBtn() {
+        return loginBtn;
+    }
+
+    public WebElement getRegistrationBtn() {
+        return registrationBtn;
+    }
+
+    public WebElement getBuild() {
+        return build;
     }
 
 }

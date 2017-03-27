@@ -32,17 +32,17 @@ public class pageElementExisting {
 
     @Test()
     public void The_Build_exists_on_the_Intro_page() {
-        assertion.isElementDisplayed(introPage.build, 15);
+        assertion.isElementDisplayed(introPage.getBuild(), 15);
     }
 
     @Test()
     public void The_authorization_button_exists_on_the_Intro_page() {
-        assertion.isElementDisplayed(introPage.loginBtn, 15);
+        assertion.isElementDisplayed(introPage.getLoginBtn(), 15);
     }
 
     @Test()
     public void The_registration_button_exists_on_the_Intro_page() {
-        assertion.isElementDisplayed(introPage.registrationBtn, 15);
+        assertion.isElementDisplayed(introPage.getRegistrationBtn(), 15);
     }
 
     @AfterClass

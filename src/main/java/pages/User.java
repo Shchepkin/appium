@@ -20,6 +20,9 @@ public class User {
     private String sendInvitesButtonText;
     private String inviteFailText;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/status")
+    private WebElement userStatus;
+
     private String oneUserForEmailField = "test.email.ajax1@i.ua";
     private String oneUserForContactList = "test.email.ajax2@i.ua";
 
@@ -204,10 +207,12 @@ public class User {
 
         s.log("start Add user process");
         for (String userEmail : manyUsersForContactList) {
+
+            s.log("scrolling to the start of list");
+            nav.scrollTop();
+
             s.log("search email \"" + userEmail + "\" in the Contacts List and click them");
             nav.scrollToElementWithText("up", userEmail, true);
-            s.log("scrolling to the start of list");
-            nav.scrollScreenToTheEnd("down");
         }
 
         s.log("click Save button");
@@ -222,12 +227,14 @@ public class User {
 
             s.log("check whether new user is added");
             for (String userEmail : manyUsersForContactList) {
+
+                s.log("scrolling to the start of list");
+                nav.scrollTop();
+
                 if(nav.scrollToElementWithText("up", userEmail,false)) {
                     s.log("new user with email \"" + userEmail + "\" is added successfully");
                     counter++;
                 }
-                s.log("scrolling to the start of list");
-                nav.scrollScreenToTheEnd("down");
             }
 
             s.log(3, "added " + counter + " new users from " + manyUsersForContactList.size());
