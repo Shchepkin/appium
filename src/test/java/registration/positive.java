@@ -225,6 +225,7 @@ public class positive {
 //        Assert.assertTrue(user.addOneFromEmailField(), "Add one user from email field is failed");
 //        Assert.assertTrue(user.addOneFromContactList(), "Add one user from Contact List is failed");
 //        Assert.assertTrue(user.addManyFromEmailField(), "Add many users from email field is failed");
+
         user.addFromContactList();
         Assert.assertTrue(user.checkIsNewUsersAdded(user.getUsersForContactList()), "Add users from Contact List is failed");
 

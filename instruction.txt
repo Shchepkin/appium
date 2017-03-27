@@ -68,3 +68,28 @@ private long start, finish;
 start = System.nanoTime();
 finish = System.nanoTime();
 System.out.println("time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
+------------------------------------------------------------------------------------------------------------------------
+The list of accepted attribute names can be found in boolean attributes and string attributes.
+
+The boolean attributes are:
+
+enabled
+checkable
+checked
+clickable
+focusable
+focused
+longClickable
+scrollable
+selected
+displayed
+
+The string attibutes are:
+
+contentDescription
+text
+className
+resourceId
+I tested this using the python bindings.
+
+Credit goes to TikhomirovSergey in a github comment.
