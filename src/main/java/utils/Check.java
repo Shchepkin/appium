@@ -29,8 +29,6 @@ public class Check {
 //**********************************************************************************************************************
     public void isElementDisplayed(WebElement element, int timer) {
         s.log("Method is started");
-        // create ScreenShot object for making screenshots
-//        screenShot = new ScreenShot(driver);
 
         try {
             // assert is the element displayed on the page
@@ -43,7 +41,7 @@ public class Check {
             screenShot.getScreenShot();
 
             // creation report
-            Assert.fail("Test failed - no such element was appeared during 3 min\n" + e);
+            Assert.fail("Test failed - no such element was appeared during " + timer + " seconds\n" + e);
         }
     }
 

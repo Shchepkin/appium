@@ -73,4 +73,40 @@ public class Wait {
     }
 
 
+    /*******************************************************************************************************************
+     * @param elementForWaiting - element which we want to wait
+     * @param timer             - how long time we want to wait for the elementForWaiting (in seconds)
+     * @param makeScreenShot    - make screenshot if elementForWaiting is not found (true)
+     * @return                  - result true or false about successfully execute this method
+
+    example:
+    wait.element(elementForWaiting, 5, true)
+     */
+    public boolean element(WebElement elementForWaiting, int timer, boolean makeScreenShot) {
+        s.log("Method is started");
+
+        try {
+            s.log(2, "waiting " + timer + " seconds for the elementForWaiting ");
+            WebDriverWait iWait = new WebDriverWait(driver, timer);
+            iWait.until(ExpectedConditions.visibilityOf(elementForWaiting));
+
+            s.log(2, "element " + elementForWaiting + " is shown with text: \"" + elementForWaiting.getText() + "\"");
+            result = true;
+
+        } catch (NoSuchElementException e) {
+            s.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            result = false;
+            if (makeScreenShot){screenShot.getScreenShot();}
+
+        } catch (TimeoutException e) {
+            s.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            result = false;
+            if (makeScreenShot){screenShot.getScreenShot();}
+        }
+        return result;
+    }
+
+
+
+
 }
