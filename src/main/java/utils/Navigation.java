@@ -203,6 +203,7 @@ public class Navigation {
         s.log("Method is started");
         start = System.nanoTime();
         flag = false;
+        counter = 0;
         etalon.clear();
         current.clear();
 
@@ -308,7 +309,6 @@ public class Navigation {
     private ArrayList <String> compare(ArrayList<String> etalon, ArrayList<String> current){
         s.log("Method is started");
         flag = false;
-        counter = 0;
 
         if (etalon.containsAll(current) && counter < 2) {
             counter++;
@@ -320,6 +320,7 @@ public class Navigation {
             counter = 0;
             etalon.clear();
             etalon.addAll(current);
+            flag = false;
         }
         s.log("Method is finished");
        return etalon;
