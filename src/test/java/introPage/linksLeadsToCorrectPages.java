@@ -45,7 +45,7 @@ public class linksLeadsToCorrectPages {
     public void Login_Button_Leads_To_The_Login_Page() {
 
         // Go to the authorization page
-        introPage.loginBtn.click();
+        introPage.goToAuthorization();
 
         // Check whether the authorization page is open (Login button is exist)
         assertion.isElementDisplayed(authorizationPage.loginBtn, 15);
@@ -58,7 +58,7 @@ public class linksLeadsToCorrectPages {
     public void Registration_Button_Leads_To_The_Registration_Page() {
 
         // Go to the registration page and checks whether the registration page is open
-        introPage.registrationBtn.click();
+        introPage.goToRegistration();
 
         // Check whether the registration page is open (registration button is exist)
         assertion.isElementDisplayed(registrationPage.registrationBtn, 15);

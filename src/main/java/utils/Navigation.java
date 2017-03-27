@@ -14,8 +14,8 @@ import java.util.List;
 
 
 public class Navigation {
-    public final AppiumDriver driver;
-    public boolean result;
+    private final AppiumDriver driver;
+    private boolean result;
 
     private long start, finish;
     private boolean flag;
@@ -27,10 +27,10 @@ public class Navigation {
 
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-    public WebElement cancelBtn;
+    private WebElement cancelBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/ok")
-    public WebElement okBtn;
+    private WebElement okBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
     private WebElement confirmButton;
@@ -53,6 +53,9 @@ public class Navigation {
     @AndroidFindBy(xpath = "//android.widget.TextView")
     private ArrayList<WebElement> allTextObjects;
 
+    public ArrayList<WebElement> getScrollList() {
+        return scrollList;
+    }
 
 //======================================================================================================================
 // Header
@@ -120,7 +123,7 @@ public class Navigation {
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / 3.00);
         int endX = startX;
-        int endY = (int)(screenSize.height / 20.00);
+        int endY = (int)(screenSize.height / 100.00);
         int duration = 1500;
 
         s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
@@ -138,7 +141,7 @@ public class Navigation {
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / heightPart);
         int endX = startX;
-        int endY = (int)(screenSize.height / 20.00);
+        int endY = (int)(screenSize.height / 100.00);
 
         s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
@@ -155,7 +158,7 @@ public class Navigation {
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / 3.00);
         int endX = startX;
-        int endY = (int)(screenSize.height / 1.3);
+        int endY = (int)(screenSize.height / 1.05);
         int duration = 1500;
 
         s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
@@ -173,7 +176,7 @@ public class Navigation {
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / heightPart);
         int endX = startX;
-        int endY = (int)(screenSize.height / 1.3);
+        int endY = (int)(screenSize.height / 1.05);
 
         s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
@@ -184,12 +187,16 @@ public class Navigation {
 // Scroll
 //======================================================================================================================
 
+    public void scrollTop(){scrollScreenToTheEnd("down");}
+
+    public void scrollBottom(){scrollScreenToTheEnd("up");}
+
     /**
      * This method just scrolls current screen to the end with needed direction ("up" or "down")
      * @param direction "up"    - for scrolling to the end of screen
      *                  "down"  - for scrolling to the top of screen
      */
-    public void scrollScreenToTheEnd(String direction){
+    private void scrollScreenToTheEnd(String direction){
         s.log("Method is started");
         start = System.nanoTime();
         flag = false;
@@ -206,8 +213,8 @@ public class Navigation {
 
         while (true){
             if (direction.equals("down")) {
-                swipeDown(500, 2);
-            }else swipeUp(500, 1.3);
+                swipeDown(200, 2);
+            }else swipeUp(200, 2);
 
             current.clear();
             s.log("put new text objects to the current list after swipe");
@@ -316,10 +323,6 @@ public class Navigation {
        return etalon;
     }
 
-    public ArrayList<WebElement> getScrollList() {
-        return scrollList;
-    }
-
 //======================================================================================================================
 // Tap
 //======================================================================================================================
@@ -338,7 +341,8 @@ public class Navigation {
     public void tapCancelButton() {cancelBtn.click();}
 
     public void tapOkButton() {
-        okBtn.click();}
+        okBtn.click();
+    }
 
 //======================================================================================================================
 // GO
@@ -381,13 +385,13 @@ public class Navigation {
             okBtn.click();
             s.log("OK button is pressed");
         }catch (Exception e){
-            s.log(3, "\nOK Button selector was not found\n" + e.getMessage());
+            s.log(3, "\nOK Button was not found\n" + e.getMessage());
 
             try {
                 confirmButton.click();
                 s.log("Confirm button is pressed");
             }catch (Exception e1){
-                s.log(3, "\nConfirm button selector was not found\n" + e1.getMessage());
+                s.log(3, "\nConfirm button was not found\n" + e1.getMessage());
             }
         }
     }
@@ -397,13 +401,13 @@ public class Navigation {
             cancelBtn.click();
             s.log("Cancel button is pressed");
         }catch (Exception e){
-            s.log(3, "\nfirst Cancel Button selector was not found\n" + e.getMessage());
+            s.log(3, "\nfirst Cancel Button was not found\n" + e.getMessage());
 
             try {
                 cancelButton.click();
                 s.log("Cancel button is pressed");
             }catch (Exception e1){
-                s.log(3, "\nsecond Cancel Button selector was not found\n" + e.getMessage());
+                s.log(3, "\nsecond Cancel Button was not found\n" + e.getMessage());
             }
         }
     }

@@ -54,7 +54,7 @@ public class popUp {
 
         // Go to the authorization page
         s.log("introPage.loginBtn.click()");
-        introPage.loginBtn.click();
+        introPage.goToAuthorization();
     }
 
 

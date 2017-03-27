@@ -8,6 +8,8 @@ import utils.*;
 import java.util.Map;
 
 public class Base{
+    //TODO create all localized objects, logs, settings from json in this class fnd extend all of other classes from Base.slass
+
 
  /*
 
