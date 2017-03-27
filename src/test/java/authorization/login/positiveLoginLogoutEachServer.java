@@ -84,7 +84,7 @@ public class positiveLoginLogoutEachServer {
         dashboardHeader.menuDrawer.click();
         menuPage.accountBtn.click();
         accountPage.logoutBtn.click();
-        check.isElementDisplayed(introPage.loginBtn, 15);
+        check.isElementDisplayed(introPage.getLoginBtn(), 15);
     }
 
     @AfterClass
