@@ -221,13 +221,17 @@ public class positive {
 
         hub.goToTheUserlistPage();
 
-        s.log("waiting for Pincode PopUp");
-//        Assert.assertTrue(user.addOneFromEmailField(), "Add one user from email field is failed");
-//        Assert.assertTrue(user.addOneFromContactList(), "Add one user from Contact List is failed");
-//        Assert.assertTrue(user.addManyFromEmailField(), "Add many users from email field is failed");
+        user.addFromEmailField();
+        Assert.assertTrue(user.checkIsNewUsersAddedBy("text", user.getUsersForEmailField()), "Add users from Email Field is failed");
 
         user.addFromContactList();
-        Assert.assertTrue(user.checkIsNewUsersAdded(user.getUsersForContactList()), "Add users from Contact List is failed");
+        Assert.assertTrue(user.checkIsNewUsersAddedBy("text", user.getUsersForContactList()), "Add users from Contact List is failed");
+
+        user.addMixedUsers();
+        Assert.assertTrue(user.checkIsNewUsersAddedBy("text", user.getUsersForMixedAdd()), "Add users with mixed style is failed");
+
+        String unregisteredUserEmail = user.getUsersForMixedAdd().get(1);
+        Assert.assertTrue(user.checkDeleteIconIsPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon");
 
         s.log("TEST IS FINISHED");
     }

@@ -31,7 +31,7 @@ public class Setup {
     private String deviceName_, UDID_, platformVersion_, URL_, appPath_, jsonString, collection, locale_;
 
     private Map localizeKeys, dbSettings, jsonCollection;
-    private ArrayList<String> jsonStringArray = new ArrayList<>();
+    private ArrayList<String> jsonStringArray;
 
     public Setup() {
     }
@@ -166,9 +166,13 @@ public class Setup {
         return dbSettings;
     }
 
+//**********************************************************************************************************************
+// JSON
+//**********************************************************************************************************************
 
     public Map getJsonCollection(String filePath, String collection) {
         log("Method is started");
+        jsonCollection = new HashMap();
         try {
 
             log(2, "get Application start up path");
@@ -194,6 +198,7 @@ public class Setup {
 
     public ArrayList <String> getJsonStringArray(String filePath, String collection) {
         log("Method is started");
+        jsonStringArray = new ArrayList<>();
         try {
 
             log(2, "get Application start up path");
@@ -210,9 +215,16 @@ public class Setup {
         } catch (Exception e) {
             log(4, "Exception\n" + e.getMessage() + "\n");
         }
-        log("created " + jsonStringArray.size() + "elements in arrayList");
+        log("created " + jsonStringArray.size() + " elements in arrayList");
+        printArray(jsonStringArray);
         log("Method is finished");
         return jsonStringArray;
+    }
+
+    private void printArray(ArrayList arrayList){
+        for (Object element: arrayList) {
+            System.out.println(element.toString());
+        }
     }
 
 //**********************************************************************************************************************

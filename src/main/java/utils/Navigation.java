@@ -266,7 +266,6 @@ public class Navigation {
         }
 
         while (true){
-
             if (current.contains(textOfSearchingElement)){
                 try {
                     switch (typeOfElement){
@@ -275,6 +274,9 @@ public class Navigation {
                             break;
                         case "email":
                             searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + textOfSearchingElement + "']"));
+                            break;
+                        case "name":
+                            searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + textOfSearchingElement + "']"));
                             break;
                         default:
                             searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
@@ -289,6 +291,7 @@ public class Navigation {
                     }
                     result = true;
                     break;
+
                 }catch (NoSuchElementException e){
                     s.log(3, "NoSuchElementException, element is not found on this screen!");
                 }
