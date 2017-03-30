@@ -240,11 +240,11 @@ public class Check {
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(popUp.snackBar));
 
-            s.log(3, "SnackBar is shown with text: \"" + popUp.snackBar.getText() + "\"");
+            s.log("SnackBar is shown with text: \"" + popUp.snackBar.getText() + "\"");
             result = true;
 
         } catch (Exception e) {
-            s.log(4, "SnackBar is not shown:\n\n" + e + "\n");
+            s.log(3, "SnackBar is not shown:\n\n" + e + "\n");
             screenShot.getScreenShot();
         }
         return result;

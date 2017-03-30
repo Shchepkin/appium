@@ -27,7 +27,10 @@ public class Imitator {
             serialPort.openPort();
 
             s.log("set port params: BAUDRATE, DATABITS, STOPBITS,PARITY)");
-            serialPort.setParams(57600, 8, 1, 0);
+            serialPort.setParams(SerialPort.BAUDRATE_57600,
+                                 SerialPort.DATABITS_8,
+                                 SerialPort.STOPBITS_1,
+                                 SerialPort.PARITY_NONE);
 
             s.log("switch on hardware flow control");
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);

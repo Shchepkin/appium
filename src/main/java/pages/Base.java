@@ -9,7 +9,8 @@ import utils.*;
 import java.util.Map;
 
 public class Base{
-    // TODO create all localized objects, logs, settings from json in this class fnd extend all of other classes from Base.slass
+// TODO create all localized objects, logs, settings from json in this class fnd extend all of other classes from Base.slass
+// TODO validate lines color if parameter is not valid (on registration page for example bg_state_mUseColor	-1754827 = red, and -11711155 = grey)
 
 
  /*
