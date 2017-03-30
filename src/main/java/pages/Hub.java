@@ -12,9 +12,8 @@ import utils.Setup;
 /**
  * Created by installer on 1/21/17.
  */
-public class Hub {
+public class Hub extends Base{
     public final AppiumDriver driver;
-    private Setup s = new Setup();
     private Check check;
     private Navigation nav;
     private String sendInvitesButtonText;
@@ -40,8 +39,8 @@ public class Hub {
         this.driver = driver;
         nav = new Navigation(driver);
         check = new Check(driver);
-        s = new Setup(locale_);
-        sendInvitesButtonText = s.getLocalizeTextForKey("send_invites");
+//        s = new Setup(locale_);
+        sendInvitesButtonText = getLocalizeTextForKey("send_invites");
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -53,35 +52,35 @@ public class Hub {
     }
 
     public void goToTheUserInvitationPage() {
-        s.log("method is started");
+        log("method is started");
 
-        s.log("click on hub");
+        log("click on hub");
         hubImageOnDeviceList.click();
 
-        s.log("click Hub Settings button");
+        log("click Hub Settings button");
         hubSettingsBtn.click();
 
-        s.log("click Users tab");
+        log("click Users tab");
         hubSettingsUsersImage.click();
 
         check.waitElement(nav.backBtn, 10, true);
         nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
-        s.log("method is finished");
+        log("method is finished");
     }
 
     public void goToTheUserlistPage() {
-        s.log("method is started");
+        log("method is started");
 
-        s.log("click on Hub tab");
+        log("click on Hub tab");
         hubImageOnDeviceList.click();
 
-        s.log("click Hub Settings button");
+        log("click Hub Settings button");
         hubSettingsBtn.click();
 
-        s.log("click Users tab");
+        log("click Users tab");
         hubSettingsUsersImage.click();
 
         check.waitElement(userStatus, 10, true);
-        s.log("method is finished");
+        log("method is finished");
     }
 }

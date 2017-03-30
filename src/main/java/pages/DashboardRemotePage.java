@@ -11,7 +11,7 @@ import utils.Setup;
 /**
  * Created by installer on 1/21/17.
  */
-public class DashboardRemotePage {
+public class DashboardRemotePage extends Base{
     public final AppiumDriver driver;
     private Setup s = new Setup();
     private Dashboard dashboard;
@@ -45,14 +45,14 @@ public class DashboardRemotePage {
 //======================================================================================================================
 
     public boolean goToTheRemotePage(){
-        s.log("method is started");
+        log("method is started");
         result = false;
 
         dashboard.footerRemote.click();
         if (spaceControlImage.isDisplayed()) {
             result = true;
         }
-        s.log("Method is finished");
+        log("Method is finished");
         return result;
     }
 

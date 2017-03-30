@@ -21,10 +21,7 @@ import utils.Setup;
 
 import java.util.List;
 
-/**
- * Created by installer on 1/21/17.
- */
-public class DashboardRoomsPage {
+public class DashboardRoomsPage extends Base{
     public final AndroidDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
@@ -79,87 +76,87 @@ public class DashboardRoomsPage {
      * @param imageNumber - if use room with type 2 y can set 1, 2 or 3 image from PopUp, other values set number to 1 for default
      */
     public void addRoom(String name, int type, int imageNumber) {
-        s.log("Method is started");
+        log("Method is started");
 
         clickAddRoomButton();
 
-        s.log("fill Room name field with: \"" + name + "\"");
+        log("fill Room name field with: \"" + name + "\"");
         roomName.sendKeys(name);
 
         switch (type){
-            case 1: s.log("add image from camera");
+            case 1: log("add image from camera");
                 addRoomImageBtn.click();
                 addImagePage.setImageFromCamera();
                 break;
-            case 2: s.log("add image from gallery");
+            case 2: log("add image from gallery");
                 addRoomImageBtn.click();
                 addImagePage.setImageFromGallery(imageNumber);
                 break;
-            default: s.log("add room without image");
+            default: log("add room without image");
                 driver.hideKeyboard();
                 break;
         }
 
         saveRoom (name);
-        s.log("Method is finished");
+        log("Method is finished");
 
     }
 
     public void addRoom(String name, int type) {
-        s.log("Method is started");
+        log("Method is started");
 
         clickAddRoomButton();
 
-        s.log("fill Room name field with: \"" + name + "\"");
+        log("fill Room name field with: \"" + name + "\"");
         roomName.sendKeys(name);
 
         switch (type){
-            case 1: s.log("add image from camera");
+            case 1: log("add image from camera");
                 addRoomImageBtn.click();
                 addImagePage.setImageFromCamera();
                 break;
-            case 2: s.log("add image from gallery");
+            case 2: log("add image from gallery");
                 addRoomImageBtn.click();
                 addImagePage.setImageFromGallery(1);
                 break;
-            default: s.log("add room without image");
+            default: log("add room without image");
                 driver.hideKeyboard();
                 break;
         }
 
         saveRoom (name);
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     private void clickAddRoomButton (){
-        s.log("Method is started");
+        log("Method is started");
 
         elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
-        s.log("choice the Add Room button");
+        log("choice the Add Room button");
         switch (check.waitElements(elements, 3)){
             case 1: addRoomBtn.click(); break;
             case 2: addRoomPlusBtn.click(); break;
             // make here scroll to element with text if there are a lot of rooms
-            default: s.log(3, "Something was wrong!"); break;
+            default: log(3, "Something was wrong!"); break;
         }
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     private void saveRoom (String name){
-        s.log("Method is started");
+        log("Method is started");
         result = false;
 
         if(check.clickElementAndWaitingPopup(saveBtn, 3, 2, false)){
             check.waitElement(roomName,3,true);
 
-            s.log("check whether new room is exist in the list of rooms");
+            log("check whether new room is exist in the list of rooms");
             for (WebElement roomNameElement: roomNameList) {
                 System.out.println(roomNameElement.getText());
                 if(roomNameElement.getText().equals(name)) {result = true;}
             }
             Assert.assertTrue(result);
         }
-        s.log("room with name \"" + name + "\" successfully added!");
-        s.log("Method is finished");
+        log("room with name \"" + name + "\" successfully added!");
+        log("Method is finished");
     }
 }

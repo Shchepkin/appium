@@ -1,10 +1,10 @@
 package utils;
 
 import jssc.*;
+import pages.Base;
 
-public class Imitator {
+public class Imitator extends Base{
 
-    private Setup s = new Setup();
     private static SerialPort serialPort;
     private String port = "/dev/ttyUSB3";
 
@@ -13,44 +13,44 @@ public class Imitator {
     }
 
     private void SerialPortSetup() {
-        s.log("method is started");
+        log("method is started");
 
         try {
             serialPort = new SerialPort("/dev/ttyUSB3");
 
-            s.log("print all available ports");
+            log("print all available ports");
             for (String portName: SerialPortList.getPortNames()) {
                 System.out.println(portName);
             }
 
-            s.log("open port ");
+            log("open port ");
             serialPort.openPort();
 
-            s.log("set port params: BAUDRATE, DATABITS, STOPBITS,PARITY)");
+            log("set port params: BAUDRATE, DATABITS, STOPBITS,PARITY)");
             serialPort.setParams(SerialPort.BAUDRATE_57600,
                                  SerialPort.DATABITS_8,
                                  SerialPort.STOPBITS_1,
                                  SerialPort.PARITY_NONE);
 
-            s.log("switch on hardware flow control");
+            log("switch on hardware flow control");
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
-            s.log("serialPort Mask to reaction on data in buffer");
+            log("serialPort Mask to reaction on data in buffer");
             serialPort.setEventsMask(SerialPort.MASK_RXCHAR);
             serialPort.addEventListener(new PortReader());
 
         } catch (Exception ex) {
-            s.log(3, "Exception \n" + ex + "\n");
+            log(3, "Exception \n" + ex + "\n");
         }
-        s.log("method is finished");
+        log("method is finished");
     }
 
     public void sendCommand(String command){
-        s.log("send command");
+        log("send command");
         try {
             serialPort.writeString(command +"\n");
         }catch (Exception ex) {
-            s.log(3, "Exception \n" + ex + "\n");
+            log(3, "Exception \n" + ex + "\n");
         }
     }
 
@@ -60,7 +60,7 @@ public class Imitator {
             serialPort.writeString(command);
             Thread.sleep(2000);
         }catch (Exception e) {
-            s.log(3, "Exception \n" + e + "\n");
+            log(3, "Exception \n" + e + "\n");
         }
     }
 
@@ -69,7 +69,7 @@ public class Imitator {
             serialPort.writeString("lst\n");
             Thread.sleep(2000);
         }catch (Exception e) {
-            s.log(3, "Exception \n" + e + "\n");
+            log(3, "Exception \n" + e + "\n");
         }
     }
 
@@ -78,7 +78,7 @@ public class Imitator {
             serialPort.writeString("cln\n");
             Thread.sleep(2000);
         }catch (Exception e) {
-            s.log(3, "Exception \n" + e + "\n");
+            log(3, "Exception \n" + e + "\n");
         }
     }
 
@@ -88,7 +88,7 @@ public class Imitator {
             serialPort.writeString("reg " + dev_id + "\n");
             Thread.sleep(2000);
         }catch (Exception e) {
-            s.log(3, "Exception \n" + e + "\n");
+            log(3, "Exception \n" + e + "\n");
         }
     }
 
@@ -103,7 +103,7 @@ public class Imitator {
 //                    System.out.println(data);
 
                 } catch (Exception ex) {
-                    s.log(3, "Exception \n" + ex + "\n");
+                    log(3, "Exception \n" + ex + "\n");
                 }
             }
         }

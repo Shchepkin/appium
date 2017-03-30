@@ -8,12 +8,13 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import pages.Base;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Navigation {
+public class Navigation extends Base{
     private final AppiumDriver driver;
     private boolean result;
 
@@ -118,10 +119,10 @@ public class Navigation {
 // Swipe
 //======================================================================================================================
     public void swipeUp() {
-        s.log("Method is started");
+        log("Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
-        s.log("Screen dimension is " + screenSize);
+        log("Screen dimension is " + screenSize);
 
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / 3.00);
@@ -129,34 +130,34 @@ public class Navigation {
         int endY = (int)(screenSize.height / 100.00);
         int duration = 1500;
 
-        s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
+        log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     public void swipeUp(int duration, double heightPart) {
-        s.log("Method is started");
+        log("Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
-        s.log("Screen dimension is " + screenSize);
+        log("Screen dimension is " + screenSize);
 
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / heightPart);
         int endX = startX;
         int endY = (int)(screenSize.height / 100.00);
 
-        s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
+        log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     public void swipeDown() {
-        s.log("Method is started");
+        log("Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
-        s.log("Screen dimension is " + screenSize);
+        log("Screen dimension is " + screenSize);
 
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / 3.00);
@@ -164,27 +165,27 @@ public class Navigation {
         int endY = (int)(screenSize.height / 1.05);
         int duration = 1500;
 
-        s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
+        log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     public void swipeDown(int duration, double heightPart) {
-        s.log("Method is started");
+        log("Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
-        s.log("Screen dimension is " + screenSize);
+        log("Screen dimension is " + screenSize);
 
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / heightPart);
         int endX = startX;
         int endY = (int)(screenSize.height / 1.05);
 
-        s.log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
+        log("swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
-        s.log("Method is finished");
+        log("Method is finished");
     }
 //======================================================================================================================
 // Scroll
@@ -200,14 +201,14 @@ public class Navigation {
      *                  "down"  - for scrolling to the top of screen
      */
     private void scrollScreenToTheEnd(String direction){
-        s.log("Method is started");
+        log("Method is started");
         start = System.nanoTime();
         flag = false;
         counter = 0;
         etalon.clear();
         current.clear();
 
-        s.log("copy text objects from scrollList to etalon and current lists");
+        log("copy text objects from scrollList to etalon and current lists");
         for (WebElement i : scrollList) {
             etalon.add(i.getText());
             current.add(i.getText());
@@ -219,21 +220,21 @@ public class Navigation {
             }else swipeUp(200, 2);
 
             current.clear();
-            s.log("put new text objects to the current list after swipe");
+            log("put new text objects to the current list after swipe");
             try {
                 for (WebElement i : scrollList) {
                   current.add(i.getText());
                 }
             }catch (NoSuchElementException e){
-                s.log(3, "NoSuchElementException, something was wrong!\n" + e);
+                log(3, "NoSuchElementException, something was wrong!\n" + e);
             }
 
             compare(etalon, current);
             if (flag) break;
         }
         finish = System.nanoTime();
-        s.log(2, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-        s.log("Method is finished");
+        log(2, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
+        log("Method is finished");
     }
 
 //======================================================================================================================
@@ -251,7 +252,7 @@ public class Navigation {
 
     public boolean scrollToElementWith(String typeOfElement, String direction, String textOfSearchingElement, boolean click) {
         start = System.nanoTime();
-        s.log("Method is started");
+        log("Method is started");
         result = false;
         WebElement searchingElement;
 
@@ -259,7 +260,7 @@ public class Navigation {
         etalon.clear();
         current.clear();
 
-        s.log("get all text objects from this screen");
+        log("get all text objects from this screen");
         for (WebElement i : allTextObjects) {
             etalon.add(i.getText());
             current.add(i.getText());
@@ -285,52 +286,52 @@ public class Navigation {
 
                     if (click) {
                         searchingElement.click();
-                        s.log("element with text \"" + textOfSearchingElement + "\" was found and clicked");
+                        log("element with text \"" + textOfSearchingElement + "\" was found and clicked");
                     } else {
-                        s.log("element with text \"" + textOfSearchingElement + "\" was found");
+                        log("element with text \"" + textOfSearchingElement + "\" was found");
                     }
                     result = true;
                     break;
 
                 }catch (NoSuchElementException e){
-                    s.log(3, "NoSuchElementException, element is not found on this screen!");
+                    log(3, "NoSuchElementException, element is not found on this screen!");
                 }
-            }else s.log(3, "element with text \"" + textOfSearchingElement + "\" is not found on this screen!");
+            }else log(3, "element with text \"" + textOfSearchingElement + "\" is not found on this screen!");
 
             if (direction.equals("down")) {
                 swipeDown(1000, 2);
             }else swipeUp(1000, 2);
 
             current.clear();
-            s.log("put new text objects to the current list after swipe");
+            log("put new text objects to the current list after swipe");
             try {
                 for (WebElement i : allTextObjects) {
                     current.add(i.getText());
                 }
             }catch (NoSuchElementException e){
-                s.log(3, "NoSuchElementException, something was wrong!\n" + e);
+                log(3, "NoSuchElementException, something was wrong!\n" + e);
             }
 
             compare(etalon, current);
             if (flag) break;
         }
         finish = System.nanoTime();
-        s.log(2, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-        s.log("Method is finished");
+        log(2, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
+        log("Method is finished");
         return result;
     }
 
 //======================================================================================================================
 
     private ArrayList <String> compare(ArrayList<String> etalon, ArrayList<String> current){
-        s.log("Method is started");
+        log("Method is started");
         flag = false;
 
         if (etalon.containsAll(current) && counter < 2) {
             counter++;
-            s.log(3, "nothing was changed, swipe try count = " + counter);
+            log(3, "nothing was changed, swipe try count = " + counter);
         }else if (counter >= 2 ){
-                s.log(3, "the end of the list is reached");
+                log(3, "the end of the list is reached");
                 flag = true;
         } else {
             counter = 0;
@@ -338,7 +339,7 @@ public class Navigation {
             etalon.addAll(current);
             flag = false;
         }
-        s.log("Method is finished");
+        log("Method is finished");
        return etalon;
     }
 
@@ -347,13 +348,13 @@ public class Navigation {
 //======================================================================================================================
 
     public void longTapButton(WebElement element, int timer) {
-        s.log("Method is started");
+        log("Method is started");
 
-        s.log(2, "long tap for " + timer + " seconds");
+        log(2, "long tap for " + timer + " seconds");
         timer = timer * 1000;
         driver.tap(1, element, timer);
 
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
 
@@ -376,7 +377,7 @@ public class Navigation {
     }
 
     public boolean goToTheRemotePage(){
-        s.log("method is started");
+        log("method is started");
         result = false;
 
         try {
@@ -384,7 +385,7 @@ public class Navigation {
                 backBtn.click();
             }
         }catch (NoSuchElementException e){
-            s.log(3, "BackButton is not shown");
+            log(3, "BackButton is not shown");
         }
 
         footerRemote.click();
@@ -392,7 +393,7 @@ public class Navigation {
         if (spaceControlImageOnRemotePage.isDisplayed()) {
             result = true;
         }
-        s.log("Method is finished");
+        log("Method is finished");
         return result;
     }
 
@@ -402,15 +403,15 @@ public class Navigation {
     public void confirmIt() {
         try {
             okBtn.click();
-            s.log("OK button is pressed");
+            log("OK button is pressed");
         }catch (Exception e){
-            s.log(3, "\nOK Button was not found\n" + e.getMessage());
+            log(3, "\nOK Button was not found\n" + e.getMessage());
 
             try {
                 confirmButton.click();
-                s.log("Confirm button is pressed");
+                log("Confirm button is pressed");
             }catch (Exception e1){
-                s.log(3, "\nConfirm button was not found\n" + e1.getMessage());
+                log(3, "\nConfirm button was not found\n" + e1.getMessage());
             }
         }
     }
@@ -418,15 +419,15 @@ public class Navigation {
     public void cancelIt() {
         try {
             cancelBtn.click();
-            s.log("Cancel button is pressed");
+            log("Cancel button is pressed");
         }catch (Exception e){
-            s.log(3, "\nfirst Cancel Button was not found\n" + e.getMessage());
+            log(3, "\nfirst Cancel Button was not found\n" + e.getMessage());
 
             try {
                 cancelButton.click();
-                s.log("Cancel button is pressed");
+                log("Cancel button is pressed");
             }catch (Exception e1){
-                s.log(3, "\nsecond Cancel Button was not found\n" + e.getMessage());
+                log(3, "\nsecond Cancel Button was not found\n" + e.getMessage());
             }
         }
     }

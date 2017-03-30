@@ -12,7 +12,7 @@ import utils.Navigation;
 import utils.Setup;
 
 
-public class AuthorizationPage {
+public class AuthorizationPage extends Base{
 
     public final AppiumDriver driver;
     private Setup s = new Setup();
@@ -99,42 +99,42 @@ public class AuthorizationPage {
 
 
     public void loginToTheServer(String login, String password) {
-        s.log("Method is started");
+        log("Method is started");
 
-        s.log(2, "fill the login field with data: [" + login + "]");
+        log(2, "fill the login field with data: [" + login + "]");
         loginField.sendKeys(login);
 
-        s.log(2, "fill the password field with data: [" + password + "]");
+        log(2, "fill the password field with data: [" + password + "]");
         passwordField.sendKeys(password);
 
-        s.log(2, "click login button");
+        log(2, "click login button");
         loginBtn.click();
 
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     public void loginToTheServer(String login, String password, String server) {
-        s.log("Method is started");
+        log("Method is started");
 
-        s.log(2, "fill the login field with data: \"" + login + "\"");
+        log(2, "fill the login field with data: \"" + login + "\"");
         loginField.sendKeys(login);
 
-        s.log(2, "fill the password field with data: \"" + password + "\"");
+        log(2, "fill the password field with data: \"" + password + "\"");
         passwordField.sendKeys(password);
 
         chooseServer(server);
 
-        s.log(2, "click login button");
+        log(2, "click login button");
         loginBtn.click();
 
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
 
     public void chooseServer(String server) {
-        s.log("Method is started");
+        log("Method is started");
 
-        s.log("select server type: \"" + server + "\"");
+        log("select server type: \"" + server + "\"");
         nav.longTapButton(loginBtn, 2);
 
         switch (server) {
@@ -153,7 +153,7 @@ public class AuthorizationPage {
             default: serverProduction.click();
                 break;
         }
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
 }

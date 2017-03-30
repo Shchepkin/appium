@@ -2,6 +2,7 @@ package utils;
 
 import org.testng.Assert;
 import org.testng.Reporter;
+import pages.Base;
 
 import javax.mail.*;
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Email {
+public class Email extends Base{
 
     private String password;
     private String user;
@@ -104,7 +105,7 @@ public class Email {
     }
 
     public String getValidationCode() {
-        s.log("Method is started");
+        log("Method is started");
         String input = getEmailTextFromNewMessage();
         if (emailText != null) {
             Pattern pattern = Pattern.compile("[\\d]{6}");

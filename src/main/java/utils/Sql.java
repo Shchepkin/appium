@@ -1,7 +1,9 @@
 package utils;
 
 
+import io.appium.java_client.AppiumDriver;
 import org.testng.Assert;
+import pages.Base;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,16 +13,15 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Sql {
+public class Sql extends Base{
 
-    private Setup s = new Setup();
     private Formatter f = new Formatter();
     private ArrayList validationToken = new ArrayList();
 
     // JDBC URL, username and password of MySQL server
-    private String url = s.getDbSettings().get("url").toString();
-    private String user = s.getDbSettings().get("user").toString();
-    private String password = s.getDbSettings().get("password").toString();
+    private String url = getDbSettings().get("url").toString();
+    private String user = getDbSettings().get("user").toString();
+    private String password = getDbSettings().get("password").toString();
 
     // JDBC variables for opening and managing connection
     private static Connection connection;
@@ -31,8 +32,7 @@ public class Sql {
     public Map tokenMap = new HashMap();
 
 
-    public Sql() {
-    }
+    public Sql() {}
 
     /**
      *  REQUIRED getConnection()
@@ -43,7 +43,7 @@ public class Sql {
             sql.getDelete("Phone", "%1216815329%");
      */
     public void getDelete(String row, String value) {
-        s.log("Method is started");
+        log("Method is started");
 
         String query = "DELETE FROM csa_accounts WHERE " + row + " LIKE '" + value + "'";
 
@@ -52,26 +52,26 @@ public class Sql {
         try {
             connection = getConnection();
 
-            s.log(2, "getting Statement object to execute query");
+            log(2, "getting Statement object to execute query");
             stmt = connection.createStatement();
 
-            s.log(3, "this objects will be deleted: ");
+            log(3, "this objects will be deleted: ");
             for (Object sqlResult : selectList) {
                 System.out.println("\033[31;49m" + sqlResult + "\033[39;49m");
             }
 
-            s.log(3, "delete objects");
+            log(3, "delete objects");
             stmt.executeUpdate(query);
 
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         } finally {
-            s.log("close all connections");
+            log("close all connections");
             try {connection.close();} catch (SQLException se) { /*can't do anything */ }
             try {stmt.close();}catch (SQLException se) { /*can't do anything */ }
             try {rs.close();} catch (SQLException se) { /*can't do anything */ }
         }
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
 
@@ -86,7 +86,7 @@ public class Sql {
             System.out.println(selectList);
      */
     public ArrayList getSelect(String row, String value) {
-        s.log("Method is started");
+        log("Method is started");
         validationToken.clear();
         selectList.clear();
 
@@ -95,10 +95,10 @@ public class Sql {
         try {
             connection = getConnection();
 
-            s.log("getting Statement object to execute query");
+            log("getting Statement object to execute query");
             stmt = connection.createStatement();
 
-            s.log(2, "executing query: [ " + query + " ]");
+            log(2, "executing query: [ " + query + " ]");
             rs = stmt.executeQuery(query);
 
             while (rs.next()) {
@@ -118,13 +118,13 @@ public class Sql {
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         } finally {
-            s.log("close all connections");
+            log("close all connections");
             try {connection.close();} catch (SQLException se) { /*can't do anything */ }
             try {stmt.close();}catch (SQLException se) { /*can't do anything */ }
             try {rs.close();} catch (SQLException se) { /*can't do anything */ }
         }
 
-        s.log("Method is finished");
+        log("Method is finished");
         return selectList;
     }
 
@@ -145,10 +145,10 @@ public class Sql {
             tokenMap.get("emailToken");
      */
     public Map getTokenMap(String row, String value) {
-        s.log("Method is started");
+        log("Method is started");
         int counter = 1;
         while (validationToken.size() < 1 || validationToken.get(0) == null) {
-            s.log(3, "Try to get Tokens from database. Attempt #" + counter);
+            log(3, "Try to get Tokens from database. Attempt #" + counter);
             getSelect(row, value);
             try {
                 Thread.sleep(5000);
@@ -169,14 +169,14 @@ public class Sql {
         else {
             String input = validationToken.get(0).toString();
 
-            s.log("Validation Token Array is not empty, so we get string and clear Array");
+            log("Validation Token Array is not empty, so we get string and clear Array");
             validationToken.clear();
 
-            s.log("create matcher");
+            log("create matcher");
             Pattern pattern = Pattern.compile("[\\d]{6}");
             Matcher matcher = pattern.matcher(input);
 
-            s.log("add matcher value to the Validation Token Array");
+            log("add matcher value to the Validation Token Array");
                 while(matcher.find()){
                     validationToken.add(matcher.group());
                 }
@@ -188,7 +188,7 @@ public class Sql {
                 tokenMap.put("emailToken", validationToken.get(1));
             }
         }
-        s.log("Method is finished");
+        log("Method is finished");
         return tokenMap;
     }
 
@@ -199,17 +199,17 @@ public class Sql {
      * @return Connection connection
      */
     private Connection getConnection (){
-        s.log("Method is started");
+        log("Method is started");
         for (int i = 1; i <= 10; i++) {
             try {
-                s.log("opening database connection to MySQL server, attempt #" + i);
+                log("opening database connection to MySQL server, attempt #" + i);
                 connection = DriverManager.getConnection(url, user, password);
-                s.log("connection to MySQL server is successfully opened");
+                log("connection to MySQL server is successfully opened");
                 break;
 
             }catch (Exception e){
-                s.log(3, "opening database connection fail: " + e.getClass());
-                s.log(3, "cause of problem: "+ e.getCause().toString());
+                log(3, "opening database connection fail: " + e.getClass());
+                log(3, "cause of problem: "+ e.getCause().toString());
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e1) {
@@ -217,7 +217,7 @@ public class Sql {
                 }
             }
         }
-        s.log("Method is finished");
+        log("Method is finished");
         return connection;
     }
 }

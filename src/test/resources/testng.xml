@@ -15,8 +15,9 @@
         <parameter name="platformVersion_" value="4.2.2"/>
         <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
         <classes>
-            <class name="registration.positive"/>
-            <!--<class name="tmp.testSQL"/>-->
+            <!--<class name="registration.positive"/>-->
+            <class name="tmp.separateTest"/>
+            <!--<class name="testCases.C42097_New_user_registration_with_validation"/>-->
         </classes>
     </test>
 

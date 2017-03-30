@@ -12,13 +12,12 @@ import utils.Sql;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class ValidationCodePage {
+public class ValidationCodePage extends Base{
     public final AppiumDriver driver;
     public boolean autoLoadResult;
 
     private Map tokenMap;
     private Sql sql = new Sql();
-    private Setup s = new Setup();
 
     @AndroidFindBy(id = "com.ajaxsystems:id/smsCode")
     public WebElement smsCode;
@@ -61,16 +60,16 @@ public class ValidationCodePage {
     }
 
     public void getAndFillValidationCodes(String row, String value){
-        s.log("Method is started");
+        log("Method is started");
 
         tokenMap = sql.getTokenMap(row, value);
-        s.log(2, "SMS token: " + tokenMap.get("smsToken"));
-        s.log(2, "Email token: " + tokenMap.get("emailToken"));
+        log(2, "SMS token: " + tokenMap.get("smsToken"));
+        log(2, "Email token: " + tokenMap.get("emailToken"));
 
-        s.log("fill tokens to the fields");
+        log("fill tokens to the fields");
         smsCode.sendKeys(tokenMap.get("smsToken").toString());
         emailCode.sendKeys(tokenMap.get("emailToken").toString());
-        s.log("Method is finished");
+        log("Method is finished");
 
     }
 

@@ -12,10 +12,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
+import pages.Base;
 
 
-public class PopUp {
-    private Setup s = new Setup();
+public class PopUp extends Base{
     private AppiumDriver driver;
     private ScreenShot screenShot;
     private long start, finish;
@@ -109,48 +109,48 @@ public class PopUp {
     }
 
     public void waitLoadingPopUp(int flag){
-        s.log("Method is started");
+        log("Method is started");
         WebDriverWait iWait = new WebDriverWait (driver, 10);
         try {
             // assert is the element displayed on the page
-            s.log(2, "waiting 10 seconds for loading PopUp");
+            log(2, "waiting 10 seconds for loading PopUp");
             iWait.until(ExpectedConditions.visibilityOf(loadingWin));
             switch (flag) {
                 case 1:
-                    s.log("loading PopUp is shown, so click Confirm Button");
+                    log("loading PopUp is shown, so click Confirm Button");
                     confirmButton.click();
                     break;
                 default:
-                    s.log("loading PopUp is shown, so click Cancel Button");
+                    log("loading PopUp is shown, so click Cancel Button");
                     cancelButton.click();
                     break;
             }
         }
         catch (NoSuchElementException e) {
-            s.log(4, "NoSuchElementException, loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
+            log(4, "NoSuchElementException, loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
         }
         catch (TimeoutException e) {
-            s.log(4, "TimeoutException loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
+            log(4, "TimeoutException loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
         }
     }
 
 
     public boolean waitLoaderPopUpWithText(String searchingText, int timer, boolean makeScreenShot) {
-        s.log("Method is started");
+        log("Method is started");
 
         try {
-            s.log(2, "waiting " + timer + " seconds for the element ");
+            log(2, "waiting " + timer + " seconds for the element ");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.textToBePresentInElement(contentText, searchingText));
 
-            s.log(2, "element is shown with text: \"" + contentText.getText() + "\"");
+            log(2, "element is shown with text: \"" + contentText.getText() + "\"");
             result = true;
         } catch (NoSuchElementException e) {
-            s.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){screenShot.getScreenShot();}
         } catch (TimeoutException e) {
-            s.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){screenShot.getScreenShot();}
         }

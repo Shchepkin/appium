@@ -5,6 +5,7 @@ import io.appium.java_client.android.AndroidDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.AuthorizationPage;
+import pages.Base;
 import pages.IntroPage;
 import utils.Check;
 import utils.PopUp;
@@ -17,7 +18,7 @@ import java.util.Map;
  *
  */
 
-public class negativeLogin {
+public class negativeLogin extends Base{
     private AppiumDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
@@ -31,13 +32,13 @@ public class negativeLogin {
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
-        s.log("Method is started");
+        log("Method is started");
         Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
-        s.log("get Driver");
+        log("get Driver");
         driver = setup.getDriver();
 
         // Create objects of pages
-        s.log("Create objects of pages");
+        log("Create objects of pages");
         popUp = new PopUp(driver);
         check = new Check(driver);
         introPage = new IntroPage(driver);
@@ -46,7 +47,7 @@ public class negativeLogin {
 
 //        localizeKeys = setup.getLocalizeKeys(locale_);
 
-        s.log("Go to the authorization page");
+        log("Go to the authorization page");
         introPage.goToAuthorization();
 //        authorizationPage.longTapLoginButton();
 //        authorizationPage.serverDevelop.click();
@@ -54,86 +55,86 @@ public class negativeLogin {
 
     @Test(enabled = true)
     public void Email_and_Password_is_empty() {
-        s.log("Method is started");
+        log("Method is started");
         authorizationPage.loginToTheServer("", "", "Release");
-        s.log(2, "wait snackBar");
+        log(2, "wait snackBar");
         check.waitElement(popUp.snackBar, 10, false);
         expected = localizeKeys.get("please_fill_in_all_of_the_required_fields").toString();
         actual = popUp.snackBar.getText();
         Assert.assertEquals(expected, actual);
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     @Test(enabled = true)
     public void Email_is_empty() {
-        s.log("Method is started");
+        log("Method is started");
         authorizationPage.loginToTheServer("", "qwe123", "Release");
         check.waitElement(popUp.snackBar, 10, false);
         expected = localizeKeys.get("please_fill_in_all_of_the_required_fields").toString();
         actual = popUp.snackBar.getText();
         Assert.assertEquals(expected, actual);
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     @Test(enabled = true)
     public void Password_is_empty() {
-        s.log("Method is started");
+        log("Method is started");
 
         authorizationPage.loginToTheServer("ajax1@i.ua", "", "Release");
         check.waitElement(popUp.snackBar, 10, false);
 
         expected = localizeKeys.get("please_fill_in_all_of_the_required_fields").toString();
-        s.log("expected: " + expected);
+        log("expected: " + expected);
 
         actual = popUp.snackBar.getText();
-        s.log("actual: " + actual);
+        log("actual: " + actual);
 
         Assert.assertEquals(expected, actual);
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     @Test(enabled = true)
     public void Email_includes_spaces() {
-        s.log("Method is started");
+        log("Method is started");
         authorizationPage.loginToTheServer("aj ax1@i.u a", "qwe123", "Release");
         check.waitElement(popUp.snackBar, 60, false);
         expected = localizeKeys.get("Login_bad_credentials0").toString();
         actual = popUp.snackBar.getText();
         Assert.assertEquals(expected, actual);
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     @Test(enabled = true)
     public void Password_includes_spaces() {
-        s.log("Method is started");
+        log("Method is started");
         authorizationPage.loginToTheServer("ajax1@i.ua", "q we1 23", "Release");
         check.waitElement(popUp.snackBar, 60, false);
         expected = localizeKeys.get("Login_bad_credentials0").toString();
         actual = popUp.snackBar.getText();
         Assert.assertEquals(expected, actual);
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     @Test(enabled = true)
     public void Capital_letters_in_Password() {
-        s.log("Method is started");
+        log("Method is started");
         authorizationPage.loginToTheServer("ajax1@i.ua", "QwE123", "Release");
         check.waitElement(popUp.snackBar, 60, false);
         expected = localizeKeys.get("Login_bad_credentials0").toString();
         actual = popUp.snackBar.getText();
         Assert.assertEquals(expected, actual);
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     @Test(enabled = true)
     public void Dots_in_Email() {
-        s.log("Method is started");
+        log("Method is started");
         authorizationPage.loginToTheServer("aj..ax1@i.u..a", "qwe123", "Release");
         check.waitElement(popUp.snackBar, 60, false);
         expected = localizeKeys.get("Login_bad_credentials0").toString();
         actual = popUp.snackBar.getText();
         Assert.assertEquals(expected, actual);
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     @AfterClass
