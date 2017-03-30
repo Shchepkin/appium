@@ -152,6 +152,7 @@ public class RegistrationPage1 extends Base{
     */
 
     public RegistrationPage1(AppiumDriver driver) {
+        super(driver, "");
 //        super(driver);
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);

@@ -6,6 +6,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pages.Base;
 import pages.Hub;
 import utils.*;
 
@@ -13,7 +14,7 @@ import utils.*;
 import java.util.Map;
 
 
-public class test {
+public class test extends Base{
     private AppiumDriver driver;
     private Email email;
     private Map localizeKeys;
@@ -23,7 +24,7 @@ public class test {
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
-        s.log("Method is started");
+        log("Method is started");
         Setup s = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
         driver = s.getDriver();
 

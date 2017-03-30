@@ -4,13 +4,14 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
+import pages.Base;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ScreenShot {
+public class ScreenShot extends Base{
 
     private AppiumDriver driver;
     private String path_screenshot = "screenshot";
@@ -24,7 +25,7 @@ public class ScreenShot {
 
     public void getScreenShot(){
         try {
-            s.log("Method is started");
+            log("Method is started");
             // Create formatted date and time for folders and filenames
             SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd");
             SimpleDateFormat time = new SimpleDateFormat("HHmmss");
@@ -41,11 +42,11 @@ public class ScreenShot {
             FileUtils.copyFile(srcFile, targetFile);
 
             pathOfScreenshot = targetFile.getAbsolutePath();
-            s.log("Path to screenshot: " + pathOfScreenshot);
-            s.log("Method is finished");
+            log("Path to screenshot: " + pathOfScreenshot);
+            log("Method is finished");
         }
         catch (IOException e1) {
-            s.log(4, "IOException:\n\n" + e1 + "\n");
+            log(4, "IOException:\n\n" + e1 + "\n");
         }
     }
 

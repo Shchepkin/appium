@@ -12,15 +12,13 @@ import utils.Setup;
 
 import java.util.List;
 
-public class RegistrationPage {
+public class RegistrationPage extends Base{
 
     private final AppiumDriver driver;
     private IntroPage introPage;
     private AuthorizationPage authorizationPage;
     private Navigation nav;
     private AddImagePage addImagePage;
-    private Setup s = new Setup();
-
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
     public WebElement backBtn;
@@ -64,7 +62,7 @@ public class RegistrationPage {
 //====================================================================================
 
     public void fakeRegistration(String email, String password, String phone, String server) {
-        s.log("Method is started");
+        log("Method is started");
         introPage.goToAuthorization();
         nav.longTapButton(authorizationPage.loginBtn, 2);
         authorizationPage.serverDevelop.click();
@@ -84,7 +82,7 @@ public class RegistrationPage {
 
 
     public void fillFields(String name, String email, String password, String phone, String server) {
-        s.log("Method is started");
+        log("Method is started");
         introPage.goToAuthorization();
         authorizationPage.chooseServer(server);
         nav.backBtn.click();
@@ -100,66 +98,63 @@ public class RegistrationPage {
     }
 
     public void fillFields(String name, String email, String password, String phone) {
-        s.log("Method is started");
+        log("Method is started");
 
-        s.log("fill name with: \"" + name + "\"");
+        log("fill name with: \"" + name + "\"");
         nameField.sendKeys(name);
 
-        s.log("fill and confirm email with: \"" + email + "\"");
+        log("fill and confirm email with: \"" + email + "\"");
         emailField.sendKeys(email);
         nav.swipeUp();
         emailConfirmField.sendKeys(email);
 
-        s.log("fill phone with: \"" + phone + "\"");
+        log("fill phone with: \"" + phone + "\"");
         phoneField.sendKeys(phone);
 
-        s.log("fill and confirm password with: \"" + password + "\"");
+        log("fill and confirm password with: \"" + password + "\"");
         nav.swipeUp();
         passwordField.sendKeys(password);
         nav.swipeUp();
         passwordConfirmField.sendKeys(password);
 
-        s.log("confirm User Agreement checkbox");
-        nav.swipeUp();
-        userAgreementCheckbox.click();
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
 
     public void confirmAgriment() {
-        s.log("Method is started");
+        log("Method is started");
         nav.swipeUp();
         userAgreementCheckbox.click();
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     public void setUserPic(int imageNumber) {
-        s.log("Method is started");
+        log("Method is started");
         userPic.click();
         addImagePage.setImageFromGallery(imageNumber);
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     public void setUserPic(int type, int imageNumber) {
-        s.log("Method is started");
+        log("Method is started");
 
         switch (type){
-            case 1: s.log("add image from camera");
+            case 1: log("add image from camera");
                 userPic.click();
                 addImagePage.setImageFromCamera();
                 break;
-            case 2: s.log("add image from gallery");
+            case 2: log("add image from gallery");
                 userPic.click();
                 addImagePage.setImageFromGallery(imageNumber);
                 break;
-            default: s.log("without image");
+            default: log("without image");
                 break;
         }
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     public void setPhoneCountryCode() {
-        s.log("Method is started");
+        log("Method is started");
 
 
     }

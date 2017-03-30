@@ -11,7 +11,7 @@ import utils.Setup;
 /**
  *
  */
-public class IntroPage {
+public class IntroPage extends Base{
 
     private final AppiumDriver driver;
     private AuthorizationPage authorizationPage;
@@ -33,21 +33,21 @@ public class IntroPage {
     }
 
     public void goToAuthorization() {
-        s.log("Method is started");
+        log("Method is started");
         loginBtn.click();
     }
 
     public void goToRegistration() {
-        s.log("Method is started");
+        log("Method is started");
         registrationBtn.click();
     }
 
     public void setServer(String server) {
-        s.log("Method is started");
+        log("Method is started");
         loginBtn.click();
         authorizationPage.chooseServer(server);
         authorizationPage.backBtn.click();
-        s.log("Method is finished");
+        log("Method is finished");
     }
 
     public WebElement getLoginBtn() {
