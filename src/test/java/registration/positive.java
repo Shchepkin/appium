@@ -160,7 +160,7 @@ public class positive {
         if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
 
         dashboard.plusBtn.click();
-        nav.nextBtn.click();
+        nav.nextButtonClick();
         dashboard.nameField.sendKeys(hubName);
         dashboard.hubKeyField.sendKeys(hubKey);
         dashboard.addBtn.click();
@@ -221,11 +221,17 @@ public class positive {
 
         hub.goToTheUserlistPage();
 
-        s.log("waiting for Pincode PopUp");
-//        Assert.assertTrue(user.addOneFromEmailField(), "Add one user from email field is failed");
-//        Assert.assertTrue(user.addOneFromContactList(), "Add one user from Contact List is failed");
-//        Assert.assertTrue(user.addManyFromEmailField(), "Add many users from email field is failed");
-        Assert.assertTrue(user.addManyFromContactList(), "Add many users from Contact List is failed");
+        user.addFromEmailField();
+        Assert.assertTrue(user.checkIsNewUsersAddedBy("text", user.getUsersForEmailField()), "Add users from Email Field is failed");
+
+        user.addFromContactList();
+        Assert.assertTrue(user.checkIsNewUsersAddedBy("text", user.getUsersForContactList()), "Add users from Contact List is failed");
+
+        user.addMixedUsers();
+        Assert.assertTrue(user.checkIsNewUsersAddedBy("text", user.getUsersForMixedAdd()), "Add users with mixed style is failed");
+
+        String unregisteredUserEmail = user.getUsersForMixedAdd().get(1);
+        Assert.assertTrue(user.checkDeleteIconIsPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon");
 
         s.log("TEST IS FINISHED");
     }
@@ -301,7 +307,7 @@ public class positive {
 
 
     @Test(priority = 1, enabled = false)
-    public void com() {
+    public void imitator() {
         s.log("TEST IS STARTED");
         Imitator imitator = new Imitator();
         imitator.sendCommand("ver\r\n");
@@ -355,8 +361,8 @@ public class positive {
             introPage.goToRegistration();
 
             s.log("waiting for User Agreement Dialog and tap OK");
-            check.waitElement(nav.nextBtn, 5, true);
-            nav.nextBtn.click();
+            check.waitElement(nav.getNextButton(), 5, true);
+            nav.nextButtonClick();
 
             s.log("registration process");
             name = "autotest_user" + i;

@@ -65,7 +65,10 @@ public class Navigation {
     public WebElement backBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
-    public WebElement nextBtn;
+    private WebElement nextButton;
+
+    public void nextButtonClick(){nextButton.click();}
+    public WebElement getNextButton() {return nextButton;}
 
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
     private WebElement addBtn;
@@ -200,7 +203,6 @@ public class Navigation {
         s.log("Method is started");
         start = System.nanoTime();
         flag = false;
-
         counter = 0;
         etalon.clear();
         current.clear();
@@ -233,7 +235,9 @@ public class Navigation {
         s.log(2, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
         s.log("Method is finished");
     }
+
 //======================================================================================================================
+
     /**
      * This method scrolls current screen to the element with needed text and direction ("up" or "down") and gives you
      * the opportunity to click this element if you want
@@ -245,10 +249,11 @@ public class Navigation {
      * @return true if method found the element (and click them if it required)
      */
 
-    public boolean scrollToElementWithText(String direction, String textOfSearchingElement, boolean click) {
+    public boolean scrollToElementWith(String typeOfElement, String direction, String textOfSearchingElement, boolean click) {
         start = System.nanoTime();
         s.log("Method is started");
         result = false;
+        WebElement searchingElement;
 
         counter = 0;
         etalon.clear();
@@ -261,10 +266,22 @@ public class Navigation {
         }
 
         while (true){
-
             if (current.contains(textOfSearchingElement)){
                 try {
-                    WebElement searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
+                    switch (typeOfElement){
+                        case "text":
+                            searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
+                            break;
+                        case "email":
+                            searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + textOfSearchingElement + "']"));
+                            break;
+                        case "name":
+                            searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + textOfSearchingElement + "']"));
+                            break;
+                        default:
+                            searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
+                            break;
+                    }
 
                     if (click) {
                         searchingElement.click();
@@ -274,14 +291,15 @@ public class Navigation {
                     }
                     result = true;
                     break;
+
                 }catch (NoSuchElementException e){
                     s.log(3, "NoSuchElementException, element is not found on this screen!");
                 }
             }else s.log(3, "element with text \"" + textOfSearchingElement + "\" is not found on this screen!");
 
             if (direction.equals("down")) {
-                swipeDown(800, 2);
-            }else swipeUp(800, 2);
+                swipeDown(1000, 2);
+            }else swipeUp(1000, 2);
 
             current.clear();
             s.log("put new text objects to the current list after swipe");
@@ -318,6 +336,7 @@ public class Navigation {
             counter = 0;
             etalon.clear();
             etalon.addAll(current);
+            flag = false;
         }
         s.log("Method is finished");
        return etalon;
@@ -353,7 +372,7 @@ public class Navigation {
     }
 
     public void goNext() {
-        nextBtn.click();
+        nextButton.click();
     }
 
     public boolean goToTheRemotePage(){

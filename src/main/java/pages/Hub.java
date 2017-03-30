@@ -3,7 +3,6 @@ package pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import utils.Check;
@@ -66,7 +65,7 @@ public class Hub {
         hubSettingsUsersImage.click();
 
         check.waitElement(nav.backBtn, 10, true);
-        nav.scrollToElementWithText("up", sendInvitesButtonText, true);
+        nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
         s.log("method is finished");
     }
 
