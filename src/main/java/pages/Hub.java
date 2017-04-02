@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import utils.Check;
 import utils.Navigation;
-import utils.Setup;
+//import utils.Setup;
 
 /**
  * Created by installer on 1/21/17.
@@ -62,7 +62,7 @@ public class Hub extends Base{
         log("click Users tab");
         hubSettingsUsersImage.click();
 
-        check.waitElement(nav.backBtn, 10, true);
+        check.waitElement(userStatus, 10, true);
         nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
         log("method is finished");
     }

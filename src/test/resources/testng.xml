@@ -8,7 +8,7 @@
 <suite name = "Suite">
     <test name = "Prestigio">
         <parameter name="deviceName_" value="Prestigio"/>
-        <parameter name="appPath_" value="/home/installer/Android/AndroidApp/ajax.2.9.13.apk"/>
+        <parameter name="appPath_" value="/home/installer/Android/AndroidApp/ajax.2.9.15.apk"/>
 
         <parameter name="locale_" value="uk"/>
         <parameter name="UDID_" value="MTPB0252700596"/>
@@ -17,7 +17,7 @@
         <classes>
             <!--<class name="registration.positive"/>-->
             <!--<class name="Suits.Smoke"/>-->
-            <class name="testCases.C42098"/>
+            <class name="testCases.C42098_Login_to_the_existing_account"/>
         </classes>
     </test>
 

@@ -6,7 +6,6 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import utils.Setup;
 import utils.Sql;
 
 import java.util.Map;
@@ -17,7 +16,7 @@ public class ValidationCodePage extends Base{
     public boolean autoLoadResult;
 
     private Map tokenMap;
-    private Sql sql = new Sql();
+    private Sql sql;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/smsCode")
     public WebElement smsCode;
@@ -61,6 +60,7 @@ public class ValidationCodePage extends Base{
 
     public void getAndFillValidationCodes(String row, String value){
         log("Method is started");
+        sql = new Sql();
 
         tokenMap = sql.getTokenMap(row, value);
         log(2, "SMS token: " + tokenMap.get("smsToken"));
@@ -78,6 +78,7 @@ public class ValidationCodePage extends Base{
     }
 
     public ValidationCodePage(AppiumDriver driver) {
+
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }

@@ -17,18 +17,18 @@ import org.testng.Assert;
 import utils.Check;
 import utils.Navigation;
 import utils.ScreenShot;
-import utils.Setup;
+//import utils.Setup;
 
 import java.util.List;
 
 public class DashboardRoomsPage extends Base{
-    public final AndroidDriver driver;
-    private IntroPage introPage;
-    private AuthorizationPage loginPage;
-    private Navigation nav;
-    private AddImagePage addImagePage;
-    private Dashboard dashboard;
-    private Check check;
+    private AppiumDriver driver;
+//    private IntroPage introPage;
+//    private AuthorizationPage loginPage;
+//    private Navigation nav;
+//    private AddImagePage addImagePage;
+//    private Dashboard dashboard;
+//    private Check check;
     private WebElement[] elements;
     private boolean result;
 
@@ -51,10 +51,9 @@ public class DashboardRoomsPage extends Base{
     private WebElement addRoomPlusBtn;
 
 
-
-
     public DashboardRoomsPage(AppiumDriver driver) {
-        this.driver = (AndroidDriver)driver;
+
+        this.driver = driver;
         nav = new Navigation(driver);
         check = new Check(driver);
         introPage = new IntroPage(driver);

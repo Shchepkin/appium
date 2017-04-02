@@ -1,12 +1,9 @@
 package pages;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import io.appium.java_client.pagefactory.*;
-import org.testng.Reporter;
-import utils.Navigation;
-import utils.Setup;
 
 /**
  *
@@ -45,7 +42,7 @@ public class IntroPage extends Base{
         log("Method is started");
         loginBtn.click();
         loginPage.chooseServer(server);
-        loginPage.backBtn.click();
+        nav.goBack();
         log("Method is finished");
     }
 

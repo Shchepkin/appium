@@ -9,8 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.Base;
 
-import java.io.IOException;
-
 
 public class Check extends Base{
     private AppiumDriver driver;
@@ -129,13 +127,13 @@ public class Check extends Base{
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period, int tryCount, boolean confirmPopupProposition){
         log("Method is started");
         result = false;
-        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin};
+        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWindow};
 
         for (int i = 1; i <= tryCount; i++) {
             log(3, "click the element link, try count #" +i);
             elementForClick.click();
 
-            log("waiting for: 1.snackBar  2.loadingWin");
+            log("waiting for: 1.snackBar  2.loadingWindow");
             numOfFoundElement = waitElements(elements, period);
 
             checkNum(numOfFoundElement, confirmPopupProposition);
@@ -156,12 +154,12 @@ public class Check extends Base{
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, boolean confirmPopupProposition){
         log("Method is started");
         result = false;
-        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin};
+        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWindow};
 
         log(3, "click the element link");
         elementForClick.click();
 
-        log("waiting for: 1.snackBar  2.loadingWin");
+        log("waiting for: 1.snackBar  2.loadingWindow");
         numOfFoundElement = waitElements(elements, 4);
 
         checkNum(numOfFoundElement, confirmPopupProposition);

@@ -6,7 +6,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import utils.Setup;
+//import utils.Setup;
 
 /**
  * Created by installer on 1/21/17.

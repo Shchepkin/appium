@@ -4,11 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import utils.*;
 
@@ -19,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Base{
 
@@ -48,6 +54,7 @@ public class Base{
     public AuthorizationPage loginPage;
     public ValidationCodePage validationCodePage;
     public DashboardActivePINPage pinPage;
+    public ScreenShot screenShot;
 
     private Path path;
     private String localizeTextForKey;
@@ -56,14 +63,36 @@ public class Base{
 
     private Map localizeKeys, dbSettings, jsonCollection;
     private ArrayList<String> jsonStringArray;
+    private String deviceName, UDID, platformVersion, URL, appPath;
 
-    @Parameters({ "locale_" })
-    public Base(AppiumDriver driver, String locale_) {
-        this.driver = driver;
 
+
+    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
+    @BeforeClass
+    public void setUp(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
+        log("setup is started");
+
+        log("set driver variables");
+        deviceName = deviceName_;
+        UDID = UDID_;
+        platformVersion = platformVersion_;
+        URL = URL_;
+        appPath = appPath_;
+
+        log("set locale to \"" + locale_ + "\"");
         this.locale = locale_;
-        log(3, "locale: \"" + locale + "\"");
+    }
 
+
+    public String  getLocale() {
+        return locale;
+    }
+
+    public Base() {
+    }
+
+//    @Parameters({ "locale_" })
+    public Base(AppiumDriver driver) {
         log(2, "init Wait(driver)");
         wait = new Wait(driver);
 
@@ -118,6 +147,12 @@ public class Base{
         log(2, "init DashboardActivePINPage(driver)");
         pinPage = new DashboardActivePINPage(driver);
 
+        log(2, "init ScreenShot(driver)");
+        screenShot = new ScreenShot(driver);
+
+        log(2, "init DashboardHeader(driver)");
+        header = new DashboardHeader(driver);
+
         log(2, "init Sql()");
         sql = new Sql();
 
@@ -127,21 +162,9 @@ public class Base{
 
     }
 
-    public Base() {
-    }
-
-
-
-
     public String getLocalizeTextForKey(String key){
         localizeTextForKey = getLocalizeKeys().get(key).toString();
         return localizeTextForKey;
-    }
-
-    @Parameters({ "locale_" })
-    private String getLocale(String locale_){
-        log(3, "locale: \"" + locale + "\"");
-        return locale;
     }
 
     private Map getLocalizeKeys() {
@@ -313,6 +336,40 @@ public class Base{
 //**********************************************************************************************************************
 // LOG
 //**********************************************************************************************************************
+
+    public void log(String message) {
+        Throwable t = new Throwable();
+        StackTraceElement trace[] = t.getStackTrace();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
+        Date timeStamp = new Date();
+        String typeOfMessage = "INFO ";
+
+        // We need element with index 0 - it's current element "log"
+        if (trace.length > 1) {
+            StackTraceElement element = trace[1];
+            System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+        } else {
+            System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
+        }
+    }
+
+    public void hideKeyboard(){
+        try{
+            driver.hideKeyboard();
+        }catch (Exception e){
+            log("Exeption: \n" + e + "\n");
+        }
+    }
+
+    public void openKeyboard() {
+        log("Method is started");
+        try{
+            driver.hideKeyboard();
+        }catch (Exception e){
+            log(3, "Exception: \n" + e + "\n");
+        }
+        log("Method is finished");
+    }
     public void log(int type, String message) {
         Throwable t = new Throwable();
         StackTraceElement trace[] = t.getStackTrace();
@@ -351,38 +408,41 @@ public class Base{
         }
     }
 
-    public void log(String message) {
-        Throwable t = new Throwable();
-        StackTraceElement trace[] = t.getStackTrace();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
-        Date timeStamp = new Date();
-        String typeOfMessage = "INFO ";
+//**********************************************************************************************************************
+// Appium Driver
+//**********************************************************************************************************************
 
-        // We need element with index 0 - it's current element "log"
-        if (trace.length > 1) {
-            StackTraceElement element = trace[1];
-            System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-        } else {
-            System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
-        }
-    }
 
-    public void hideKeyboard(){
-        try{
-            driver.hideKeyboard();
-        }catch (Exception e){
-            log("Exeption: \n" + e + "\n");
-        }
-    }
-
-    public void openKeyboard() {
+    public AppiumDriver getDriver() {
         log("Method is started");
-        try{
-            driver.hideKeyboard();
-        }catch (Exception e){
-            log(3, "Exception: \n" + e + "\n");
+        try {
+            log(2, "get .apk file");
+            File app = new File(appPath);
+
+            //Settings ajaxMobileApp AndroidDriver
+            log(2, "set capabilities settings");
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability(MobileCapabilityType.TAKES_SCREENSHOT, "true");
+            capabilities.setCapability(CapabilityType.BROWSER_NAME, "Android");
+            capabilities.setCapability("deviceName", deviceName);
+            capabilities.setCapability("udid", UDID);
+            capabilities.setCapability("platformVersion", platformVersion);
+            capabilities.setCapability("platformName", "Android");
+            capabilities.setCapability("app", app.getAbsolutePath());
+            capabilities.setCapability("appPackage", "com.ajaxsystems");
+            capabilities.setCapability("appActivity", "com.ajaxsystems.ui.activity.LauncherActivity");
+
+            log(2, "implement Android driver");
+            driver = new AndroidDriver(new URL("http://" + URL), capabilities);
+
+            log(2, "set timeouts");
+            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+
+        } catch (MalformedURLException e) {
+            log(4, "MalformedURLException\n" + e);
         }
         log("Method is finished");
+        return driver;
     }
 
 }

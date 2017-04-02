@@ -1,17 +1,14 @@
 package utils;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Reporter;
 import pages.Base;
 
 
@@ -37,7 +34,7 @@ public class PopUp extends Base{
     public WebElement message;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/loading")
-    public WebElement loadingWin;
+    public WebElement loadingWindow;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/progress")
     public WebElement progressImage;
@@ -112,7 +109,7 @@ public class PopUp extends Base{
         try {
             // assert is the element displayed on the page
             log(2, "waiting 10 seconds for loading PopUp");
-            iWait.until(ExpectedConditions.visibilityOf(loadingWin));
+            iWait.until(ExpectedConditions.visibilityOf(loadingWindow));
             switch (flag) {
                 case 1:
                     log("loading PopUp is shown, so click Confirm Button");
@@ -155,5 +152,7 @@ public class PopUp extends Base{
         return result;
     }
 
-
+    public String getContentText() {
+        return contentText.getText();
+    }
 }

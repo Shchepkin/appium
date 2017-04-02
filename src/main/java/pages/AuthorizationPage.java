@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import utils.Check;
 import utils.Navigation;
-import utils.Setup;
 
 
 public class AuthorizationPage extends Base{
@@ -19,7 +18,7 @@ public class AuthorizationPage extends Base{
     private Check check;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
-    public WebElement backBtn;
+    private WebElement backBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/login")
     public WebElement loginField;

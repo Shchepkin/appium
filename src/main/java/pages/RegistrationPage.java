@@ -1,14 +1,12 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import utils.Navigation;
-import utils.Setup;
 
 import java.util.List;
 
@@ -66,7 +64,7 @@ public class RegistrationPage extends Base{
         introPage.goToAuthorization();
         nav.longTapButton(loginPage.loginBtn, 2);
         loginPage.serverDevelop.click();
-        nav.backBtn.click();
+        nav.goBack();
         introPage.goToRegistration();
         nameField.sendKeys("fakeRegistration");
         emailField.sendKeys(email);
@@ -85,7 +83,7 @@ public class RegistrationPage extends Base{
         log("Method is started");
         introPage.goToAuthorization();
         loginPage.chooseServer(server);
-        nav.backBtn.click();
+        nav.goBack();
         introPage.goToRegistration();
         nameField.sendKeys(name);
         emailField.sendKeys(email);

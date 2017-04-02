@@ -64,7 +64,7 @@ public class Navigation extends Base{
 //======================================================================================================================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
-    public WebElement backBtn;
+    private WebElement backBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
     private WebElement nextButton;
