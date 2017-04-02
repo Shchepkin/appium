@@ -25,7 +25,7 @@ public class test extends Base{
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
         log("Method is started");
-        Setup s = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        Setup s = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_);
         driver = s.getDriver();
 
 //        hub = new Hub(driver, locale_);

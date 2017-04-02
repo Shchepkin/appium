@@ -26,8 +26,8 @@
 //    private AddImagePage addImagePage;
 //    private DashboardHeader dashboardHeader;
 //    private MenuAccountPage accountPage;
-//    private RegistrationPage registrationPage;
-//    private AuthorizationPage authorizationPage;
+//    private RegistrationPage regPage;
+//    private AuthorizationPage loginPage;
 //    private ValidationCodePage validationCodePage;
 //    private DashboardRoomsPage roomsPage;
 //    private DashboardRemotePage remotePage;
@@ -60,8 +60,8 @@
 //        accountPage = new MenuAccountPage(driver);
 //        addImagePage = new AddImagePage(driver);
 //        dashboardHeader = new DashboardHeader(driver);
-//        registrationPage = new RegistrationPage(driver);
-//        authorizationPage = new AuthorizationPage(driver);
+//        regPage = new RegistrationPage(driver);
+//        loginPage = new AuthorizationPage(driver);
 //        validationCodePage = new ValidationCodePage(driver);
 //    }
 //
@@ -84,11 +84,11 @@
 ////        nav.nextBtn.click();
 //
 //        s.log("registration process");
-//        registrationPage.setUserPic(1);
-//        registrationPage.fillFields(name, login, pass, phone);
-//        registrationPage.confirmAgriment();
+//        regPage.setUserPic(1);
+//        regPage.fillFields(name, login, pass, phone);
+//        regPage.confirmAgrimentCheckBox();
 //
-//        check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5, 3, false);
+//        check.clickElementAndWaitingPopup(regPage.registrationBtn, 5, 3, false);
 //
 //        s.log("waiting for Validation Code Page");
 //        Assert.assertTrue(check.waitElement(validationCodePage.smsCode, 60, true));
@@ -98,10 +98,10 @@
 //        validationCodePage.okBtn.click();
 //
 //        s.log("waiting for Welcome Page with dashboard link");
-//        Assert.assertTrue(check.waitElement(registrationPage.dashboard, 30, true));
+//        Assert.assertTrue(check.waitElement(regPage.dashboard, 30, true));
 //
 //        s.log("Welcome Page is shown, so go to the dashboard");
-//        check.clickElementAndWaitingPopup(registrationPage.dashboard, 5, 3, false);
+//        check.clickElementAndWaitingPopup(regPage.dashboard, 5, 3, false);
 //
 //        s.log("waiting for Pincode PopUp");
 //        if(check.waitElement(popUp.cancelButton, 15, true)) {
@@ -123,7 +123,7 @@
 //
 //        s.log("start from IntroPage");
 //        introPage.goToAuthorization();
-//        authorizationPage.loginToTheServer(login, pass, server);
+//        loginPage.loginToTheServer(login, pass, server);
 //
 //        s.log("waiting for Pincode PopUp");
 //        if(check.waitElement(popUp.cancelButton, 15, true)) {
@@ -152,7 +152,7 @@
 //
 //        s.log("start from IntroPage");
 //        introPage.goToAuthorization();
-//        authorizationPage.loginToTheServer(login, pass, server);
+//        loginPage.loginToTheServer(login, pass, server);
 //
 //        s.log("waiting for Pincode PopUp");
 //
@@ -183,7 +183,7 @@
 //
 //        s.log("start from IntroPage");
 //        introPage.goToAuthorization();
-//        authorizationPage.loginToTheServer(login, pass, server);
+//        loginPage.loginToTheServer(login, pass, server);
 //
 //        s.log("waiting for Pincode PopUp");
 //        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
@@ -214,7 +214,7 @@
 //
 //        s.log("start from IntroPage");
 //        introPage.goToAuthorization();
-//        authorizationPage.loginToTheServer(login, pass, server);
+//        loginPage.loginToTheServer(login, pass, server);
 //
 //        s.log("waiting for Pincode PopUp");
 //        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
@@ -249,7 +249,7 @@
 //
 //        s.log("start from IntroPage");
 //        introPage.goToAuthorization();
-//        authorizationPage.loginToTheServer(login, pass, server);
+//        loginPage.loginToTheServer(login, pass, server);
 //
 //        s.log("waiting for Pincode PopUp");
 //        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
@@ -280,7 +280,7 @@
 //    public void Login_to_the_not_validated_account() {
 //        s.log("TEST IS STARTED");
 //
-//        authorizationPage.loginToTheServer(login, pass, server);
+//        loginPage.loginToTheServer(login, pass, server);
 //
 //        s.log("wait for message this_account_was_not_yet_validated");
 //        Assert.assertTrue(check.waitElement(popUp.dialogMessage, 60, true));
@@ -321,7 +321,7 @@
 //    @Test(priority = 1, enabled = false)
 //    public void Test() {
 //        s.log("TEST IS STARTED");
-//        registrationPage.fillFields(name, login, pass, phone, server);
+//        regPage.fillFields(name, login, pass, phone, server);
 //
 //        s.log("TEST IS FINISHED");
 //    }
@@ -338,7 +338,7 @@
 //    private void logIn() {
 //        s.log("start from IntroPage");
 //        introPage.goToAuthorization();
-//        authorizationPage.loginToTheServer(login, pass, server);
+//        loginPage.loginToTheServer(login, pass, server);
 //    }
 //
 //    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
@@ -376,8 +376,8 @@
 //            else if (i >= 100000 && i < 1000000) {phone = "681" + i;}
 //            else {phone = "68" + i;}
 //
-//            registrationPage.fillFields(name, login, pass, phone);
-//            check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5, 2, false);
+//            regPage.fillFields(name, login, pass, phone);
+//            check.clickElementAndWaitingPopup(regPage.registrationBtn, 5, 2, false);
 //
 //            s.log("waiting for Validation Code Page");
 //            check.waitElement(validationCodePage.smsCode, 30, true);
@@ -387,7 +387,7 @@
 //            validationCodePage.okBtn.click();
 //
 //            s.log("waiting for Welcome Page with dashboard link");
-//            check.waitElement(registrationPage.dashboard, 30, true);
+//            check.waitElement(regPage.dashboard, 30, true);
 //
 //            s.log("close driver");
 //            driver.quit();

@@ -17,7 +17,6 @@ public class ScreenShot extends Base{
     private String path_screenshot = "screenshot";
     private Date currentDate = new Date();
     private String pathOfScreenshot;
-    private Setup s = new Setup();
 
     public ScreenShot(AppiumDriver driver) {
         this.driver = driver;

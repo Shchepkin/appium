@@ -21,14 +21,14 @@ public class Navigation extends Base{
     private long start, finish;
     private boolean flag;
     private int counter;
-    private Setup s = new Setup();
     private ArrayList<String> etalon = new ArrayList<>();
     private ArrayList<String> current = new ArrayList<>();
 
-
-
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
     private WebElement cancelBtn;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
+    private WebElement cancelButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/ok")
     private WebElement okBtn;
@@ -36,8 +36,9 @@ public class Navigation extends Base{
     @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
     private WebElement confirmButton;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
-    private WebElement cancelButton;
+    @AndroidFindBy(id = "com.ajaxsystems:id/add")
+    private WebElement addButton;
+
 
     @AndroidFindBy(xpath = "//*[@resource-id='com.ajaxsystems:id/rrv_recycler_view']//android.widget.RelativeLayout/android.widget.TextView")
     private List<WebElement> userList;
@@ -70,9 +71,6 @@ public class Navigation extends Base{
 
     public void nextButtonClick(){nextButton.click();}
     public WebElement getNextButton() {return nextButton;}
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/add")
-    private WebElement addBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
     private WebElement nameField;
@@ -242,11 +240,16 @@ public class Navigation extends Base{
     /**
      * This method scrolls current screen to the element with needed text and direction ("up" or "down") and gives you
      * the opportunity to click this element if you want
+     * @param typeOfElement text, email, name, id
+     *
      * @param direction "up"    - for scrolling to the end of screen
      *                  "down"  - for scrolling to the top of screen
+     *
      * @param textOfSearchingElement - text which Searching Element contains
+     *
      * @param click - true - if you want to click the element
      *                false - if you don't need to click the element
+     *
      * @return true if method found the element (and click them if it required)
      */
 
@@ -270,6 +273,9 @@ public class Navigation extends Base{
             if (current.contains(textOfSearchingElement)){
                 try {
                     switch (typeOfElement){
+                        case "id":
+                            searchingElement = driver.findElement(By.id("\"" + textOfSearchingElement + "\""));
+                            break;
                         case "text":
                             searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
                             break;
@@ -344,6 +350,12 @@ public class Navigation extends Base{
     }
 
 //======================================================================================================================
+// Keyboard
+//======================================================================================================================
+
+
+
+//======================================================================================================================
 // Tap
 //======================================================================================================================
 
@@ -412,6 +424,13 @@ public class Navigation extends Base{
                 log("Confirm button is pressed");
             }catch (Exception e1){
                 log(3, "\nConfirm button was not found\n" + e1.getMessage());
+
+                try {
+                    addButton.click();
+                    log("Confirm button is pressed");
+                }catch (Exception e2){
+                    log(3, "\nAdd button was not found\n" + e2.getMessage());
+                }
             }
         }
     }

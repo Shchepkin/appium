@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by installer on 1/21/17.
  */
-public class Dashboard {
+public class Dashboard extends Base{
     public final AppiumDriver driver;
 
 // ================= Header ===================
@@ -64,14 +64,13 @@ public class Dashboard {
     @AndroidFindBy(id = "com.ajaxsystems:id/hint")
     public WebElement hint;
 
-// ================= Add Rooms ===================
+// ================= Add Device ===================
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/name")
-    public WebElement roomName;
+    @AndroidFindBy(id = "com.ajaxsystems:id/footerTitle")
+    private WebElement addDeviceButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
     public WebElement roomNkame;
-
 
 // ================= Footer ===================
 

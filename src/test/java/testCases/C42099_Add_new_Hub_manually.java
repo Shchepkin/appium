@@ -3,7 +3,6 @@ package testCases;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 import pages.Base;
 
 /**
@@ -18,7 +17,7 @@ public class C42099_Add_new_Hub_manually  extends Base {
         log("Method is started");
 
         login = "ajax1@i.ua";
-        pass = "qwe";
+        pass = "qwe123";
         server = "Develop";
         String hubName = "1495";
         String hubKey = "00001495DDFB55691000";
@@ -26,18 +25,16 @@ public class C42099_Add_new_Hub_manually  extends Base {
 
         log("start from IntroPage");
         introPage.goToAuthorization();
-        authorizationPage.loginToTheServer(login, pass, server);
+        loginPage.loginToTheServer(login, pass, server);
 
-        log("waiting for Pincode PopUp");
-
-        elements = new WebElement[]{dashboardHeader.menuDrawer, popUp.cancelButton};
-        if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}
+        log("waiting for Pincode PopUp and cancel it");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 15);
 
         dashboard.plusBtn.click();
         nav.nextButtonClick();
         dashboard.nameField.sendKeys(hubName);
         dashboard.hubKeyField.sendKeys(hubKey);
-        dashboard.addBtn.click();
+        nav.confirmIt();
 
         elements = new WebElement[]{dashboardHeader.hubImage, popUp.cancelButton};
         if (check.waitElements(elements, 3) == 2){popUp.cancelButton.click();}

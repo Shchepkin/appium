@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  *
  */
-public class ForgotPasswordPage {
+public class ForgotPasswordPage extends Base{
 
     public final AppiumDriver driver;
 

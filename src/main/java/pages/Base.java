@@ -3,13 +3,13 @@ package pages;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.sun.xml.internal.bind.v2.TODO;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.Parameters;
 import utils.*;
 
 import java.io.*;
@@ -21,58 +21,106 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Base{
-// TODO create all localized objects, logs, settings from json in this class fnd extend all of other classes from Base.slass
+
 // TODO validate lines color if parameter is not valid (on registration page for example bg_state_mUseColor	-1754827 = red, and -11711155 = grey)
 
 
     public AppiumDriver driver;
-    public Map tokenMap;
+    public Sql sql;
     public Hub hub;
     public User user;
+    public Wait wait;
     public Check check;
     public Email email;
     public PopUp popUp;
     public DashboardHeader header;
     public IntroPage introPage;
     public Dashboard dashboard;
+    public DashboardDevicesPage device;
+    public DashboardHeader dashboardHeader;
+    public DashboardRoomsPage roomsPage;
+    public DashboardRemotePage remotePage;
     public Navigation nav;
     public MenuMainPage menuPage;
     public AddImagePage addImagePage;
-    public DashboardHeader dashboardHeader;
     public MenuAccountPage accountPage;
-    public RegistrationPage registrationPage;
-    public AuthorizationPage authorizationPage;
+    public RegistrationPage regPage;
+    public AuthorizationPage loginPage;
     public ValidationCodePage validationCodePage;
-    public DashboardRoomsPage roomsPage;
-    public DashboardRemotePage remotePage;
-    public Wait wait;
-    public Sql sql;
+    public DashboardActivePINPage pinPage;
+
     private Path path;
     private String localizeTextForKey;
-    private String jsonString, collection, locale_;
+    private String jsonString, collection;
+    private String locale;
 
     private Map localizeKeys, dbSettings, jsonCollection;
     private ArrayList<String> jsonStringArray;
 
+    @Parameters({ "locale_" })
     public Base(AppiumDriver driver, String locale_) {
         this.driver = driver;
-        this.locale_ = locale_;
-        hub = new Hub(driver);
+
+        this.locale = locale_;
+        log(3, "locale: \"" + locale + "\"");
+
+        log(2, "init Wait(driver)");
+        wait = new Wait(driver);
+
+        log(2, "init Navigation(driver)");
         nav = new Navigation(driver);
+
+        log(2, "init Check(driver)");
         check = new Check(driver);
+
+        log(2, "init Hub(driver)");
+        hub = new Hub(driver);
+
+        log(2, "init PopUp(driver)");
         popUp = new PopUp(driver);
+
+        log(2, "init DashboardDevicesPage(driver)");
+        device = new DashboardDevicesPage(driver);
+
+        log(2, "init RegistrationPage(driver)");
+        regPage = new RegistrationPage(driver);
+
+        log(2, "init MenuMainPage(driver)");
         menuPage = new MenuMainPage(driver);
+
+        log(2, "init IntroPage(driver)");
         introPage = new IntroPage(driver);
+
+        log(2, "init Dashboard(driver)");
         dashboard = new Dashboard(driver);
+
+        log(2, "init AuthorizationPage(driver)");
+        loginPage = new AuthorizationPage(driver);
+
+        log(2, "init DashboardRoomsPage(driver)");
         roomsPage = new DashboardRoomsPage(driver);
+
+        log(2, "init DashboardRemotePage(driver)");
         remotePage = new DashboardRemotePage(driver);
+
+        log(2, "init MenuAccountPage(driver)");
         accountPage = new MenuAccountPage(driver);
+
+        log(2, "init AddImagePage(driver)");
         addImagePage = new AddImagePage(driver);
+
+        log(2, "init DashboardHeader(driver)");
         dashboardHeader = new DashboardHeader(driver);
-        registrationPage = new RegistrationPage(driver);
-        authorizationPage = new AuthorizationPage(driver);
+
+        log(2, "init ValidationCodePage(driver)");
         validationCodePage = new ValidationCodePage(driver);
+
+        log(2, "init DashboardActivePINPage(driver)");
+        pinPage = new DashboardActivePINPage(driver);
+
+        log(2, "init Sql()");
         sql = new Sql();
+
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 //        page1 = PageFactory.initElements(driver, Page1.class);
@@ -83,13 +131,22 @@ public class Base{
     }
 
 
+
+
     public String getLocalizeTextForKey(String key){
         localizeTextForKey = getLocalizeKeys().get(key).toString();
         return localizeTextForKey;
     }
 
+    @Parameters({ "locale_" })
+    private String getLocale(String locale_){
+        log(3, "locale: \"" + locale + "\"");
+        return locale;
+    }
+
     private Map getLocalizeKeys() {
         log("Method is started");
+        log(3, "locale: \"" + locale + "\"");
         try {
             localizeKeys = new HashMap<>();
 
@@ -98,7 +155,7 @@ public class Base{
 
             log(2, "get json content ");
             collection = loadJSON(path + "/classes/lokaliseKeys/collection.json");
-            jsonString = loadJSON(path + "/classes/lokaliseKeys/" + locale_ + ".json");
+            jsonString = loadJSON(path + "/classes/lokaliseKeys/" + locale + ".json");
 
             JsonParser parser = new JsonParser();
             JsonObject jo = parser.parse(jsonString).getAsJsonObject();
@@ -253,7 +310,7 @@ public class Base{
         return new String(buf);
     }
 
-    //**********************************************************************************************************************
+//**********************************************************************************************************************
 // LOG
 //**********************************************************************************************************************
     public void log(int type, String message) {
@@ -308,6 +365,24 @@ public class Base{
         } else {
             System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
         }
+    }
+
+    public void hideKeyboard(){
+        try{
+            driver.hideKeyboard();
+        }catch (Exception e){
+            log("Exeption: \n" + e + "\n");
+        }
+    }
+
+    public void openKeyboard() {
+        log("Method is started");
+        try{
+            driver.hideKeyboard();
+        }catch (Exception e){
+            log(3, "Exception: \n" + e + "\n");
+        }
+        log("Method is finished");
     }
 
 }

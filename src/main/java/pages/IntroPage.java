@@ -14,8 +14,7 @@ import utils.Setup;
 public class IntroPage extends Base{
 
     private final AppiumDriver driver;
-    private AuthorizationPage authorizationPage;
-    private Setup s = new Setup();
+    private AuthorizationPage loginPage;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/login")
     private WebElement loginBtn;
@@ -28,7 +27,7 @@ public class IntroPage extends Base{
 
     public IntroPage(AppiumDriver driver) {
         this.driver = driver;
-        authorizationPage = new AuthorizationPage(driver);
+        loginPage = new AuthorizationPage(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -45,8 +44,8 @@ public class IntroPage extends Base{
     public void setServer(String server) {
         log("Method is started");
         loginBtn.click();
-        authorizationPage.chooseServer(server);
-        authorizationPage.backBtn.click();
+        loginPage.chooseServer(server);
+        loginPage.backBtn.click();
         log("Method is finished");
     }
 

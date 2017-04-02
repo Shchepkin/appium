@@ -13,12 +13,7 @@ import utils.*;
 import java.util.ArrayList;
 
 public class User extends Base{
-    private final AppiumDriver driver;
-    private Setup s = new Setup();
-    private Navigation nav;
-    private Check check;
-    private PopUp popUp;
-    private Wait wait;
+    private AppiumDriver driver;
     private boolean result;
     private String sendInvitesButtonText;
     private String inviteFailText;
@@ -53,14 +48,12 @@ public class User extends Base{
     }
 
 
-    public User(AppiumDriver driver, String locale_) {
-        super(driver, locale_);
-        this.driver = driver;
-//        s = new Setup(locale_);
+    public User(AppiumDriver driver, String locale) {
+        log(3, "locale: \"" + locale + "\"");
         nav = new Navigation(driver);
         check = new Check(driver);
         popUp = new PopUp(driver);
-        wait = new Wait(driver, locale_);
+        wait = new Wait(driver);
         sendInvitesButtonText = getLocalizeTextForKey("send_invites");
 
         inviteFailText = getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails")

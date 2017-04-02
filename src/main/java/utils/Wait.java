@@ -2,6 +2,8 @@ package utils;
 
 import io.appium.java_client.AppiumDriver;
 import org.apache.commons.io.FileUtils;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,12 +20,9 @@ public class Wait extends Base{
     private boolean result;
     private ScreenShot screenShot;
     private String waiterText;
-    private Setup s;
 
-    public Wait(AppiumDriver driver, String locale_){
+    public Wait(AppiumDriver driver){
         this.driver = driver;
-//        s = new Setup(locale_);
-        waiterText = getLocalizeTextForKey("request_send");
     }
 
     public boolean elementWithText(String searchingText, int timer, boolean makeScreenShot) {
@@ -53,6 +52,7 @@ public class Wait extends Base{
     public boolean invisibilityOfWaiter(boolean makeScreenShot) {
         log("Method is started");
         result = false;
+        waiterText = getLocalizeTextForKey("request_send");
 
         try {
             log(2, "waiting 90 seconds while Waiter become Invisible");

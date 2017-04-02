@@ -20,7 +20,7 @@ public class linksLeadsToCorrectPages {
 
     private AppiumDriver driver;
     private IntroPage introPage;
-    private AuthorizationPage authorizationPage;
+    private AuthorizationPage loginPage;
     private RegistrationPage registrationPage;
     private Check assertion;
 
@@ -28,12 +28,12 @@ public class linksLeadsToCorrectPages {
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
         Reporter.log("Create setup", true);
-        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_);
         driver = setup.getDriver();
 
         // Create objects of pages
         introPage = new IntroPage(driver);
-        authorizationPage = new AuthorizationPage(driver);
+        loginPage = new AuthorizationPage(driver);
         registrationPage = new RegistrationPage(driver);
 
         // Create assertion object
@@ -48,10 +48,10 @@ public class linksLeadsToCorrectPages {
         introPage.goToAuthorization();
 
         // Check whether the authorization page is open (Login button is exist)
-        assertion.isElementDisplayed(authorizationPage.loginBtn, 15);
+        assertion.isElementDisplayed(loginPage.loginBtn, 15);
 
         // Back to the previous page
-        authorizationPage.backBtn.click();
+        loginPage.backBtn.click();
     }
 
     @Test

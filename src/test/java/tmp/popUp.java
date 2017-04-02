@@ -21,7 +21,7 @@ import utils.Setup;
 public class popUp extends Base{
     private AppiumDriver driver;
     private IntroPage introPage;
-    private AuthorizationPage authorizationPage;
+    private AuthorizationPage loginPage;
     private PopUp popUp;
     private Setup s = new Setup();
     private Check check;
@@ -37,7 +37,7 @@ public class popUp extends Base{
         String query = "DELETE FROM csa_accounts WHERE Login LIKE '%" + locale_ + "%'";
         log(query);
 //        System.exit(0);
-        Setup s = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        Setup s = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_);
         driver = s.getDriver();
 
         // Create objects of pages
@@ -46,7 +46,7 @@ public class popUp extends Base{
         popUp = new PopUp(driver);
         check = new Check(driver);
         introPage = new IntroPage(driver);
-        authorizationPage = new AuthorizationPage(driver);
+        loginPage = new AuthorizationPage(driver);
         header = new DashboardHeader(driver);
 
         // Go to the authorization page
@@ -59,7 +59,7 @@ public class popUp extends Base{
     @Test(enabled = false)
     public void PopUp_Test() {
         log("== Method is started");
-        authorizationPage.loginToTheServer("ajax1@i.u", "qwe123", "Production");
+        loginPage.loginToTheServer("ajax1@i.u", "qwe123", "Production");
 
         elements = new WebElement[]{header.menuDrawer};
         int result = check.waitElements(elements, 10);
@@ -95,7 +95,7 @@ public class popUp extends Base{
     @Test(enabled = false)
     public void Check() {
         log(1,"Method is started");
-        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Release");
+        loginPage.loginToTheServer("ajax1@i.ua", "qwe123", "Release");
         Assert.assertFalse(popUp.result, "login is unsuccessfully, was shown SnackBar");
 
         popUp.waitLoadingPopUp(0);

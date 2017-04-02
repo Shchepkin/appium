@@ -15,7 +15,6 @@ import utils.Setup;
 public class AuthorizationPage extends Base{
 
     public final AppiumDriver driver;
-    private Setup s = new Setup();
     private Navigation nav;
     private Check check;
 

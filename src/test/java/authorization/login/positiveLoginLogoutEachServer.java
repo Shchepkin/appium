@@ -8,26 +8,19 @@ import pages.*;
 import utils.Check;
 import utils.Setup;
 
-public class positiveLoginLogoutEachServer {
+public class positiveLoginLogoutEachServer extends Base{
     private AppiumDriver driver;
-    private IntroPage introPage;
-    private AuthorizationPage authorizationPage;
-    private DashboardHeader dashboardHeader;
-    private MenuMainPage menuPage;
-    private MenuAccountPage accountPage;
-    private Check check;
-    private DashboardActivePINPage pinPage;
 
     @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
         Reporter.log("Create setup", true);
-        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_);
         driver = setup.getDriver();
 
         // Create objects of pages
         introPage = new IntroPage(driver);
-        authorizationPage = new AuthorizationPage(driver);
+        loginPage = new AuthorizationPage(driver);
         dashboardHeader = new DashboardHeader(driver);
         menuPage = new MenuMainPage(driver);
         accountPage = new MenuAccountPage(driver);
@@ -42,7 +35,7 @@ public class positiveLoginLogoutEachServer {
 
     @Test()
     public void Login_to_the_Develop_with_correct_data() {
-        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe", "Develop");
+        loginPage.loginToTheServer("ajax1@i.ua", "qwe", "Develop");
         pinPage.closePinWindowIfDisplayed();
         check.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         logOut();
@@ -50,7 +43,7 @@ public class positiveLoginLogoutEachServer {
 
     @Test()
     public void Login_to_the_Production_with_correct_data() {
-        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Production");
+        loginPage.loginToTheServer("ajax1@i.ua", "qwe123", "Production");
         pinPage.closePinWindowIfDisplayed();
         check.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         logOut();
@@ -58,7 +51,7 @@ public class positiveLoginLogoutEachServer {
 
     @Test(enabled = false)
     public void Login_to_the_Debug_with_correct_data() {
-        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Debug");
+        loginPage.loginToTheServer("ajax1@i.ua", "qwe123", "Debug");
         pinPage.closePinWindowIfDisplayed();
         check.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         logOut();
@@ -66,7 +59,7 @@ public class positiveLoginLogoutEachServer {
 
     @Test(enabled = false)
     public void Login_to_the_Eden_with_correct_data() {
-        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Eden");
+        loginPage.loginToTheServer("ajax1@i.ua", "qwe123", "Eden");
         pinPage.closePinWindowIfDisplayed();
         check.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         logOut();
@@ -74,7 +67,7 @@ public class positiveLoginLogoutEachServer {
 
     @Test(enabled = false)
     public void Login_to_the_Amazon_with_correct_data() {
-        authorizationPage.loginToTheServer("ajax1@i.ua", "qwe123", "Amazon");
+        loginPage.loginToTheServer("ajax1@i.ua", "qwe123", "Amazon");
         pinPage.closePinWindowIfDisplayed();
         check.isElementDisplayed(dashboardHeader.menuDrawer, 15);
         logOut();

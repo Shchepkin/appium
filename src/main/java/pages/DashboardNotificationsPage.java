@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by installer on 1/21/17.
  */
-public class DashboardNotificationsPage {
+public class DashboardNotificationsPage extends Base{
     public final AppiumDriver driver;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/mail")

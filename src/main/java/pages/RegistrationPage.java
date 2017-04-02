@@ -16,7 +16,7 @@ public class RegistrationPage extends Base{
 
     private final AppiumDriver driver;
     private IntroPage introPage;
-    private AuthorizationPage authorizationPage;
+    private AuthorizationPage loginPage;
     private Navigation nav;
     private AddImagePage addImagePage;
 
@@ -64,8 +64,8 @@ public class RegistrationPage extends Base{
     public void fakeRegistration(String email, String password, String phone, String server) {
         log("Method is started");
         introPage.goToAuthorization();
-        nav.longTapButton(authorizationPage.loginBtn, 2);
-        authorizationPage.serverDevelop.click();
+        nav.longTapButton(loginPage.loginBtn, 2);
+        loginPage.serverDevelop.click();
         nav.backBtn.click();
         introPage.goToRegistration();
         nameField.sendKeys("fakeRegistration");
@@ -84,7 +84,7 @@ public class RegistrationPage extends Base{
     public void fillFields(String name, String email, String password, String phone, String server) {
         log("Method is started");
         introPage.goToAuthorization();
-        authorizationPage.chooseServer(server);
+        loginPage.chooseServer(server);
         nav.backBtn.click();
         introPage.goToRegistration();
         nameField.sendKeys(name);
@@ -121,7 +121,7 @@ public class RegistrationPage extends Base{
     }
 
 
-    public void confirmAgriment() {
+    public void confirmAgrimentCheckBox() {
         log("Method is started");
         nav.swipeUp();
         userAgreementCheckbox.click();
@@ -164,7 +164,7 @@ public class RegistrationPage extends Base{
         nav = new Navigation(driver);
         introPage = new IntroPage(driver);
         addImagePage = new AddImagePage(driver);
-        authorizationPage = new AuthorizationPage(driver);
+        loginPage = new AuthorizationPage(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 }

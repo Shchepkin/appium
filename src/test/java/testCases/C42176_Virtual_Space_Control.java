@@ -15,8 +15,8 @@ public class C42176_Virtual_Space_Control extends Base {
         super(driver, locale_);
 
         log("TEST IS STARTED");
-        pass = "qwe";
         login = "ajax1@i.ua";
+        pass = "qwe123";
         server = "Develop";
         String armedText = getLocalizeTextForKey("armed");
         String disarmedText = getLocalizeTextForKey("disarmed");
@@ -24,10 +24,10 @@ public class C42176_Virtual_Space_Control extends Base {
 
         log("start from IntroPage");
         introPage.goToAuthorization();
-        authorizationPage.loginToTheServer(login, pass, server);
+        loginPage.loginToTheServer(login, pass, server);
 
-        log("waiting for Pincode PopUp");
-        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+        log("waiting for Pincode PopUp and cancel it");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 15);
 
         log("go to the Remote Page");
         remotePage.goToTheRemotePage();

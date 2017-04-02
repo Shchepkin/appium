@@ -13,7 +13,6 @@ import utils.Setup;
  */
 public class DashboardRemotePage extends Base{
     public final AppiumDriver driver;
-    private Setup s = new Setup();
     private Dashboard dashboard;
     private boolean result;
 

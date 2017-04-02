@@ -2,7 +2,6 @@ package testCases;
 
 import io.appium.java_client.AppiumDriver;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 import pages.Base;
 
 /**
@@ -16,16 +15,16 @@ public class C42102_Add_new_guest_user extends Base {
         super(driver, locale_);
         log("TEST IS STARTED");
 
-        pass = "qwe";
         login = "ajax1@i.ua";
+        pass = "qwe123";
         server = "Develop";
 
         log("start from IntroPage");
         introPage.goToAuthorization();
-        authorizationPage.loginToTheServer(login, pass, server);
+        loginPage.loginToTheServer(login, pass, server);
 
-        log("waiting for Pincode PopUp");
-        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+        log("waiting for Pincode PopUp and cancel it");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 15);
 
         hub.goToTheUserlistPage();
 

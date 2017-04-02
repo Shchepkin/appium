@@ -24,10 +24,9 @@ import java.util.List;
 public class DashboardRoomsPage extends Base{
     public final AndroidDriver driver;
     private IntroPage introPage;
-    private AuthorizationPage authorizationPage;
+    private AuthorizationPage loginPage;
     private Navigation nav;
     private AddImagePage addImagePage;
-    private Setup s = new Setup();
     private Dashboard dashboard;
     private Check check;
     private WebElement[] elements;
@@ -61,7 +60,7 @@ public class DashboardRoomsPage extends Base{
         introPage = new IntroPage(driver);
         dashboard = new Dashboard(driver);
         addImagePage = new AddImagePage(driver);
-        authorizationPage = new AuthorizationPage(driver);
+        loginPage = new AuthorizationPage(driver);
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
@@ -159,4 +158,5 @@ public class DashboardRoomsPage extends Base{
         log("room with name \"" + name + "\" successfully added!");
         log("Method is finished");
     }
+
 }

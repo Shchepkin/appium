@@ -16,7 +16,7 @@ public class positiveLoginWithCheckingFields {
     private IntroPage introPage;
     private RegistrationPage registrationPage;
     private ValidationCodePage validationCodePage;
-    private AuthorizationPage authorizationPage;
+    private AuthorizationPage loginPage;
     private DashboardHeader dashboardHeader;
     private Check assertion;
     private Navigation nav;
@@ -25,12 +25,12 @@ public class positiveLoginWithCheckingFields {
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
         Reporter.log("Create setup", true);
-        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_);
         driver = setup.getDriver();
 
         // Create objects of pages
         introPage = new IntroPage(driver);
-        authorizationPage = new AuthorizationPage(driver);
+        loginPage = new AuthorizationPage(driver);
         dashboardHeader = new DashboardHeader(driver);
         nav = new Navigation(driver);
 
@@ -48,7 +48,7 @@ public class positiveLoginWithCheckingFields {
         introPage.goToAuthorization();
 
         Reporter.log("> Login", true);
-        authorizationPage.loginToTheServer("  ajax1@i.ua  ", "  qwe123  ", "Production");
+        loginPage.loginToTheServer("  ajax1@i.ua  ", "  qwe123  ", "Production");
 
         Reporter.log("> Check login", true);
         assertion.isElementDisplayed(dashboardHeader.menuDrawer, 15);
@@ -65,7 +65,7 @@ public class positiveLoginWithCheckingFields {
         introPage.goToAuthorization();
 
         Reporter.log("> Login", true);
-        authorizationPage.loginToTheServer("AjaX1@i.Ua", "qwe123", "Production");
+        loginPage.loginToTheServer("AjaX1@i.Ua", "qwe123", "Production");
 
         Reporter.log("> Check login", true);
         assertion.isElementDisplayed(dashboardHeader.menuDrawer, 15);
@@ -97,19 +97,19 @@ public class positiveLoginWithCheckingFields {
         validationCodePage.cancelBtn.click();
 
         Reporter.log("> wait for appearing Authorization page", true);
-        assertion.waitElement(authorizationPage.forgotPasswordBtn, 60, false);
-        String actual = authorizationPage.loginField.getText();
+        assertion.waitElement(loginPage.forgotPasswordBtn, 60, false);
+        String actual = loginPage.loginField.getText();
         String expected = login;
 
         Reporter.log("> check existing login in the Email field", true);
         Assert.assertTrue(actual.equals(expected));
 
         Reporter.log("> fill password to the Password field and tap authorization button", true);
-        authorizationPage.passwordField.sendKeys(pass);
+        loginPage.passwordField.sendKeys(pass);
         nav.nextButtonClick();
 
         Reporter.log("> wait for appearing Dialog message", true);
-        assertion.waitElement(authorizationPage.dialogMessage, 15, false);
+        assertion.waitElement(loginPage.dialogMessage, 15, false);
 
         try {
             Thread.sleep(10000);
@@ -117,7 +117,7 @@ public class positiveLoginWithCheckingFields {
             e.printStackTrace();
         }
 
-//        String actual = authorizationPage.loginField.getText();
+//        String actual = loginPage.loginField.getText();
 //        String expected = login;
 //        Assert.assertEquals(expected, actual);
     }

@@ -39,8 +39,6 @@ public class Hub extends Base{
         this.driver = driver;
         nav = new Navigation(driver);
         check = new Check(driver);
-//        s = new Setup(locale_);
-        sendInvitesButtonText = getLocalizeTextForKey("send_invites");
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -53,6 +51,7 @@ public class Hub extends Base{
 
     public void goToTheUserInvitationPage() {
         log("method is started");
+        sendInvitesButtonText = getLocalizeTextForKey("send_invites");
 
         log("click on hub");
         hubImageOnDeviceList.click();

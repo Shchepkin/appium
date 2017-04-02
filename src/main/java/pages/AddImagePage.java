@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 
-public class AddImagePage {
+public class AddImagePage extends Base{
     public final AppiumDriver driver;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/tv_title")

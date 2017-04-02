@@ -40,7 +40,7 @@ public class Imitator extends Base{
             serialPort.addEventListener(new PortReader());
 
         } catch (Exception ex) {
-            log(3, "Exception \n" + ex + "\n");
+            log(3, "Exception: \n" + ex + "\n");
         }
         log("method is finished");
     }
@@ -50,45 +50,44 @@ public class Imitator extends Base{
         try {
             serialPort.writeString(command +"\n");
         }catch (Exception ex) {
-            log(3, "Exception \n" + ex + "\n");
+            log(3, "Exception: \n" + ex + "\n");
         }
     }
 
     public void addDevice(int dev_id, int dev_numb, int dev_type){
         String command = String.format("add %d %d %d\n", dev_id, dev_numb, dev_type);
         try {
-            serialPort.writeString(command);
             Thread.sleep(2000);
+            serialPort.writeString(command);
         }catch (Exception e) {
-            log(3, "Exception \n" + e + "\n");
+            log(3, "Exception: \n" + e + "\n");
         }
     }
 
     public void getDeviceList(){
         try {
-            serialPort.writeString("lst\n");
             Thread.sleep(2000);
+            serialPort.writeString("lst\n");
         }catch (Exception e) {
-            log(3, "Exception \n" + e + "\n");
+            log(3, "Exception: \n" + e + "\n");
         }
     }
 
     public void clearMemory(){
         try {
-            serialPort.writeString("cln\n");
             Thread.sleep(2000);
+            serialPort.writeString("cln\n");
         }catch (Exception e) {
-            log(3, "Exception \n" + e + "\n");
+            log(3, "Exception: \n" + e + "\n");
         }
     }
 
     public void registerDevice(int dev_id){
         try {
-
-            serialPort.writeString("reg " + dev_id + "\n");
             Thread.sleep(2000);
+            serialPort.writeString("reg " + dev_id + "\n");
         }catch (Exception e) {
-            log(3, "Exception \n" + e + "\n");
+            log(3, "Exception: \n" + e + "\n");
         }
     }
 
@@ -100,7 +99,7 @@ public class Imitator extends Base{
                     String data = serialPort.readString(event.getEventValue());
 //                    byte[] buffer = serialPort.readBytes(16);
 //                    String str = new String(buffer);
-//                    System.out.println(data);
+                    System.out.println(data);
 
                 } catch (Exception ex) {
                     log(3, "Exception \n" + ex + "\n");

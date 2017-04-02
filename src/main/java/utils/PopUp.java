@@ -98,9 +98,7 @@ public class PopUp extends Base{
 
 //=====================================================================================
 
-    public PopUp() {
-
-    }
+    public PopUp() {}
 
     public PopUp(AppiumDriver driver) {
         this.driver = driver;

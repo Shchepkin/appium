@@ -19,7 +19,6 @@ public class Email extends Base{
     private Folder folder;
     private Store store;
     private Message message[];
-    private Setup s = new Setup();
 
     public String emailCode;
     public String emailText;

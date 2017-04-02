@@ -6,7 +6,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class DashboardHeader {
+public class DashboardHeader extends Base{
     public final AppiumDriver driver;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/menuDrawer")

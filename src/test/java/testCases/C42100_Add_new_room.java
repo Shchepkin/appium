@@ -1,7 +1,6 @@
 package testCases;
 
 import io.appium.java_client.AppiumDriver;
-import org.testng.annotations.Test;
 import pages.Base;
 
 /**
@@ -15,17 +14,16 @@ public class C42100_Add_new_room extends Base {
         super(driver, locale_);
         
         log("TEST IS STARTED");
-        pass = "qwe123";
-        name = "room_number_";
         login = "ajax1@i.ua";
-        server = "Production";
+        pass = "qwe123";
+        server = "Develop";
 
         log("start from IntroPage");
         introPage.goToAuthorization();
-        authorizationPage.loginToTheServer(login, pass, server);
+        loginPage.loginToTheServer(login, pass, server);
 
-        log("waiting for Pincode PopUp");
-        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+        log("waiting for Pincode PopUp and cancel it");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 15);
 
         log("tap the Room Page button in the footer");
         dashboard.footerRooms.click();

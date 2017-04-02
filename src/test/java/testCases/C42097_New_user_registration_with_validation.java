@@ -12,8 +12,8 @@ public class C42097_New_user_registration_with_validation extends Base {
         super(driver, locale_);
         log("Method is started");
 
-        login = "ajaxsys32@bigmir.net";
-        phone = "977275625";
+        login = "ajaxsys33@bigmir.net";
+        phone = "971112234";
         pass = "qwe";
         name = "name";
         server = "Develop";
@@ -23,11 +23,11 @@ public class C42097_New_user_registration_with_validation extends Base {
         introPage.goToRegistration();
 
         log("registration process");
-        registrationPage.setUserPic(1);
-        registrationPage.fillFields(name, login, pass, phone);
-        registrationPage.confirmAgriment();
+        regPage.setUserPic(1);
+        regPage.fillFields(name, login, pass, phone);
+        regPage.confirmAgrimentCheckBox();
 
-        check.clickElementAndWaitingPopup(registrationPage.registrationBtn, 5, 3, false);
+        check.clickElementAndWaitingPopup(regPage.registrationBtn, 5, 2, false);
 
         log("waiting for Validation Code Page");
         Assert.assertTrue(check.waitElement(validationCodePage.smsCode, 60, true));
@@ -37,16 +37,13 @@ public class C42097_New_user_registration_with_validation extends Base {
         validationCodePage.okBtn.click();
 
         log("waiting for Welcome Page with dashboard link");
-        Assert.assertTrue(check.waitElement(registrationPage.dashboard, 30, true));
+        Assert.assertTrue(check.waitElement(regPage.dashboard, 30, true));
 
         log("Welcome Page is shown, so go to the dashboard");
-        check.clickElementAndWaitingPopup(registrationPage.dashboard, 5, 3, false);
+        check.clickElementAndWaitingPopup(regPage.dashboard, 5, 3, false);
 
-        log("waiting for Pincode PopUp");
-        if (check.waitElement(popUp.cancelButton, 15, true)) {
-            log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
-            popUp.cancelButton.click();
-        }
+        log("waiting for Pincode PopUp and cancel it");
+        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 30);
 
         Assert.assertTrue(check.waitElement(dashboardHeader.menuDrawer, 15, true), "Login failed!\n");
         log("TEST IS FINISHED");

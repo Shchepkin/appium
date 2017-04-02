@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by installer on 1/21/17.
  */
-public class MenuMainPage {
+public class MenuMainPage extends Base{
     public final AppiumDriver driver;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/menuTitle")

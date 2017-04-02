@@ -20,7 +20,7 @@ public class pageElementExisting {
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
         Reporter.log("Create setup", true);
-        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_);
         driver = setup.getDriver();
 
         // Create objects of Intro pages

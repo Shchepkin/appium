@@ -16,7 +16,7 @@ import utils.Setup;
 public class pageElementExisting {
     private AppiumDriver driver;
     private IntroPage introPage;
-    private AuthorizationPage authorizationPage;
+    private AuthorizationPage loginPage;
     private ForgotPasswordPage forgotPasswordPage;
     private Check assertion;
 
@@ -24,12 +24,12 @@ public class pageElementExisting {
     @BeforeClass
     public void setup(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
         Reporter.log("Create setup", true);
-        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_, locale_);
+        Setup setup = new Setup(deviceName_, UDID_, platformVersion_, URL_, appPath_);
         driver = setup.getDriver();
 
         // Create objects of pages
         introPage = new IntroPage(driver);
-        authorizationPage = new AuthorizationPage(driver);
+        loginPage = new AuthorizationPage(driver);
         forgotPasswordPage = new ForgotPasswordPage(driver);
 
         // Create assertion object
@@ -37,7 +37,7 @@ public class pageElementExisting {
 
         // Go to the authorization page
         introPage.goToAuthorization();
-        authorizationPage.forgotPasswordBtn.click();
+        loginPage.forgotPasswordBtn.click();
     }
 
     @Test()
