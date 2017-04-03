@@ -7,9 +7,11 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.remote.MobileCapabilityType;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
@@ -54,16 +56,23 @@ public class Base{
     public AuthorizationPage loginPage;
     public ValidationCodePage validationCodePage;
     public DashboardActivePINPage pinPage;
-    public ScreenShot screenShot;
 
     private Path path;
-    private String localizeTextForKey;
-    private String jsonString, collection;
-    private String locale;
+    private String jsonString;
+    private String collection;
 
-    private Map localizeKeys, dbSettings, jsonCollection;
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public String locale;
+    private String localizeTextForKey;
+    private String pathForScreenshot = "screenshot";
+
+    private Map  dbSettings, jsonCollection;
     private ArrayList<String> jsonStringArray;
     private String deviceName, UDID, platformVersion, URL, appPath;
+    private Map localizeKeys = new HashMap<>();
 
 
 
@@ -73,14 +82,14 @@ public class Base{
         log("setup is started");
 
         log("set driver variables");
-        deviceName = deviceName_;
-        UDID = UDID_;
-        platformVersion = platformVersion_;
         URL = URL_;
+        UDID = UDID_;
         appPath = appPath_;
+        deviceName = deviceName_;
+        platformVersion = platformVersion_;
 
         log("set locale to \"" + locale_ + "\"");
-        this.locale = locale_;
+        locale = locale_;
     }
 
 
@@ -89,9 +98,9 @@ public class Base{
     }
 
     public Base() {
+        locale = getLocale();
     }
 
-//    @Parameters({ "locale_" })
     public Base(AppiumDriver driver) {
         log(2, "init Wait(driver)");
         wait = new Wait(driver);
@@ -147,20 +156,17 @@ public class Base{
         log(2, "init DashboardActivePINPage(driver)");
         pinPage = new DashboardActivePINPage(driver);
 
-        log(2, "init ScreenShot(driver)");
-        screenShot = new ScreenShot(driver);
-
         log(2, "init DashboardHeader(driver)");
         header = new DashboardHeader(driver);
 
         log(2, "init Sql()");
         sql = new Sql();
 
-
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-//        page1 = PageFactory.initElements(driver, Page1.class);
+//        addImagePage = PageFactory.initElements(driver, AddImagePage.class);
 
     }
+
 
     public String getLocalizeTextForKey(String key){
         localizeTextForKey = getLocalizeKeys().get(key).toString();
@@ -171,8 +177,6 @@ public class Base{
         log("Method is started");
         log(3, "locale: \"" + locale + "\"");
         try {
-            localizeKeys = new HashMap<>();
-
             log(2, "get Application start up path");
             path = getApplicationStartUp();
 
@@ -207,7 +211,6 @@ public class Base{
         log("Method is finished");
         return localizeKeys;
     }
-
 
     public Map getDbSettings() {
         log("Method is started");
@@ -321,6 +324,7 @@ public class Base{
         return path;
     }
 
+//**********************************************************************************************************************
 
     private String loadJSON(String path) throws IOException {
         log("Method is started");
@@ -353,23 +357,6 @@ public class Base{
         }
     }
 
-    public void hideKeyboard(){
-        try{
-            driver.hideKeyboard();
-        }catch (Exception e){
-            log("Exeption: \n" + e + "\n");
-        }
-    }
-
-    public void openKeyboard() {
-        log("Method is started");
-        try{
-            driver.hideKeyboard();
-        }catch (Exception e){
-            log(3, "Exception: \n" + e + "\n");
-        }
-        log("Method is finished");
-    }
     public void log(int type, String message) {
         Throwable t = new Throwable();
         StackTraceElement trace[] = t.getStackTrace();
@@ -409,9 +396,32 @@ public class Base{
     }
 
 //**********************************************************************************************************************
-// Appium Driver
+// Keyboard
 //**********************************************************************************************************************
 
+
+    public void hideKeyboard(){
+        try{
+            driver.hideKeyboard();
+        }catch (Exception e){
+            log(2, "Exeption: \n\n" + e + "\n");
+        }
+    }
+
+    public void openKeyboard() {
+        log("Method is started");
+        try{
+            driver.hideKeyboard();
+        }catch (Exception e){
+            log(2, "Exception: \n\n" + e + "\n");
+        }
+        log("Method is finished");
+    }
+
+
+//**********************************************************************************************************************
+// Appium Driver
+//**********************************************************************************************************************
 
     public AppiumDriver getDriver() {
         log("Method is started");
@@ -443,6 +453,38 @@ public class Base{
         }
         log("Method is finished");
         return driver;
+    }
+
+
+//**********************************************************************************************************************
+// ScreenShot
+//**********************************************************************************************************************
+
+
+    public void getScreenShot(AppiumDriver driver){
+        try {
+            Date currentDate = new Date();
+
+            // Create formatted date and time for folders and filenames
+            SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd");
+            SimpleDateFormat time = new SimpleDateFormat("HHmmss");
+
+            // Make screenshot
+            File srcFile = driver.getScreenshotAs(OutputType.FILE);
+
+            // Creating folder and filename for screenshot
+            String folder = pathForScreenshot + "/" + date.format(currentDate);
+            String filename = date.format(currentDate) + "_" + time.format(currentDate) + ".png";
+            File targetFile = new File(folder + "/" + filename);
+
+            // Move screenshot to the target folder
+            FileUtils.copyFile(srcFile, targetFile);
+
+            log(3, "Path to screenshot: " + targetFile.getAbsolutePath());
+        }
+        catch (IOException e1) {
+            log(4, "IOException:\n\n" + e1 + "\n");
+        }
     }
 
 }

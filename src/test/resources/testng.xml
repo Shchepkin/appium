@@ -17,7 +17,9 @@
         <classes>
             <!--<class name="registration.positive"/>-->
             <!--<class name="Suits.Smoke"/>-->
-            <class name="testCases.C42098_Login_to_the_existing_account"/>
+            <!--<class name="testCases.C42098_Login_to_the_existing_account"/>-->
+            <!--<class name="testCases.C42099_Add_new_Hub_manually"/>-->
+            <class name="testCases.C42100_Add_new_room"/>
         </classes>
     </test>
 

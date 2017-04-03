@@ -62,7 +62,7 @@ public class Hub extends Base{
         log("click Users tab");
         hubSettingsUsersImage.click();
 
-        check.waitElement(userStatus, 10, true);
+        wait.element(userStatus, 10, true);
         nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
         log("method is finished");
     }
@@ -79,7 +79,7 @@ public class Hub extends Base{
         log("click Users tab");
         hubSettingsUsersImage.click();
 
-        check.waitElement(userStatus, 10, true);
+        wait.element(userStatus, 10, true);
         log("method is finished");
     }
 }

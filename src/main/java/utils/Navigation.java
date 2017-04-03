@@ -349,11 +349,6 @@ public class Navigation extends Base{
        return etalon;
     }
 
-//======================================================================================================================
-// Keyboard
-//======================================================================================================================
-
-
 
 //======================================================================================================================
 // Tap
@@ -367,13 +362,6 @@ public class Navigation extends Base{
         driver.tap(1, element, timer);
 
         log("Method is finished");
-    }
-
-
-    public void tapCancelButton() {cancelBtn.click();}
-
-    public void tapOkButton() {
-        okBtn.click();
     }
 
 //======================================================================================================================
@@ -394,7 +382,7 @@ public class Navigation extends Base{
 
         try {
             while (backBtn.isDisplayed()) {
-                backBtn.click();
+                goBack();
             }
         }catch (NoSuchElementException e){
             log(3, "BackButton is not shown");
@@ -417,19 +405,19 @@ public class Navigation extends Base{
             okBtn.click();
             log("OK button is pressed");
         }catch (Exception e){
-            log(3, "\nOK Button was not found\n" + e.getMessage());
+            log(2, "OK Button was not found\n\n" + e.getMessage() + "\n");
 
             try {
                 confirmButton.click();
                 log("Confirm button is pressed");
             }catch (Exception e1){
-                log(3, "\nConfirm button was not found\n" + e1.getMessage());
+                log(2, "nConfirm button was not found\n\n" + e1.getMessage() + "\n");
 
                 try {
                     addButton.click();
                     log("Confirm button is pressed");
                 }catch (Exception e2){
-                    log(3, "\nAdd button was not found\n" + e2.getMessage());
+                    log(2, "Add button was not found\n\n" + e2.getMessage() + "\n");
                 }
             }
         }
@@ -440,13 +428,13 @@ public class Navigation extends Base{
             cancelBtn.click();
             log("Cancel button is pressed");
         }catch (Exception e){
-            log(3, "\nfirst Cancel Button was not found\n" + e.getMessage());
+            log(2, "first Cancel Button was not found\n\n" + e.getMessage() + "\n");
 
             try {
                 cancelButton.click();
                 log("Cancel button is pressed");
             }catch (Exception e1){
-                log(3, "\nsecond Cancel Button was not found\n" + e.getMessage());
+                log(3, "\nsecond Cancel Button was not found\n\n" + e.getMessage());
             }
         }
     }

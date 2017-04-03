@@ -18,39 +18,38 @@ public class Dashboard extends Base{
     public WebElement addBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
-    public WebElement nameField;
+    private WebElement nameField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/image")
     public WebElement image;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/settings")
-    public WebElement settingsBtn;
+    private WebElement settingsBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-    public WebElement cancelBtn;
+    private WebElement cancelBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/save")
-    public WebElement saveBtn;
+    private WebElement saveBtn;
 
 
-// ================= Add Hub ===================
+
+
+    // ================= Add Hub ===================
     @AndroidFindBy(id = "com.ajaxsystems:id/plus")
-    public WebElement plusBtn;
+    private WebElement plusButton;
+    public WebElement getPlusButton() {
+        return plusButton;
+    }
+
+
+
 
     @AndroidFindBy(id = "com.ajaxsystems:id/panel")
     public WebElement addHubWizard;
 
-//    @AndroidFindBy(id = "com.ajaxsystems:id/add")
-//    public WebElement addHubBtn;
-//
-//    @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-//    public WebElement cancelBtn;
-//
-//    @AndroidFindBy(id = "com.ajaxsystems:id/name")
-//    public WebElement hubName;
-
     @AndroidFindBy(id = "com.ajaxsystems:id/key")
-    public WebElement hubKeyField;
+    private WebElement hubKeyField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/nameInfo")
     public WebElement nameInfo;
@@ -75,13 +74,13 @@ public class Dashboard extends Base{
 // ================= Footer ===================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/devices")
-    public WebElement footerDevices;
+    private WebElement footerDevices;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/rooms")
-    public WebElement footerRooms;
+    private WebElement footerRooms;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/notifications")
-    public WebElement footerNotifications;
+    private WebElement footerNotifications;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/remote")
     public WebElement footerRemote;
@@ -91,6 +90,23 @@ public class Dashboard extends Base{
     public Dashboard(AppiumDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    }
+//=====================================================================================================================
+
+    public void fillFieldsWith(String hubName, String hubKey){
+        log("fill Name Field with \"" + hubName + "\"");
+        nameField.sendKeys(hubName);
+
+        log("fill Hub Key Field with \"" + hubKey + "\"");
+        hubKeyField.sendKeys(hubKey);
+    }
+
+    public void plusButtonClick() {
+        plusButton.click();
+    }
+
+    public void goToTheRoomPage() {
+        footerRooms.click();
     }
 }
 

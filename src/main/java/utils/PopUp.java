@@ -14,7 +14,6 @@ import pages.Base;
 
 public class PopUp extends Base{
     private AppiumDriver driver;
-    private ScreenShot screenShot;
     private long start, finish;
 
     public boolean result = false;
@@ -99,7 +98,6 @@ public class PopUp extends Base{
 
     public PopUp(AppiumDriver driver) {
         this.driver = driver;
-        screenShot = new ScreenShot(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -143,11 +141,11 @@ public class PopUp extends Base{
         } catch (NoSuchElementException e) {
             log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){screenShot.getScreenShot();}
+            if (makeScreenShot){getScreenShot(driver);}
         } catch (TimeoutException e) {
             log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){screenShot.getScreenShot();}
+            if (makeScreenShot){getScreenShot(driver);}
         }
         return result;
     }

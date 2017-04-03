@@ -10,13 +10,18 @@ public class DashboardHeader extends Base{
     public final AppiumDriver driver;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/menuDrawer")
-    public WebElement menuDrawer;
+    private WebElement menuDrawer;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/connection")
     public WebElement connectionIcon;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/hubImage")
     public WebElement hubImage;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/gprs")
+    private WebElement gprsImage;
+
+
 
     @AndroidFindBy(id = "com.ajaxsystems:id/hubSecurity")
     public WebElement hubSecurity;
@@ -37,4 +42,38 @@ public class DashboardHeader extends Base{
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+
+
+    public WebElement getMenuDrawer() {
+        return menuDrawer;
+    }
+
+    public boolean isMenuIconPresent(int timer){
+        boolean result = false;
+
+        return result;
+    }
+
+    public WebElement getConnectionIcon() {
+        return connectionIcon;
+    }
+    public WebElement getHubImage() {
+        return hubImage;
+    }
+    public WebElement getHubSecurity() {
+        return hubSecurity;
+    }
+    public WebElement getTitle() {
+        return title;
+    }
+    public WebElement getStatus() {
+        return status;
+    }
+    public WebElement getNormalElement() {
+        return normalElement;
+    }
+    public WebElement getHubOffline() {
+        return hubOffline;
+    }
+    public WebElement getGprsImage() {return gprsImage;}
 }

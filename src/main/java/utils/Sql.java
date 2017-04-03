@@ -16,20 +16,20 @@ import java.util.regex.Pattern;
 public class Sql extends Base{
 
     private Formatter f = new Formatter();
-    private ArrayList validationToken = new ArrayList();
+    private ArrayList validationToken;
 
     // JDBC URL, username and password of MySQL server
-    private String url = getDbSettings().get("url").toString();
-    private String user = getDbSettings().get("user").toString();
-    private String password = getDbSettings().get("password").toString();
+    private String url;
+    private String user;
+    private String password;
 
     // JDBC variables for opening and managing connection
     private static Connection connection;
     private static Statement stmt;
     private static ResultSet rs;
 
-    public ArrayList selectList = new ArrayList();
-    public Map tokenMap = new HashMap();
+    public ArrayList selectList;
+    public Map tokenMap;
 
 
     public Sql() {}
@@ -44,6 +44,7 @@ public class Sql extends Base{
      */
     public void getDelete(String row, String value) {
         log("Method is started");
+        selectList = new ArrayList();
 
         String query = "DELETE FROM csa_accounts WHERE " + row + " LIKE '" + value + "'";
 
@@ -87,8 +88,10 @@ public class Sql extends Base{
      */
     public ArrayList getSelect(String row, String value) {
         log("Method is started");
-        validationToken.clear();
-        selectList.clear();
+        validationToken = new ArrayList();
+        selectList = new ArrayList();
+//        validationToken.clear();
+//        selectList.clear();
 
         String query = "SELECT id,InnerID,Role,Phone,ConfirmationToken,Login FROM csa_accounts WHERE " + row + " LIKE '" + value + "' ORDER BY id ASC";
 
@@ -146,6 +149,7 @@ public class Sql extends Base{
      */
     public Map getTokenMap(String row, String value) {
         log("Method is started");
+        tokenMap = new HashMap();
         int counter = 1;
         while (validationToken.size() < 1 || validationToken.get(0) == null) {
             log(3, "Try to get Tokens from database. Attempt #" + counter);
@@ -200,6 +204,10 @@ public class Sql extends Base{
      */
     private Connection getConnection (){
         log("Method is started");
+        url = getDbSettings().get("url").toString();
+        user = getDbSettings().get("user").toString();
+        password = getDbSettings().get("password").toString();
+
         for (int i = 1; i <= 10; i++) {
             try {
                 log("opening database connection to MySQL server, attempt #" + i);

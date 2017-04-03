@@ -1,6 +1,5 @@
 package testCases;
 
-import io.appium.java_client.AppiumDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.Base;
@@ -8,11 +7,11 @@ import pages.Base;
 public class C42098_Login_to_the_existing_account extends Base{
 
     private String login, pass, server, expectedText, actual;
-    private Base base;
+    private Base $;
 
     @BeforeMethod
     public void driverInit(){
-        base = new Base(getDriver());
+        $ = new Base(getDriver());
     }
 
     @Test(priority = 1, enabled = true)
@@ -24,22 +23,28 @@ public class C42098_Login_to_the_existing_account extends Base{
         server = "Develop";
 
         log("start from IntroPage");
-        base.introPage.goToAuthorization();
-        base.loginPage.loginToTheServer(login, pass, server);
+        $.introPage.goToAuthorization();
+        $.loginPage.loginToTheServer(login, pass, server);
+
+        $.wait.invisibilityOfLoaderLogo(true);
+        Assert.assertFalse($.check.forSnackBarIsPresent(3), "SnackBar is shown");
 
         log("waiting for Pincode PopUp");
-        if(base.wait.element(base.popUp.loadingWindow, 90, true)) {
+        if($.wait.element($.popUp.loadingWindow, 90, true)) {
             log("Check localized text");
             expectedText = getLocalizeTextForKey("do_you_want_to_enable_passcode");
-            actual = base.popUp.getContentText();
+            actual = $.popUp.getContentText();
 
             System.out.println("expected: \"" + expectedText + "\"");
             System.out.println("actual: \"" + actual + "\"");
 
             Assert.assertEquals(expectedText, actual, "localization of Text on Pincode PopUp is wrong!");
             log("localized text is OK");
-            base.nav.cancelIt();
+            $.nav.cancelIt();
         }
+
+        Assert.assertTrue($.wait.element($.dashboardHeader.getMenuDrawer(), 5, true), "Menu Icon is not shown");
+
         log("TEST IS FINISHED");
     }
 

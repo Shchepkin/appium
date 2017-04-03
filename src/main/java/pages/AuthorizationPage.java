@@ -13,7 +13,7 @@ import utils.Navigation;
 
 public class AuthorizationPage extends Base{
 
-    public final AppiumDriver driver;
+    private AppiumDriver driver;
     private Navigation nav;
     private Check check;
 

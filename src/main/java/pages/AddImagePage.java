@@ -10,28 +10,27 @@ import java.util.List;
 
 
 public class AddImagePage extends Base{
-    public final AppiumDriver driver;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/tv_title")
-    public WebElement addImagePageTitle;
+    private WebElement addImagePageTitle;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/iv_thumbnail")
     private List<WebElement> thumbnail;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/rotateCounterClockwise")
-    public WebElement rotateCounterClockwise;
+    private WebElement rotateCounterClockwise;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/rotateClockwise")
-    public WebElement rotateClockwise;
+    private WebElement rotateClockwise;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cropImage")
-    public WebElement cropImage;
+    private WebElement cropImage;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
-    public WebElement backBtn;
+    private WebElement backBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
-    public WebElement nextBtn;
+    private WebElement nextBtn;
 
 
 // ===================== Camera v.4-5 =================================
@@ -64,6 +63,7 @@ public class AddImagePage extends Base{
     }
 
     public void setImageFromCamera(){
+        log("method is started");
         thumbnail.get(0).click();
         shutterButtonPhoto.click();
         doneButton.click();

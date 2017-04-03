@@ -12,7 +12,8 @@ import pages.Base;
 
 public class Check extends Base{
     private AppiumDriver driver;
-    private ScreenShot screenShot;
+//    private ScreenShot screenShot;
+    private Wait wait;
     private PopUp popUp;
     private int numOfFoundElement;
 
@@ -20,8 +21,9 @@ public class Check extends Base{
 
     public Check(AppiumDriver driver) {
         this.driver = driver;
+        wait = new Wait(driver);
         this.popUp = new PopUp(driver);
-        this.screenShot = new ScreenShot(driver);
+//        this.screenShot = new ScreenShot(driver);
     }
 
 //**********************************************************************************************************************
@@ -36,41 +38,11 @@ public class Check extends Base{
 
         } catch (NoSuchElementException e) {
             // is failed - make screenshot
-            screenShot.getScreenShot();
+            getScreenShot(driver);
 
             // creation report
             Assert.fail("Test failed - no such element was appeared during " + timer + " seconds\n" + e);
         }
-    }
-
-    /*******************************************************************************************************************
-        * @param element           - element which we want to wait
-        * @param timer             - how long time we want to wait for the element (in seconds)
-        * @param makeScreenShot    - make screenshot if element is not found (true)
-        * @return                  - result true or false about successfully execute this method
-
-         example:
-            waitElement(element, 5, true)
-     */
-    public boolean waitElement(WebElement element, int timer, boolean makeScreenShot) {
-        log("Method is started");
-
-        try {
-            log(2, "waiting " + timer + " seconds for the element ");
-            WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions.visibilityOf(element));
-            log(2, "element " + element + " is shown with text: \"" + element.getText() + "\"");
-            result = true;
-        } catch (NoSuchElementException e) {
-            log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
-            result = false;
-            if (makeScreenShot){screenShot.getScreenShot();}
-        } catch (TimeoutException e) {
-            log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
-            result = false;
-            if (makeScreenShot){screenShot.getScreenShot();}
-        }
-        return result;
     }
 
 
@@ -138,7 +110,7 @@ public class Check extends Base{
 
             checkNum(numOfFoundElement, confirmPopupProposition);
 
-            if (!waitElement(elementForClick, 1, true)) {
+            if (!wait.element(elementForClick, 1, true)) {
                 log(3, "element for click is not shown now");
                 result = true;
                 break;
@@ -217,12 +189,12 @@ public class Check extends Base{
         } catch (NoSuchElementException e) {
             log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            screenShot.getScreenShot();
+            getScreenShot(driver);
 
         } catch (TimeoutException e) {
             log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            screenShot.getScreenShot();
+            getScreenShot(driver);
         }
         return result;
     }
@@ -241,9 +213,26 @@ public class Check extends Base{
             log("SnackBar is shown with text: \"" + popUp.snackBar.getText() + "\"");
             result = true;
 
-        } catch (Exception e) {
-            log(3, "SnackBar is not shown:\n\n" + e + "\n");
-            screenShot.getScreenShot();
+        } catch (NoSuchElementException e) {
+            log("SnackBar is not shown:\n\n" + e + "\n");
+            getScreenShot(driver);
+        }
+        return result;
+    }
+
+    public boolean isErrorPresent(int timer) {
+        log("Method is started");
+        try {
+            WebDriverWait iWait = new WebDriverWait(driver, timer);
+            iWait.until(ExpectedConditions.visibilityOf(popUp.errorPic));
+
+            log("Error message is shown with text: \"" + popUp.getContentText() + "\"");
+            result = true;
+
+        } catch (NoSuchElementException e) {
+            log("Error message is not shown");
+            getScreenShot(driver);
+            result = false;
         }
         return result;
     }
