@@ -1,46 +1,81 @@
-//package testCases;
-//
-//import io.appium.java_client.AppiumDriver;
-//import org.testng.Assert;
-//import pages.Base;
-//
-///**
-// * Created by installer on 3/28/17.
-// */
-//public class C42102_Add_new_guest_user extends Base {
-//
-//    private String login, pass, server, expected, actual;
-//
-//    public C42102_Add_new_guest_user(AppiumDriver driver, String locale_) {
-//        super(driver, locale_);
-//        log("TEST IS STARTED");
-//
-//        login = "ajax1@i.ua";
-//        pass = "qwe123";
-//        server = "Develop";
-//
-//        log("start from IntroPage");
-//        introPage.goToAuthorization();
-//        loginPage.loginToTheServer(login, pass, server);
-//
-//        log("waiting for Pincode PopUp and cancel it");
-//        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 15);
-//
-//        hub.goToTheUserlistPage();
-//
-//        user.addFromEmailField();
-//        Assert.assertTrue(user.checkIsNewUsersAddedBy("text", user.getUsersForEmailField()), "Add users from Email Field is failed");
-//
-//        user.addFromContactList();
-//        Assert.assertTrue(user.checkIsNewUsersAddedBy("text", user.getUsersForContactList()), "Add users from Contact List is failed");
-//
-//        user.addMixedUsers();
-//        Assert.assertTrue(user.checkIsNewUsersAddedBy("text", user.getUsersForMixedAdd()), "Add users with mixed style is failed");
-//
-//        String unregisteredUserEmail = user.getUsersForMixedAdd().get(1);
-//        Assert.assertTrue(user.checkDeleteIconIsPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon");
-//
-//        log("TEST IS FINISHED");
-//    }
-//
-//}
+package testCases;
+
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import pages.Base;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by installer on 3/28/17.
+ */
+public class C42102_Add_new_guest_user extends Base {
+
+    private String login, pass, server, expected, actual;
+    private Base $;
+
+    @Parameters({ "deviceName_" })
+    @BeforeClass
+    public void init(){
+
+        $ = new Base(getDriver());
+
+        log("get credentials for login");
+        login = creds.get("login").toString();
+        pass = creds.get("password").toString();
+        server = creds.get("server").toString();
+
+        log("get localized keys");
+        String sendInvitesButtonText = getLocalizeTextForKey("send_invites");
+        String inviteFailText = getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
+        String waiterText = getLocalizeTextForKey("request_send");
+
+        log("set localized keys");
+        $.user.setSendInvitesButtonText(sendInvitesButtonText);
+        $.user.setInviteFailText(inviteFailText);
+        $.wait.setWaiterText(waiterText);
+
+        log("login without Pin");
+        $.loginPage.loginWithPinCancel(login, pass, server);
+
+        log("tap the Room Page button in the footer");
+        $.hub.goToTheUserlistPage();
+    }
+
+    @Test(priority = 1, enabled = true)
+    public void From_Email_Field() {
+
+        $.user.addFromEmailField();
+        Assert.assertTrue($.user.checkIsNewUsersAddedBy("text", $.user.getUsersForEmailField()), "Add users from Email Field is failed");
+    }
+
+    @Test(priority = 2, enabled = true)
+    public void From_Contact_List() {
+
+        $.user.addFromContactList();
+        Assert.assertTrue($.user.checkIsNewUsersAddedBy("text", $.user.getUsersForContactList()), "Add users from Contact List is failed");
+    }
+
+    @Test(priority = 3, enabled = true)
+    public void Add_Mixed_Users() {
+
+        $.user.addMixedUsers();
+        Assert.assertTrue($.user.checkIsNewUsersAddedBy("text", $.user.getUsersForMixedAdd()), "Add users with mixed style is failed");
+    }
+
+    @Test(priority = 3, enabled = true)
+    public void Check_is_unreg_user_in_pending_list() {
+
+        String unregisteredUserEmail = $.user.getUsersForMixedAdd().get(1);
+        Assert.assertTrue($.user.checkDeleteIconIsPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon");
+    }
+
+    @AfterClass
+    public void endSuit() {
+        driver.quit();
+    }
+}

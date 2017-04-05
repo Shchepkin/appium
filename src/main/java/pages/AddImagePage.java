@@ -59,6 +59,7 @@ public class AddImagePage extends Base{
 // ==================================================================
     public AddImagePage(AppiumDriver driver) {
         this.driver = driver;
+
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -68,6 +69,7 @@ public class AddImagePage extends Base{
         shutterButtonPhoto.click();
         doneButton.click();
         nextBtn.click();
+        log("method is finished");
     }
 
 

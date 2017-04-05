@@ -12,11 +12,7 @@ import java.util.List;
 
 public class RegistrationPage extends Base{
 
-    private final AppiumDriver driver;
-    private IntroPage introPage;
-    private AuthorizationPage loginPage;
-    private Navigation nav;
-    private AddImagePage addImagePage;
+    private AppiumDriver driver;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
     public WebElement backBtn;
@@ -34,10 +30,10 @@ public class RegistrationPage extends Base{
     public WebElement emailConfirmField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/code")
-    public WebElement phoneCountryCode;
+    private WebElement phoneCountryCode;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/text")
-    public List<WebElement> phoneCountryCodeList;
+    private List<WebElement> phoneCountryCodeList;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/phone")
     public AndroidElement phoneField;
@@ -51,19 +47,36 @@ public class RegistrationPage extends Base{
     @AndroidFindBy(id = "com.ajaxsystems:id/agreement")
     public WebElement userAgreementCheckbox;
 
+
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
-    public WebElement registrationBtn;
+    private WebElement registrationButtonLink;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/dashboard")
-    public WebElement dashboard;
+    private WebElement dashboardLink;
+
+
+    public RegistrationPage(AppiumDriver driver) {
+        this.driver = driver;
+        nav = new Navigation(driver);
+        introPage = new IntroPage(driver);
+        loginPage = new AuthorizationPage(driver);
+        addImagePage = new AddImagePage(driver);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    }
+
+    public WebElement getDashboardLink() {
+        return dashboardLink;
+    }
+    public WebElement getRegistrationButtonLink() {
+        return registrationButtonLink;
+    }
 
 //====================================================================================
 
     public void fakeRegistration(String email, String password, String phone, String server) {
         log("Method is started");
         introPage.goToAuthorization();
-        nav.longTapButton(loginPage.loginBtn, 2);
-        loginPage.serverDevelop.click();
+        loginPage.chooseServer(server);
         nav.goBack();
         introPage.goToRegistration();
         nameField.sendKeys("fakeRegistration");
@@ -74,7 +87,7 @@ public class RegistrationPage extends Base{
         passwordField.sendKeys(password);
         nav.swipeUp();
         passwordConfirmField.sendKeys(password);
-        registrationBtn.click();
+        registrationButtonLink.click();
     }
 
 
@@ -153,16 +166,6 @@ public class RegistrationPage extends Base{
 
     public void setPhoneCountryCode() {
         log("Method is started");
-
-
     }
 
-    public RegistrationPage(AppiumDriver driver) {
-        this.driver = driver;
-        nav = new Navigation(driver);
-        introPage = new IntroPage(driver);
-        addImagePage = new AddImagePage(driver);
-        loginPage = new AuthorizationPage(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-    }
 }

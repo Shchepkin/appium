@@ -19,19 +19,19 @@ public class DashboardRemotePage extends Base{
 
 
     @AndroidFindBy(id = "com.ajaxsystems:id/arm")
-    public WebElement armBtn;
+    private WebElement armButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/disarm")
-    public WebElement disarmBtn;
+    private WebElement disarmButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/partial")
-    public WebElement partialArmBtn;
+    private WebElement partialArmButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/alarm")
-    public WebElement alarmBtn;
+    private WebElement alarmButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/securityText")
-    public WebElement securityText;
+    private WebElement securityText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/spaceControl")
     private WebElement spaceControlImage;
@@ -47,7 +47,7 @@ public class DashboardRemotePage extends Base{
         log("method is started");
         result = false;
 
-        dashboard.footerRemote.click();
+        dashboard.footerRemoteClick();
         if (spaceControlImage.isDisplayed()) {
             result = true;
         }
@@ -55,4 +55,35 @@ public class DashboardRemotePage extends Base{
         return result;
     }
 
+    public void clickAlarmButton(){
+        alarmButton.click();
+    }
+
+    public void clickArmButton(){
+        armButton.click();
+    }
+
+    public void clickDisarmButton(){
+        disarmButton.click();
+    }
+
+    public void clickPartialArmButton(){
+        partialArmButton.click();
+    }
+
+    public WebElement getArmButton() {
+        return armButton;
+    }
+
+    public WebElement getDisarmButton() {
+        return disarmButton;
+    }
+
+    public WebElement getPartialArmButton() {
+        return partialArmButton;
+    }
+
+    public WebElement getAlarmButton() {
+        return alarmButton;
+    }
 }

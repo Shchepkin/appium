@@ -27,28 +27,25 @@ public class PopUp extends Base{
     public WebElement contentText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/timerText")
-    public WebElement timerText;
+    private WebElement timerText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/message")
-    public WebElement message;
+    private WebElement message;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/loading")
     public WebElement loadingWindow;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/progress")
-    public WebElement progressImage;
+    private WebElement progressImage;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/shadow")
-    public WebElement shadow;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-    public WebElement cancelBtn;
+    private WebElement shadow;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
     public WebElement cancelButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/ok")
-    public WebElement okBtn;
+    private WebElement okBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
     public WebElement confirmButton;
@@ -56,14 +53,14 @@ public class PopUp extends Base{
 //================================ dialogMessage =====================================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
-    public WebElement dialogMessage;
+    private WebElement dialogMessage;
 
 //================================ QR ================================================
     @AndroidFindBy(id = "com.ajaxsystems:id/zxing_viewfinder_view")
-    public WebElement qrFinderView;
+    private WebElement qrFinderView;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/zxing_status_view")
-    public WebElement qrStatusView;
+    private WebElement qrStatusView;
 
 //================================= Toast & Snack ====================================
 
@@ -71,30 +68,30 @@ public class PopUp extends Base{
     public WebElement snackBar;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/message")
-    public WebElement toast;
+    private WebElement toast;
 
 //================================ desc_container ====================================
 
     @AndroidFindBy(id = "com.android.packageinstaller:id/desc_container")
-    public WebElement descContainer;
+    private WebElement descContainer;
 
     @AndroidFindBy(id = "com.android.packageinstaller:id/permission_deny_button")
-    public WebElement denyButton;
+    private WebElement denyButton;
 
     @AndroidFindBy(id = "com.android.packageinstaller:id/permission_allow_button")
-    public WebElement allowButton;
+    private WebElement allowButton;
 
 //================================ User_Agreement_Dialog ==============================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/web")
-    public WebElement userAgreement;
+    private WebElement userAgreement;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/agreement")
-    public WebElement userAgreementCheckbox;
+    private WebElement userAgreementCheckbox;
 
 //=====================================================================================
 
-    public PopUp() {}
+//    public PopUp() {}
 
     public PopUp(AppiumDriver driver) {
         this.driver = driver;

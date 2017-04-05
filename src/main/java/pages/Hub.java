@@ -7,15 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import utils.Check;
 import utils.Navigation;
+import utils.Wait;
 //import utils.Setup;
 
 /**
  * Created by installer on 1/21/17.
  */
 public class Hub extends Base{
-    public final AppiumDriver driver;
-    private Check check;
-    private Navigation nav;
     private String sendInvitesButtonText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/usersImage")
@@ -39,13 +37,15 @@ public class Hub extends Base{
         this.driver = driver;
         nav = new Navigation(driver);
         check = new Check(driver);
+
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
     public Hub(AppiumDriver driver) {
         this.driver = driver;
-        this.nav = new Navigation(driver);
-        this.check = new Check(driver);
+        nav = new Navigation(driver);
+        check = new Check(driver);
+        wait = new Wait(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 

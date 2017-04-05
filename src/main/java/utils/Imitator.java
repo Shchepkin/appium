@@ -6,10 +6,11 @@ import pages.Base;
 public class Imitator extends Base{
 
     private static SerialPort serialPort;
-    private String port = "/dev/ttyUSB3";
 
     public Imitator() {
         SerialPortSetup();
+        log("clear imitator memory");
+        clearMemory();
     }
 
     private void SerialPortSetup() {
@@ -84,7 +85,7 @@ public class Imitator extends Base{
 
     public void registerDevice(int dev_id){
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
             serialPort.writeString("reg " + dev_id + "\n");
         }catch (Exception e) {
             log(3, "Exception: \n" + e + "\n");
@@ -97,8 +98,6 @@ public class Imitator extends Base{
             if (event.isRXCHAR() && event.getEventValue() > 0) {
                 try {
                     String data = serialPort.readString(event.getEventValue());
-//                    byte[] buffer = serialPort.readBytes(16);
-//                    String str = new String(buffer);
                     System.out.println(data);
 
                 } catch (Exception ex) {

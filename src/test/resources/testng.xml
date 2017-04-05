@@ -6,69 +6,65 @@
  -->
 
 <suite name = "Suite">
-    <test name = "Prestigio">
-        <parameter name="deviceName_" value="Prestigio"/>
-        <parameter name="appPath_" value="/home/installer/Android/AndroidApp/ajax.2.9.15.apk"/>
 
-        <parameter name="locale_" value="uk"/>
-        <parameter name="UDID_" value="MTPB0252700596"/>
-        <parameter name="platformVersion_" value="4.2.2"/>
-        <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
-        <classes>
-            <!--<class name="registration.positive"/>-->
-            <!--<class name="Suits.Smoke"/>-->
-            <!--<class name="testCases.C42098_Login_to_the_existing_account"/>-->
-            <!--<class name="testCases.C42099_Add_new_Hub_manually"/>-->
-            <class name="testCases.C42100_Add_new_room"/>
-        </classes>
-    </test>
+    <!---->
+    <!--<test name = "Prestigio">-->
+        <!--<parameter name="deviceName_" value="Prestigio"/>-->
+        <!--<parameter name="appPath_" value="/home/installer/Android/AndroidApp/ajax.2.9.15.apk"/>-->
 
-    <!-- *****************
+        <!--<parameter name="locale_" value="uk"/>-->
+        <!--<parameter name="UDID_" value="MTPB0252700596"/>-->
+        <!--<parameter name="platformVersion_" value="4.2.2"/>-->
+        <!--<parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>-->
+        <!--<classes>-->
+            <!--&lt;!&ndash;<class name="registration.positive"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<class name="Suits.Smoke"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<class name="testCases.C42098_Login_to_the_existing_account"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<class name="testCases.C42099_Add_new_Hub_manually"/>&ndash;&gt;-->
+            <!--<class name="testCases.C42100_Add_new_room"/>-->
+        <!--</classes>-->
+    <!--</test>-->
+    <!---->
 
-    <test name = "Prestigio">
-        <parameter name="deviceName_" value="Prestigio"/>
-        <parameter name="appPath_" value="/home/installer/Android/AndroidApp/build.2.9.0.apk"/>
-
-        <parameter name="locale_" value="uk"/>
-        <parameter name="UDID_" value="MTPB0252700596"/>
-        <parameter name="platformVersion_" value="4.2.2"/>
-        <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
-        <classes>
-            <class name="tmp.popUp"/>
-        </classes>
-    </test>
     <test name="LG">
         <parameter name="deviceName_" value="LG"/>
-        <parameter name="appPath_" value="/home/installer/Android/AndroidApp/build.2.9.0.apk"/>
-        <parameter name="locale_" value="en"/>
+        <parameter name="appPath_" value="/home/installer/Android/AndroidApp/ajax.2.9.15.apk"/>
+        <parameter name="locale_" value="uk"/>
         <parameter name="UDID_" value="SWIVR8YHDI7TYTS8"/>
         <parameter name="platformVersion_" value="5.1"/>
         <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
         <classes>
-            <class name="tmp.popUp"/>
+            <!--<class name="testCases.C42100_Add_new_room"/>-->
+            <!--<class name="testCases.C42102_Add_new_guest_user"/>-->
+            <!--<class name="testCases.C42176_Virtual_Space_Control"/>-->
+            <!--<class name="testCases.C43875_Add_new_device"/>-->
+            <class name="testCases.C42097_New_user_registration"/>
         </classes>
     </test>
-    <test name="Xiaomi">
-        <parameter name="deviceName_" value="Xiaomi"/>
-        <parameter name="appPath_" value="/home/installer/Android/AndroidApp/build.2.9.0.apk"/>
-        <parameter name="locale_" value="ru"/>
-        <parameter name="UDID_" value="81c6da4a7d63"/>
-        <parameter name="platformVersion_" value="6.0.1"/>
-        <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
-        <classes>
-            <class name="tmp.popUp"/>
-        </classes>
-    </test>
-    <test name="JiaYu">
-        <parameter name="deviceName_" value="JiaYu"/>
-        <parameter name="appPath_" value="/home/installer/Android/AndroidApp/build.2.8.17.apk"/>
-        <parameter name="locale_" value="en"/>
-        <parameter name="UDID_" value="0123456789ABCDEF"/>
-        <parameter name="platformVersion_" value="4.2.1"/>
-        <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
-        <classes>
-            <class name="tmp.popUp"/>
-        </classes>
-    </test>
-    ***************** -->
+    <!---->
+    <!--<test name="Xiaomi">-->
+        <!--<parameter name="deviceName_" value="Xiaomi"/>-->
+        <!--<parameter name="appPath_" value="/home/installer/Android/AndroidApp/build.2.9.0.apk"/>-->
+        <!--<parameter name="locale_" value="ru"/>-->
+        <!--<parameter name="UDID_" value="81c6da4a7d63"/>-->
+        <!--<parameter name="platformVersion_" value="6.0.1"/>-->
+        <!--<parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>-->
+        <!--<classes>-->
+            <!--<class name="tmp.popUp"/>-->
+        <!--</classes>-->
+    <!--</test>-->
+    <!---->
+    <!--<test name="JiaYu">-->
+        <!--<parameter name="deviceName_" value="JiaYu"/>-->
+        <!--<parameter name="appPath_" value="/home/installer/Android/AndroidApp/build.2.8.17.apk"/>-->
+        <!--<parameter name="locale_" value="en"/>-->
+        <!--<parameter name="UDID_" value="0123456789ABCDEF"/>-->
+        <!--<parameter name="platformVersion_" value="4.2.1"/>-->
+        <!--<parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>-->
+        <!--<classes>-->
+            <!--<class name="tmp.popUp"/>-->
+        <!--</classes>-->
+    <!--</test>-->
+
+
 </suite> <!-- Suite -->

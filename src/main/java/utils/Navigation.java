@@ -333,10 +333,10 @@ public class Navigation extends Base{
         log("Method is started");
         flag = false;
 
-        if (etalon.containsAll(current) && counter < 2) {
+        if (etalon.containsAll(current) && counter < 1) {
             counter++;
             log(3, "nothing was changed, swipe try count = " + counter);
-        }else if (counter >= 2 ){
+        }else if (counter >= 1 ){
                 log(3, "the end of the list is reached");
                 flag = true;
         } else {
@@ -411,7 +411,7 @@ public class Navigation extends Base{
                 confirmButton.click();
                 log("Confirm button is pressed");
             }catch (Exception e1){
-                log(2, "nConfirm button was not found\n\n" + e1.getMessage() + "\n");
+                log(2, "Confirm button was not found\n\n" + e1.getMessage() + "\n");
 
                 try {
                     addButton.click();
@@ -434,11 +434,13 @@ public class Navigation extends Base{
                 cancelButton.click();
                 log("Cancel button is pressed");
             }catch (Exception e1){
-                log(3, "\nsecond Cancel Button was not found\n\n" + e.getMessage());
+                log(2, "second Cancel Button was not found\n\n" + e.getMessage() + "\n");
             }
         }
     }
 
-
+    public void cancelPopUpIfPresent() {
+        cancelIt();
+    }
 
 }

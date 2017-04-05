@@ -1,6 +1,5 @@
 package testCases;
 
-import io.appium.java_client.AppiumDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -20,25 +19,19 @@ public class C42100_Add_new_room extends Base {
     public void init(){
         $ = new Base(getDriver());
 
-        login = "ajax1@i.ua";
-        pass = "qwe123";
-        server = "Develop";
+        log("get credentials for login");
+        login = creds.get("login").toString();
+        pass = creds.get("password").toString();
+        server = creds.get("server").toString();
 
-        log("start from IntroPage");
-        $.introPage.goToAuthorization();
-        $.loginPage.loginToTheServer(login, pass, server);
-
-        $.wait.invisibilityOfLoaderLogo(true);
-
-        log("waiting for Pincode PopUp and cancel it");
-        $.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 15);
+        $.loginPage.loginWithPinCancel(login, pass, server);
 
         log("tap the Room Page button in the footer");
         $.dashboard.goToTheRoomPage();
     }
 
-    @Test(priority = 1, enabled = false)
-    public void Without_image() {
+    @Test(priority = 1, enabled = true)
+    public void First_room_without_image() {
         log("add Room without image");
         $.roomsPage.addRoom("Without image", 0);
 
@@ -46,19 +39,25 @@ public class C42100_Add_new_room extends Base {
     }
 
     @Test(priority = 2, enabled = true)
-    public void Camera_image() {
-        log("add Room with image from camera");
-        $.roomsPage.addRoom("Camera image", 1);
-
-        Assert.assertTrue($.roomsPage.isRoomPresens("Camera image"));
-    }
-
-    @Test(priority = 3, enabled = true)
     public void Gallery_image() {
+        log("close pop up if present");
+        $.nav.cancelIt();
+
         log("add Room with image from popup gallery");
         $.roomsPage.addRoom("Gallery image", 2, 2);
 
         Assert.assertTrue($.roomsPage.isRoomPresens("Gallery image"));
+    }
+
+    @Test(priority = 3, enabled = true)
+    public void Camera_image() {
+        log("close pop up if present");
+        $.nav.cancelIt();
+
+        log("add Room with image from camera");
+        $.roomsPage.addRoom("Camera image", 1);
+
+        Assert.assertTrue($.roomsPage.isRoomPresens("Camera image"));
     }
 
     @AfterClass

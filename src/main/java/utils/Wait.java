@@ -9,6 +9,11 @@ import pages.Base;
 public class Wait extends Base{
     private AppiumDriver driver;
     private boolean result;
+
+    public void setWaiterText(String waiterText) {
+        this.waiterText = waiterText;
+    }
+
     private String waiterText;
 
     public Wait(AppiumDriver driver){
@@ -105,8 +110,19 @@ public class Wait extends Base{
     public boolean invisibilityOfWaiter(boolean makeScreenShot) {
         log("Method is started");
         result = false;
-        waiterText = getLocalizeTextForKey("request_send");
+        log(3, "waiterText: \"" + waiterText + "\"");
+//        waiterText = getLocalizeTextForKey("request_send");
         invisibilityElementWithText(waiterText, makeScreenShot);
+        return result;
+    }
+
+    public boolean invisibilityOfWaiter() {
+        log("Method is started");
+        result = false;
+        log(2, "waiting 100 seconds while Waiter become Invisible");
+        WebDriverWait iWait = new WebDriverWait(driver, 100);
+        iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ajaxsystems:id/progress")));
+        result = true;
         return result;
     }
 

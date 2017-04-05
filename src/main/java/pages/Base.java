@@ -56,50 +56,53 @@ public class Base{
     public AuthorizationPage loginPage;
     public ValidationCodePage validationCodePage;
     public DashboardActivePINPage pinPage;
+    public Imitator imitator;
 
     private Path path;
-    private String jsonString;
-    private String collection;
+    private String jsonString, collection;
 
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public String locale;
+    private String locale;
     private String localizeTextForKey;
     private String pathForScreenshot = "screenshot";
 
     private Map  dbSettings, jsonCollection;
     private ArrayList<String> jsonStringArray;
     private String deviceName, UDID, platformVersion, URL, appPath;
-    private Map localizeKeys = new HashMap<>();
 
+    public Map localizeKeys = getLocalizeKeys();
+    public Map creds;
 
-
-    @Parameters({ "deviceName_","UDID_","platformVersion_", "URL_", "appPath_", "locale_" })
+    @Parameters({ "deviceName_" })
     @BeforeClass
-    public void setUp(String deviceName_, String UDID_, String platformVersion_, String URL_, String appPath_, String locale_){
+    public void setUp(String deviceName_){
         log("setup is started");
+        creds = getJsonCollection("deviceData.json", deviceName_);
 
         log("set driver variables");
-        URL = URL_;
-        UDID = UDID_;
-        appPath = appPath_;
         deviceName = deviceName_;
-        platformVersion = platformVersion_;
+        URL = creds.get("URL").toString();
+        UDID = creds.get("UDID").toString();
+        appPath = creds.get("appPath").toString();
+        platformVersion = creds.get("platformVersion").toString();
+        locale = creds.get("locale").toString();
 
-        log("set locale to \"" + locale_ + "\"");
-        locale = locale_;
+        log("set locale to \"" + locale + "\"");
+        localizeKeys = getLocalizeKeys(locale);
     }
 
+    public Map getLocalizeKeys() {
+        return localizeKeys;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
 
     public String  getLocale() {
         return locale;
     }
 
-    public Base() {
-        locale = getLocale();
-    }
+    public Base() {}
 
     public Base(AppiumDriver driver) {
         log(2, "init Wait(driver)");
@@ -159,23 +162,27 @@ public class Base{
         log(2, "init DashboardHeader(driver)");
         header = new DashboardHeader(driver);
 
+        log(2, "init DashboardHeader(driver)");
+        user = new User(driver);
+
         log(2, "init Sql()");
-        sql = new Sql();
+//        sql = new Sql();
+
+//        imitator = new Imitator();
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 //        addImagePage = PageFactory.initElements(driver, AddImagePage.class);
-
     }
 
-
     public String getLocalizeTextForKey(String key){
-        localizeTextForKey = getLocalizeKeys().get(key).toString();
+        localizeTextForKey = localizeKeys.get(key).toString();
         return localizeTextForKey;
     }
 
-    private Map getLocalizeKeys() {
+    private Map getLocalizeKeys(String locale) {
         log("Method is started");
         log(3, "locale: \"" + locale + "\"");
+        localizeKeys = new HashMap<>();
         try {
             log(2, "get Application start up path");
             path = getApplicationStartUp();
@@ -399,7 +406,6 @@ public class Base{
 // Keyboard
 //**********************************************************************************************************************
 
-
     public void hideKeyboard(){
         try{
             driver.hideKeyboard();
@@ -417,7 +423,6 @@ public class Base{
         }
         log("Method is finished");
     }
-
 
 //**********************************************************************************************************************
 // Appium Driver
@@ -455,11 +460,9 @@ public class Base{
         return driver;
     }
 
-
 //**********************************************************************************************************************
 // ScreenShot
 //**********************************************************************************************************************
-
 
     public void getScreenShot(AppiumDriver driver){
         try {

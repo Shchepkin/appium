@@ -13,10 +13,20 @@ import utils.*;
 import java.util.ArrayList;
 
 public class User extends Base{
-    private AppiumDriver driver;
+//    private AppiumDriver driver;
     private boolean result;
+
     private String sendInvitesButtonText;
+
+    public void setSendInvitesButtonText(String sendInvitesButtonText) {
+        this.sendInvitesButtonText = sendInvitesButtonText;
+    }
+
     private String inviteFailText;
+
+    public void setInviteFailText(String inviteFailText) {
+        this.inviteFailText = inviteFailText;
+    }
 
     @AndroidFindBy(id = "com.ajaxsystems:id/active")
     private WebElement active;
@@ -33,9 +43,9 @@ public class User extends Base{
     @AndroidFindBy(xpath = "//android.widget.TextView")
     private ArrayList<WebElement> allTextObjects;
 
-    private ArrayList<String> usersForContactList = getJsonStringArray("emails.json", "usersForContactList");
-    private ArrayList<String> usersForEmailField = getJsonStringArray("emails.json", "usersForEmailField");
-    private ArrayList<String> usersForMixedAdd = getJsonStringArray("emails.json", "usersForMixedAdd");
+    private ArrayList<String> usersForContactList;
+    private ArrayList<String> usersForEmailField;
+    private ArrayList<String> usersForMixedAdd;
 
     public ArrayList<String> getUsersForEmailField() {
         return usersForEmailField;
@@ -48,16 +58,22 @@ public class User extends Base{
     }
 
 
-    public User(AppiumDriver driver, String locale) {
-        log(3, "locale: \"" + locale + "\"");
+    public User(AppiumDriver driver) {
+        this.driver = driver;
         nav = new Navigation(driver);
         check = new Check(driver);
         popUp = new PopUp(driver);
         wait = new Wait(driver);
-        sendInvitesButtonText = getLocalizeTextForKey("send_invites");
 
-        inviteFailText = getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails")
-                          .substring(0, getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails").length() - 5);
+        usersForContactList = getJsonStringArray("emails.json", "usersForContactList");
+        usersForEmailField = getJsonStringArray("emails.json", "usersForEmailField");
+        usersForMixedAdd = getJsonStringArray("emails.json", "usersForMixedAdd");
+
+//        sendInvitesButtonText = getLocalizeTextForKey("send_invites");
+//        sendInvitesButtonText = localizeKeys.get("send_invites").toString();
+
+//        inviteFailText = getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails")
+//                          .substring(0, getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails").length() - 5);
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
@@ -144,7 +160,7 @@ public class User extends Base{
 
             log("confirm proposition");
             nav.confirmIt();
-            wait.invisibilityOfWaiter(true);
+            wait.invisibilityOfWaiter();
 
             check.isElementDisplayed(userStatus, 15);
 
@@ -172,6 +188,7 @@ public class User extends Base{
 
     public void addUserListFromEmailField(String nameOfJsonCollection) {
         log("Method is started");
+        log(3, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
         ArrayList<String> userListFromJson = getJsonStringArray("emails.json", nameOfJsonCollection);
         String emailListString = "";
 
@@ -201,6 +218,7 @@ public class User extends Base{
 
     public void addFromContactList() {
         log("Method is started");
+        log(3, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
         result = false;
 
         log("searching and clicking the Send Invites Button");
@@ -230,7 +248,7 @@ public class User extends Base{
         check.clickElementAndWaitingPopup(nav.getNextButton(), true);
 
         Assert.assertFalse(check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
-        wait.invisibilityOfWaiter(true);
+        wait.invisibilityOfWaiter();
         Assert.assertTrue(wait.element(userStatus, 10, true), "User page is not shown \n");
 
         log("Method is finished");
@@ -239,8 +257,8 @@ public class User extends Base{
 //**********************************************************************************************************************
 
     private boolean activateUserInContactListBy(String typeBy, String userEmail) {
-            String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
-            String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
+        String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
+        String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
 
         for (int i = 1; i < 3; i++) {
             if (nav.scrollToElementWith(typeBy, "up", userEmail, true)) {
@@ -265,6 +283,7 @@ public class User extends Base{
 
     public void addMixedUsers() {
         log("Method is started");
+
         String registeredUser = usersForMixedAdd.get(0);
         String unregisteredUser = usersForMixedAdd.get(1);
         String userForContactList = usersForMixedAdd.get(2);

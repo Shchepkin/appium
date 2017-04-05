@@ -21,7 +21,7 @@ public class Check extends Base{
 
     public Check(AppiumDriver driver) {
         this.driver = driver;
-        wait = new Wait(driver);
+        this.wait = new Wait(driver);
         this.popUp = new PopUp(driver);
 //        this.screenShot = new ScreenShot(driver);
     }

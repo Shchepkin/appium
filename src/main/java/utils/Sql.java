@@ -32,7 +32,9 @@ public class Sql extends Base{
     public Map tokenMap;
 
 
-    public Sql() {}
+    public Sql() {
+//        getConnection ();
+    }
 
     /**
      *  REQUIRED getConnection()
@@ -90,8 +92,9 @@ public class Sql extends Base{
         log("Method is started");
         validationToken = new ArrayList();
         selectList = new ArrayList();
-//        validationToken.clear();
-//        selectList.clear();
+
+        validationToken.clear();
+        selectList.clear();
 
         String query = "SELECT id,InnerID,Role,Phone,ConfirmationToken,Login FROM csa_accounts WHERE " + row + " LIKE '" + value + "' ORDER BY id ASC";
 
@@ -150,6 +153,8 @@ public class Sql extends Base{
     public Map getTokenMap(String row, String value) {
         log("Method is started");
         tokenMap = new HashMap();
+        validationToken = new ArrayList();
+
         int counter = 1;
         while (validationToken.size() < 1 || validationToken.get(0) == null) {
             log(3, "Try to get Tokens from database. Attempt #" + counter);

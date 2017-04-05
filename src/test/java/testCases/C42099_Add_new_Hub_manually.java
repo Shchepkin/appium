@@ -18,7 +18,7 @@ public class C42099_Add_new_Hub_manually extends Base {
     private Base $;
 
     @BeforeClass
-    public void driverInit(){
+    public void init(){
         $ = new Base(getDriver());
     }
 
@@ -27,22 +27,16 @@ public class C42099_Add_new_Hub_manually extends Base {
         log("Method is started");
         String waiterText = getLocalizeTextForKey("request_send");
 
-        login = "ajax1@i.ua";
-        pass = "qwe123";
-        server = "Develop";
+        log("get credentials for login");
+        login = creds.get("login").toString();
+        pass = creds.get("password").toString();
+        server = creds.get("server").toString();
+
         String hubName = "1495";
         String hubKey = "00001495DDFB55691000";
 //        String hubKey = "12345123451234512345";
 
-        log("start from IntroPage");
-        $.introPage.goToAuthorization();
-        $.loginPage.loginToTheServer(login, pass, server);
-
-        $.wait.invisibilityOfLoaderLogo(true);
-        Assert.assertFalse($.check.forSnackBarIsPresent(2), "SnackBar is shown");
-
-        log("waiting for Pincode PopUp and cancel it");
-        $.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 15);
+        $.loginPage.loginWithPinCancel(login, pass, server);
 
         log("tap to the Plus Button");
         $.dashboard.plusButtonClick();

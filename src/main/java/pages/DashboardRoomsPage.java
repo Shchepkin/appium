@@ -15,8 +15,6 @@ import java.util.List;
 
 public class DashboardRoomsPage extends Base{
     private AppiumDriver driver;
-//    private Navigation nav;
-//    private Check check;
     private WebElement[] elements;
     private boolean result;
 
@@ -44,10 +42,7 @@ public class DashboardRoomsPage extends Base{
         this.driver = driver;
         nav = new Navigation(driver);
         check = new Check(driver);
-//        introPage = new IntroPage(driver);
-//        dashboard = new Dashboard(driver);
         addImagePage = new AddImagePage(driver);
-//        loginPage = new AuthorizationPage(driver);
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
@@ -118,13 +113,13 @@ public class DashboardRoomsPage extends Base{
 
     private void clickAddRoomButton (){
         log("Method is started");
-
         elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
+
         log("choice the Add Room button");
-        switch (check.waitElements(elements, 3)){
-            case 1: System.out.println(addRoomBtn.getText());addRoomBtn.click(); break;
+        nav.scrollBottom();
+        switch (check.waitElements(elements, 2)){
+            case 1: addRoomBtn.click(); break;
             case 2: addRoomPlusBtn.click(); break;
-            // make here scroll to element with text if there are a lot of rooms
             default: log(3, "Something was wrong!"); break;
         }
         log("Method is finished");
@@ -134,10 +129,14 @@ public class DashboardRoomsPage extends Base{
         log("Method is started");
         result = false;
         for (WebElement roomNameElement : roomNameList) {
-            System.out.println(roomNameElement.getText());
             if (roomNameElement.getText().equals(roomName)) {
                 result = true;
                 log("room with name \"" + roomName + "\" successfully added!");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
         }

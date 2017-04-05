@@ -5,6 +5,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import utils.Navigation;
 
 /**
  * Created by installer on 1/21/17.
@@ -15,7 +16,7 @@ public class Dashboard extends Base{
 // ================= Header ===================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
-    public WebElement addBtn;
+    private WebElement addBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
     private WebElement nameField;
@@ -43,25 +44,23 @@ public class Dashboard extends Base{
     }
 
 
-
-
     @AndroidFindBy(id = "com.ajaxsystems:id/panel")
-    public WebElement addHubWizard;
+    private WebElement addHubWizard;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/key")
     private WebElement hubKeyField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/nameInfo")
-    public WebElement nameInfo;
+    private WebElement nameInfo;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/keyInfo")
-    public WebElement keyInfo;
+    private WebElement keyInfo;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/qr")
-    public WebElement qrIcon;
+    private WebElement qrIcon;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/hint")
-    public WebElement hint;
+    private WebElement hint;
 
 // ================= Add Device ===================
 
@@ -69,7 +68,7 @@ public class Dashboard extends Base{
     private WebElement addDeviceButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
-    public WebElement roomNkame;
+    private WebElement roomName;
 
 // ================= Footer ===================
 
@@ -83,7 +82,7 @@ public class Dashboard extends Base{
     private WebElement footerNotifications;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/remote")
-    public WebElement footerRemote;
+    private WebElement footerRemote;
 
 //=====================================================================================================================
 
@@ -105,8 +104,16 @@ public class Dashboard extends Base{
         plusButton.click();
     }
 
+    public void footerRemoteClick() {
+        footerRemote.click();
+    }
+
     public void goToTheRoomPage() {
         footerRooms.click();
+    }
+
+    public void goToTheRemotePage() {
+        footerRemote.click();
     }
 }
 

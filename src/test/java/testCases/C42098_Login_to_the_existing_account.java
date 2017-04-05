@@ -10,7 +10,7 @@ public class C42098_Login_to_the_existing_account extends Base{
     private Base $;
 
     @BeforeMethod
-    public void driverInit(){
+    public void init(){
         $ = new Base(getDriver());
     }
 
@@ -18,9 +18,10 @@ public class C42098_Login_to_the_existing_account extends Base{
     public void Positive_test_with_valid_data() {
         log("TEST IS STARTED");
 
-        login = "ajax1@i.ua";
-        pass = "qwe123";
-        server = "Develop";
+        log("get credentials for login");
+        login = creds.get("login").toString();
+        pass = creds.get("password").toString();
+        server = creds.get("server").toString();
 
         log("start from IntroPage");
         $.introPage.goToAuthorization();

@@ -12,27 +12,33 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class ValidationCodePage extends Base{
-    public final AppiumDriver driver;
+    private final AppiumDriver driver;
     public boolean autoLoadResult;
 
     private Map tokenMap;
     private Sql sql;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/smsCode")
-    public WebElement smsCode;
+    private WebElement smsCode;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/emailCode")
-    public WebElement emailCode;
+    private WebElement emailCode;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/codeResend")
-    public WebElement codeResend;
+    private WebElement codeResend;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-    public WebElement cancelBtn;
+    private WebElement cancelBtn;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/ok")
-    public WebElement okBtn;
+//**********************************************************************************************************************
 
+    public ValidationCodePage(AppiumDriver driver) {
+        this.driver = driver;
+        this.sql = new Sql();
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    }
+
+//**********************************************************************************************************************
 
     public void autoLoadCode(WebElement element, int timer){
         System.out.print("  - Create matcher for checking  ... ");
@@ -60,7 +66,6 @@ public class ValidationCodePage extends Base{
 
     public void getAndFillValidationCodes(String row, String value){
         log("Method is started");
-        sql = new Sql();
 
         tokenMap = sql.getTokenMap(row, value);
         log(2, "SMS token: " + tokenMap.get("smsToken"));
@@ -76,10 +81,9 @@ public class ValidationCodePage extends Base{
     public void getCodeFromEmail(){
         System.out.println("Done");
     }
-
-    public ValidationCodePage(AppiumDriver driver) {
-
-        this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    public WebElement getSmsCode() {
+        return smsCode;
     }
+
+
 }

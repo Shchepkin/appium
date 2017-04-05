@@ -7,91 +7,62 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import utils.Check;
 import utils.Navigation;
+import utils.Wait;
 
 
 public class AuthorizationPage extends Base{
 
     private AppiumDriver driver;
-    private Navigation nav;
-    private Check check;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/back")
-    private WebElement backBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/login")
-    public WebElement loginField;
+    private WebElement loginField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/password")
-    public WebElement passwordField;
+    private WebElement passwordField;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/login")
+    private WebElement loginButtonOnIntro;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
-    public WebElement loginBtn;
+    private WebElement loginBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/forgot")
-    public WebElement forgotPasswordBtn;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/snackbar_text")
-    public WebElement snackBar;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/message")
-    public WebElement toast;
+    private WebElement forgotPasswordBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
-    public WebElement dialogMessage;
+    private WebElement dialogMessage;
 
-
-// Server menu
-// version >= 2.8
 //---------------------------------------------------------------------------------------------------------------------
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Debug\")")
-    public WebElement serverDebug;
+    private WebElement serverDebug;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Develop\")")
-    public WebElement serverDevelop;
+    private WebElement serverDevelop;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Production\")")
-    public WebElement serverProduction;
+    private WebElement serverProduction;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Amazon\")")
-    public WebElement serverAmazon;
+    private WebElement serverAmazon;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Eden\")")
-    public WebElement serverEden;
+    private WebElement serverEden;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Glimmering_dev\")")
-    public WebElement serverGlim;
+    private WebElement serverGlim;
 
 
-
-//---------------------------------------------------------------------------------------------------------------------
-
-// version < 2.8
-//---------------------------------------------------------------------------------------------------------------------
-/*
-    @AndroidFindBy(id = "com.ajaxsystems:id/s1")
-    public WebElement serverDebug;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/s2")
-    public WebElement serverDevelop;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/s3")
-    public WebElement serverProduction;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/s4")
-    public WebElement serverAmazon;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/s5")
-    public WebElement serverEden;
-*/
-//---------------------------------------------------------------------------------------------------------------------
 
     public AuthorizationPage(AppiumDriver driver) {
         this.driver = driver;
         this.nav = new Navigation(driver);
+        this.wait = new Wait(driver);
         this.check = new Check(driver);
+        this.dashboardHeader = new DashboardHeader(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -124,6 +95,24 @@ public class AuthorizationPage extends Base{
 
         log(2, "click login button");
         loginBtn.click();
+
+        log("Method is finished");
+    }
+
+
+    public void loginWithPinCancel(String login, String password, String server) {
+        log("Method is started");
+
+        log("start from IntroPage");
+        loginButtonOnIntro.click();
+
+        loginToTheServer(login, password, server);
+
+        log("wait until LoaderLogo become invisible");
+        wait.invisibilityOfLoaderLogo(true);
+
+        log("waiting for Pincode PopUp and cancel it");
+        Assert.assertTrue(check.waitElementWithoutPin(dashboardHeader.getMenuDrawer(), 10), "Login failed!");
 
         log("Method is finished");
     }

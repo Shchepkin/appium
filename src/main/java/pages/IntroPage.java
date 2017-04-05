@@ -4,6 +4,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import utils.Navigation;
 
 /**
  *
@@ -24,6 +25,7 @@ public class IntroPage extends Base{
 
     public IntroPage(AppiumDriver driver) {
         this.driver = driver;
+        nav = new Navigation(driver);
         loginPage = new AuthorizationPage(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
