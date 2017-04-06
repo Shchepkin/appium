@@ -7,9 +7,6 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.Base;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by installer on 3/28/17.
  */
@@ -42,7 +39,6 @@ public class C42102_Add_new_guest_user extends Base {
         log("login without Pin");
         $.loginPage.loginWithPinCancel(login, pass, server);
 
-        log("tap the Room Page button in the footer");
         $.hub.goToTheUserlistPage();
     }
 
@@ -71,7 +67,7 @@ public class C42102_Add_new_guest_user extends Base {
     public void Check_is_unreg_user_in_pending_list() {
 
         String unregisteredUserEmail = $.user.getUsersForMixedAdd().get(1);
-        Assert.assertTrue($.user.checkDeleteIconIsPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon");
+        Assert.assertTrue($.user.checkIsDeleteIconPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon");
     }
 
     @AfterClass

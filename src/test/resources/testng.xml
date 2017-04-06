@@ -29,16 +29,17 @@
     <test name="LG">
         <parameter name="deviceName_" value="LG"/>
         <parameter name="appPath_" value="/home/installer/Android/AndroidApp/ajax.2.9.15.apk"/>
-        <parameter name="locale_" value="uk"/>
-        <parameter name="UDID_" value="SWIVR8YHDI7TYTS8"/>
-        <parameter name="platformVersion_" value="5.1"/>
-        <parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>
+        <!--<parameter name="locale_" value="uk"/>-->
+        <!--<parameter name="UDID_" value="SWIVR8YHDI7TYTS8"/>-->
+        <!--<parameter name="platformVersion_" value="5.1"/>-->
+        <!--<parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>-->
         <classes>
             <!--<class name="testCases.C42100_Add_new_room"/>-->
             <!--<class name="testCases.C42102_Add_new_guest_user"/>-->
             <!--<class name="testCases.C42176_Virtual_Space_Control"/>-->
             <!--<class name="testCases.C43875_Add_new_device"/>-->
-            <class name="testCases.C42097_New_user_registration"/>
+            <!--<class name="testCases.C42097_New_user_registration"/>-->
+            <class name="testCases.C44141_User_delete"/>
         </classes>
     </test>
     <!---->

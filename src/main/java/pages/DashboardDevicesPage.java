@@ -113,6 +113,34 @@ public class DashboardDevicesPage extends Base{
         }
         return result;
     }
+    private class name{
+    }
+
+
+    public boolean dellBy(String by) {
+        boolean result = false;
+
+        switch (by){
+            case "room":
+                break;
+            case "name":
+                break;
+            case "all":
+                break;
+            default:
+        }
+
+//        if (nav.scrollToElementWith("name", "up", roomName, false)) {
+//            log("new device with name \"" + roomName + "\" is added successfully");
+//            result = true;
+//        }else {
+//            log(3, "device with name \"" + roomName + "\" is not added");
+//            result = false;
+//        }
+        return result;
+    }
+
+
 
 
 }

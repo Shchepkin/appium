@@ -110,6 +110,7 @@ public class Navigation extends Base{
 //======================================================================================================================
     public Navigation(AppiumDriver driver) {
         this.driver = driver;
+        this.wait = new Wait(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -326,6 +327,57 @@ public class Navigation extends Base{
         log("Method is finished");
         return result;
     }
+
+
+    public boolean scrollToElement(WebElement elementForSearch, String direction) {
+        start = System.nanoTime();
+        log("Method is started");
+        result = false;
+
+        counter = 0;
+        etalon.clear();
+        current.clear();
+
+        log("get all text objects from this screen");
+        for (WebElement i : allTextObjects) {
+            etalon.add(i.getText());
+            current.add(i.getText());
+        }
+
+        while (true){
+
+            if (wait.element(elementForSearch, 2, true)){
+                result = true;
+                break;
+
+            }else {
+                log(3, "element is not found on this screen!");
+                result = false;
+            }
+
+            if (direction.equals("down")) {
+                swipeDown(1000, 2);
+            }else swipeUp(1000, 2);
+
+            current.clear();
+            log("put new text objects to the current list after swipe");
+            try {
+                for (WebElement i : allTextObjects) {
+                    current.add(i.getText());
+                }
+            }catch (NoSuchElementException e){
+                log(3, "NoSuchElementException, something was wrong!\n" + e);
+            }
+
+            compare(etalon, current);
+            if (flag) break;
+        }
+        finish = System.nanoTime();
+        log(2, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
+        log("Method is finished");
+        return result;
+    }
+
 
 //======================================================================================================================
 

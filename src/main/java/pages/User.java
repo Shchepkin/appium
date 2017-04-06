@@ -8,9 +8,11 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 import utils.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User extends Base{
 //    private AppiumDriver driver;
@@ -39,6 +41,9 @@ public class User extends Base{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
     private WebElement addButtonFromContactList;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/delete")
+    private WebElement deleteButton;
 
     @AndroidFindBy(xpath = "//android.widget.TextView")
     private ArrayList<WebElement> allTextObjects;
@@ -350,22 +355,98 @@ public class User extends Base{
         return result;
     }
 
-    public boolean checkDeleteIconIsPresent(String userName) {
-        String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + userName + "']";
+    public boolean checkIsDeleteIconPresent(String pendingUserName) {
+        String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
         String deleteElementXpath = "/ancestor::android.widget.LinearLayout[1]//*[@resource-id = 'com.ajaxsystems:id/delete']";
 
-        if (nav.scrollToElementWith("name", "up", userName, false)) {
+        if (nav.scrollToElementWith("name", "up", pendingUserName, false)) {
+
             try {
-                wait.element(driver.findElement(By.xpath(nameElementXpath + deleteElementXpath)), 5, true);
-                log("new user with email \"" + userName + "\" has the DELETE button");
+                wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
+                log("new user with email \"" + pendingUserName + "\" has the DELETE button");
                 result = true;
 
             }catch (Exception e){
-                log(3, "new user with email \"" + userName + "\" has no the DELETE button");
+                log(3, "new user with email \"" + pendingUserName + "\" has no the DELETE button");
                 result = false;
             }
         }
         return result;
+    }
+
+    public boolean isDeleteIconPresent(String pendingUserName) {
+        WebElement pendingUserForCheck = findPendingFrom("name", pendingUserName);
+
+        if (nav.scrollToElement(pendingUserForCheck, "up")) {
+            log("new user with email \"" + pendingUserName + "\" has the DELETE button");
+            result = true;
+
+        } else {
+            log(3, "new user with email \"" + pendingUserName + "\" has no the DELETE button");
+            result = false;
+        }
+        return result;
+    }
+
+    public void deletePendingByName(String pendingUserName) {
+        WebElement pendingUserForDelete = findPendingFrom("name", pendingUserName);
+        nav.scrollToElement(pendingUserForDelete, "up");
+        pendingUserForDelete.click();
+    }
+
+    public void deleteAllPending() {
+        while (true) {
+            if(nav.scrollToElement(deleteButton, "up")){
+                deleteButton.click();
+                nav.confirmIt();
+            } else {
+                log(3, "pending users are not found");
+                break;
+            }
+        }
+    }
+
+    public void deleteAllActive(String status) {
+        String statusXpath = "*[contains(@resource-id,'com.ajaxsystems:id/status') and @text='" + status + "']";
+        String settingsButtonXpath = "*[@resource-id = 'com.ajaxsystems:id/settings']";
+        String firstLinearLayout = "android.widget.LinearLayout[1]";
+        String xPath = "//" + statusXpath + "/ancestor::" + firstLinearLayout + "//" + settingsButtonXpath;
+        WebElement userForDelete = driver.findElementByXPath(xPath);
+
+        while (true) {
+            if(nav.scrollToElement(userForDelete, "up")){
+                userForDelete.click();
+                deleteButton.click();
+                nav.confirmIt();
+            } else {
+                log(3, "active users with status \"" + status + "\" are not found");
+                break;
+            }
+        }
+    }
+
+    private WebElement findPendingFrom(String from, String pendingUserName){
+        String nameElementXpath = "*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
+        String deleteElementXpath = "*[@resource-id = 'com.ajaxsystems:id/delete']";
+        String firstLinearLayout = "android.widget.LinearLayout[1]";
+        String xPath = null;
+        switch (from){
+            case "delete": xPath = "//" + deleteElementXpath + "/ancestor::" + firstLinearLayout + "//" + nameElementXpath;
+                break;
+            case "name": xPath = "//" + nameElementXpath + "/ancestor::" + firstLinearLayout + "//" + deleteElementXpath;
+                break;
+            default: log(3, "invalid parametr");
+                break;
+        }
+        WebElement pendingUserElement = driver.findElementByXPath(xPath);
+        nav.scrollToElement(pendingUserElement, "up");
+        return pendingUserElement;
+    }
+
+    public void deleteActiveBy() {
+    }
+
+    public void master_user() {
     }
 
 }

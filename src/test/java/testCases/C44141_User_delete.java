@@ -1,41 +1,59 @@
 package testCases;
 
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.Base;
 
 /**
  * PRECONDITION:
- * Account has no hub
+ * There are at least one hub with at least one room in account
  */
-public class C42099_Add_new_Hub_manually extends Base {
+public class C44141_User_delete extends Base {
 
-    private String login, pass, server, waiterText, hubName, hubKey, expected, actual;
-    private WebElement[] elements;
+    private String login, pass, server, adminUserText, guestUserText;
     private Base $;
 
+    @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(){
         $ = new Base(getDriver());
-        waiterText = getLocalizeTextForKey("request_send");
+
+        adminUserText = getLocalizeTextForKey("admin");
+        guestUserText = getLocalizeTextForKey("user");
 
         log("get credentials for login");
         login = creds.get("login").toString();
         pass = creds.get("password").toString();
         server = creds.get("server").toString();
 
-        hubName = "1495";
-        hubKey = "00001495DDFB55691000";
-//        String hubKey = "12345123451234512345";
-
+        log("login without Pin");
         $.loginPage.loginWithPinCancel(login, pass, server);
+
+        $.hub.goToTheUserlistPage();
     }
 
-    @Test(priority = 1, enabled = true)
-    public void Add_first_Hub() {
+    @Test(priority = 1, enabled = false)
+    public void all_pending_users() {
+        $.user.deleteAllPending();
+    }
+
+    @Test(priority = 2, enabled = true)
+    public void all_guest_users() {
+        $.user.deleteAllActive(guestUserText);
+    }
+
+    @Test(priority = 3, enabled = false)
+    public void master_user() {
+        $.user.deleteAllActive(adminUserText);
+    }
+
+    private void addHub() {
+        String hubName = "1495";
+        String hubKey = "00001495DDFB55691000";
+        String waiterText = getLocalizeTextForKey("request_send");
 
         log("tap to the Plus Button");
         $.dashboard.plusButtonClick();
@@ -51,14 +69,11 @@ public class C42099_Add_new_Hub_manually extends Base {
 
         Assert.assertTrue($.wait.element($.dashboardHeader.getGprsImage(), 15, true));
         log("hub successfully added!");
-        log("Method is finished");
     }
-
-    @Test(priority = 1, enabled = false)
-    public void Add_Hub_from_menu() {}
 
     @AfterClass
     public void endSuit() {
+
         driver.quit();
     }
 }

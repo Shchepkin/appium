@@ -165,9 +165,8 @@ public class Base{
         log(2, "init DashboardHeader(driver)");
         user = new User(driver);
 
-        log(2, "init Sql()");
+//        log(2, "init Sql()");
 //        sql = new Sql();
-
 //        imitator = new Imitator();
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);

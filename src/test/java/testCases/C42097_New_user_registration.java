@@ -6,23 +6,35 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.*;
+import utils.Sql;
 
 public class C42097_New_user_registration extends Base {
 
-    private String name, login, pass, phone, server;
+    private String userName, login, pass, phone, server;
 
     private Base $;
+    private Sql sql;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(){
         $ = new Base(getDriver());
+        sql = new Sql();
 
-        login = "ajaxsys33@bigmir.net";
-        phone = "971112234";
-        pass = "qwe";
-        name = "name";
-        server = "Develop";
+        login = creds.get("login").toString();
+        pass = creds.get("password").toString();
+        server = creds.get("server").toString();
+        phone = creds.get("phone").toString();
+        userName = creds.get("userName").toString();
+
+        sql.getDelete("Phone", "%" + phone + "%");
+
+
+//        login = "ajaxsys33@bigmir.net";
+//        phone = "971112234";
+//        pass = "qwe";
+//        userName = "name";
+//        server = "Develop";
 
 
     }
@@ -35,7 +47,7 @@ public class C42097_New_user_registration extends Base {
 
         log("registration process");
         $.regPage.setUserPic(1);
-        $.regPage.fillFields(name, login, pass, phone);
+        $.regPage.fillFields(userName, login, pass, phone);
         $.regPage.confirmAgrimentCheckBox();
 
         $.check.clickElementAndWaitingPopup($.regPage.getRegistrationButtonLink(), 5, 2, false);

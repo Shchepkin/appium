@@ -231,7 +231,7 @@
 //        Assert.assertTrue(user.checkIsNewUsersAddedBy("text", user.getUsersForMixedAdd()), "Add users with mixed style is failed");
 //
 //        String unregisteredUserEmail = user.getUsersForMixedAdd().get(1);
-//        Assert.assertTrue(user.checkDeleteIconIsPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon");
+//        Assert.assertTrue(user.checkIsDeleteIconPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon");
 //
 //        s.log("TEST IS FINISHED");
 //    }

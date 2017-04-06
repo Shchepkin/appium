@@ -173,7 +173,7 @@ public class Wait extends Base{
             result = true;
 
         } catch (NoSuchElementException e) {
-            log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){getScreenShot(driver);}
 
@@ -184,8 +184,5 @@ public class Wait extends Base{
         }
         return result;
     }
-
-
-
 
 }
