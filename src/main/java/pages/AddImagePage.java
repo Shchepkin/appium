@@ -1,6 +1,5 @@
 package pages;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
@@ -8,8 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-
-public class AddImagePage extends Base{
+public class AddImagePage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/tv_title")
     private WebElement addImagePageTitle;
@@ -57,19 +55,21 @@ public class AddImagePage extends Base{
     private WebElement cancelButton6;
 
 // ==================================================================
-    public AddImagePage(AppiumDriver driver) {
-        this.driver = driver;
 
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    private final Base $;
+
+    public AddImagePage(Base base) {
+        $ = base;
+        PageFactory.initElements(new AppiumFieldDecorator($.getDriver()), this);
     }
 
     public void setImageFromCamera(){
-        log("method is started");
+        Base.log("method is started");
         thumbnail.get(0).click();
         shutterButtonPhoto.click();
         doneButton.click();
         nextBtn.click();
-        log("method is finished");
+        Base.log("method is finished");
     }
 
 

@@ -53,7 +53,7 @@ public class C42097_New_user_registration extends Base {
         $.check.clickElementAndWaitingPopup($.regPage.getRegistrationButtonLink(), 5, 2, false);
 
         log("waiting for Validation Code Page");
-        Assert.assertTrue($.wait.element($.validationCodePage.getSmsCode(), 60, true));
+        Assert.assertTrue($.wait.element($.validationCodePage.getSmsCodeField(), 60, true));
 
         log("get and fill Validation Codes");
         $.validationCodePage.getAndFillValidationCodes("Phone", "%" + phone + "%");

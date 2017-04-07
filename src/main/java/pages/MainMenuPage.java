@@ -6,29 +6,33 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-/**
- * Created by installer on 1/21/17.
- */
-public class MenuMainPage extends Base{
-    public final AppiumDriver driver;
+public class MainMenuPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/menuTitle")
-    public WebElement menuTitle;
+    private WebElement menuTitle;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/account")
-    public WebElement accountBtn;
+    private WebElement accountButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/addHub")
-    public WebElement addHubBtn;
+    private WebElement addHubButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/logs")
-    public WebElement logsBtn;
+    private WebElement logsButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/settings")
-    public WebElement settingsBtn;
+    private WebElement settingsButton;
 
-    public MenuMainPage(AppiumDriver driver) {
-        this.driver = driver;
+
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
+
+    public MainMenuPage(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+//----------------------------------------------------------------------------------------------------------------------
+
 }

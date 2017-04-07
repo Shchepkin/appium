@@ -6,29 +6,32 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-//import utils.Setup;
 
-/**
- * Created by installer on 1/21/17.
- */
-public class DashboardRemotePage extends Base{
-    public final AppiumDriver driver;
-    private Dashboard dashboard;
-    private boolean result;
-
-
+public class DashboardRemotePage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/arm")
     private WebElement armButton;
+    public WebElement getArmButton() {
+        return armButton;
+    }
 
     @AndroidFindBy(id = "com.ajaxsystems:id/disarm")
     private WebElement disarmButton;
+    public WebElement getDisarmButton() {
+        return disarmButton;
+    }
 
     @AndroidFindBy(id = "com.ajaxsystems:id/partial")
     private WebElement partialArmButton;
+    public WebElement getPartialArmButton() {
+        return partialArmButton;
+    }
 
     @AndroidFindBy(id = "com.ajaxsystems:id/alarm")
     private WebElement alarmButton;
+    public WebElement getAlarmButton() {
+        return alarmButton;
+    }
 
     @AndroidFindBy(id = "com.ajaxsystems:id/securityText")
     private WebElement securityText;
@@ -36,22 +39,27 @@ public class DashboardRemotePage extends Base{
     @AndroidFindBy(id = "com.ajaxsystems:id/spaceControl")
     private WebElement spaceControlImage;
 
-    public DashboardRemotePage(AppiumDriver driver) {
-        this.driver = driver;
-        dashboard = new Dashboard(driver);
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
+    private boolean result;
+
+    public DashboardRemotePage(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 
     public boolean goToTheRemotePage(){
-        log("method is started");
+        Base.log("method is started");
         result = false;
 
-        dashboard.footerRemoteClick();
+        $.dashboard.footerRemoteClick();
         if (spaceControlImage.isDisplayed()) {
             result = true;
         }
-        log("Method is finished");
+        Base.log("Method is finished");
         return result;
     }
 
@@ -71,19 +79,5 @@ public class DashboardRemotePage extends Base{
         partialArmButton.click();
     }
 
-    public WebElement getArmButton() {
-        return armButton;
-    }
 
-    public WebElement getDisarmButton() {
-        return disarmButton;
-    }
-
-    public WebElement getPartialArmButton() {
-        return partialArmButton;
-    }
-
-    public WebElement getAlarmButton() {
-        return alarmButton;
-    }
 }

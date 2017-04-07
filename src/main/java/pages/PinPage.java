@@ -9,11 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class DashboardActivePINPage extends Base{
-    public final AppiumDriver driver;
+public class PinPage {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/content_text")
-    public WebElement contentText;
+    private WebElement contentText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
     public WebElement cancelBtn;
@@ -22,57 +21,69 @@ public class DashboardActivePINPage extends Base{
     public WebElement confirmBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/description")
-    public WebElement description;
+    private WebElement description;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/pin1")
-    public WebElement pin1;
+    private WebElement pin1;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/pin2")
-    public WebElement pin2;
+    private WebElement pin2;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/pin3")
-    public WebElement pin3;
+    private WebElement pin3;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/pin4")
-    public WebElement pin4;
+    private WebElement pin4;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/one")
-    public WebElement one;
+    private WebElement one;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/two")
-    public WebElement two;
+    private WebElement two;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/three")
-    public WebElement three;
+    private WebElement three;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/four")
-    public WebElement four;
+    private WebElement four;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/five")
-    public WebElement five;
+    private WebElement five;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/sixth")
-    public WebElement six;
+    private WebElement six;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/seven")
-    public WebElement seven;
+    private WebElement seven;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/eight")
-    public WebElement eight;
+    private WebElement eight;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/nine")
-    public WebElement nine;
+    private WebElement nine;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/zero")
-    public WebElement zero;
+    private WebElement zero;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/backspace")
-    public WebElement backspace;
+    private WebElement backspace;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/fingerprint")
-    public WebElement fingerprint;
+    private WebElement fingerprint;
+    public WebElement getFingerprint() {
+        return fingerprint;
+    }
 
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
 
+    public PinPage(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    }
+//----------------------------------------------------------------------------------------------------------------------
 
     public void closePinWindowIfDisplayed() {
         try {
@@ -80,10 +91,10 @@ public class DashboardActivePINPage extends Base{
             WebDriverWait iWait = new WebDriverWait (driver, 30);
             iWait.until(ExpectedConditions.visibilityOf(cancelBtn));
             cancelBtn.click();
-            System.out.println("Window with PIN acceptation is displayed and canceled.");
+            $.log("window with PIN acceptation is displayed and canceled");
 
         } catch (NoSuchElementException e) {
-            System.out.println("Window with PIN acceptation isn't displayed.");
+            $.log("window with PIN acceptation isn't displayed");
         }
     }
 
@@ -93,15 +104,11 @@ public class DashboardActivePINPage extends Base{
             WebDriverWait iWait = new WebDriverWait (driver, 30);
             iWait.until(ExpectedConditions.visibilityOf(confirmBtn));
             confirmBtn.click();
-            System.out.println("Window with PIN acceptation is displayed and confirmed.");
+            $.log("Window with PIN acceptation is displayed and confirmed.");
 
         } catch (NoSuchElementException e) {
-            System.out.println("Window with PIN acceptation isn't displayed.");
+            $.log("Window with PIN acceptation isn't displayed.");
         }
     }
 
-    public DashboardActivePINPage(AppiumDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-    }
 }

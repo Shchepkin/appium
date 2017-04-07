@@ -13,10 +13,7 @@ import utils.Navigation;
 
 import java.util.List;
 
-public class DashboardRoomsPage extends Base{
-    private AppiumDriver driver;
-    private WebElement[] elements;
-    private boolean result;
+public class DashboardRoomsPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
     private WebElement addRoomBtn;
@@ -36,16 +33,18 @@ public class DashboardRoomsPage extends Base{
     @AndroidFindBy(id = "com.ajaxsystems:id/footerImage")
     private WebElement addRoomPlusBtn;
 
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
+    private boolean result;
+    private WebElement[] elements;
 
-    public DashboardRoomsPage(AppiumDriver driver) {
-
-        this.driver = driver;
-        nav = new Navigation(driver);
-        check = new Check(driver);
-        addImagePage = new AddImagePage(driver);
-
+    public DashboardRoomsPage(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+//----------------------------------------------------------------------------------------------------------------------
 
     /******************************************************************************************************************
      *
@@ -57,81 +56,81 @@ public class DashboardRoomsPage extends Base{
      * @param imageNumber - if use room with type 2 y can set 1, 2 or 3 image from PopUp, other values set number to 1 for default
      */
     public void addRoom(String roomName, int type, int imageNumber) {
-        log("Method is started");
+        Base.log("Method is started");
 
         clickAddRoomButton();
 
-        log("fill Room name field with: \"" + roomName + "\"");
+        Base.log("fill Room name field with: \"" + roomName + "\"");
         roomNameField.sendKeys(roomName);
 
         switch (type){
-            case 1: log("add image from camera");
+            case 1: Base.log("add image from camera");
                 addRoomImageBtn.click();
-                addImagePage.setImageFromCamera();
+                $.addImagePage.setImageFromCamera();
                 break;
-            case 2: log("add image from gallery");
+            case 2: Base.log("add image from gallery");
                 addRoomImageBtn.click();
-                addImagePage.setImageFromGallery(imageNumber);
+                $.addImagePage.setImageFromGallery(imageNumber);
                 break;
-            default: log("add room without image");
+            default: Base.log("add room without image");
                 driver.hideKeyboard();
                 break;
         }
 
-        log("tap Save button");
+        Base.log("tap Save button");
         saveButton.click();
 
-        log("Method is finished");
+        Base.log("Method is finished");
     }
 
     public void addRoom(String roomName, int roomType) {
-        log("Method is started");
+        Base.log("Method is started");
 
         clickAddRoomButton();
 
-        log("fill Room name field with: \"" + roomName + "\"");
+        Base.log("fill Room name field with: \"" + roomName + "\"");
         roomNameField.sendKeys(roomName);
 
         switch (roomType){
-            case 1: log("add image from camera");
+            case 1: Base.log("add image from camera");
                 addRoomImageBtn.click();
-                addImagePage.setImageFromCamera();
+                $.addImagePage.setImageFromCamera();
                 break;
-            case 2: log("add image from gallery");
+            case 2: Base.log("add image from gallery");
                 addRoomImageBtn.click();
-                addImagePage.setImageFromGallery(1);
+                $.addImagePage.setImageFromGallery(1);
                 break;
-            default: log("add room without image");
+            default: Base.log("add room without image");
                 driver.hideKeyboard();
                 break;
         }
-        log("tap Save button");
+        Base.log("tap Save button");
         saveButton.click();
 
-        log("Method is finished");
+        Base.log("Method is finished");
     }
 
     private void clickAddRoomButton (){
-        log("Method is started");
+        Base.log("Method is started");
         elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
 
-        log("choice the Add Room button");
-        nav.scrollBottom();
-        switch (check.waitElements(elements, 2)){
+        Base.log("choice the Add Room button");
+        $.nav.scrollBottom();
+        switch ($.check.waitElements(elements, 2)){
             case 1: addRoomBtn.click(); break;
             case 2: addRoomPlusBtn.click(); break;
-            default: log(3, "Something was wrong!"); break;
+            default: Base.log(3, "Something was wrong!"); break;
         }
-        log("Method is finished");
+        Base.log("Method is finished");
     }
 
     public boolean isRoomPresens(String roomName) {
-        log("Method is started");
+        Base.log("Method is started");
         result = false;
         for (WebElement roomNameElement : roomNameList) {
             if (roomNameElement.getText().equals(roomName)) {
                 result = true;
-                log("room with name \"" + roomName + "\" successfully added!");
+                Base.log("room with name \"" + roomName + "\" successfully added!");
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
@@ -140,7 +139,7 @@ public class DashboardRoomsPage extends Base{
                 break;
             }
         }
-        log("Method is finished");
+        Base.log("Method is finished");
         return result;
     }
 }

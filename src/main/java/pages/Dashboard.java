@@ -1,17 +1,11 @@
 package pages;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import utils.Navigation;
 
-/**
- * Created by installer on 1/21/17.
- */
-public class Dashboard extends Base{
-    public final AppiumDriver driver;
+public class Dashboard{
 
 // ================= Header ===================
 
@@ -84,19 +78,20 @@ public class Dashboard extends Base{
     @AndroidFindBy(id = "com.ajaxsystems:id/remote")
     private WebElement footerRemote;
 
-//=====================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
 
-    public Dashboard(AppiumDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    public Dashboard(Base base) {
+        $ = base;
+        PageFactory.initElements(new AppiumFieldDecorator($.getDriver()), this);
     }
-//=====================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 
     public void fillFieldsWith(String hubName, String hubKey){
-        log("fill Name Field with \"" + hubName + "\"");
+        Base.log("fill Name Field with \"" + hubName + "\"");
         nameField.sendKeys(hubName);
 
-        log("fill Hub Key Field with \"" + hubKey + "\"");
+        Base.log("fill Hub Key Field with \"" + hubKey + "\"");
         hubKeyField.sendKeys(hubKey);
     }
 

@@ -29,12 +29,11 @@ public class C42102_Add_new_guest_user extends Base {
         log("get localized keys");
         String sendInvitesButtonText = getLocalizeTextForKey("send_invites");
         String inviteFailText = getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
-        String waiterText = getLocalizeTextForKey("request_send");
 
         log("set localized keys");
         $.user.setSendInvitesButtonText(sendInvitesButtonText);
         $.user.setInviteFailText(inviteFailText);
-        $.wait.setWaiterText(waiterText);
+
 
         log("login without Pin");
         $.loginPage.loginWithPinCancel(login, pass, server);
@@ -72,6 +71,6 @@ public class C42102_Add_new_guest_user extends Base {
 
     @AfterClass
     public void endSuit() {
-        driver.quit();
+        $.getDriver().quit();
     }
 }

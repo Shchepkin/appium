@@ -28,12 +28,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class Base{
+public class Base {
 
 // TODO validate lines color if parameter is not valid (on registration page for example bg_state_mUseColor	-1754827 = red, and -11711155 = grey)
 
-
-    public AppiumDriver driver;
     public Sql sql;
     public Hub hub;
     public User user;
@@ -41,40 +39,40 @@ public class Base{
     public Check check;
     public Email email;
     public PopUp popUp;
-    public DashboardHeader header;
+    public PinPage pinPage;
+    public Imitator imitator;
     public IntroPage introPage;
     public Dashboard dashboard;
-    public DashboardDevicesPage device;
-    public DashboardHeader dashboardHeader;
-    public DashboardRoomsPage roomsPage;
-    public DashboardRemotePage remotePage;
     public Navigation nav;
-    public MenuMainPage menuPage;
+    public MainMenuPage menuPage;
     public AddImagePage addImagePage;
-    public MenuAccountPage accountPage;
+    public AccountMenuPage accountPage;
+    public DashboardHeader header;
+    public DashboardHeader dashboardHeader;
     public RegistrationPage regPage;
     public AuthorizationPage loginPage;
+    public DashboardRoomsPage roomsPage;
+    public ForgotPasswordPage forgotPasswordPage;
     public ValidationCodePage validationCodePage;
-    public DashboardActivePINPage pinPage;
-    public Imitator imitator;
+    public DashboardRemotePage remotePage;
+    public DashboardDevicesPage device;
 
+    private AppiumDriver driver = null;
     private Path path;
     private String jsonString, collection;
-
     private String locale;
-    private String localizeTextForKey;
-    private String pathForScreenshot = "screenshot";
 
-    private Map  dbSettings, jsonCollection;
+    private Map jsonCollection;
+    private Map localizeKeys;
     private ArrayList<String> jsonStringArray;
     private String deviceName, UDID, platformVersion, URL, appPath;
 
-    public Map localizeKeys = getLocalizeKeys();
     public Map creds;
+    public Map dbSettings;
 
-    @Parameters({ "deviceName_" })
+    @Parameters({"deviceName_"})
     @BeforeClass
-    public void setUp(String deviceName_){
+    public void setUp(String deviceName_) {
         log("setup is started");
         creds = getJsonCollection("deviceData.json", deviceName_);
 
@@ -82,12 +80,13 @@ public class Base{
         deviceName = deviceName_;
         URL = creds.get("URL").toString();
         UDID = creds.get("UDID").toString();
+        locale = creds.get("locale").toString();
         appPath = creds.get("appPath").toString();
         platformVersion = creds.get("platformVersion").toString();
-        locale = creds.get("locale").toString();
 
-        log("set locale to \"" + locale + "\"");
+        log("get localizeKeys Map with locale \"" + locale + "\"");
         localizeKeys = getLocalizeKeys(locale);
+        dbSettings = getDbSettings();
     }
 
     public Map getLocalizeKeys() {
@@ -98,83 +97,93 @@ public class Base{
         this.locale = locale;
     }
 
-    public String  getLocale() {
+    public String getLocale() {
         return locale;
     }
 
-    public Base() {}
-
-    public Base(AppiumDriver driver) {
-        log(2, "init Wait(driver)");
-        wait = new Wait(driver);
-
-        log(2, "init Navigation(driver)");
-        nav = new Navigation(driver);
-
-        log(2, "init Check(driver)");
-        check = new Check(driver);
-
-        log(2, "init Hub(driver)");
-        hub = new Hub(driver);
-
-        log(2, "init PopUp(driver)");
-        popUp = new PopUp(driver);
-
-        log(2, "init DashboardDevicesPage(driver)");
-        device = new DashboardDevicesPage(driver);
-
-        log(2, "init RegistrationPage(driver)");
-        regPage = new RegistrationPage(driver);
-
-        log(2, "init MenuMainPage(driver)");
-        menuPage = new MenuMainPage(driver);
-
-        log(2, "init IntroPage(driver)");
-        introPage = new IntroPage(driver);
-
-        log(2, "init Dashboard(driver)");
-        dashboard = new Dashboard(driver);
-
-        log(2, "init AuthorizationPage(driver)");
-        loginPage = new AuthorizationPage(driver);
-
-        log(2, "init DashboardRoomsPage(driver)");
-        roomsPage = new DashboardRoomsPage(driver);
-
-        log(2, "init DashboardRemotePage(driver)");
-        remotePage = new DashboardRemotePage(driver);
-
-        log(2, "init MenuAccountPage(driver)");
-        accountPage = new MenuAccountPage(driver);
-
-        log(2, "init AddImagePage(driver)");
-        addImagePage = new AddImagePage(driver);
-
-        log(2, "init DashboardHeader(driver)");
-        dashboardHeader = new DashboardHeader(driver);
-
-        log(2, "init ValidationCodePage(driver)");
-        validationCodePage = new ValidationCodePage(driver);
-
-        log(2, "init DashboardActivePINPage(driver)");
-        pinPage = new DashboardActivePINPage(driver);
-
-        log(2, "init DashboardHeader(driver)");
-        header = new DashboardHeader(driver);
-
-        log(2, "init DashboardHeader(driver)");
-        user = new User(driver);
-
-//        log(2, "init Sql()");
-//        sql = new Sql();
-//        imitator = new Imitator();
-
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-//        addImagePage = PageFactory.initElements(driver, AddImagePage.class);
+    public Base() {
     }
 
-    public String getLocalizeTextForKey(String key){
-        localizeTextForKey = localizeKeys.get(key).toString();
+    public Base(AppiumDriver driver) {
+        initPageObjects(driver);
+    }
+
+
+    public void initPageObjects(AppiumDriver driver) {
+        log(2, "init Wait()");
+        wait = new Wait(this);
+
+        log(2, "init Navigation()");
+        nav = new Navigation(this);
+
+        log(2, "init Check()");
+        check = new Check(this);
+
+        log(2, "init Hub()");
+        hub = new Hub(this);
+
+        log(2, "init PopUp()");
+        popUp = new PopUp(this);
+
+        log(2, "init DashboardDevicesPage()");
+        device = new DashboardDevicesPage(this);
+
+        log(2, "init RegistrationPage()");
+        regPage = new RegistrationPage(this);
+
+        log(2, "init MenuMainPage()");
+        menuPage = new MainMenuPage(this);
+
+        log(2, "init IntroPage()");
+        introPage = new IntroPage(this);
+
+        log(2, "init Dashboard(driver)");
+        dashboard = new Dashboard(this);
+
+        log(2, "init AuthorizationPage()");
+        loginPage = new AuthorizationPage(this);
+
+        log(2, "init DashboardRoomsPage()");
+        roomsPage = new DashboardRoomsPage(this);
+
+        log(2, "init DashboardRemotePage()");
+        remotePage = new DashboardRemotePage(this);
+
+        log(2, "init MenuAccountPage()");
+        accountPage = new AccountMenuPage(this);
+
+        log(2, "init AddImagePage()");
+        addImagePage = new AddImagePage(this);
+
+        log(2, "init DashboardHeader()");
+        dashboardHeader = new DashboardHeader(this);
+
+        log(2, "init ValidationCodePage()");
+        validationCodePage = new ValidationCodePage(this);
+
+        log(2, "init DashboardActivePINPage()");
+        pinPage = new PinPage(this);
+
+        log(2, "init DashboardHeader()");
+        header = new DashboardHeader(this);
+
+        log(2, "init DashboardHeader(driver)");
+        user = new User(this);
+
+        log(2, "init Sql()");
+        sql = new Sql(this);
+
+        log(2, "init Imitator()");
+        imitator = new Imitator();
+
+        log(2, "init ForgotPasswordPage()");
+        forgotPasswordPage = new ForgotPasswordPage(this);
+
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    }
+
+    public String getLocalizeTextForKey(String key) {
+        String localizeTextForKey = localizeKeys.get(key).toString();
         return localizeTextForKey;
     }
 
@@ -218,7 +227,7 @@ public class Base{
         return localizeKeys;
     }
 
-    public Map getDbSettings() {
+    private Map getDbSettings() {
         log("Method is started");
         try {
             dbSettings = new HashMap<>();
@@ -299,8 +308,8 @@ public class Base{
         return jsonStringArray;
     }
 
-    private void printArray(ArrayList arrayList){
-        for (Object element: arrayList) {
+    private void printArray(ArrayList arrayList) {
+        for (Object element : arrayList) {
             System.out.println(element.toString());
         }
     }
@@ -347,7 +356,7 @@ public class Base{
 // LOG
 //**********************************************************************************************************************
 
-    public void log(String message) {
+    public static void log(String message) {
         Throwable t = new Throwable();
         StackTraceElement trace[] = t.getStackTrace();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
@@ -363,7 +372,7 @@ public class Base{
         }
     }
 
-    public void log(int type, String message) {
+    public static void log(int type, String message) {
         Throwable t = new Throwable();
         StackTraceElement trace[] = t.getStackTrace();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
@@ -405,29 +414,36 @@ public class Base{
 // Keyboard
 //**********************************************************************************************************************
 
-    public void hideKeyboard(){
-        try{
+    public void hideKeyboard() {
+        try {
             driver.hideKeyboard();
-        }catch (Exception e){
+        } catch (Exception e) {
             log(2, "Exeption: \n\n" + e + "\n");
         }
     }
 
     public void openKeyboard() {
         log("Method is started");
-        try{
+        try {
             driver.hideKeyboard();
-        }catch (Exception e){
+        } catch (Exception e) {
             log(2, "Exception: \n\n" + e + "\n");
         }
         log("Method is finished");
     }
 
-//**********************************************************************************************************************
+    //**********************************************************************************************************************
 // Appium Driver
 //**********************************************************************************************************************
 
     public AppiumDriver getDriver() {
+        if (driver == null) {
+            driver = initDriver();
+        }
+        return driver;
+    }
+
+    private AppiumDriver initDriver() {
         log("Method is started");
         try {
             log(2, "get .apk file");
@@ -463,7 +479,7 @@ public class Base{
 // ScreenShot
 //**********************************************************************************************************************
 
-    public void getScreenShot(AppiumDriver driver){
+    public void getScreenShot() {
         try {
             Date currentDate = new Date();
 
@@ -472,10 +488,10 @@ public class Base{
             SimpleDateFormat time = new SimpleDateFormat("HHmmss");
 
             // Make screenshot
-            File srcFile = driver.getScreenshotAs(OutputType.FILE);
+            File srcFile = this.driver.getScreenshotAs(OutputType.FILE);
 
             // Creating folder and filename for screenshot
-            String folder = pathForScreenshot + "/" + date.format(currentDate);
+            String folder = "screenshot/" + date.format(currentDate);
             String filename = date.format(currentDate) + "_" + time.format(currentDate) + ".png";
             File targetFile = new File(folder + "/" + filename);
 
@@ -483,8 +499,7 @@ public class Base{
             FileUtils.copyFile(srcFile, targetFile);
 
             log(3, "Path to screenshot: " + targetFile.getAbsolutePath());
-        }
-        catch (IOException e1) {
+        } catch (IOException e1) {
             log(4, "IOException:\n\n" + e1 + "\n");
         }
     }

@@ -1,57 +1,64 @@
 package utils;
 
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import jssc.*;
+import org.openqa.selenium.support.PageFactory;
 import pages.Base;
 
-public class Imitator extends Base{
+public class Imitator{
 
+//----------------------------------------------------------------------------------------------------------------------
+    private boolean result;
     private static SerialPort serialPort;
 
     public Imitator() {
         SerialPortSetup();
-        log("clear imitator memory");
+        Base.log("clear imitator memory");
         clearMemory();
     }
 
+//----------------------------------------------------------------------------------------------------------------------
+
     private void SerialPortSetup() {
-        log("method is started");
+        Base.log("method is started");
 
         try {
             serialPort = new SerialPort("/dev/ttyUSB3");
 
-            log("print all available ports");
+            Base.log("print all available ports");
             for (String portName: SerialPortList.getPortNames()) {
                 System.out.println(portName);
             }
 
-            log("open port ");
+            Base.log("open port ");
             serialPort.openPort();
 
-            log("set port params: BAUDRATE, DATABITS, STOPBITS,PARITY)");
+            Base.log("set port params: BAUDRATE, DATABITS, STOPBITS,PARITY)");
             serialPort.setParams(SerialPort.BAUDRATE_57600,
                                  SerialPort.DATABITS_8,
                                  SerialPort.STOPBITS_1,
                                  SerialPort.PARITY_NONE);
 
-            log("switch on hardware flow control");
+            Base.log("switch on hardware flow control");
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
-            log("serialPort Mask to reaction on data in buffer");
+            Base.log("serialPort Mask to reaction on data in buffer");
             serialPort.setEventsMask(SerialPort.MASK_RXCHAR);
             serialPort.addEventListener(new PortReader());
 
         } catch (Exception ex) {
-            log(3, "Exception: \n" + ex + "\n");
+            Base.log(3, "Exception: \n" + ex + "\n");
         }
-        log("method is finished");
+        Base.log("method is finished");
     }
 
     public void sendCommand(String command){
-        log("send command");
+        Base.log("send command");
         try {
             serialPort.writeString(command +"\n");
         }catch (Exception ex) {
-            log(3, "Exception: \n" + ex + "\n");
+            Base.log(3, "Exception: \n" + ex + "\n");
         }
     }
 
@@ -61,7 +68,7 @@ public class Imitator extends Base{
             Thread.sleep(2000);
             serialPort.writeString(command);
         }catch (Exception e) {
-            log(3, "Exception: \n" + e + "\n");
+            Base.log(3, "Exception: \n" + e + "\n");
         }
     }
 
@@ -70,7 +77,7 @@ public class Imitator extends Base{
             Thread.sleep(2000);
             serialPort.writeString("lst\n");
         }catch (Exception e) {
-            log(3, "Exception: \n" + e + "\n");
+            Base.log(3, "Exception: \n" + e + "\n");
         }
     }
 
@@ -79,7 +86,7 @@ public class Imitator extends Base{
             Thread.sleep(2000);
             serialPort.writeString("cln\n");
         }catch (Exception e) {
-            log(3, "Exception: \n" + e + "\n");
+            Base.log(3, "Exception: \n" + e + "\n");
         }
     }
 
@@ -88,7 +95,7 @@ public class Imitator extends Base{
             Thread.sleep(3000);
             serialPort.writeString("reg " + dev_id + "\n");
         }catch (Exception e) {
-            log(3, "Exception: \n" + e + "\n");
+            Base.log(3, "Exception: \n" + e + "\n");
         }
     }
 
@@ -101,7 +108,7 @@ public class Imitator extends Base{
                     System.out.println(data);
 
                 } catch (Exception ex) {
-                    log(3, "Exception \n" + ex + "\n");
+                    Base.log(3, "Exception \n" + ex + "\n");
                 }
             }
         }

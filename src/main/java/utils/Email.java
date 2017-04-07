@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Email extends Base{
+public class Email{
 
     private String password;
     private String user;
@@ -30,16 +30,16 @@ public class Email extends Base{
             this.password = password;
 
             // Get system settings
-            Reporter.log("Get system settings", true);
+            Base.log("Get system settings");
             Properties props = System.getProperties();
             props.put("mail.pop3.host", host);
 
             // Get session
-            Reporter.log("Get session", true);
+            Base.log("Get session");
             Session session = Session.getDefaultInstance(props, null);
 
             // Get store
-            Reporter.log("Get store", true);
+            Base.log("Get store");
             store = session.getStore("pop3");
             store.connect(host, user, password);
 
@@ -56,15 +56,15 @@ public class Email extends Base{
 
     public Message[] openFolderAndGetMessages() {
         try {
-            Reporter.log("\n=== Start process for opening folder.", true);
+            Base.log("\n=== Start process for opening folder.");
 
             // Get folder
-            Reporter.log("> Get inbox folder", true);
+            Base.log("> Get inbox folder");
             folder = store.getFolder("INBOX");
             folder.open(Folder.READ_ONLY);
 
             // Get messages from Folder
-            Reporter.log("> Get messages from inbox folder", true);
+            Base.log("> Get messages from inbox folder");
             message = folder.getMessages();
 
         } catch (MessagingException e) {
@@ -74,11 +74,11 @@ public class Email extends Base{
     }
 
     public Message[] checkNewMessage() {
-        Reporter.log("\n=== Start process for checking New Message.", true);
+        Base.log("\n=== Start process for checking New Message.");
         int counter = 30;
         while (message.length == 0 & counter > 0) {
 
-            Reporter.log("\n> Attempts left: " + counter + "\n-------------------", true);
+            Base.log("\n> Attempts left: " + counter + "\n-------------------");
             openFolderAndGetMessages();
 
             try {
@@ -91,7 +91,7 @@ public class Email extends Base{
         if (counter <= 0) {
             Assert.fail("> Timeout error! New E-mail is NOT found!");
         } else {
-            Reporter.log("> New E-mail is found", true);
+            Base.log("> New E-mail is found");
             try {
                 folder = store.getFolder("INBOX");
                 folder.open(Folder.READ_WRITE);
@@ -104,14 +104,14 @@ public class Email extends Base{
     }
 
     public String getValidationCode() {
-        log("Method is started");
+        Base.log("Method is started");
         String input = getEmailTextFromNewMessage();
         if (emailText != null) {
             Pattern pattern = Pattern.compile("[\\d]{6}");
             Matcher matcher = pattern.matcher(input);
             matcher.find();
             emailCode = matcher.group();
-            Reporter.log("> E-mail Validation code is: " + emailCode, true);
+            Base.log("> E-mail Validation code is: " + emailCode);
         }
         return emailCode;
     }
@@ -120,30 +120,30 @@ public class Email extends Base{
     public String getEmailTextFromNewMessage() {
         try {
             if (message.length > 0) {
-                Reporter.log("\n=== Start process for getting text from e-mail.", true);
-                Reporter.log("> There are found new messages. So get the newest one.", true);
+                Base.log("\n=== Start process for getting text from e-mail.");
+                Base.log("> There are found new messages. So get the newest one.");
                 Message m = folder.getMessage(folder.getMessageCount());
 
                 if (m.getSize() > 0) {
-                    Reporter.log("> Get Message is successfully.", true);
+                    Base.log("> Get Message is successfully.");
                 } else {
                     Assert.fail("> Get Message is fail!");
                 }
 
                 if (m.isMimeType("text/plain")) {
-                    Reporter.log("> CONTENT-TYPE: " + m.getContentType(), true);
+                    Base.log("> CONTENT-TYPE: " + m.getContentType());
                     emailText = String.valueOf(m.getContent());
                 } else if (m.isMimeType("multipart/*")) {
-                    Reporter.log("> CONTENT-TYPE: " + m.getContentType(), true);
-                    Reporter.log("> Get Multipart content.", true);
+                    Base.log("> CONTENT-TYPE: " + m.getContentType());
+                    Base.log("> Get Multipart content.");
                     Multipart mp = (Multipart) m.getContent();
 
-                    Reporter.log("> Get Body Part from content.", true);
+                    Base.log("> Get Body Part from content.");
                     BodyPart bp = mp.getBodyPart(0);
                     emailText = String.valueOf(bp.getContent());
                 }
 
-            } else Reporter.log("> There are no messages found.", true);
+            } else Base.log("> There are no messages found.");
 
         } catch (NoSuchProviderException e) {
             e.printStackTrace();
@@ -158,17 +158,17 @@ public class Email extends Base{
     public void deleteAllMessage() {
         try {
             if (message.length > 0) {
-                Reporter.log("\n=== Start process of deleting all message.", true);
-                Reporter.log("> Number of messages: " + message.length, true);
+                Base.log("\n=== Start process of deleting all message.");
+                Base.log("> Number of messages: " + message.length);
                 for (Message m : message) {
                     m.setFlag(Flags.Flag.DELETED, true);
                     System.out.println(m.getMessageNumber() + ": Deleted\nFROM: " + m.getFrom()[0] + "\nSubject: " + m.getSubject() + "\nSentDate" + m.getSentDate() + "\n");
                 }
-                // folder.setFlags(1, 1, new Flags(Flags.Flag.DELETED), true);
-            } else Reporter.log("> There is no messages found.", true);
+                // folder.setFlags(1, 1, new Flags(Flags.Flag.DELETED));
+            } else Base.log("> There is no messages found.");
 
             // close the store and folder objects
-            Reporter.log("> Close the store and folder objects", true);
+            Base.log("> Close the store and folder objects");
             closeAll();
 
         } catch (NoSuchProviderException e) {
@@ -180,17 +180,17 @@ public class Email extends Base{
 
     public void closeAll() {
         try {
-            Reporter.log("\n=== Start closing process of all folders and stores.", true);
+            Base.log("\n=== Start closing process of all folders and stores.");
             // close the store and folder objects
             if(folder.isOpen()){
                 folder.close(true);
-                Reporter.log("> Folder is closed.", true);
-            }else Reporter.log("> Folder is already closed.", true);
+                Base.log("> Folder is closed.");
+            }else Base.log("> Folder is already closed.");
 
             if(store.isConnected()){
                 store.close();
-                Reporter.log("> Store is closed.", true);
-            }else Reporter.log("> Store is already closed.", true);
+                Base.log("> Store is closed.");
+            }else Base.log("> Store is already closed.");
 
         } catch (NoSuchProviderException e) {
             e.printStackTrace();

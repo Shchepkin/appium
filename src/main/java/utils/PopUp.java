@@ -12,11 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.Base;
 
 
-public class PopUp extends Base{
-    private AppiumDriver driver;
-    private long start, finish;
-
-    public boolean result = false;
+public class PopUp{
 
 //================================ Loading ===========================================
 
@@ -41,15 +37,6 @@ public class PopUp extends Base{
     @AndroidFindBy(id = "com.ajaxsystems:id/shadow")
     private WebElement shadow;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
-    public WebElement cancelButton;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/ok")
-    private WebElement okBtn;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
-    public WebElement confirmButton;
-
 //================================ dialogMessage =====================================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
@@ -65,7 +52,7 @@ public class PopUp extends Base{
 //================================= Toast & Snack ====================================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/snackbar_text")
-    public WebElement snackBar;
+    private WebElement snackBar;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/message")
     private WebElement toast;
@@ -89,65 +76,74 @@ public class PopUp extends Base{
     @AndroidFindBy(id = "com.ajaxsystems:id/agreement")
     private WebElement userAgreementCheckbox;
 
-//=====================================================================================
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
+    private boolean result;
+    private long start, finish;
 
-//    public PopUp() {}
 
-    public PopUp(AppiumDriver driver) {
-        this.driver = driver;
+    public PopUp(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+//----------------------------------------------------------------------------------------------------------------------
 
     public void waitLoadingPopUp(int flag){
-        log("Method is started");
+        Base.log("Method is started");
         WebDriverWait iWait = new WebDriverWait (driver, 10);
         try {
             // assert is the element displayed on the page
-            log(2, "waiting 10 seconds for loading PopUp");
+            Base.log(2, "waiting 10 seconds for loading PopUp");
             iWait.until(ExpectedConditions.visibilityOf(loadingWindow));
             switch (flag) {
                 case 1:
-                    log("loading PopUp is shown, so click Confirm Button");
-                    confirmButton.click();
+                    Base.log("loading PopUp is shown, so click Confirm Button");
+                    $.nav.confirmIt();
                     break;
                 default:
-                    log("loading PopUp is shown, so click Cancel Button");
-                    cancelButton.click();
+                    Base.log("loading PopUp is shown, so click Cancel Button");
+                    $.nav.cancelIt();
                     break;
             }
         }
         catch (NoSuchElementException e) {
-            log(4, "NoSuchElementException, loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
+            Base.log(4, "NoSuchElementException, loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
         }
         catch (TimeoutException e) {
-            log(4, "TimeoutException loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
+            Base.log(4, "TimeoutException loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
         }
     }
 
 
     public boolean waitLoaderPopUpWithText(String searchingText, int timer, boolean makeScreenShot) {
-        log("Method is started");
+        Base.log("Method is started");
 
         try {
-            log(2, "waiting " + timer + " seconds for the element ");
+            Base.log(2, "waiting " + timer + " seconds for the element ");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.textToBePresentInElement(contentText, searchingText));
 
-            log(2, "element is shown with text: \"" + contentText.getText() + "\"");
+            Base.log(2, "element is shown with text: \"" + contentText.getText() + "\"");
             result = true;
         } catch (NoSuchElementException e) {
-            log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){getScreenShot(driver);}
+            if (makeScreenShot){$.getScreenShot();}
         } catch (TimeoutException e) {
-            log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){getScreenShot(driver);}
+            if (makeScreenShot){$.getScreenShot();}
         }
         return result;
     }
 
     public String getContentText() {
         return contentText.getText();
+    }
+
+    public WebElement getSnackBar() {
+        return snackBar;
     }
 }
