@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.Base;
 
@@ -11,21 +12,22 @@ import pages.Base;
  * PRECONDITION:
  * Account has no hub
  */
-public class C42099_Add_new_Hub_manually extends Base {
+public class C42099_Add_new_Hub_manually{
 
     private String login, pass, server, waiterText, hubName, hubKey, expected, actual;
     private WebElement[] elements;
     private Base $;
 
+    @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(){
-        $ = new Base(getDriver());
-        waiterText = getLocalizeTextForKey("request_send");
+        $ = new Base();
+        $.initPageObjects($.getDriver());
 
-        log("get credentials for login");
-        login = creds.get("login").toString();
-        pass = creds.get("password").toString();
-        server = creds.get("server").toString();
+        Base.log("get credentials for login");
+        login = $.creds.get("login").toString();
+        pass = $.creds.get("password").toString();
+        server = $.creds.get("server").toString();
 
         hubName = "1495";
         hubKey = "00001495DDFB55691000";
@@ -37,21 +39,22 @@ public class C42099_Add_new_Hub_manually extends Base {
     @Test(priority = 1, enabled = true)
     public void Add_first_Hub() {
 
-        log("tap to the Plus Button");
+        Base.log("tap to the Plus Button");
         $.dashboard.plusButtonClick();
 
-        log("choose manual Hub adding ");
+        Base.log("choose manual Hub adding ");
         $.nav.nextButtonClick();
 
         $.dashboard.fillFieldsWith(hubName, hubKey);
         $.nav.confirmIt();
 
-        $.wait.invisibilityElementWithText(waiterText, true);
+//        $.wait.invisibilityElementWithText(waiterText, true);
+        $.wait.invisibilityOfWaiter(true);
         Assert.assertFalse($.check.isErrorPresent(3), "Hub adding failed!");
 
         Assert.assertTrue($.wait.element($.dashboardHeader.getGprsImage(), 15, true));
-        log("hub successfully added!");
-        log("Method is finished");
+        Base.log("hub successfully added!");
+        Base.log("Method is finished");
     }
 
     @Test(priority = 1, enabled = false)
@@ -59,6 +62,6 @@ public class C42099_Add_new_Hub_manually extends Base {
 
     @AfterClass
     public void endSuit() {
-        driver.quit();
+        $.getDriver().quit();
     }
 }

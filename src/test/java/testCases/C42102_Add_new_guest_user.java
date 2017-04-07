@@ -7,10 +7,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.Base;
 
-/**
- * Created by installer on 3/28/17.
- */
-public class C42102_Add_new_guest_user extends Base {
+public class C42102_Add_new_guest_user{
 
     private String login, pass, server, expected, actual;
     private Base $;
@@ -18,24 +15,15 @@ public class C42102_Add_new_guest_user extends Base {
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(){
+        $ = new Base();
+        $.initPageObjects($.getDriver());
 
-        $ = new Base(getDriver());
+        Base.log("get credentials for login");
+        login = $.creds.get("login").toString();
+        pass = $.creds.get("password").toString();
+        server = $.creds.get("server").toString();
 
-        log("get credentials for login");
-        login = creds.get("login").toString();
-        pass = creds.get("password").toString();
-        server = creds.get("server").toString();
-
-        log("get localized keys");
-        String sendInvitesButtonText = getLocalizeTextForKey("send_invites");
-        String inviteFailText = getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
-
-        log("set localized keys");
-        $.user.setSendInvitesButtonText(sendInvitesButtonText);
-        $.user.setInviteFailText(inviteFailText);
-
-
-        log("login without Pin");
+        Base.log("login without Pin");
         $.loginPage.loginWithPinCancel(login, pass, server);
 
         $.hub.goToTheUserlistPage();

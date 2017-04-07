@@ -11,7 +11,7 @@ import pages.Base;
  * PRECONDITION:
  * There are at least one hub with at least one room in account
  */
-public class C44141_User_delete extends Base {
+public class C44141_User_delete{
 
     private String login, pass, server, adminUserText, guestUserText;
     private Base $;
@@ -19,17 +19,18 @@ public class C44141_User_delete extends Base {
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(){
-        $ = new Base(getDriver());
+        $ = new Base();
+        $.initPageObjects($.getDriver());
 
-        adminUserText = getLocalizeTextForKey("admin");
-        guestUserText = getLocalizeTextForKey("user");
+        adminUserText = $.getLocalizeTextForKey("admin");
+        guestUserText = $.getLocalizeTextForKey("user");
 
-        log("get credentials for login");
-        login = creds.get("login").toString();
-        pass = creds.get("password").toString();
-        server = creds.get("server").toString();
+        Base.log("get credentials for login");
+        login = $.creds.get("login").toString();
+        pass = $.creds.get("password").toString();
+        server = $.creds.get("server").toString();
 
-        log("login without Pin");
+        Base.log("login without Pin");
         $.loginPage.loginWithPinCancel(login, pass, server);
 
         $.hub.goToTheUserlistPage();
@@ -53,27 +54,27 @@ public class C44141_User_delete extends Base {
     private void addHub() {
         String hubName = "1495";
         String hubKey = "00001495DDFB55691000";
-        String waiterText = getLocalizeTextForKey("request_send");
+//        String waiterText = getLocalizeTextForKey("request_send");
 
-        log("tap to the Plus Button");
+        Base.log("tap to the Plus Button");
         $.dashboard.plusButtonClick();
 
-        log("choose manual Hub adding ");
+        Base.log("choose manual Hub adding ");
         $.nav.nextButtonClick();
 
         $.dashboard.fillFieldsWith(hubName, hubKey);
         $.nav.confirmIt();
 
-        $.wait.invisibilityElementWithText(waiterText, true);
+//        $.wait.invisibilityElementWithText(waiterText, true);
+        $.wait.invisibilityOfWaiter(true);
         Assert.assertFalse($.check.isErrorPresent(3), "Hub adding failed!");
 
         Assert.assertTrue($.wait.element($.dashboardHeader.getGprsImage(), 15, true));
-        log("hub successfully added!");
+        Base.log("hub successfully added!");
     }
 
     @AfterClass
     public void endSuit() {
-
-        driver.quit();
+        $.getDriver().quit();
     }
 }
