@@ -572,8 +572,8 @@ jQuery.cookie = function(name, value, options) {
 <body>
 <div id="container">
 <div id="header">
-<div class="time">2 m 37 s</div>
-<h1>/home/installer/AutomationProjects/appium/src/test/resources/testng.xml: <strong><span class="total">6 total, </span><span class="passed">6 passed</span></strong>
+<div class="time">3 m 53 s</div>
+<h1>/home/installer/AutomationProjects/appium/src/test/resources/testng.xml: <strong><span class="total">5 total, </span><span class="error">1 error, </span><span class="failed">2 failed, </span><span class="passed">2 passed</span></strong>
 </h1>
 <div id="treecontrol">
 <ul>
@@ -589,203 +589,71 @@ jQuery.cookie = function(name, value, options) {
 </div>
 <div id="content">
 <ul id="tree">
-<li xmlns="" class="level top open">
+<li xmlns="" class="level top failed open">
 <span><em class="time">
-<div class="time">2 m 37 s</div>
+<div class="time">3 m 53 s</div>
 </em>LG</span>
 <ul>
-<li class="level suite open">
+<li class="level suite failed open">
 <span><em class="time">
-<div class="time">2 m 37 s</div>
-</em>C43875_Add_new_device</span>
+<div class="time">3 m 53 s</div>
+</em>C44141_User_delete</span>
 <ul>
-<li class="level test">
+<li class="level test failed open">
 <span><em class="time">
-<div class="time">34.01 s</div>
-</em><em class="status">passed</em>C43875_Add_new_device.add_Door_Protect</span>
+<div class="time">39.17 s</div>
+</em><em class="status">failed</em>C44141_User_delete.all_pending_users</span>
 <ul>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:38.515] [INFO ] where:{ testCases.C43875_Add_new_device.add_Door_Protect }[35], what:{ add devices DoorProtect to Hub }<br/></span>
+<span class="stdout">[07.04.2017 21:01:29.336] [INFO ] where:{ utils.Navigation.scrollToElement }[337], what:{ Method is started }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:38.515] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[86], what:{ add devices to imitator }<br/></span>
+<span class="stdout">[07.04.2017 21:01:29.337] [INFO ] where:{ utils.Navigation.scrollToElement }[344], what:{ get all text objects from this screen }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:40.516] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[90], what:{ add devices &quot;Door_Protect&quot; to Hub }<br/></span>
+<span class="stdout">[07.04.2017 21:01:32.266] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:40.516] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[202], what:{ Method is started }<br/></span>
+<span class="stdout">[07.04.2017 21:01:32.267] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 2 seconds for the element  }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:40.516] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[209], what:{ copy text objects from scrollList to etalon and current lists }<br/></span>
+<span class="stdout">[07.04.2017 21:01:37.248] [DEBUG] where:{ utils.Wait.element }[180], what:{ No Such Element Exception, element is not shown:<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">add 203061 1 <br/></span>
+<span class="stdout">org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">1<br/></span>
+<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/delete&quot; <br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">RESULT;OK;0;<br/></span>
+<span class="stdout">- html content: &quot;by id or name &quot;deleteButton&quot;&quot;<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:42.699] [INFO ] where:{ utils.Navigation.swipeUp }[138], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:42.709] [INFO ] where:{ utils.Navigation.swipeUp }[141], what:{ Screen dimension is (480, 782) }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:42.709] [INFO ] where:{ utils.Navigation.swipeUp }[148], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 200] }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:42.879] [INFO ] where:{ utils.Navigation.swipeUp }[151], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:42.879] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[221], what:{ put new text objects to the current list after swipe }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:43.965] [INFO ] where:{ utils.Navigation.compare }[333], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:43.965] [WARN ] where:{ utils.Navigation.compare }[338], what:{ nothing was changed, swipe try count = 1 }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:43.965] [INFO ] where:{ utils.Navigation.compare }[348], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:43.966] [INFO ] where:{ utils.Navigation.swipeUp }[138], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:43.974] [INFO ] where:{ utils.Navigation.swipeUp }[141], what:{ Screen dimension is (480, 782) }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:43.974] [INFO ] where:{ utils.Navigation.swipeUp }[148], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 200] }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:44.103] [INFO ] where:{ utils.Navigation.swipeUp }[151], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:44.103] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[221], what:{ put new text objects to the current list after swipe }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:45.094] [INFO ] where:{ utils.Navigation.compare }[333], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:45.095] [WARN ] where:{ utils.Navigation.compare }[340], what:{ the end of the list is reached }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:45.095] [INFO ] where:{ utils.Navigation.compare }[348], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:45.095] [DEBUG] where:{ utils.Navigation.scrollScreenToTheEnd }[234], what:{ time 4.58 sec }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:45.096] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[235], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:45.096] [INFO ] where:{ pages.DashboardDevicesPage.addDeviceButtonClick }[51], what:{ click Add Device button }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:45.656] [INFO ] where:{ pages.DashboardDevicesPage.fillFieldsWith }[56], what:{ fill name field with &quot;Door_Protect&quot; }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:16:51.634] [DEBUG] where:{ pages.Base.hideKeyboard }[415], what:{ Exeption: <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. Original error: Soft keyboard not present, cannot hide keyboard (WARNING: The server did not provide any stacktrace information)<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Command duration or timeout: 62 milliseconds<br/></span>
+<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
@@ -803,19 +671,7 @@ jQuery.cookie = function(name, value, options) {
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">Driver info: io.appium.java_client.android.AndroidDriver<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Capabilities [{app=/home/installer/Android/AndroidApp/ajax.2.9.15.apk, appPackage=com.ajaxsystems, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=SWIVR8YHDI7TYTS8, platform=LINUX, deviceUDID=SWIVR8YHDI7TYTS8, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, desired={app=/home/installer/Android/AndroidApp/ajax.2.9.15.apk, appPackage=com.ajaxsystems, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, platformVersion=5.1, takesScreenshot=true, browserName=Android, udid=SWIVR8YHDI7TYTS8, platformName=Android, deviceName=LG}, platformVersion=5.1, webStorageEnabled=false, locationContextEnabled=false, takesScreenshot=true, browserName=Android, javascriptEnabled=true, udid=SWIVR8YHDI7TYTS8, platformName=Android}]<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Session ID: 6ad4ec47-06ad-449b-a22d-df88e6bafd6a<br/></span>
+<span class="stdout">Driver info: driver.version: unknown<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
@@ -827,25 +683,97 @@ jQuery.cookie = function(name, value, options) {
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:51.634] [INFO ] where:{ pages.DashboardDevicesPage.fillFieldsWith }[61], what:{ fill ID field with &quot;203061&quot; }<br/></span>
+<span class="stdout">[07.04.2017 21:01:38.060] [WARN ] where:{ pages.Base.getScreenShot }[488], what:{ Path to screenshot: /home/installer/AutomationProjects/appium/screenshot/2017.04.07/2017.04.07_210137.png }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:57.784] [DEBUG] where:{ pages.Base.hideKeyboard }[415], what:{ Exeption: <br/></span>
+<span class="stdout">[07.04.2017 21:01:38.060] [WARN ] where:{ utils.Navigation.scrollToElement }[357], what:{ element is not found on this screen! }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. Original error: Soft keyboard not present, cannot hide keyboard (WARNING: The server did not provide any stacktrace information)<br/></span>
+<span class="stdout">[07.04.2017 21:01:38.060] [INFO ] where:{ utils.Navigation.swipeUp }[142], what:{ Method is started }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">Command duration or timeout: 69 milliseconds<br/></span>
+<span class="stdout">[07.04.2017 21:01:38.070] [INFO ] where:{ utils.Navigation.swipeUp }[145], what:{ Screen dimension is (480, 782) }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:38.070] [INFO ] where:{ utils.Navigation.swipeUp }[152], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:38.723] [INFO ] where:{ utils.Navigation.swipeUp }[155], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:38.723] [INFO ] where:{ utils.Navigation.scrollToElement }[366], what:{ put new text objects to the current list after swipe }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:41.493] [INFO ] where:{ utils.Navigation.compare }[388], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:41.494] [INFO ] where:{ utils.Navigation.compare }[403], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:41.494] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:41.494] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 2 seconds for the element  }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:46.077] [DEBUG] where:{ utils.Wait.element }[180], what:{ No Such Element Exception, element is not shown:<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/delete&quot; <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- html content: &quot;by id or name &quot;deleteButton&quot;&quot;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
@@ -863,19 +791,7 @@ jQuery.cookie = function(name, value, options) {
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">Driver info: io.appium.java_client.android.AndroidDriver<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Capabilities [{app=/home/installer/Android/AndroidApp/ajax.2.9.15.apk, appPackage=com.ajaxsystems, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=SWIVR8YHDI7TYTS8, platform=LINUX, deviceUDID=SWIVR8YHDI7TYTS8, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, desired={app=/home/installer/Android/AndroidApp/ajax.2.9.15.apk, appPackage=com.ajaxsystems, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, platformVersion=5.1, takesScreenshot=true, browserName=Android, udid=SWIVR8YHDI7TYTS8, platformName=Android, deviceName=LG}, platformVersion=5.1, webStorageEnabled=false, locationContextEnabled=false, takesScreenshot=true, browserName=Android, javascriptEnabled=true, udid=SWIVR8YHDI7TYTS8, platformName=Android}]<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Session ID: 6ad4ec47-06ad-449b-a22d-df88e6bafd6a<br/></span>
+<span class="stdout">Driver info: driver.version: unknown<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
@@ -887,43 +803,449 @@ jQuery.cookie = function(name, value, options) {
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:57.784] [INFO ] where:{ pages.DashboardDevicesPage.setRoom }[67], what:{ click Set Room button }<br/></span>
+<span class="stdout">[07.04.2017 21:01:46.842] [WARN ] where:{ pages.Base.getScreenShot }[488], what:{ Path to screenshot: /home/installer/AutomationProjects/appium/screenshot/2017.04.07/2017.04.07_210146.png }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:58.588] [INFO ] where:{ utils.Wait.element }[164], what:{ Method is started }<br/></span>
+<span class="stdout">[07.04.2017 21:01:46.843] [WARN ] where:{ utils.Navigation.scrollToElement }[357], what:{ element is not found on this screen! }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:58.588] [DEBUG] where:{ utils.Wait.element }[167], what:{ waiting 10 seconds for the element  }<br/></span>
+<span class="stdout">[07.04.2017 21:01:46.843] [INFO ] where:{ utils.Navigation.swipeUp }[142], what:{ Method is started }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:59.798] [DEBUG] where:{ utils.Wait.element }[171], what:{ element [[AndroidDriver: Android on LINUX (6ad4ec47-06ad-449b-a22d-df88e6bafd6a)] -&gt; id: com.ajaxsystems:id/type] is shown with text: &quot;Стандартний&quot; }<br/></span>
+<span class="stdout">[07.04.2017 21:01:46.862] [INFO ] where:{ utils.Navigation.swipeUp }[145], what:{ Screen dimension is (480, 782) }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:16:59.798] [INFO ] where:{ pages.DashboardDevicesPage.setRoom }[77], what:{ set room number as &quot;1&quot; }<br/></span>
+<span class="stdout">[07.04.2017 21:01:46.862] [INFO ] where:{ utils.Navigation.swipeUp }[152], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:00.180] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[97], what:{ add devices button click }<br/></span>
+<span class="stdout">[07.04.2017 21:01:47.363] [INFO ] where:{ utils.Navigation.swipeUp }[155], what:{ Method is finished }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:01.678] [DEBUG] where:{ utils.Navigation.confirmIt }[408], what:{ OK Button was not found<br/></span>
+<span class="stdout">[07.04.2017 21:01:47.363] [INFO ] where:{ utils.Navigation.scrollToElement }[366], what:{ put new text objects to the current list after swipe }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:50.196] [INFO ] where:{ utils.Navigation.compare }[388], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:50.196] [INFO ] where:{ utils.Navigation.compare }[403], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:50.196] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:50.196] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 2 seconds for the element  }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:55.509] [DEBUG] where:{ utils.Wait.element }[180], what:{ No Such Element Exception, element is not shown:<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/delete&quot; <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- html content: &quot;by id or name &quot;deleteButton&quot;&quot;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Driver info: driver.version: unknown<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout"> }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:56.256] [WARN ] where:{ pages.Base.getScreenShot }[488], what:{ Path to screenshot: /home/installer/AutomationProjects/appium/screenshot/2017.04.07/2017.04.07_210155.png }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:56.256] [WARN ] where:{ utils.Navigation.scrollToElement }[357], what:{ element is not found on this screen! }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:56.257] [INFO ] where:{ utils.Navigation.swipeUp }[142], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:56.266] [INFO ] where:{ utils.Navigation.swipeUp }[145], what:{ Screen dimension is (480, 782) }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:56.266] [INFO ] where:{ utils.Navigation.swipeUp }[152], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:56.989] [INFO ] where:{ utils.Navigation.swipeUp }[155], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:56.989] [INFO ] where:{ utils.Navigation.scrollToElement }[366], what:{ put new text objects to the current list after swipe }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:59.848] [INFO ] where:{ utils.Navigation.compare }[388], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:59.848] [WARN ] where:{ utils.Navigation.compare }[393], what:{ nothing was changed, swipe try count = 1 }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:59.850] [INFO ] where:{ utils.Navigation.compare }[403], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:59.854] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:01:59.855] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 2 seconds for the element  }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:04.983] [DEBUG] where:{ utils.Wait.element }[180], what:{ No Such Element Exception, element is not shown:<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/delete&quot; <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- html content: &quot;by id or name &quot;deleteButton&quot;&quot;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Driver info: driver.version: unknown<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout"> }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:05.765] [WARN ] where:{ pages.Base.getScreenShot }[488], what:{ Path to screenshot: /home/installer/AutomationProjects/appium/screenshot/2017.04.07/2017.04.07_210204.png }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:05.765] [WARN ] where:{ utils.Navigation.scrollToElement }[357], what:{ element is not found on this screen! }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:05.765] [INFO ] where:{ utils.Navigation.swipeUp }[142], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:05.774] [INFO ] where:{ utils.Navigation.swipeUp }[145], what:{ Screen dimension is (480, 782) }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:05.774] [INFO ] where:{ utils.Navigation.swipeUp }[152], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:06.490] [INFO ] where:{ utils.Navigation.swipeUp }[155], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:06.490] [INFO ] where:{ utils.Navigation.scrollToElement }[366], what:{ put new text objects to the current list after swipe }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:08.505] [INFO ] where:{ utils.Navigation.compare }[388], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:08.505] [WARN ] where:{ utils.Navigation.compare }[395], what:{ the end of the list is reached }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:08.506] [INFO ] where:{ utils.Navigation.compare }[403], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:08.506] [DEBUG] where:{ utils.Navigation.scrollToElement }[379], what:{ time 39.17 sec }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:02:08.506] [INFO ] where:{ utils.Navigation.scrollToElement }[380], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: Test impossible, because precondition isn&#39;t valid - no one pending user was found<br/> expected [true] but found [false]<br/></span>
+</li>
+<li class="text">
+<span class="stdout">Expected :<br/></span>
+</li>
+<li class="text">
+<span class="stderr">true<br/></span>
+</li>
+<li class="text">
+<span class="stdout">Actual   :<br/></span>
+</li>
+<li class="text">
+<span class="stderr">false<br/> <br/>	at org.testng.Assert.fail(Assert.java:94)<br/>	at org.testng.Assert.failNotEquals(Assert.java:494)<br/>	at org.testng.Assert.assertTrue(Assert.java:42)<br/>	at pages.User.deleteAllPending(User.java:390)<br/>	at testCases.C44141_User_delete.all_pending_users(C44141_User_delete.java:41)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)<br/>	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br/>	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br/>	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br/>	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br/>	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br/>	at org.testng.TestRunner.privateRun(TestRunner.java:767)<br/>	at org.testng.TestRunner.run(TestRunner.java:617)<br/>	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)<br/>	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)<br/>	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br/>	at org.testng.SuiteRunner.run(SuiteRunner.java:240)<br/>	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br/>	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br/>	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)<br/>	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)<br/>	at org.testng.TestNG.run(TestNG.java:1031)<br/>	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)<br/>	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:124)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)<br/></span>
+</li>
+</ul>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">2 m 3 s</div>
+</em><em class="status">failed</em>C44141_User_delete.all_guest_users</span>
+<ul>
+<li class="text">
+<span class="stdout">Driver info: driver.version: unknown<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout"> }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:38.131] [WARN ] where:{ pages.Base.getScreenShot }[488], what:{ Path to screenshot: /home/installer/AutomationProjects/appium/screenshot/2017.04.07/2017.04.07_210337.png }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:38.131] [WARN ] where:{ utils.Navigation.scrollToElement }[357], what:{ element is not found on this screen! }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:38.131] [INFO ] where:{ utils.Navigation.swipeUp }[142], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:38.139] [INFO ] where:{ utils.Navigation.swipeUp }[145], what:{ Screen dimension is (480, 782) }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:38.139] [INFO ] where:{ utils.Navigation.swipeUp }[152], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:38.612] [INFO ] where:{ utils.Navigation.swipeUp }[155], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:38.612] [INFO ] where:{ utils.Navigation.scrollToElement }[366], what:{ put new text objects to the current list after swipe }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:40.053] [INFO ] where:{ utils.Navigation.compare }[388], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:40.053] [INFO ] where:{ utils.Navigation.compare }[403], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:40.053] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:40.053] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 2 seconds for the element  }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:40.254] [DEBUG] where:{ utils.Wait.element }[176], what:{ element [[AndroidDriver: Android on LINUX (2f61d471-230b-41dc-8931-d11380891514)] -&gt; id: com.ajaxsystems:id/delete] is shown with text: &quot;Видалити користувача&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:40.254] [DEBUG] where:{ utils.Navigation.scrollToElement }[379], what:{ time 9.83 sec }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:40.254] [INFO ] where:{ utils.Navigation.scrollToElement }[380], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:40.254] [INFO ] where:{ pages.User.deleteAllActive }[431], what:{ tap delete button }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:41.805] [DEBUG] where:{ utils.Navigation.confirmIt }[462], what:{ OK Button was not found<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
@@ -977,25 +1299,103 @@ jQuery.cookie = function(name, value, options) {
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:03.012] [DEBUG] where:{ utils.Navigation.confirmIt }[414], what:{ Confirm button was not found<br/></span>
+<span class="stdout">[07.04.2017 21:03:42.073] [INFO ] where:{ utils.Navigation.confirmIt }[466], what:{ Confirm button is pressed }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">Can&#39;t locate an element by this strategy: Locator map: <br/></span>
+<span class="stdout">[07.04.2017 21:03:42.073] [INFO ] where:{ utils.Wait.elementWithText }[28], what:{ Method is started }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/confirm_button&quot; <br/></span>
+<span class="stdout">[07.04.2017 21:03:42.074] [DEBUG] where:{ utils.Wait.elementWithText }[32], what:{ waiting 10 seconds for the element with text &quot;Користувач успішно видалений із вашого хаба&quot; }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">- html content: &quot;by id or name &quot;confirmButton&quot;&quot;<br/></span>
+<span class="stdout">[07.04.2017 21:03:43.078] [DEBUG] where:{ utils.Wait.elementWithText }[36], what:{ element is shown with text: &quot;Користувач успішно видалений із вашого хаба&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:43.079] [INFO ] where:{ pages.User.deleteAllActive }[435], what:{ user with email &quot;test.email.ajax33@i.ua&quot; is deleted successfully and SUCCESS text is shown }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:43.079] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:43.079] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 5 seconds for the element  }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:45.633] [DEBUG] where:{ utils.Wait.element }[176], what:{ element [[AndroidDriver: Android on LINUX (2f61d471-230b-41dc-8931-d11380891514)] -&gt; xpath: //*[contains(@resource-id,&#39;com.ajaxsystems:id/status&#39;) and @text=&#39;Користувач&#39;]/ancestor::android.widget.LinearLayout[1]//*[@resource-id = &#39;com.ajaxsystems:id/settings&#39;]] is shown with text: &quot;&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:46.316] [INFO ] where:{ pages.User.deleteAllActive }[428], what:{ delete user with email &quot;test.email.ajax31@i.ua&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:49.482] [INFO ] where:{ utils.Navigation.scrollToElement }[337], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:49.482] [INFO ] where:{ utils.Navigation.scrollToElement }[344], what:{ get all text objects from this screen }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:52.104] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:52.104] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 2 seconds for the element  }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:03:57.372] [DEBUG] where:{ utils.Wait.element }[180], what:{ No Such Element Exception, element is not shown:<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/delete&quot; <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- html content: &quot;by id or name &quot;deleteButton&quot;&quot;<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
@@ -1031,1200 +1431,588 @@ jQuery.cookie = function(name, value, options) {
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:03.464] [INFO ] where:{ utils.Navigation.confirmIt }[418], what:{ Confirm button is pressed }<br/></span>
+<span class="stdout">[07.04.2017 21:03:58.068] [WARN ] where:{ pages.Base.getScreenShot }[488], what:{ Path to screenshot: /home/installer/AutomationProjects/appium/screenshot/2017.04.07/2017.04.07_210357.png }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:03.464] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[100], what:{ device turn on }<br/></span>
+<span class="stdout">[07.04.2017 21:03:58.068] [WARN ] where:{ utils.Navigation.scrollToElement }[357], what:{ element is not found on this screen! }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:08.464] [INFO ] where:{ utils.Navigation.scrollToElementWith }[258], what:{ Method is started }<br/></span>
+<span class="stdout">[07.04.2017 21:03:58.068] [INFO ] where:{ utils.Navigation.swipeUp }[142], what:{ Method is started }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:08.464] [INFO ] where:{ utils.Navigation.scrollToElementWith }[266], what:{ get all text objects from this screen }<br/></span>
+<span class="stdout">[07.04.2017 21:03:58.077] [INFO ] where:{ utils.Navigation.swipeUp }[145], what:{ Screen dimension is (480, 782) }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">reg 203061<br/></span>
+<span class="stdout">[07.04.2017 21:03:58.078] [INFO ] where:{ utils.Navigation.swipeUp }[152], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">RESUL<br/></span>
+<span class="stdout">[07.04.2017 21:03:58.815] [INFO ] where:{ utils.Navigation.swipeUp }[155], what:{ Method is finished }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">T;OK;0;<br/></span>
+<span class="stdout">[07.04.2017 21:03:58.816] [INFO ] where:{ utils.Navigation.scrollToElement }[366], what:{ put new text objects to the current list after swipe }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">EVENT;203061;<br/></span>
+<span class="stdout">[07.04.2017 21:04:00.908] [INFO ] where:{ utils.Navigation.compare }[388], what:{ Method is started }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">REG=1;<br/></span>
+<span class="stdout">[07.04.2017 21:04:00.908] [WARN ] where:{ utils.Navigation.compare }[393], what:{ nothing was changed, swipe try count = 1 }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:10.124] [WARN ] where:{ utils.Navigation.scrollToElementWith }[305], what:{ element with text &quot;Door_Protect&quot; is not found on this screen! }<br/></span>
+<span class="stdout">[07.04.2017 21:04:00.908] [INFO ] where:{ utils.Navigation.compare }[403], what:{ Method is finished }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:10.124] [INFO ] where:{ utils.Navigation.swipeUp }[138], what:{ Method is started }<br/></span>
+<span class="stdout">[07.04.2017 21:04:00.908] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:10.132] [INFO ] where:{ utils.Navigation.swipeUp }[141], what:{ Screen dimension is (480, 782) }<br/></span>
+<span class="stdout">[07.04.2017 21:04:00.908] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 2 seconds for the element  }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:10.132] [INFO ] where:{ utils.Navigation.swipeUp }[148], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
+<span class="stdout">[07.04.2017 21:04:05.934] [DEBUG] where:{ utils.Wait.element }[180], what:{ No Such Element Exception, element is not shown:<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:10.896] [INFO ] where:{ utils.Navigation.swipeUp }[151], what:{ Method is finished }<br/></span>
+<span class="stdout">org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:10.896] [INFO ] where:{ utils.Navigation.scrollToElementWith }[312], what:{ put new text objects to the current list after swipe }<br/></span>
+<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/delete&quot; <br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:12.333] [INFO ] where:{ utils.Navigation.compare }[333], what:{ Method is started }<br/></span>
+<span class="stdout">- html content: &quot;by id or name &quot;deleteButton&quot;&quot;<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:12.333] [INFO ] where:{ utils.Navigation.compare }[348], what:{ Method is finished }<br/></span>
+<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:12.527] [INFO ] where:{ utils.Navigation.scrollToElementWith }[297], what:{ element with text &quot;Door_Protect&quot; was found }<br/></span>
+<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:12.527] [DEBUG] where:{ utils.Navigation.scrollToElementWith }[325], what:{ time 4.06 sec }<br/></span>
+<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:12.527] [INFO ] where:{ utils.Navigation.scrollToElementWith }[326], what:{ Method is finished }<br/></span>
+<span class="stdout">Driver info: driver.version: unknown<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:12.527] [INFO ] where:{ pages.DashboardDevicesPage.checkIsNewDeviceAdded }[108], what:{ new device with name &quot;Door_Protect&quot; is added successfully }<br/></span>
+<span class="stdout"> }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:06.700] [WARN ] where:{ pages.Base.getScreenShot }[488], what:{ Path to screenshot: /home/installer/AutomationProjects/appium/screenshot/2017.04.07/2017.04.07_210405.png }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:06.700] [WARN ] where:{ utils.Navigation.scrollToElement }[357], what:{ element is not found on this screen! }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:06.700] [INFO ] where:{ utils.Navigation.swipeUp }[142], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:06.710] [INFO ] where:{ utils.Navigation.swipeUp }[145], what:{ Screen dimension is (480, 782) }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:06.710] [INFO ] where:{ utils.Navigation.swipeUp }[152], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:07.251] [INFO ] where:{ utils.Navigation.swipeUp }[155], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:07.251] [INFO ] where:{ utils.Navigation.scrollToElement }[366], what:{ put new text objects to the current list after swipe }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:10.011] [INFO ] where:{ utils.Navigation.compare }[388], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:10.011] [WARN ] where:{ utils.Navigation.compare }[395], what:{ the end of the list is reached }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:10.011] [INFO ] where:{ utils.Navigation.compare }[403], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:10.011] [DEBUG] where:{ utils.Navigation.scrollToElement }[379], what:{ time 20.53 sec }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:10.011] [INFO ] where:{ utils.Navigation.scrollToElement }[380], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:10.011] [INFO ] where:{ pages.User.deleteAllActive }[431], what:{ tap delete button }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: Test impossible, because precondition isn&#39;t valid - no one user with status &quot;Користувач&quot; are not found<br/>	at org.testng.Assert.fail(Assert.java:83)<br/>	at pages.User.deleteAllActive(User.java:440)<br/>	at pages.User.deleteAllGuests(User.java:401)<br/>	at testCases.C44141_User_delete.all_guest_users(C44141_User_delete.java:46)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)<br/>	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br/>	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br/>	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br/>	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br/>	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br/>	at org.testng.TestRunner.privateRun(TestRunner.java:767)<br/>	at org.testng.TestRunner.run(TestRunner.java:617)<br/>	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)<br/>	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)<br/>	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br/>	at org.testng.SuiteRunner.run(SuiteRunner.java:240)<br/>	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br/>	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br/>	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)<br/>	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)<br/>	at org.testng.TestNG.run(TestNG.java:1031)<br/>	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)<br/>	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:124)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)<br/>Caused by: org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/>- native content: &quot;By.id: com.ajaxsystems:id/delete&quot; <br/>- html content: &quot;by id or name &quot;deleteButton&quot;&quot;<br/>For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/>Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/>System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/>Driver info: driver.version: unknown<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator.findElement(AppiumElementLocator.java:119)<br/>	at io.appium.java_client.pagefactory.interceptors.InterceptorOfASingleElement.intercept(InterceptorOfASingleElement.java:57)<br/>	at io.appium.java_client.android.AndroidElement$$EnhancerByCGLIB$$c0b591f0.click(&lt;generated&gt;)<br/>	at pages.User.deleteAllActive(User.java:432)<br/>	... 30 more<br/>Caused by: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for io.appium.java_client.pagefactory.AppiumElementLocator$WaitingFunction@7d3e8655 (tried for 1 second(s) with 500 MILLISECONDS interval)<br/>Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/>System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/>Driver info: driver.version: unknown<br/>	at org.openqa.selenium.support.ui.FluentWait.timeoutException(FluentWait.java:296)<br/>	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:265)<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator.waitFor(AppiumElementLocator.java:91)<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator.findElement(AppiumElementLocator.java:112)<br/>	... 33 more<br/>Caused by: org.openqa.selenium.NoSuchElementException: An element could not be located on the page using the given search parameters. (WARNING: The server did not provide any stacktrace information)<br/>Command duration or timeout: 232 milliseconds<br/>For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/>Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/>System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/>Driver info: io.appium.java_client.android.AndroidDriver<br/>Capabilities [{app=/home/installer/Android/AndroidApp/ajax.2.9.16.apk, appPackage=com.ajaxsystems, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=SWIVR8YHDI7TYTS8, platform=LINUX, deviceUDID=SWIVR8YHDI7TYTS8, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, desired={app=/home/installer/Android/AndroidApp/ajax.2.9.16.apk, appPackage=com.ajaxsystems, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, platformVersion=5.1, takesScreenshot=true, browserName=Android, udid=SWIVR8YHDI7TYTS8, platformName=Android, deviceName=LG}, platformVersion=5.1, webStorageEnabled=false, locationContextEnabled=false, takesScreenshot=true, browserName=Android, javascriptEnabled=true, udid=SWIVR8YHDI7TYTS8, platformName=Android}]<br/>Session ID: 2f61d471-230b-41dc-8931-d11380891514<br/>*** Element info: {Using=id, value=com.ajaxsystems:id/delete}<br/>	at sun.reflect.GeneratedConstructorAccessor12.newInstance(Unknown Source)<br/>	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br/>	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br/>	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:216)<br/>	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:168)<br/>	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:635)<br/>	at io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br/>	at io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br/>	at io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br/>	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:368)<br/>	at io.appium.java_client.DefaultGenericMobileDriver.findElement(DefaultGenericMobileDriver.java:62)<br/>	at io.appium.java_client.AppiumDriver.findElement(AppiumDriver.java:1)<br/>	at io.appium.java_client.android.AndroidDriver.findElement(AndroidDriver.java:1)<br/>	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:417)<br/>	at io.appium.java_client.DefaultGenericMobileDriver.findElementById(DefaultGenericMobileDriver.java:70)<br/>	at io.appium.java_client.AppiumDriver.findElementById(AppiumDriver.java:1)<br/>	at io.appium.java_client.android.AndroidDriver.findElementById(AndroidDriver.java:1)<br/>	at org.openqa.selenium.By$ById.findElement(By.java:218)<br/>	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:360)<br/>	at io.appium.java_client.DefaultGenericMobileDriver.findElement(DefaultGenericMobileDriver.java:58)<br/>	at io.appium.java_client.AppiumDriver.findElement(AppiumDriver.java:1)<br/>	at io.appium.java_client.android.AndroidDriver.findElement(AndroidDriver.java:1)<br/>	at io.appium.java_client.pagefactory.bys.ContentMappedBy.findElement(ContentMappedBy.java:36)<br/>	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:360)<br/>	at io.appium.java_client.DefaultGenericMobileDriver.findElement(DefaultGenericMobileDriver.java:58)<br/>	at io.appium.java_client.AppiumDriver.findElement(AppiumDriver.java:1)<br/>	at io.appium.java_client.android.AndroidDriver.findElement(AndroidDriver.java:1)<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator.lambda$0(AppiumElementLocator.java:113)<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator$WaitingFunction.apply(AppiumElementLocator.java:163)<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator$WaitingFunction.apply(AppiumElementLocator.java:1)<br/>	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:238)<br/>	... 35 more<br/></span>
+</li>
+</ul>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">19.89 s</div>
+</em><em class="status">passed</em>C44141_User_delete.master_user</span>
+<ul>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:11.789] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:11.789] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 5 seconds for the element  }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:11.859] [DEBUG] where:{ utils.Wait.element }[176], what:{ element [[AndroidDriver: Android on LINUX (2f61d471-230b-41dc-8931-d11380891514)] -&gt; xpath: //*[contains(@resource-id,&#39;com.ajaxsystems:id/status&#39;) and @text=&#39;Адміністратор&#39;]/ancestor::android.widget.LinearLayout[1]//*[@resource-id = &#39;com.ajaxsystems:id/settings&#39;]] is shown with text: &quot;&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:12.059] [INFO ] where:{ pages.User.deleteAllActive }[428], what:{ delete user with email &quot;ajax1@i.ua&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:12.508] [INFO ] where:{ utils.Navigation.scrollToElement }[337], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:12.508] [INFO ] where:{ utils.Navigation.scrollToElement }[344], what:{ get all text objects from this screen }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:14.817] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:14.818] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 2 seconds for the element  }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:19.552] [DEBUG] where:{ utils.Wait.element }[180], what:{ No Such Element Exception, element is not shown:<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/delete&quot; <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- html content: &quot;by id or name &quot;deleteButton&quot;&quot;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Driver info: driver.version: unknown<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout"> }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:20.392] [WARN ] where:{ pages.Base.getScreenShot }[488], what:{ Path to screenshot: /home/installer/AutomationProjects/appium/screenshot/2017.04.07/2017.04.07_210419.png }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:20.392] [WARN ] where:{ utils.Navigation.scrollToElement }[357], what:{ element is not found on this screen! }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:20.392] [INFO ] where:{ utils.Navigation.swipeUp }[142], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:20.401] [INFO ] where:{ utils.Navigation.swipeUp }[145], what:{ Screen dimension is (480, 782) }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:20.401] [INFO ] where:{ utils.Navigation.swipeUp }[152], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:20.872] [INFO ] where:{ utils.Navigation.swipeUp }[155], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:20.872] [INFO ] where:{ utils.Navigation.scrollToElement }[366], what:{ put new text objects to the current list after swipe }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:22.306] [INFO ] where:{ utils.Navigation.compare }[388], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:22.306] [INFO ] where:{ utils.Navigation.compare }[403], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:22.306] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:22.306] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 2 seconds for the element  }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:22.497] [DEBUG] where:{ utils.Wait.element }[176], what:{ element [[AndroidDriver: Android on LINUX (2f61d471-230b-41dc-8931-d11380891514)] -&gt; id: com.ajaxsystems:id/delete] is shown with text: &quot;Видалити користувача&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:22.497] [DEBUG] where:{ utils.Navigation.scrollToElement }[379], what:{ time 9.99 sec }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:22.497] [INFO ] where:{ utils.Navigation.scrollToElement }[380], what:{ Method is finished }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:22.497] [INFO ] where:{ pages.User.deleteAllActive }[431], what:{ tap delete button }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:23.976] [DEBUG] where:{ utils.Navigation.confirmIt }[462], what:{ OK Button was not found<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Can&#39;t locate an element by this strategy: Locator map: <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/ok&quot; <br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">- html content: &quot;by id or name &quot;okBtn&quot;&quot;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Driver info: driver.version: unknown<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout"> }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:24.208] [INFO ] where:{ utils.Navigation.confirmIt }[466], what:{ Confirm button is pressed }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:24.208] [INFO ] where:{ utils.Wait.elementWithText }[28], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:24.208] [DEBUG] where:{ utils.Wait.elementWithText }[32], what:{ waiting 10 seconds for the element with text &quot;Хаб видалений з вашого облікового запису&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:25.226] [DEBUG] where:{ utils.Wait.elementWithText }[36], what:{ element is shown with text: &quot;Хаб видалений з вашого облікового запису&quot; }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:25.226] [INFO ] where:{ pages.User.deleteAllActive }[435], what:{ user with email &quot;ajax1@i.ua&quot; is deleted successfully and SUCCESS text is shown }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:25.226] [INFO ] where:{ utils.Wait.element }[169], what:{ Method is started }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:25.226] [DEBUG] where:{ utils.Wait.element }[172], what:{ waiting 5 seconds for the element  }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:30.743] [DEBUG] where:{ utils.Wait.element }[185], what:{ Timeout Exception, element is not shown:<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of [[AndroidDriver: Android on LINUX (2f61d471-230b-41dc-8931-d11380891514)] -&gt; xpath: //*[contains(@resource-id,&#39;com.ajaxsystems:id/status&#39;) and @text=&#39;Адміністратор&#39;]/ancestor::android.widget.LinearLayout[1]//*[@resource-id = &#39;com.ajaxsystems:id/settings&#39;]] (tried for 5 second(s) with 500 MILLISECONDS interval)<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Driver info: io.appium.java_client.android.AndroidDriver<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Capabilities [{app=/home/installer/Android/AndroidApp/ajax.2.9.16.apk, appPackage=com.ajaxsystems, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=SWIVR8YHDI7TYTS8, platform=LINUX, deviceUDID=SWIVR8YHDI7TYTS8, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, desired={app=/home/installer/Android/AndroidApp/ajax.2.9.16.apk, appPackage=com.ajaxsystems, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, platformVersion=5.1, takesScreenshot=true, browserName=Android, udid=SWIVR8YHDI7TYTS8, platformName=Android, deviceName=LG}, platformVersion=5.1, webStorageEnabled=false, locationContextEnabled=false, takesScreenshot=true, browserName=Android, javascriptEnabled=true, udid=SWIVR8YHDI7TYTS8, platformName=Android}]<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">Session ID: 2f61d471-230b-41dc-8931-d11380891514<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout"> }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:31.502] [WARN ] where:{ pages.Base.getScreenShot }[488], what:{ Path to screenshot: /home/installer/AutomationProjects/appium/screenshot/2017.04.07/2017.04.07_210430.png }<br/></span>
+</li>
+<li class="text">
+<span class="stdout"></span>
+</li>
+<li class="text">
+<span class="stdout">[07.04.2017 21:04:31.502] [INFO ] where:{ pages.User.deleteAllActive }[443], what:{ active users with status &quot;Адміністратор&quot; are not found, number of deleted users: 1 }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 </ul>
 </li>
-<li class="level test">
+<li class="level test failed open">
 <span><em class="time">
-<div class="time">36.46 s</div>
-</em><em class="status">passed</em>C43875_Add_new_device.add_Motion_Protect</span>
+<div class="time">0 ms</div>
+</em><em class="status">error</em>C44141_User_delete.endSuit</span>
 <ul>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:12.528] [INFO ] where:{ testCases.C43875_Add_new_device.add_Motion_Protect }[42], what:{ add devices MotionProtect to Hub }<br/></span>
+<span class="stdout">[07.04.2017 21:04:31.502] [INFO ] where:{ testCases.C44141_User_delete.endSuit }[76], what:{ return hub for next tests }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:12.528] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[86], what:{ add devices to imitator }<br/></span>
+<span class="stdout">[07.04.2017 21:04:31.503] [INFO ] where:{ testCases.C44141_User_delete.addHub }[58], what:{ tap to the Plus Button }<br/></span>
 </li>
 <li class="text">
 <span class="stdout"></span>
 </li>
 <li class="text">
-<span class="stdout">[05.04.2017 19:17:14.528] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[90], what:{ add devices &quot;Motion_Protect&quot; to Hub }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:14.528] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[202], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:14.528] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[209], what:{ copy text objects from scrollList to etalon and current lists }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">add 203062<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout"> 2 2<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">RESULT;OK;0<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:16.993] [INFO ] where:{ utils.Navigation.swipeUp }[138], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:17.001] [INFO ] where:{ utils.Navigation.swipeUp }[141], what:{ Screen dimension is (480, 782) }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:17.001] [INFO ] where:{ utils.Navigation.swipeUp }[148], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 200] }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:17.160] [INFO ] where:{ utils.Navigation.swipeUp }[151], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:17.160] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[221], what:{ put new text objects to the current list after swipe }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:18.574] [INFO ] where:{ utils.Navigation.compare }[333], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:18.574] [WARN ] where:{ utils.Navigation.compare }[338], what:{ nothing was changed, swipe try count = 1 }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:18.574] [INFO ] where:{ utils.Navigation.compare }[348], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:18.574] [INFO ] where:{ utils.Navigation.swipeUp }[138], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:18.582] [INFO ] where:{ utils.Navigation.swipeUp }[141], what:{ Screen dimension is (480, 782) }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:18.582] [INFO ] where:{ utils.Navigation.swipeUp }[148], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 200] }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:18.736] [INFO ] where:{ utils.Navigation.swipeUp }[151], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:18.736] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[221], what:{ put new text objects to the current list after swipe }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:20.040] [INFO ] where:{ utils.Navigation.compare }[333], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:20.041] [WARN ] where:{ utils.Navigation.compare }[340], what:{ the end of the list is reached }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:20.041] [INFO ] where:{ utils.Navigation.compare }[348], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:20.041] [DEBUG] where:{ utils.Navigation.scrollScreenToTheEnd }[234], what:{ time 5.51 sec }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:20.041] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[235], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:20.041] [INFO ] where:{ pages.DashboardDevicesPage.addDeviceButtonClick }[51], what:{ click Add Device button }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:20.537] [INFO ] where:{ pages.DashboardDevicesPage.fillFieldsWith }[56], what:{ fill name field with &quot;Motion_Protect&quot; }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:27.634] [INFO ] where:{ pages.DashboardDevicesPage.fillFieldsWith }[61], what:{ fill ID field with &quot;203062&quot; }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:33.982] [DEBUG] where:{ pages.Base.hideKeyboard }[415], what:{ Exeption: <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. Original error: Soft keyboard not present, cannot hide keyboard (WARNING: The server did not provide any stacktrace information)<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Command duration or timeout: 59 milliseconds<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Driver info: io.appium.java_client.android.AndroidDriver<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Capabilities [{app=/home/installer/Android/AndroidApp/ajax.2.9.15.apk, appPackage=com.ajaxsystems, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=SWIVR8YHDI7TYTS8, platform=LINUX, deviceUDID=SWIVR8YHDI7TYTS8, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, desired={app=/home/installer/Android/AndroidApp/ajax.2.9.15.apk, appPackage=com.ajaxsystems, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, platformVersion=5.1, takesScreenshot=true, browserName=Android, udid=SWIVR8YHDI7TYTS8, platformName=Android, deviceName=LG}, platformVersion=5.1, webStorageEnabled=false, locationContextEnabled=false, takesScreenshot=true, browserName=Android, javascriptEnabled=true, udid=SWIVR8YHDI7TYTS8, platformName=Android}]<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Session ID: 6ad4ec47-06ad-449b-a22d-df88e6bafd6a<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout"> }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:33.982] [INFO ] where:{ pages.DashboardDevicesPage.setRoom }[67], what:{ click Set Room button }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:34.753] [INFO ] where:{ utils.Wait.element }[164], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:34.753] [DEBUG] where:{ utils.Wait.element }[167], what:{ waiting 10 seconds for the element  }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:35.968] [DEBUG] where:{ utils.Wait.element }[171], what:{ element [[AndroidDriver: Android on LINUX (6ad4ec47-06ad-449b-a22d-df88e6bafd6a)] -&gt; id: com.ajaxsystems:id/type] is shown with text: &quot;Стандартний&quot; }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:35.968] [INFO ] where:{ pages.DashboardDevicesPage.setRoom }[77], what:{ set room number as &quot;2&quot; }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:36.297] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[97], what:{ add devices button click }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:37.777] [DEBUG] where:{ utils.Navigation.confirmIt }[408], what:{ OK Button was not found<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Can&#39;t locate an element by this strategy: Locator map: <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/ok&quot; <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">- html content: &quot;by id or name &quot;okBtn&quot;&quot;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Driver info: driver.version: unknown<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout"> }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:39.033] [DEBUG] where:{ utils.Navigation.confirmIt }[414], what:{ Confirm button was not found<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Can&#39;t locate an element by this strategy: Locator map: <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/confirm_button&quot; <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">- html content: &quot;by id or name &quot;confirmButton&quot;&quot;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Driver info: driver.version: unknown<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout"> }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:39.551] [INFO ] where:{ utils.Navigation.confirmIt }[418], what:{ Confirm button is pressed }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:39.551] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[100], what:{ device turn on }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:44.552] [INFO ] where:{ utils.Navigation.scrollToElementWith }[258], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:44.552] [INFO ] where:{ utils.Navigation.scrollToElementWith }[266], what:{ get all text objects from this screen }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">reg <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">203062<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">RESULT;OK;0;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">EVENT;203062;REG=1<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:46.390] [WARN ] where:{ utils.Navigation.scrollToElementWith }[305], what:{ element with text &quot;Motion_Protect&quot; is not found on this screen! }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:46.391] [INFO ] where:{ utils.Navigation.swipeUp }[138], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:46.399] [INFO ] where:{ utils.Navigation.swipeUp }[141], what:{ Screen dimension is (480, 782) }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:46.399] [INFO ] where:{ utils.Navigation.swipeUp }[148], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:47.178] [INFO ] where:{ utils.Navigation.swipeUp }[151], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:47.178] [INFO ] where:{ utils.Navigation.scrollToElementWith }[312], what:{ put new text objects to the current list after swipe }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:48.787] [INFO ] where:{ utils.Navigation.compare }[333], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:48.787] [INFO ] where:{ utils.Navigation.compare }[348], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:48.983] [INFO ] where:{ utils.Navigation.scrollToElementWith }[297], what:{ element with text &quot;Motion_Protect&quot; was found }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:48.983] [DEBUG] where:{ utils.Navigation.scrollToElementWith }[325], what:{ time 4.43 sec }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:48.984] [INFO ] where:{ utils.Navigation.scrollToElementWith }[326], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:48.984] [INFO ] where:{ pages.DashboardDevicesPage.checkIsNewDeviceAdded }[108], what:{ new device with name &quot;Motion_Protect&quot; is added successfully }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-</ul>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">35.00 s</div>
-</em><em class="status">passed</em>C43875_Add_new_device.add_Glass_Protect</span>
-<ul>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:48.984] [INFO ] where:{ testCases.C43875_Add_new_device.add_Glass_Protect }[49], what:{ add devices GlassProtect to Hub }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:48.984] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[86], what:{ add devices to imitator }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:50.985] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[90], what:{ add devices &quot;Glass_Protect&quot; to Hub }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:50.985] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[202], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:50.985] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[209], what:{ copy text objects from scrollList to etalon and current lists }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">add 2<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">03063 3 4<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">RESULT;OK;0;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:53.455] [INFO ] where:{ utils.Navigation.swipeUp }[138], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:53.463] [INFO ] where:{ utils.Navigation.swipeUp }[141], what:{ Screen dimension is (480, 782) }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:53.464] [INFO ] where:{ utils.Navigation.swipeUp }[148], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 200] }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:53.614] [INFO ] where:{ utils.Navigation.swipeUp }[151], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:53.614] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[221], what:{ put new text objects to the current list after swipe }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:55.232] [INFO ] where:{ utils.Navigation.compare }[333], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:55.232] [WARN ] where:{ utils.Navigation.compare }[338], what:{ nothing was changed, swipe try count = 1 }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:55.233] [INFO ] where:{ utils.Navigation.compare }[348], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:55.233] [INFO ] where:{ utils.Navigation.swipeUp }[138], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:55.242] [INFO ] where:{ utils.Navigation.swipeUp }[141], what:{ Screen dimension is (480, 782) }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:55.242] [INFO ] where:{ utils.Navigation.swipeUp }[148], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 200] }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:55.390] [INFO ] where:{ utils.Navigation.swipeUp }[151], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:55.390] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[221], what:{ put new text objects to the current list after swipe }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:56.955] [INFO ] where:{ utils.Navigation.compare }[333], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:56.955] [WARN ] where:{ utils.Navigation.compare }[340], what:{ the end of the list is reached }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:56.955] [INFO ] where:{ utils.Navigation.compare }[348], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:56.955] [DEBUG] where:{ utils.Navigation.scrollScreenToTheEnd }[234], what:{ time 5.97 sec }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:56.955] [INFO ] where:{ utils.Navigation.scrollScreenToTheEnd }[235], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:56.955] [INFO ] where:{ pages.DashboardDevicesPage.addDeviceButtonClick }[51], what:{ click Add Device button }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:17:57.540] [INFO ] where:{ pages.DashboardDevicesPage.fillFieldsWith }[56], what:{ fill name field with &quot;Glass_Protect&quot; }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:03.470] [DEBUG] where:{ pages.Base.hideKeyboard }[415], what:{ Exeption: <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. Original error: Soft keyboard not present, cannot hide keyboard (WARNING: The server did not provide any stacktrace information)<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Command duration or timeout: 65 milliseconds<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Driver info: io.appium.java_client.android.AndroidDriver<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Capabilities [{app=/home/installer/Android/AndroidApp/ajax.2.9.15.apk, appPackage=com.ajaxsystems, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=SWIVR8YHDI7TYTS8, platform=LINUX, deviceUDID=SWIVR8YHDI7TYTS8, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, desired={app=/home/installer/Android/AndroidApp/ajax.2.9.15.apk, appPackage=com.ajaxsystems, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, platformVersion=5.1, takesScreenshot=true, browserName=Android, udid=SWIVR8YHDI7TYTS8, platformName=Android, deviceName=LG}, platformVersion=5.1, webStorageEnabled=false, locationContextEnabled=false, takesScreenshot=true, browserName=Android, javascriptEnabled=true, udid=SWIVR8YHDI7TYTS8, platformName=Android}]<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Session ID: 6ad4ec47-06ad-449b-a22d-df88e6bafd6a<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout"> }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:03.470] [INFO ] where:{ pages.DashboardDevicesPage.fillFieldsWith }[61], what:{ fill ID field with &quot;203063&quot; }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:09.266] [DEBUG] where:{ pages.Base.hideKeyboard }[415], what:{ Exeption: <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. Original error: Soft keyboard not present, cannot hide keyboard (WARNING: The server did not provide any stacktrace information)<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Command duration or timeout: 61 milliseconds<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Driver info: io.appium.java_client.android.AndroidDriver<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Capabilities [{app=/home/installer/Android/AndroidApp/ajax.2.9.15.apk, appPackage=com.ajaxsystems, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=SWIVR8YHDI7TYTS8, platform=LINUX, deviceUDID=SWIVR8YHDI7TYTS8, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, desired={app=/home/installer/Android/AndroidApp/ajax.2.9.15.apk, appPackage=com.ajaxsystems, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, platformVersion=5.1, takesScreenshot=true, browserName=Android, udid=SWIVR8YHDI7TYTS8, platformName=Android, deviceName=LG}, platformVersion=5.1, webStorageEnabled=false, locationContextEnabled=false, takesScreenshot=true, browserName=Android, javascriptEnabled=true, udid=SWIVR8YHDI7TYTS8, platformName=Android}]<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Session ID: 6ad4ec47-06ad-449b-a22d-df88e6bafd6a<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout"> }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:09.266] [INFO ] where:{ pages.DashboardDevicesPage.setRoom }[67], what:{ click Set Room button }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:10.017] [INFO ] where:{ utils.Wait.element }[164], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:10.017] [DEBUG] where:{ utils.Wait.element }[167], what:{ waiting 10 seconds for the element  }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:11.367] [DEBUG] where:{ utils.Wait.element }[171], what:{ element [[AndroidDriver: Android on LINUX (6ad4ec47-06ad-449b-a22d-df88e6bafd6a)] -&gt; id: com.ajaxsystems:id/type] is shown with text: &quot;Стандартний&quot; }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:11.367] [INFO ] where:{ pages.DashboardDevicesPage.setRoom }[77], what:{ set room number as &quot;3&quot; }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:11.724] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[97], what:{ add devices button click }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:13.319] [DEBUG] where:{ utils.Navigation.confirmIt }[408], what:{ OK Button was not found<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Can&#39;t locate an element by this strategy: Locator map: <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/ok&quot; <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">- html content: &quot;by id or name &quot;okBtn&quot;&quot;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Driver info: driver.version: unknown<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout"> }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:14.491] [DEBUG] where:{ utils.Navigation.confirmIt }[414], what:{ Confirm button was not found<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Can&#39;t locate an element by this strategy: Locator map: <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">- native content: &quot;By.id: com.ajaxsystems:id/confirm_button&quot; <br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">- html content: &quot;by id or name &quot;confirmButton&quot;&quot;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">Driver info: driver.version: unknown<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout"> }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:14.915] [INFO ] where:{ utils.Navigation.confirmIt }[418], what:{ Confirm button is pressed }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:14.915] [INFO ] where:{ pages.DashboardDevicesPage.addNew }[100], what:{ device turn on }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:19.915] [INFO ] where:{ utils.Navigation.scrollToElementWith }[258], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:19.915] [INFO ] where:{ utils.Navigation.scrollToElementWith }[266], what:{ get all text objects from this screen }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">reg 203<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">063<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">RESULT;OK;0;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">EV<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">ENT;203063;REG=1;<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:21.602] [WARN ] where:{ utils.Navigation.scrollToElementWith }[305], what:{ element with text &quot;Glass_Protect&quot; is not found on this screen! }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:21.602] [INFO ] where:{ utils.Navigation.swipeUp }[138], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:21.610] [INFO ] where:{ utils.Navigation.swipeUp }[141], what:{ Screen dimension is (480, 782) }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:21.610] [INFO ] where:{ utils.Navigation.swipeUp }[148], what:{ swipe(startX, startY, endX, endY, duration) [240, 391, 240, 7, 1000] }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:22.079] [INFO ] where:{ utils.Navigation.swipeUp }[151], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:22.080] [INFO ] where:{ utils.Navigation.scrollToElementWith }[312], what:{ put new text objects to the current list after swipe }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:23.761] [INFO ] where:{ utils.Navigation.compare }[333], what:{ Method is started }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:23.761] [INFO ] where:{ utils.Navigation.compare }[348], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:23.982] [INFO ] where:{ utils.Navigation.scrollToElementWith }[297], what:{ element with text &quot;Glass_Protect&quot; was found }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:23.982] [DEBUG] where:{ utils.Navigation.scrollToElementWith }[325], what:{ time 4.07 sec }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:23.983] [INFO ] where:{ utils.Navigation.scrollToElementWith }[326], what:{ Method is finished }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
-</li>
-<li class="text">
-<span class="stdout">[05.04.2017 19:18:23.983] [INFO ] where:{ pages.DashboardDevicesPage.checkIsNewDeviceAdded }[108], what:{ new device with name &quot;Glass_Protect&quot; is added successfully }<br/></span>
-</li>
-<li class="text">
-<span class="stdout"></span>
+<span class="stderr">org.openqa.selenium.NoSuchElementException: Can&#39;t locate an element by this strategy: Locator map: <br/>- native content: &quot;By.id: com.ajaxsystems:id/plus&quot; <br/>- html content: &quot;by id or name &quot;plusButton&quot;&quot;<br/>For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/>Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/>System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/>Driver info: driver.version: unknown<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator.findElement(AppiumElementLocator.java:119)<br/>	at io.appium.java_client.pagefactory.interceptors.InterceptorOfASingleElement.intercept(InterceptorOfASingleElement.java:57)<br/>	at io.appium.java_client.android.AndroidElement$$EnhancerByCGLIB$$c0b591f0.click(&lt;generated&gt;)<br/>	at pages.Dashboard.plusButtonClick(Dashboard.java:99)<br/>	at testCases.C44141_User_delete.addHub(C44141_User_delete.java:59)<br/>	at testCases.C44141_User_delete.endSuit(C44141_User_delete.java:77)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)<br/>	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)<br/>	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)<br/>	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)<br/>	at org.testng.internal.TestMethodWorker.invokeAfterClassMethods(TestMethodWorker.java:225)<br/>	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:114)<br/>	at org.testng.TestRunner.privateRun(TestRunner.java:767)<br/>	at org.testng.TestRunner.run(TestRunner.java:617)<br/>	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)<br/>	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)<br/>	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br/>	at org.testng.SuiteRunner.run(SuiteRunner.java:240)<br/>	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br/>	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br/>	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)<br/>	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)<br/>	at org.testng.TestNG.run(TestNG.java:1031)<br/>	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:72)<br/>	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:124)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>	at java.lang.reflect.Method.invoke(Method.java:498)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)<br/>Caused by: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for io.appium.java_client.pagefactory.AppiumElementLocator$WaitingFunction@6cd24612 (tried for 1 second(s) with 500 MILLISECONDS interval)<br/>Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/>System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/>Driver info: driver.version: unknown<br/>	at org.openqa.selenium.support.ui.FluentWait.timeoutException(FluentWait.java:296)<br/>	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:265)<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator.waitFor(AppiumElementLocator.java:91)<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator.findElement(AppiumElementLocator.java:112)<br/>	... 33 more<br/>Caused by: org.openqa.selenium.NoSuchElementException: An element could not be located on the page using the given search parameters. (WARNING: The server did not provide any stacktrace information)<br/>Command duration or timeout: 64 milliseconds<br/>For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/>Build info: version: &#39;3.0.1&#39;, revision: &#39;1969d75&#39;, time: &#39;2016-10-18 09:49:13 -0700&#39;<br/>System info: host: &#39;ajaxGod&#39;, ip: &#39;127.0.1.1&#39;, os.name: &#39;Linux&#39;, os.arch: &#39;amd64&#39;, os.version: &#39;4.4.0-21-generic&#39;, java.version: &#39;1.8.0_111&#39;<br/>Driver info: io.appium.java_client.android.AndroidDriver<br/>Capabilities [{app=/home/installer/Android/AndroidApp/ajax.2.9.16.apk, appPackage=com.ajaxsystems, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=SWIVR8YHDI7TYTS8, platform=LINUX, deviceUDID=SWIVR8YHDI7TYTS8, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, desired={app=/home/installer/Android/AndroidApp/ajax.2.9.16.apk, appPackage=com.ajaxsystems, appActivity=com.ajaxsystems.ui.activity.LauncherActivity, platformVersion=5.1, takesScreenshot=true, browserName=Android, udid=SWIVR8YHDI7TYTS8, platformName=Android, deviceName=LG}, platformVersion=5.1, webStorageEnabled=false, locationContextEnabled=false, takesScreenshot=true, browserName=Android, javascriptEnabled=true, udid=SWIVR8YHDI7TYTS8, platformName=Android}]<br/>Session ID: 2f61d471-230b-41dc-8931-d11380891514<br/>*** Element info: {Using=id, value=com.ajaxsystems:id/plus}<br/>	at sun.reflect.GeneratedConstructorAccessor12.newInstance(Unknown Source)<br/>	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br/>	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br/>	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:216)<br/>	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:168)<br/>	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:635)<br/>	at io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br/>	at io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br/>	at io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br/>	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:368)<br/>	at io.appium.java_client.DefaultGenericMobileDriver.findElement(DefaultGenericMobileDriver.java:62)<br/>	at io.appium.java_client.AppiumDriver.findElement(AppiumDriver.java:1)<br/>	at io.appium.java_client.android.AndroidDriver.findElement(AndroidDriver.java:1)<br/>	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:417)<br/>	at io.appium.java_client.DefaultGenericMobileDriver.findElementById(DefaultGenericMobileDriver.java:70)<br/>	at io.appium.java_client.AppiumDriver.findElementById(AppiumDriver.java:1)<br/>	at io.appium.java_client.android.AndroidDriver.findElementById(AndroidDriver.java:1)<br/>	at org.openqa.selenium.By$ById.findElement(By.java:218)<br/>	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:360)<br/>	at io.appium.java_client.DefaultGenericMobileDriver.findElement(DefaultGenericMobileDriver.java:58)<br/>	at io.appium.java_client.AppiumDriver.findElement(AppiumDriver.java:1)<br/>	at io.appium.java_client.android.AndroidDriver.findElement(AndroidDriver.java:1)<br/>	at io.appium.java_client.pagefactory.bys.ContentMappedBy.findElement(ContentMappedBy.java:36)<br/>	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:360)<br/>	at io.appium.java_client.DefaultGenericMobileDriver.findElement(DefaultGenericMobileDriver.java:58)<br/>	at io.appium.java_client.AppiumDriver.findElement(AppiumDriver.java:1)<br/>	at io.appium.java_client.android.AndroidDriver.findElement(AndroidDriver.java:1)<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator.lambda$0(AppiumElementLocator.java:113)<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator$WaitingFunction.apply(AppiumElementLocator.java:163)<br/>	at io.appium.java_client.pagefactory.AppiumElementLocator$WaitingFunction.apply(AppiumElementLocator.java:1)<br/>	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:238)<br/>	... 35 more<br/></span>
 </li>
 </ul>
 </li>
@@ -2236,7 +2024,7 @@ jQuery.cookie = function(name, value, options) {
 </div>
 </div>
 <div id="footer">
-<p>Generated by IntelliJ IDEA on 4/5/17 7:19 PM</p>
+<p>Generated by IntelliJ IDEA on 4/7/17 9:05 PM</p>
 </div>
 </body>
 </html>

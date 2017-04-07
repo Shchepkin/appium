@@ -217,9 +217,9 @@ public class Sql{
     private Connection getConnection (){
         Base.log("Method is started");
 
-        url = $.dbSettings.get("url").toString();
-        user = $.dbSettings.get("user").toString();
-        password = $.dbSettings.get("password").toString();
+        url = $.getDbSettingsWithKey("url");
+        user = $.getDbSettingsWithKey("user");
+        password = $.getDbSettingsWithKey("password");
 
         for (int i = 1; i <= 10; i++) {
             try {

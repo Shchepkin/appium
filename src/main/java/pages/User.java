@@ -53,25 +53,18 @@ public class User{
     private final AppiumDriver driver;
     private boolean result;
 
-    private String sendInvitesButtonText, inviteFailText;
+    private String sendInvitesButtonText, inviteFailText, adminStatusText, userStatusText;
 
     public User(Base base) {
         $ = base;
         this.driver = $.getDriver();
         sendInvitesButtonText = $.getLocalizeTextForKey("send_invites");
         inviteFailText = $.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
+        adminStatusText = $.getLocalizeTextForKey("admin");
+        userStatusText = $.getLocalizeTextForKey("user");
+
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
-
-
-    public void setInviteFailText(String inviteFailText) {
-        this.inviteFailText = inviteFailText;
-    }
-
-    public void setSendInvitesButtonText(String sendInvitesButtonText) {
-        this.sendInvitesButtonText = sendInvitesButtonText;
-    }
-
 //----------------------------------------------------------------------------------------------------------------------
 
     public void fillUserEmailsField(String inviteEmail) {
@@ -382,34 +375,73 @@ public class User{
     }
 
     public void deleteAllPending() {
+        int counter = 0;
+        String successText = $.getLocalizeTextForKey("Com_executed1");
         while (true) {
             if($.nav.scrollToElement(deleteButton, "up")){
                 deleteButton.click();
                 $.nav.confirmIt();
+                Assert.assertTrue($.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
+                counter++;
             } else {
-                Base.log(3, "pending users are not found");
                 break;
             }
         }
+        Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one pending user was found\n");
+        Base.log(1, "pending users are not found, number of deleted users: " + counter);
     }
 
-    public void deleteAllActive(String status) {
+
+
+    public void deleteMasterUser(){
+        deleteAllActive(adminStatusText);
+    }
+
+    public void deleteAllGuests(){
+        deleteAllActive(userStatusText);
+    }
+
+    private void deleteAllActive(String status) {
+        String successText = null;
+        int counter = 0;
+
+        Assert.assertNotNull(status,"expected object: \"User Status localized text\", ");
+
+        if (status.equalsIgnoreCase(userStatusText)){
+            successText = $.getLocalizeTextForKey("user_guest_detach");
+        }else if (status.equalsIgnoreCase(adminStatusText)){
+            successText = $.getLocalizeTextForKey("Detach_success1");
+        }else {
+            Assert.fail("localized text for User Status was not found");
+        }
+
         String statusXpath = "*[contains(@resource-id,'com.ajaxsystems:id/status') and @text='" + status + "']";
         String settingsButtonXpath = "*[@resource-id = 'com.ajaxsystems:id/settings']";
         String firstLinearLayout = "android.widget.LinearLayout[1]";
         String xPath = "//" + statusXpath + "/ancestor::" + firstLinearLayout + "//" + settingsButtonXpath;
-        WebElement userForDelete = driver.findElementByXPath(xPath);
+        String emailXpath = "/ancestor::" + firstLinearLayout + "//*[@resource-id = 'com.ajaxsystems:id/mail']";
 
-        while (true) {
-            if($.nav.scrollToElement(userForDelete, "up")){
-                userForDelete.click();
-                deleteButton.click();
-                $.nav.confirmIt();
-            } else {
-                Base.log(3, "active users with status \"" + status + "\" are not found");
-                break;
+        try {
+            WebElement settingsButton = driver.findElementByXPath(xPath);
+            while (true) {
+                if($.wait.element(settingsButton, 5, true)){
+                    String email = driver.findElementByXPath(xPath + emailXpath).getText();
+                    Base.log(1, "delete user with email \"" + email + "\"");
+                    settingsButton.click();
+                    $.nav.scrollToElement(deleteButton, "up");
+                    Base.log(1, "tap delete button");
+                    deleteButton.click();
+                    $.nav.confirmIt();
+                    Assert.assertTrue($.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
+                    Base.log(1, "user with email \"" + email + "\" is deleted successfully and SUCCESS text is shown");
+                    counter++;
+                } else {break;}
             }
+        }catch (NoSuchElementException e){
+            Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
         }
+        Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one user with status \"" + status + "\" are not found\n");
+        Base.log(1, "active users with status \"" + status + "\" are not found, number of deleted users: " + counter);
     }
 
     private WebElement findPendingFrom(String from, String pendingUserName){
@@ -422,18 +454,11 @@ public class User{
                 break;
             case "name": xPath = "//" + nameElementXpath + "/ancestor::" + firstLinearLayout + "//" + deleteElementXpath;
                 break;
-            default: Base.log(3, "invalid parametr");
+            default: Base.log(3, "invalid parameter");
                 break;
         }
         WebElement pendingUserElement = driver.findElementByXPath(xPath);
         $.nav.scrollToElement(pendingUserElement, "up");
         return pendingUserElement;
     }
-
-    public void deleteActiveBy() {
-    }
-
-    public void master_user() {
-    }
-
 }

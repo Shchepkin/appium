@@ -18,14 +18,14 @@ public class C42100_Add_new_room{
 
     @Parameters({ "deviceName_" })
     @BeforeClass
-    public void init(){
-        $ = new Base();
+    public void init(String deviceName_){
+        $ = new Base(deviceName_);
         $.initPageObjects($.getDriver());
 
         Base.log("get credentials for login");
-        login = $.creds.get("login").toString();
-        pass = $.creds.get("password").toString();
-        server = $.creds.get("server").toString();
+        login = $.getCredsWithKey("login");
+        pass = $.getCredsWithKey("password");
+        server = $.getCredsWithKey("server");
 
         $.loginPage.loginWithPinCancel(login, pass, server);
 

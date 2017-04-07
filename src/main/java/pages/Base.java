@@ -62,17 +62,12 @@ public class Base {
     private String jsonString, collection;
     private String locale;
 
-    private Map jsonCollection;
-    private Map localizeKeys;
+    private Map localizeKeys, creds, dbSettings;
+
     private ArrayList<String> jsonStringArray;
     private String deviceName, UDID, platformVersion, URL, appPath;
 
-    public Map creds;
-    public Map dbSettings;
-
-    @Parameters({"deviceName_"})
-    @BeforeClass
-    public void setUp(String deviceName_) {
+    public Base(String deviceName_) {
         log("setup is started");
         creds = getJsonCollection("deviceData.json", deviceName_);
 
@@ -89,21 +84,6 @@ public class Base {
         dbSettings = getDbSettings();
     }
 
-    public Map getLocalizeKeys() {
-        return localizeKeys;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public Base() {
-    }
-
     public Base(AppiumDriver driver) {
         initPageObjects(driver);
     }
@@ -116,11 +96,14 @@ public class Base {
         log(2, "init Navigation()");
         nav = new Navigation(this);
 
-        log(2, "init Check()");
-        check = new Check(this);
+        log(2, "init Sql()");
+        sql = new Sql(this);
 
         log(2, "init Hub()");
         hub = new Hub(this);
+
+        log(2, "init Check()");
+        check = new Check(this);
 
         log(2, "init PopUp()");
         popUp = new PopUp(this);
@@ -137,7 +120,7 @@ public class Base {
         log(2, "init IntroPage()");
         introPage = new IntroPage(this);
 
-        log(2, "init Dashboard(driver)");
+        log(2, "init Dashboard()");
         dashboard = new Dashboard(this);
 
         log(2, "init AuthorizationPage()");
@@ -167,11 +150,8 @@ public class Base {
         log(2, "init DashboardHeader()");
         header = new DashboardHeader(this);
 
-        log(2, "init DashboardHeader(driver)");
+        log(2, "init DashboardHeader()");
         user = new User(this);
-
-        log(2, "init Sql()");
-        sql = new Sql(this);
 
         log(2, "init Imitator()");
         imitator = new Imitator();
@@ -183,8 +163,15 @@ public class Base {
     }
 
     public String getLocalizeTextForKey(String key) {
-        String localizeTextForKey = localizeKeys.get(key).toString();
-        return localizeTextForKey;
+        return localizeKeys.get(key).toString();
+    }
+
+    public String getCredsWithKey(String key){
+        return creds.get(key).toString();
+    }
+
+    public String getDbSettingsWithKey(String key){
+        return dbSettings.get(key).toString();
     }
 
     private Map getLocalizeKeys(String locale) {
@@ -259,7 +246,7 @@ public class Base {
 
     public Map getJsonCollection(String filePath, String collection) {
         log("Method is started");
-        jsonCollection = new HashMap();
+        Map<String, String> jsonCollection = new HashMap<>();
         try {
 
             log(2, "get Application start up path");

@@ -14,23 +14,24 @@ import pages.Base;
  */
 public class C42099_Add_new_Hub_manually{
 
-    private String login, pass, server, waiterText, hubName, hubKey, expected, actual;
+    private String login, pass, server, hubName, hubMasterKey, expected, actual;
     private WebElement[] elements;
     private Base $;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
-    public void init(){
-        $ = new Base();
+    public void init(String deviceName_){
+        $ = new Base(deviceName_);
         $.initPageObjects($.getDriver());
 
         Base.log("get credentials for login");
-        login = $.creds.get("login").toString();
-        pass = $.creds.get("password").toString();
-        server = $.creds.get("server").toString();
+        login = $.getCredsWithKey("login");
+        pass = $.getCredsWithKey("password");
+        server = $.getCredsWithKey("server");
 
-        hubName = "1495";
-        hubKey = "00001495DDFB55691000";
+        hubName = $.getCredsWithKey("hubName");
+        hubMasterKey = $.getCredsWithKey("hubMasterKey");
+
 //        String hubKey = "12345123451234512345";
 
         $.loginPage.loginWithPinCancel(login, pass, server);
@@ -45,7 +46,7 @@ public class C42099_Add_new_Hub_manually{
         Base.log("choose manual Hub adding ");
         $.nav.nextButtonClick();
 
-        $.dashboard.fillFieldsWith(hubName, hubKey);
+        $.dashboard.fillFieldsWith(hubName, hubMasterKey);
         $.nav.confirmIt();
 
 //        $.wait.invisibilityElementWithText(waiterText, true);

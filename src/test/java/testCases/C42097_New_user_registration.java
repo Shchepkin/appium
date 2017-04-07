@@ -16,15 +16,15 @@ public class C42097_New_user_registration{
 
     @Parameters({ "deviceName_" })
     @BeforeClass
-    public void init(){
-        $ = new Base();
+    public void init(String deviceName_){
+        $ = new Base(deviceName_);
         $.initPageObjects($.getDriver());
 
-        login = $.creds.get("login").toString();
-        pass = $.creds.get("password").toString();
-        server = $.creds.get("server").toString();
-        phone = $.creds.get("phone").toString();
-        userName = $.creds.get("userName").toString();
+        login = $.getCredsWithKey("login");
+        pass = $.getCredsWithKey("password");
+        server = $.getCredsWithKey("server");
+        login = $.getCredsWithKey("phone");
+        pass = $.getCredsWithKey("userName");
 
         $.sql.getDelete("Phone", "%" + phone + "%");
 

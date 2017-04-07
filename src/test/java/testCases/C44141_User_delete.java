@@ -9,26 +9,26 @@ import pages.Base;
 
 /**
  * PRECONDITION:
- * There are at least one hub with at least one room in account
+ * There are:
+ * - at least one hub, so master user present
+ * - at least one active user
+ * - at least one pending user
  */
 public class C44141_User_delete{
 
-    private String login, pass, server, adminUserText, guestUserText;
+    private String login, pass, server, adminStatus, userStatus;
     private Base $;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
-    public void init(){
-        $ = new Base();
+    public void init(String deviceName_){
+        $ = new Base(deviceName_);
         $.initPageObjects($.getDriver());
 
-        adminUserText = $.getLocalizeTextForKey("admin");
-        guestUserText = $.getLocalizeTextForKey("user");
-
         Base.log("get credentials for login");
-        login = $.creds.get("login").toString();
-        pass = $.creds.get("password").toString();
-        server = $.creds.get("server").toString();
+        login = $.getCredsWithKey("login");
+        pass = $.getCredsWithKey("password");
+        server = $.getCredsWithKey("server");
 
         Base.log("login without Pin");
         $.loginPage.loginWithPinCancel(login, pass, server);
@@ -43,18 +43,19 @@ public class C44141_User_delete{
 
     @Test(priority = 2, enabled = true)
     public void all_guest_users() {
-        $.user.deleteAllActive(guestUserText);
+        $.user.deleteAllGuests();
     }
 
-    @Test(priority = 3, enabled = false)
+    @Test(priority = 3, enabled = true)
     public void master_user() {
-        $.user.deleteAllActive(adminUserText);
+        $.user.deleteMasterUser();
+        $.nav.cancelIt();
+        Assert.assertTrue($.dashboard.getPlusButton().isDisplayed());
     }
 
     private void addHub() {
         String hubName = "1495";
         String hubKey = "00001495DDFB55691000";
-//        String waiterText = getLocalizeTextForKey("request_send");
 
         Base.log("tap to the Plus Button");
         $.dashboard.plusButtonClick();
@@ -65,7 +66,6 @@ public class C44141_User_delete{
         $.dashboard.fillFieldsWith(hubName, hubKey);
         $.nav.confirmIt();
 
-//        $.wait.invisibilityElementWithText(waiterText, true);
         $.wait.invisibilityOfWaiter(true);
         Assert.assertFalse($.check.isErrorPresent(3), "Hub adding failed!");
 
@@ -75,6 +75,8 @@ public class C44141_User_delete{
 
     @AfterClass
     public void endSuit() {
+        Base.log("return hub for next tests");
+        addHub();
         $.getDriver().quit();
     }
 }
