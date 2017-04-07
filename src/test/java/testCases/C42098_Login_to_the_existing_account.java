@@ -11,8 +11,8 @@ public class C42098_Login_to_the_existing_account{
 
     @Parameters({ "deviceName_" })
     @BeforeClass
-    public void init(){
-        $ = new Base();
+    public void init(String deviceName_){
+        $ = new Base(deviceName_);
         $.initPageObjects($.getDriver());
     }
 
@@ -21,9 +21,9 @@ public class C42098_Login_to_the_existing_account{
         Base.log("TEST IS STARTED");
 
         Base.log("get credentials for login");
-        login = $.creds.get("login").toString();
-        pass = $.creds.get("password").toString();
-        server = $.creds.get("server").toString();
+        login = $.getCredsWithKey("login");
+        pass = $.getCredsWithKey("password");
+        server = $.getCredsWithKey("server");
 
         Base.log("start from IntroPage");
         $.introPage.goToAuthorization();

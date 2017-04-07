@@ -182,7 +182,7 @@ public class Wait{
             if (makeScreenShot){$.getScreenShot();}
 
         } catch (TimeoutException e) {
-            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){$.getScreenShot();}
         }

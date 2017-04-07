@@ -25,7 +25,6 @@
 ////    public void C42097_New_user_registration_with_validation() {
 ////        new C42097_New_user_registration_with_validation(driver, locale);
 ////    }
-//    // TODO C44141	- Удаление пользователя
 //    // TODO C44142	- Удаление датчика
 //    // TODO C44143	- Удаление комнаты
 //    // TODO C44144	- Удаление хаба
