@@ -8,8 +8,10 @@ import org.testng.annotations.Test;
 import pages.Base;
 
 /**
- * PRECONDITION:
- * Account has no room
+ * PRECONDITION
+ * There are:
+ * - at least one Hub
+ * - no rooms in the Hub
  */
 public class C42100_Add_new_room{
 

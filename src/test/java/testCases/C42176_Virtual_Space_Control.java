@@ -8,12 +8,14 @@ import org.testng.annotations.Test;
 import pages.Base;
 
 /**
- * PRECONDITION:
- * There are at least one hub with at least one room in account
+ * PRECONDITION
+ * There are:
+ * - at least one Hub
+ * - at least one room
  */
 public class C42176_Virtual_Space_Control{
 
-    private String login, pass, server, armedText, disarmedText, patrialArmedText;
+    private String armedText, disarmedText, patrialArmedText;
     private Base $;
 
     @Parameters({ "deviceName_" })
@@ -22,31 +24,26 @@ public class C42176_Virtual_Space_Control{
         $ = new Base(deviceName_);
         $.initPageObjects($.getDriver());
 
-        Base.log("get credentials for login");
-        login = $.getCredsWithKey("login");
-        pass = $.getCredsWithKey("password");
-        server = $.getCredsWithKey("server");
-
-        $.log("get localized keys");
+        Base.log("get localized keys");
         armedText = $.getLocalizeTextForKey("armed");
         disarmedText = $.getLocalizeTextForKey("disarmed");
         patrialArmedText = $.getLocalizeTextForKey("partially_armed");
 
-        $.log("login without Pin");
-        $.loginPage.loginWithPinCancel(login, pass, server);
+        Base.log("login without Pin");
+        $.loginPage.loginWithPinCancel();
 
-        $.log("go to the Remote Page");
+        Base.log("go to the Remote Page");
         $.dashboard.goToTheRemotePage();
     }
 
     @Test(priority = 1, enabled = true)
     public void Click_Arm_Button() {
 
-        $.log("make precondition disarmed state");
+        Base.log("make precondition disarmed state");
         $.remotePage.clickDisarmButton();
         Assert.assertTrue($.wait.elementWithText(armedText, 10, true), "Text \"" + armedText + "\" is not found");
 
-        $.log("click Arm Button and confirm if there is shown popUp");
+        Base.log("click Arm Button and confirm if there is shown popUp");
         $.check.clickElementAndWaitingPopup($.remotePage.getArmButton(), true);
         Assert.assertTrue($.wait.elementWithText(armedText, 10, true), "Text \"" + armedText + "\" is not found");
     }
@@ -54,7 +51,7 @@ public class C42176_Virtual_Space_Control{
     @Test(priority = 2, enabled = true)
     public void Click_Partial_Arm_Button() {
 
-        $.log("click Partial Arm Button and confirm if there is shown popUp");
+        Base.log("click Partial Arm Button and confirm if there is shown popUp");
         $.check.clickElementAndWaitingPopup($.remotePage.getPartialArmButton(), true);
         Assert.assertTrue($.wait.elementWithText(patrialArmedText, 10, true), "Text \"" + patrialArmedText + "\" is not found");
     }
@@ -62,7 +59,7 @@ public class C42176_Virtual_Space_Control{
     @Test(priority = 3, enabled = true)
     public void Click_Disarm_Button() {
 
-        $.log("click Disarm Button");
+        Base.log("click Disarm Button");
         $.remotePage.clickDisarmButton();
         Assert.assertTrue($.wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found");
     }

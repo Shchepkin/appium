@@ -7,6 +7,12 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.Base;
 
+/**
+ * PRECONDITION
+ * There are:
+ * - at least one Hub
+ */
+
 public class C42102_Add_new_guest_user{
 
     private String login, pass, server, expected, actual;
@@ -18,13 +24,8 @@ public class C42102_Add_new_guest_user{
         $ = new Base(deviceName_);
         $.initPageObjects($.getDriver());
 
-        Base.log("get credentials for login");
-        login = $.getCredsWithKey("login");
-        pass = $.getCredsWithKey("password");
-        server = $.getCredsWithKey("server");
-
         Base.log("login without Pin");
-        $.loginPage.loginWithPinCancel(login, pass, server);
+        $.loginPage.loginWithPinCancel();
 
         $.hub.goToTheUserlistPage();
     }
@@ -40,7 +41,7 @@ public class C42102_Add_new_guest_user{
     public void From_Contact_List() {
 
         $.user.addFromContactList();
-        Assert.assertTrue($.user.checkIsNewUsersAddedBy("text", $.user.getUsersForContactList()), "Add users from Contact List is failed");
+        Assert.assertTrue($.user.checkIsNewUsersAddedBy("email", $.user.getUsersForContactList()), "Add users from Contact List is failed");
     }
 
     @Test(priority = 3, enabled = true)

@@ -49,6 +49,7 @@ public class User{
     }
 
 //----------------------------------------------------------------------------------------------------------------------
+
     private final Base $;
     private final AppiumDriver driver;
     private boolean result;
@@ -72,7 +73,8 @@ public class User{
         $.nav.nextButtonClick();
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
+
     public void addFromEmailField(String userEmail) {
         Base.log("Method is started");
         result = false;
@@ -95,7 +97,8 @@ public class User{
         Base.log("Method is finished");
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
+
     public void addFromContactList(String userEmail) {
         Base.log("Method is started");
         result = false;
@@ -119,7 +122,7 @@ public class User{
         Base.log("Method is finished");
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public boolean addFromEmailField() {
         Base.log("Method is started");
@@ -169,7 +172,7 @@ public class User{
         return result;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public void addUserListFromEmailField(String nameOfJsonCollection) {
         Base.log("Method is started");
@@ -199,7 +202,7 @@ public class User{
         Base.log("Method is finished");
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public void addFromContactList() {
         Base.log("Method is started");
@@ -239,7 +242,7 @@ public class User{
         Base.log("Method is finished");
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     private boolean activateUserInContactListBy(String typeBy, String userEmail) {
         String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
@@ -264,7 +267,7 @@ public class User{
         return result;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public void addMixedUsers() {
         Base.log("Method is started");
@@ -297,7 +300,7 @@ public class User{
         Base.log("Method is finished");
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     /**
      * @param byType    - name, email, text
@@ -335,6 +338,8 @@ public class User{
         return result;
     }
 
+//----------------------------------------------------------------------------------------------------------------------
+
     public boolean checkIsDeleteIconPresent(String pendingUserName) {
         String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
         String deleteElementXpath = "/ancestor::android.widget.LinearLayout[1]//*[@resource-id = 'com.ajaxsystems:id/delete']";
@@ -354,6 +359,8 @@ public class User{
         return result;
     }
 
+//----------------------------------------------------------------------------------------------------------------------
+
     public boolean isDeleteIconPresent(String pendingUserName) {
         WebElement pendingUserForCheck = findPendingFrom("name", pendingUserName);
 
@@ -368,30 +375,44 @@ public class User{
         return result;
     }
 
+//----------------------------------------------------------------------------------------------------------------------
+
     public void deletePendingByName(String pendingUserName) {
         WebElement pendingUserForDelete = findPendingFrom("name", pendingUserName);
         $.nav.scrollToElement(pendingUserForDelete, "up");
         pendingUserForDelete.click();
     }
 
-    public void deleteAllPending() {
+//----------------------------------------------------------------------------------------------------------------------
+
+    public boolean deleteAllPending() {
+        result = false;
         int counter = 0;
         String successText = $.getLocalizeTextForKey("Com_executed1");
         while (true) {
+
             if($.nav.scrollToElement(deleteButton, "up")){
+
+                Base.log("tap User Delete button and confirm popUp proposition");
                 deleteButton.click();
                 $.nav.confirmIt();
-                Assert.assertTrue($.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
+
+                $.wait.invisibilityOfWaiter(true);
+
+                Assert.assertTrue($.wait.elementWithText(successText, 5, true), "SUCCESS text is not shown");
+                Base.log("SUCCESS text is shown");
                 counter++;
             } else {
                 break;
             }
         }
         Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one pending user was found\n");
-        Base.log(1, "pending users are not found, number of deleted users: " + counter);
+        Base.log("pending users are not found, number of deleted users: " + counter);
+        result = true;
+        return result;
     }
 
-
+//----------------------------------------------------------------------------------------------------------------------
 
     public void deleteMasterUser(){
         deleteAllActive(adminStatusText);
@@ -401,10 +422,11 @@ public class User{
         deleteAllActive(userStatusText);
     }
 
+//----------------------------------------------------------------------------------------------------------------------
+
     private void deleteAllActive(String status) {
         String successText = null;
         int counter = 0;
-
         Assert.assertNotNull(status,"expected object: \"User Status localized text\", ");
 
         if (status.equalsIgnoreCase(userStatusText)){
@@ -428,7 +450,8 @@ public class User{
                     String email = driver.findElementByXPath(xPath + emailXpath).getText();
                     Base.log(1, "delete user with email \"" + email + "\"");
                     settingsButton.click();
-                    $.nav.scrollToElement(deleteButton, "up");
+//                    $.nav.scrollToElement(deleteButton, "up");
+                    $.nav.scrollBottom();
                     Base.log(1, "tap delete button");
                     deleteButton.click();
                     $.nav.confirmIt();
@@ -443,6 +466,8 @@ public class User{
         Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one user with status \"" + status + "\" are not found\n");
         Base.log(1, "active users with status \"" + status + "\" are not found, number of deleted users: " + counter);
     }
+
+//----------------------------------------------------------------------------------------------------------------------
 
     private WebElement findPendingFrom(String from, String pendingUserName){
         String nameElementXpath = "*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
@@ -461,4 +486,6 @@ public class User{
         $.nav.scrollToElement(pendingUserElement, "up");
         return pendingUserElement;
     }
+
+//----------------------------------------------------------------------------------------------------------------------
 }
