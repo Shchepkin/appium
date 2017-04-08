@@ -110,5 +110,11 @@ public class Dashboard{
     public void goToTheRemotePage() {
         footerRemote.click();
     }
+    public void goToTheNotificationPage() {
+        footerNotifications.click();
+    }
+    public void goToTheDevicesPage() {
+        footerDevices.click();
+    }
 }
 
