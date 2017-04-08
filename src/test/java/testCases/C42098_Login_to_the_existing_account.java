@@ -1,41 +1,59 @@
 package testCases;
 
-import io.appium.java_client.AppiumDriver;
 import org.testng.Assert;
-import pages.*;
+import org.testng.annotations.*;
+import pages.Base;
 
-public class C42098_Login_to_the_existing_account extends Base{
+public class C42098_Login_to_the_existing_account{
 
-    private String login, pass, server, expected, actual;
+    private String login, pass, server, expectedText, actual;
+    private Base $;
 
-    public C42098_Login_to_the_existing_account(AppiumDriver driver, String locale_) {
-        super(driver, locale_);
-
-        log("TEST IS STARTED");
-        login = "ajax1@i.ua";
-        pass = "qwe";
-        server = "Develop";
-
-        log("start from IntroPage");
-        introPage.goToAuthorization();
-        authorizationPage.loginToTheServer(login, pass, server);
-
-        log("waiting for Pincode PopUp");
-        if(check.waitElement(popUp.cancelButton, 15, true)) {
-            log("Pincode PopUp is shown with text: \"" + popUp.contentText.getText() + "\", so click CANCEL button");
-
-            expected = getLocalizeTextForKey("do_you_want_to_enable_passcode");
-            actual = popUp.contentText.getText();
-            Assert.assertEquals(expected, actual, "Text on Pincode PopUp is wrong!");
-            popUp.cancelButton.click();
-        }
-
-        log("check whether login was successfully");
-        Assert.assertTrue(check.waitElement(dashboardHeader.menuDrawer, 60, true));
-        log("TEST IS FINISHED");
+    @Parameters({ "deviceName_" })
+    @BeforeClass
+    public void init(String deviceName_){
+        $ = new Base(deviceName_);
+        $.initPageObjects($.getDriver());
     }
 
+    @Test(priority = 1, enabled = true)
+    public void Positive_test_with_valid_data() {
+        Base.log("TEST IS STARTED");
 
+        Base.log("get credentials for login");
+        login = $.getCredsWithKey("login");
+        pass = $.getCredsWithKey("password");
+        server = $.getCredsWithKey("server");
 
+        Base.log("start from IntroPage");
+        $.introPage.goToAuthorization();
+        $.loginPage.loginToTheServer(login, pass, server);
+
+        $.wait.invisibilityOfLoaderLogo(true);
+        Assert.assertFalse($.check.forSnackBarIsPresent(3), "SnackBar is shown");
+
+        Base.log("waiting for Pincode PopUp");
+        if($.wait.element($.popUp.loadingWindow, 90, true)) {
+            Base.log("Check localized text");
+            expectedText = $.getLocalizeTextForKey("do_you_want_to_enable_passcode");
+            actual = $.popUp.getContentText();
+
+            System.out.println("expected: \"" + expectedText + "\"");
+            System.out.println("actual: \"" + actual + "\"");
+
+            Assert.assertEquals(expectedText, actual, "localization of Text on Pincode PopUp is wrong!");
+            Base.log("localized text is OK");
+            $.nav.cancelIt();
+        }
+
+        Assert.assertTrue($.wait.element($.dashboardHeader.getMenuDrawer(), 5, true), "Menu Icon is not shown");
+
+        Base.log("TEST IS FINISHED");
+    }
+
+    @AfterMethod
+    public void endSuit() {
+        $.getDriver().quit();
+    }
 
 }

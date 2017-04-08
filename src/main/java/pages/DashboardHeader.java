@@ -6,35 +6,75 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class DashboardHeader {
-    public final AppiumDriver driver;
+public class DashboardHeader{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/menuDrawer")
-    public WebElement menuDrawer;
+    private WebElement menuDrawer;
+    public WebElement getMenuDrawer() {
+        return menuDrawer;
+    }
 
     @AndroidFindBy(id = "com.ajaxsystems:id/connection")
-    public WebElement connectionIcon;
+    private WebElement connectionIcon;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/hubImage")
-    public WebElement hubImage;
+    private WebElement hubImage;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/gprs")
+    private WebElement gprsImage;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/hubSecurity")
-    public WebElement hubSecurity;
+    private WebElement hubSecurity;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/title")
-    public WebElement title;
+    private WebElement title;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/status")
-    public WebElement status;
+    private WebElement status;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/normal")
-    public WebElement normalElement;
+    private WebElement normalElement;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/hubOffline")
-    public WebElement hubOffline;
+    private WebElement hubOffline;
 
-     public DashboardHeader(AppiumDriver driver) {
-        this.driver = driver;
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
+
+    public DashboardHeader(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+//----------------------------------------------------------------------------------------------------------------------
+
+    public boolean isMenuIconPresent(int timer){
+        boolean result = false;
+
+        return result;
+    }
+
+    public WebElement getConnectionIcon() {
+        return connectionIcon;
+    }
+    public WebElement getHubImage() {
+        return hubImage;
+    }
+    public WebElement getHubSecurity() {
+        return hubSecurity;
+    }
+    public WebElement getTitle() {
+        return title;
+    }
+    public WebElement getStatus() {
+        return status;
+    }
+    public WebElement getNormalElement() {
+        return normalElement;
+    }
+    public WebElement getHubOffline() {
+        return hubOffline;
+    }
+    public WebElement getGprsImage() {return gprsImage;}
 }

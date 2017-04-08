@@ -1,97 +1,114 @@
 package pages;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-/**
- * Created by installer on 1/21/17.
- */
-public class Dashboard {
-    public final AppiumDriver driver;
+public class Dashboard{
 
 // ================= Header ===================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
-    public WebElement addBtn;
+    private WebElement addBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
-    public WebElement nameField;
+    private WebElement nameField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/image")
     public WebElement image;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/settings")
-    public WebElement settingsBtn;
+    private WebElement settingsBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-    public WebElement cancelBtn;
+    private WebElement cancelBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/save")
-    public WebElement saveBtn;
+    private WebElement saveBtn;
 
 
-// ================= Add Hub ===================
+
+
+    // ================= Add Hub ===================
     @AndroidFindBy(id = "com.ajaxsystems:id/plus")
-    public WebElement plusBtn;
+    private WebElement plusButton;
+    public WebElement getPlusButton() {
+        return plusButton;
+    }
+
 
     @AndroidFindBy(id = "com.ajaxsystems:id/panel")
-    public WebElement addHubWizard;
-
-//    @AndroidFindBy(id = "com.ajaxsystems:id/add")
-//    public WebElement addHubBtn;
-//
-//    @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-//    public WebElement cancelBtn;
-//
-//    @AndroidFindBy(id = "com.ajaxsystems:id/name")
-//    public WebElement hubName;
+    private WebElement addHubWizard;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/key")
-    public WebElement hubKeyField;
+    private WebElement hubKeyField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/nameInfo")
-    public WebElement nameInfo;
+    private WebElement nameInfo;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/keyInfo")
-    public WebElement keyInfo;
+    private WebElement keyInfo;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/qr")
-    public WebElement qrIcon;
+    private WebElement qrIcon;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/hint")
-    public WebElement hint;
+    private WebElement hint;
 
-// ================= Add Rooms ===================
+// ================= Add Device ===================
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/footerTitle")
+    private WebElement addDeviceButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
-    public WebElement roomName;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/name")
-    public WebElement roomNkame;
-
+    private WebElement roomName;
 
 // ================= Footer ===================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/devices")
-    public WebElement footerDevices;
+    private WebElement footerDevices;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/rooms")
-    public WebElement footerRooms;
+    private WebElement footerRooms;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/notifications")
-    public WebElement footerNotifications;
+    private WebElement footerNotifications;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/remote")
-    public WebElement footerRemote;
+    private WebElement footerRemote;
 
-//=====================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
 
-    public Dashboard(AppiumDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    public Dashboard(Base base) {
+        $ = base;
+        PageFactory.initElements(new AppiumFieldDecorator($.getDriver()), this);
+    }
+//----------------------------------------------------------------------------------------------------------------------
+
+    public void fillFieldsWith(String hubName, String hubKey){
+        Base.log("fill Name Field with \"" + hubName + "\"");
+        nameField.sendKeys(hubName);
+
+        Base.log("fill Hub Key Field with \"" + hubKey + "\"");
+        hubKeyField.sendKeys(hubKey);
+    }
+
+    public void plusButtonClick() {
+        plusButton.click();
+    }
+
+    public void footerRemoteClick() {
+        footerRemote.click();
+    }
+
+    public void goToTheRoomPage() {
+        footerRooms.click();
+    }
+
+    public void goToTheRemotePage() {
+        footerRemote.click();
     }
 }
 

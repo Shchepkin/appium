@@ -1,26 +1,18 @@
 package utils;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Reporter;
 import pages.Base;
 
 
-public class PopUp extends Base{
-    private AppiumDriver driver;
-    private ScreenShot screenShot;
-    private long start, finish;
-
-    public boolean result = false;
+public class PopUp{
 
 //================================ Loading ===========================================
 
@@ -31,131 +23,127 @@ public class PopUp extends Base{
     public WebElement contentText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/timerText")
-    public WebElement timerText;
+    private WebElement timerText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/message")
-    public WebElement message;
+    private WebElement message;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/loading")
-    public WebElement loadingWin;
+    public WebElement loadingWindow;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/progress")
-    public WebElement progressImage;
+    private WebElement progressImage;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/shadow")
-    public WebElement shadow;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-    public WebElement cancelBtn;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
-    public WebElement cancelButton;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/ok")
-    public WebElement okBtn;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
-    public WebElement confirmButton;
+    private WebElement shadow;
 
 //================================ dialogMessage =====================================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
-    public WebElement dialogMessage;
+    private WebElement dialogMessage;
 
 //================================ QR ================================================
     @AndroidFindBy(id = "com.ajaxsystems:id/zxing_viewfinder_view")
-    public WebElement qrFinderView;
+    private WebElement qrFinderView;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/zxing_status_view")
-    public WebElement qrStatusView;
+    private WebElement qrStatusView;
 
 //================================= Toast & Snack ====================================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/snackbar_text")
-    public WebElement snackBar;
+    private WebElement snackBar;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/message")
-    public WebElement toast;
+    private WebElement toast;
 
 //================================ desc_container ====================================
 
     @AndroidFindBy(id = "com.android.packageinstaller:id/desc_container")
-    public WebElement descContainer;
+    private WebElement descContainer;
 
     @AndroidFindBy(id = "com.android.packageinstaller:id/permission_deny_button")
-    public WebElement denyButton;
+    private WebElement denyButton;
 
     @AndroidFindBy(id = "com.android.packageinstaller:id/permission_allow_button")
-    public WebElement allowButton;
+    private WebElement allowButton;
 
 //================================ User_Agreement_Dialog ==============================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/web")
-    public WebElement userAgreement;
+    private WebElement userAgreement;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/agreement")
-    public WebElement userAgreementCheckbox;
+    private WebElement userAgreementCheckbox;
 
-//=====================================================================================
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
+    private boolean result;
+    private long start, finish;
 
-    public PopUp() {
 
-    }
-
-    public PopUp(AppiumDriver driver) {
-        this.driver = driver;
-        screenShot = new ScreenShot(driver);
+    public PopUp(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+//----------------------------------------------------------------------------------------------------------------------
 
     public void waitLoadingPopUp(int flag){
-        log("Method is started");
+        Base.log("Method is started");
         WebDriverWait iWait = new WebDriverWait (driver, 10);
         try {
             // assert is the element displayed on the page
-            log(2, "waiting 10 seconds for loading PopUp");
-            iWait.until(ExpectedConditions.visibilityOf(loadingWin));
+            Base.log(2, "waiting 10 seconds for loading PopUp");
+            iWait.until(ExpectedConditions.visibilityOf(loadingWindow));
             switch (flag) {
                 case 1:
-                    log("loading PopUp is shown, so click Confirm Button");
-                    confirmButton.click();
+                    Base.log("loading PopUp is shown, so click Confirm Button");
+                    $.nav.confirmIt();
                     break;
                 default:
-                    log("loading PopUp is shown, so click Cancel Button");
-                    cancelButton.click();
+                    Base.log("loading PopUp is shown, so click Cancel Button");
+                    $.nav.cancelIt();
                     break;
             }
         }
         catch (NoSuchElementException e) {
-            log(4, "NoSuchElementException, loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
+            Base.log(4, "NoSuchElementException, loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
         }
         catch (TimeoutException e) {
-            log(4, "TimeoutException loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
+            Base.log(4, "TimeoutException loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
         }
     }
 
 
     public boolean waitLoaderPopUpWithText(String searchingText, int timer, boolean makeScreenShot) {
-        log("Method is started");
+        Base.log("Method is started");
 
         try {
-            log(2, "waiting " + timer + " seconds for the element ");
+            Base.log(2, "waiting " + timer + " seconds for the element ");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.textToBePresentInElement(contentText, searchingText));
 
-            log(2, "element is shown with text: \"" + contentText.getText() + "\"");
+            Base.log(2, "element is shown with text: \"" + contentText.getText() + "\"");
             result = true;
         } catch (NoSuchElementException e) {
-            log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){screenShot.getScreenShot();}
+            if (makeScreenShot){$.getScreenShot();}
         } catch (TimeoutException e) {
-            log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){screenShot.getScreenShot();}
+            if (makeScreenShot){$.getScreenShot();}
         }
         return result;
     }
 
+    public String getContentText() {
+        return contentText.getText();
+    }
 
+    public WebElement getSnackBar() {
+        return snackBar;
+    }
 }

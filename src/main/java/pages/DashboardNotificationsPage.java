@@ -6,17 +6,20 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-/**
- * Created by installer on 1/21/17.
- */
-public class DashboardNotificationsPage {
-    public final AppiumDriver driver;
+public class DashboardNotificationsPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/mail")
     public WebElement emailField;
 
-    public DashboardNotificationsPage(AppiumDriver driver) {
-        this.driver = driver;
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
+
+    public DashboardNotificationsPage(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+//----------------------------------------------------------------------------------------------------------------------
+
 }

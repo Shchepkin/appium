@@ -2,6 +2,8 @@ package utils;
 
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import pages.Base;
 
@@ -13,26 +15,33 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Sql extends Base{
+public class Sql{
 
     private Formatter f = new Formatter();
-    private ArrayList validationToken = new ArrayList();
+    private ArrayList validationToken;
 
     // JDBC URL, username and password of MySQL server
-    private String url = getDbSettings().get("url").toString();
-    private String user = getDbSettings().get("user").toString();
-    private String password = getDbSettings().get("password").toString();
+    private String url;
+    private String user;
+    private String password;
 
     // JDBC variables for opening and managing connection
     private static Connection connection;
     private static Statement stmt;
     private static ResultSet rs;
 
-    public ArrayList selectList = new ArrayList();
-    public Map tokenMap = new HashMap();
+    public ArrayList selectList;
+    public Map tokenMap;
 
+    //----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private boolean result;
 
-    public Sql() {}
+    public Sql(Base base) {
+        $ = base;
+    }
+//----------------------------------------------------------------------------------------------------------------------
+
 
     /**
      *  REQUIRED getConnection()
@@ -43,7 +52,8 @@ public class Sql extends Base{
             sql.getDelete("Phone", "%1216815329%");
      */
     public void getDelete(String row, String value) {
-        log("Method is started");
+        Base.log("Method is started");
+        selectList = new ArrayList();
 
         String query = "DELETE FROM csa_accounts WHERE " + row + " LIKE '" + value + "'";
 
@@ -52,26 +62,26 @@ public class Sql extends Base{
         try {
             connection = getConnection();
 
-            log(2, "getting Statement object to execute query");
+            Base.log(2, "getting Statement object to execute query");
             stmt = connection.createStatement();
 
-            log(3, "this objects will be deleted: ");
+            Base.log(3, "this objects will be deleted: ");
             for (Object sqlResult : selectList) {
                 System.out.println("\033[31;49m" + sqlResult + "\033[39;49m");
             }
 
-            log(3, "delete objects");
+            Base.log(3, "delete objects");
             stmt.executeUpdate(query);
 
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         } finally {
-            log("close all connections");
+            Base.log("close all connections");
             try {connection.close();} catch (SQLException se) { /*can't do anything */ }
             try {stmt.close();}catch (SQLException se) { /*can't do anything */ }
             try {rs.close();} catch (SQLException se) { /*can't do anything */ }
         }
-        log("Method is finished");
+        Base.log("Method is finished");
     }
 
 
@@ -86,7 +96,10 @@ public class Sql extends Base{
             System.out.println(selectList);
      */
     public ArrayList getSelect(String row, String value) {
-        log("Method is started");
+        Base.log("Method is started");
+        validationToken = new ArrayList();
+        selectList = new ArrayList();
+
         validationToken.clear();
         selectList.clear();
 
@@ -95,10 +108,10 @@ public class Sql extends Base{
         try {
             connection = getConnection();
 
-            log("getting Statement object to execute query");
+            Base.log("getting Statement object to execute query");
             stmt = connection.createStatement();
 
-            log(2, "executing query: [ " + query + " ]");
+            Base.log(2, "executing query: [ " + query + " ]");
             rs = stmt.executeQuery(query);
 
             while (rs.next()) {
@@ -118,13 +131,13 @@ public class Sql extends Base{
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         } finally {
-            log("close all connections");
+            Base.log("close all connections");
             try {connection.close();} catch (SQLException se) { /*can't do anything */ }
             try {stmt.close();}catch (SQLException se) { /*can't do anything */ }
             try {rs.close();} catch (SQLException se) { /*can't do anything */ }
         }
 
-        log("Method is finished");
+        Base.log("Method is finished");
         return selectList;
     }
 
@@ -145,10 +158,13 @@ public class Sql extends Base{
             tokenMap.get("emailToken");
      */
     public Map getTokenMap(String row, String value) {
-        log("Method is started");
+        Base.log("Method is started");
+        tokenMap = new HashMap();
+        validationToken = new ArrayList();
+
         int counter = 1;
         while (validationToken.size() < 1 || validationToken.get(0) == null) {
-            log(3, "Try to get Tokens from database. Attempt #" + counter);
+            Base.log(3, "Try to get Tokens from database. Attempt #" + counter);
             getSelect(row, value);
             try {
                 Thread.sleep(5000);
@@ -169,14 +185,14 @@ public class Sql extends Base{
         else {
             String input = validationToken.get(0).toString();
 
-            log("Validation Token Array is not empty, so we get string and clear Array");
+            Base.log("Validation Token Array is not empty, so we get string and clear Array");
             validationToken.clear();
 
-            log("create matcher");
+            Base.log("create matcher");
             Pattern pattern = Pattern.compile("[\\d]{6}");
             Matcher matcher = pattern.matcher(input);
 
-            log("add matcher value to the Validation Token Array");
+            Base.log("add matcher value to the Validation Token Array");
                 while(matcher.find()){
                     validationToken.add(matcher.group());
                 }
@@ -188,7 +204,7 @@ public class Sql extends Base{
                 tokenMap.put("emailToken", validationToken.get(1));
             }
         }
-        log("Method is finished");
+        Base.log("Method is finished");
         return tokenMap;
     }
 
@@ -199,17 +215,22 @@ public class Sql extends Base{
      * @return Connection connection
      */
     private Connection getConnection (){
-        log("Method is started");
+        Base.log("Method is started");
+
+        url = $.getDbSettingsWithKey("url");
+        user = $.getDbSettingsWithKey("user");
+        password = $.getDbSettingsWithKey("password");
+
         for (int i = 1; i <= 10; i++) {
             try {
-                log("opening database connection to MySQL server, attempt #" + i);
+                Base.log("opening database connection to MySQL server, attempt #" + i);
                 connection = DriverManager.getConnection(url, user, password);
-                log("connection to MySQL server is successfully opened");
+                Base.log("connection to MySQL server is successfully opened");
                 break;
 
             }catch (Exception e){
-                log(3, "opening database connection fail: " + e.getClass());
-                log(3, "cause of problem: "+ e.getCause().toString());
+                Base.log(3, "opening database connection fail: " + e.getClass());
+                Base.log(3, "cause of problem: "+ e.getCause().toString());
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e1) {
@@ -217,7 +238,7 @@ public class Sql extends Base{
                 }
             }
         }
-        log("Method is finished");
+        Base.log("Method is finished");
         return connection;
     }
 }

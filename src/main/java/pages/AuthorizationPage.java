@@ -1,141 +1,118 @@
 package pages;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import utils.Check;
-import utils.Navigation;
-import utils.Setup;
+import org.testng.Assert;
 
-
-public class AuthorizationPage extends Base{
-
-    public final AppiumDriver driver;
-    private Setup s = new Setup();
-    private Navigation nav;
-    private Check check;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/back")
-    public WebElement backBtn;
+public class AuthorizationPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/login")
-    public WebElement loginField;
+    private WebElement loginField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/password")
-    public WebElement passwordField;
+    private WebElement passwordField;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/login")
+    private WebElement loginButtonOnIntro;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
-    public WebElement loginBtn;
+    private WebElement loginBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/forgot")
-    public WebElement forgotPasswordBtn;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/snackbar_text")
-    public WebElement snackBar;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/message")
-    public WebElement toast;
+    private WebElement forgotPasswordBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
-    public WebElement dialogMessage;
+    private WebElement dialogMessage;
 
-
-// Server menu
-// version >= 2.8
 //---------------------------------------------------------------------------------------------------------------------
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Debug\")")
-    public WebElement serverDebug;
+    private WebElement serverDebug;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Develop\")")
-    public WebElement serverDevelop;
+    private WebElement serverDevelop;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Production\")")
-    public WebElement serverProduction;
+    private WebElement serverProduction;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Amazon\")")
-    public WebElement serverAmazon;
+    private WebElement serverAmazon;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Eden\")")
-    public WebElement serverEden;
+    private WebElement serverEden;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Glimmering_dev\")")
-    public WebElement serverGlim;
+    private WebElement serverGlim;
 
+//----------------------------------------------------------------------------------------------------------------------
 
+    private final Base $;
 
-//---------------------------------------------------------------------------------------------------------------------
-
-// version < 2.8
-//---------------------------------------------------------------------------------------------------------------------
-/*
-    @AndroidFindBy(id = "com.ajaxsystems:id/s1")
-    public WebElement serverDebug;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/s2")
-    public WebElement serverDevelop;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/s3")
-    public WebElement serverProduction;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/s4")
-    public WebElement serverAmazon;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/s5")
-    public WebElement serverEden;
-*/
-//---------------------------------------------------------------------------------------------------------------------
-
-    public AuthorizationPage(AppiumDriver driver) {
-        this.driver = driver;
-        this.nav = new Navigation(driver);
-        this.check = new Check(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    public AuthorizationPage(Base base) {
+        $ = base;
+        PageFactory.initElements(new AppiumFieldDecorator($.getDriver()), this);
     }
 
+//----------------------------------------------------------------------------------------------------------------------
 
     public void loginToTheServer(String login, String password) {
-        log("Method is started");
+        Base.log("Method is started");
 
-        log(2, "fill the login field with data: [" + login + "]");
+        Base.log(2, "fill the login field with data: [" + login + "]");
         loginField.sendKeys(login);
 
-        log(2, "fill the password field with data: [" + password + "]");
+        Base.log(2, "fill the password field with data: [" + password + "]");
         passwordField.sendKeys(password);
 
-        log(2, "click login button");
+        Base.log(2, "click login button");
         loginBtn.click();
 
-        log("Method is finished");
+        Base.log("Method is finished");
     }
 
     public void loginToTheServer(String login, String password, String server) {
-        log("Method is started");
+        Base.log("Method is started");
 
-        log(2, "fill the login field with data: \"" + login + "\"");
+        Base.log(2, "fill the login field with data: \"" + login + "\"");
         loginField.sendKeys(login);
 
-        log(2, "fill the password field with data: \"" + password + "\"");
+        Base.log(2, "fill the password field with data: \"" + password + "\"");
         passwordField.sendKeys(password);
 
         chooseServer(server);
 
-        log(2, "click login button");
+        Base.log(2, "click login button");
         loginBtn.click();
 
-        log("Method is finished");
+        Base.log("Method is finished");
+    }
+
+
+    public void loginWithPinCancel(String login, String password, String server) {
+        Base.log("Method is started");
+
+        Base.log("start from IntroPage");
+        loginButtonOnIntro.click();
+
+        loginToTheServer(login, password, server);
+
+        Base.log("wait until LoaderLogo become invisible");
+        $.wait.invisibilityOfLoaderLogo(true);
+
+        Base.log("waiting for Pincode PopUp and cancel it");
+        Assert.assertTrue($.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
+
+        Base.log("Method is finished");
     }
 
 
     public void chooseServer(String server) {
-        log("Method is started");
+        Base.log("Method is started");
 
-        log("select server type: \"" + server + "\"");
-        nav.longTapButton(loginBtn, 2);
+        Base.log("select server type: \"" + server + "\"");
+        $.nav.longTapButton(loginBtn, 2);
 
         switch (server) {
             case "Debug":  serverDebug.click();
@@ -153,7 +130,7 @@ public class AuthorizationPage extends Base{
             default: serverProduction.click();
                 break;
         }
-        log("Method is finished");
+        Base.log("Method is finished");
     }
 
 }

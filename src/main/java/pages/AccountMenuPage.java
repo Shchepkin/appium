@@ -6,44 +6,44 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-/**
- * Created by installer on 1/21/17.
- */
-public class MenuAccountPage {
-    public final AppiumDriver driver;
+public class AccountMenuPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/logout")
-    public WebElement logoutBtn;
+    private WebElement logoutBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/edit")
-    public WebElement editBtn;
+    private WebElement editBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/editText")
-    public WebElement editText;
+    private WebElement editText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/logoutText")
-    public WebElement logoutText;
+    private WebElement logoutText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/editImage")
-    public WebElement editImage;
+    private WebElement editImage;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/image")
-    public WebElement accountImage;
+    private WebElement accountImage;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
-    public WebElement accountName;
+    private WebElement accountName;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/mail")
-    public WebElement accountMail;
+    private WebElement accountMail;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/logoutImage")
-    public WebElement logoutImage;
+    private WebElement logoutImage;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/back")
-    public WebElement backBtn;
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
 
-    public MenuAccountPage(AppiumDriver driver) {
-        this.driver = driver;
+    public AccountMenuPage(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+//----------------------------------------------------------------------------------------------------------------------
+
 }

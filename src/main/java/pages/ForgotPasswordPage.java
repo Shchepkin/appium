@@ -6,12 +6,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-/**
- *
- */
-public class ForgotPasswordPage {
-
-    public final AppiumDriver driver;
+public class ForgotPasswordPage{
 
     @AndroidFindBy(uiAutomator = "new UiSelector().class(\"android.widget.TextView\").text(\"Forgot password?\")")
     public WebElement titleEn;
@@ -34,9 +29,15 @@ public class ForgotPasswordPage {
     @AndroidFindBy(id = "com.ajaxsystems:id/message")
     public WebElement toast;
 
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
 
-    public ForgotPasswordPage(AppiumDriver driver) {
-        this.driver = driver;
+    public ForgotPasswordPage(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+//----------------------------------------------------------------------------------------------------------------------
+
 }

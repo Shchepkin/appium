@@ -1,6 +1,5 @@
 package testCases;
 
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -10,12 +9,14 @@ import pages.Base;
 
 /**
  * PRECONDITION:
- * Account has no hub
+ * There are:
+ * - at least one hub, so master user present
+ * - at least one active user
+ * - at least one pending user
  */
-public class C42099_Add_new_Hub_manually{
+public class C44141_User_delete{
 
-    private String login, pass, server, hubName, hubMasterKey, expected, actual;
-    private WebElement[] elements;
+    private String login, pass, server, adminStatus, userStatus;
     private Base $;
 
     @Parameters({ "deviceName_" })
@@ -29,16 +30,32 @@ public class C42099_Add_new_Hub_manually{
         pass = $.getCredsWithKey("password");
         server = $.getCredsWithKey("server");
 
-        hubName = $.getCredsWithKey("hubName");
-        hubMasterKey = $.getCredsWithKey("hubMasterKey");
-
-//        String hubKey = "12345123451234512345";
-
+        Base.log("login without Pin");
         $.loginPage.loginWithPinCancel(login, pass, server);
+
+        $.hub.goToTheUserlistPage();
     }
 
-    @Test(priority = 1, enabled = true)
-    public void Add_first_Hub() {
+    @Test(priority = 1, enabled = false)
+    public void all_pending_users() {
+        $.user.deleteAllPending();
+    }
+
+    @Test(priority = 2, enabled = true)
+    public void all_guest_users() {
+        $.user.deleteAllGuests();
+    }
+
+    @Test(priority = 3, enabled = true)
+    public void master_user() {
+        $.user.deleteMasterUser();
+        $.nav.cancelIt();
+        Assert.assertTrue($.dashboard.getPlusButton().isDisplayed());
+    }
+
+    private void addHub() {
+        String hubName = "1495";
+        String hubKey = "00001495DDFB55691000";
 
         Base.log("tap to the Plus Button");
         $.dashboard.plusButtonClick();
@@ -46,23 +63,20 @@ public class C42099_Add_new_Hub_manually{
         Base.log("choose manual Hub adding ");
         $.nav.nextButtonClick();
 
-        $.dashboard.fillFieldsWith(hubName, hubMasterKey);
+        $.dashboard.fillFieldsWith(hubName, hubKey);
         $.nav.confirmIt();
 
-//        $.wait.invisibilityElementWithText(waiterText, true);
         $.wait.invisibilityOfWaiter(true);
         Assert.assertFalse($.check.isErrorPresent(3), "Hub adding failed!");
 
         Assert.assertTrue($.wait.element($.dashboardHeader.getGprsImage(), 15, true));
         Base.log("hub successfully added!");
-        Base.log("Method is finished");
     }
-
-    @Test(priority = 1, enabled = false)
-    public void Add_Hub_from_menu() {}
 
     @AfterClass
     public void endSuit() {
+        Base.log("return hub for next tests");
+        addHub();
         $.getDriver().quit();
     }
 }

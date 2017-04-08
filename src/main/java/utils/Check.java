@@ -1,78 +1,47 @@
 package utils;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.Base;
 
-import java.io.IOException;
 
+public class Check{
 
-public class Check extends Base{
-    private AppiumDriver driver;
-    private ScreenShot screenShot;
-    private PopUp popUp;
+//----------------------------------------------------------------------------------------------------------------------
+    private final Base $;
+    private final AppiumDriver driver;
+    private boolean result;
     private int numOfFoundElement;
 
-    private boolean result;
-
-    public Check(AppiumDriver driver) {
-        this.driver = driver;
-        this.popUp = new PopUp(driver);
-        this.screenShot = new ScreenShot(driver);
+    public Check(Base base) {
+        $ = base;
+        this.driver = $.getDriver();
     }
+//----------------------------------------------------------------------------------------------------------------------
 
-//**********************************************************************************************************************
     public void isElementDisplayed(WebElement element, int timer) {
-        log("Method is started");
+        Base.log("Method is started");
 
         try {
             // assert is the element displayed on the page
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(element));
-            log("element is shown with text: \"" + element.getText() + "\"");
+            Base.log("element is shown with text: \"" + element.getText() + "\"");
 
         } catch (NoSuchElementException e) {
             // is failed - make screenshot
-            screenShot.getScreenShot();
+            $.getScreenShot();
 
             // creation report
             Assert.fail("Test failed - no such element was appeared during " + timer + " seconds\n" + e);
         }
-    }
-
-    /*******************************************************************************************************************
-        * @param element           - element which we want to wait
-        * @param timer             - how long time we want to wait for the element (in seconds)
-        * @param makeScreenShot    - make screenshot if element is not found (true)
-        * @return                  - result true or false about successfully execute this method
-
-         example:
-            waitElement(element, 5, true)
-     */
-    public boolean waitElement(WebElement element, int timer, boolean makeScreenShot) {
-        log("Method is started");
-
-        try {
-            log(2, "waiting " + timer + " seconds for the element ");
-            WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions.visibilityOf(element));
-            log(2, "element " + element + " is shown with text: \"" + element.getText() + "\"");
-            result = true;
-        } catch (NoSuchElementException e) {
-            log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
-            result = false;
-            if (makeScreenShot){screenShot.getScreenShot();}
-        } catch (TimeoutException e) {
-            log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
-            result = false;
-            if (makeScreenShot){screenShot.getScreenShot();}
-        }
-        return result;
     }
 
 
@@ -89,29 +58,29 @@ public class Check extends Base{
         waitElements(elements, 5));
      */
     public int waitElements (WebElement[] elements, int period) {
-        log("Method is started");
+        Base.log("Method is started");
         numOfFoundElement = 0;
         result = false;
         for (int i = 1; i <= period; i++) {
             int counter = 1;
-            log("start waiting period #" + i);
+            Base.log("start waiting period #" + i);
 
             for (WebElement el : elements) {
                 try {
-                    log("element " + el + " is shown with text: \"" + el.getText() + "\"");
+                    Base.log("element " + el + " is shown with text: \"" + el.getText() + "\"");
                     result = true;
                     numOfFoundElement = counter;
                     break;
                 } catch (NoSuchElementException e) {
-                    log(4, "NoSuchElementException, element " + counter + " is not shown");
+                    Base.log(4, "NoSuchElementException, element " + counter + " is not shown");
                 } catch (TimeoutException e) {
-                    log(4, "Timeout Exception, element " + counter + " is not shown");
+                    Base.log(4, "Timeout Exception, element " + counter + " is not shown");
                 }
                 counter ++;
             }
             if (result) {break;}
         }
-        log("Method is finished");
+        Base.log("Method is finished");
         return numOfFoundElement;
     }
 
@@ -127,46 +96,46 @@ public class Check extends Base{
           clickElementAndWaitingPopup(popUp.cancelButton, 3, 3, false)
      */
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period, int tryCount, boolean confirmPopupProposition){
-        log("Method is started");
+        Base.log("Method is started");
         result = false;
-        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin};
+        WebElement[] elements = new WebElement[]{$.popUp.getSnackBar(), $.popUp.loadingWindow};
 
         for (int i = 1; i <= tryCount; i++) {
-            log(3, "click the element link, try count #" +i);
+            Base.log(3, "click the element link, try count #" +i);
             elementForClick.click();
 
-            log("waiting for: 1.snackBar  2.loadingWin");
+            Base.log("waiting for: 1.snackBar  2.loadingWindow");
             numOfFoundElement = waitElements(elements, period);
 
             checkNum(numOfFoundElement, confirmPopupProposition);
 
-            if (!waitElement(elementForClick, 1, true)) {
-                log(3, "element for click is not shown now");
+            if (!$.wait.element(elementForClick, 1, true)) {
+                Base.log(3, "element for click is not shown now");
                 result = true;
                 break;
             }
-            log(3, "element for click is shown again");
+            Base.log(3, "element for click is shown again");
         }
-        log("Method is finished");
+        Base.log("Method is finished");
         return result;
     }
 
 //======================================================================================================================
 
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, boolean confirmPopupProposition){
-        log("Method is started");
+        Base.log("Method is started");
         result = false;
-        WebElement[] elements = new WebElement[]{popUp.snackBar, popUp.loadingWin};
+        WebElement[] elements = new WebElement[]{$.popUp.getSnackBar(), $.popUp.loadingWindow};
 
-        log(3, "click the element link");
+        Base.log(3, "click the element link");
         elementForClick.click();
 
-        log("waiting for: 1.snackBar  2.loadingWin");
+        Base.log("waiting for: 1.snackBar  2.loadingWindow");
         numOfFoundElement = waitElements(elements, 4);
 
         checkNum(numOfFoundElement, confirmPopupProposition);
 
-        log("Method is finished");
+        Base.log("Method is finished");
         return result;
     }
 
@@ -175,24 +144,24 @@ public class Check extends Base{
     private void checkNum (int numOfFoundElement, boolean confirmPopupProposition) {
 
         switch (numOfFoundElement){
-            case 0: log(3, "no PopUp is shown or this moment is missed"); break;
-            case 1: log(3, "snackBar is shown, the text was previously displayed"); break;
-            case 2: log(3, "PopUp is shown with text: \"" + popUp.contentText.getText() + "\"");
-                WebElement[] elements = new WebElement[]{popUp.cancelButton, popUp.errorPic};
+            case 0: Base.log(3, "no PopUp is shown or this moment is missed"); break;
+            case 1: Base.log(3, "snackBar is shown, the text was previously displayed"); break;
+            case 2: Base.log(3, "PopUp is shown with text: \"" + $.popUp.contentText.getText() + "\"");
+                WebElement[] elements = new WebElement[]{$.nav.getCancelButton(), $.popUp.errorPic};
                 numOfFoundElement = waitElements(elements, 5);
                 switch (numOfFoundElement){
-                    case 0: log(3, "PopUp is shown, but without errors and any propositions"); break;
+                    case 0: Base.log(3, "PopUp is shown, but without errors and any propositions"); break;
                     case 1:
                         if (confirmPopupProposition){
-                            log("confirm Popup Proposition");
-                            popUp.confirmButton.click();
+                            Base.log("confirm Popup Proposition");
+                            $.nav.getConfirmButton().click();
                         }
                         else {
-                            log("cancel Popup Proposition");
-                            popUp.cancelButton.click();
+                            Base.log("cancel Popup Proposition");
+                            $.nav.getCancelButton().click();
                         }
                         break;
-                    case 2: log(4, "ERROR is shown with text: \"" + popUp.contentText.getText() + "\""); break;
+                    case 2: Base.log(4, "ERROR is shown with text: \"" + $.popUp.contentText.getText() + "\""); break;
                     default: break;
                 }
             default: break;
@@ -202,29 +171,29 @@ public class Check extends Base{
 //======================================================================================================================
 
     public boolean waitElementWithoutPin(WebElement element, int timer) {
-        log("Method is started");
+        Base.log("Method is started");
 
         try {
-            log(2, "waiting " + timer + " seconds for the element ");
+            Base.log(2, "waiting " + timer + " seconds for the element ");
 
-            WebElement[] elements = new WebElement[]{element, popUp.cancelButton};
+            WebElement[] elements = new WebElement[]{element, $.nav.getCancelButton()};
             if (waitElements(elements, 5) == 2) {
-                log("Pincode PopUp is shown - cancel it!");
-                popUp.cancelButton.click();
+                Base.log("Pincode PopUp is shown - cancel it!");
+                $.nav.cancelIt();
             }
 
-            log(2, "element " + element + " is shown with text: \"" + element.getText() + "\"");
+            Base.log(2, "element " + element + " is shown with text: \"" + element.getText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
-            log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            screenShot.getScreenShot();
+            $.getScreenShot();
 
         } catch (TimeoutException e) {
-            log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            screenShot.getScreenShot();
+            $.getScreenShot();
         }
         return result;
     }
@@ -232,20 +201,37 @@ public class Check extends Base{
 //======================================================================================================================
 
     public boolean forSnackBarIsPresent(int timer) {
-        log("Method is started");
+        Base.log("Method is started");
         result = false;
 
         try {
-            log(2, "waiting " + timer + " seconds for SnackBar");
+            Base.log(2, "waiting " + timer + " seconds for SnackBar");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions.visibilityOf(popUp.snackBar));
+            iWait.until(ExpectedConditions.visibilityOf($.popUp.getSnackBar()));
 
-            log("SnackBar is shown with text: \"" + popUp.snackBar.getText() + "\"");
+            Base.log("SnackBar is shown with text: \"" + $.popUp.getSnackBar().getText() + "\"");
             result = true;
 
-        } catch (Exception e) {
-            log(3, "SnackBar is not shown:\n\n" + e + "\n");
-            screenShot.getScreenShot();
+        } catch (NoSuchElementException e) {
+            Base.log("SnackBar is not shown:\n\n" + e + "\n");
+            $.getScreenShot();
+        }
+        return result;
+    }
+
+    public boolean isErrorPresent(int timer) {
+        Base.log("Method is started");
+        try {
+            WebDriverWait iWait = new WebDriverWait(driver, timer);
+            iWait.until(ExpectedConditions.visibilityOf($.popUp.errorPic));
+
+            Base.log("Error message is shown with text: \"" + $.popUp.getContentText() + "\"");
+            result = true;
+
+        } catch (NoSuchElementException e) {
+            Base.log("Error message is not shown");
+            $.getScreenShot();
+            result = false;
         }
         return result;
     }

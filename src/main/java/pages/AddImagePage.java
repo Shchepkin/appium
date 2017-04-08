@@ -1,6 +1,5 @@
 package pages;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
@@ -8,30 +7,28 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-
-public class AddImagePage {
-    public final AppiumDriver driver;
+public class AddImagePage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/tv_title")
-    public WebElement addImagePageTitle;
+    private WebElement addImagePageTitle;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/iv_thumbnail")
     private List<WebElement> thumbnail;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/rotateCounterClockwise")
-    public WebElement rotateCounterClockwise;
+    private WebElement rotateCounterClockwise;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/rotateClockwise")
-    public WebElement rotateClockwise;
+    private WebElement rotateClockwise;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cropImage")
-    public WebElement cropImage;
+    private WebElement cropImage;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
-    public WebElement backBtn;
+    private WebElement backBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
-    public WebElement nextBtn;
+    private WebElement nextBtn;
 
 
 // ===================== Camera v.4-5 =================================
@@ -58,16 +55,21 @@ public class AddImagePage {
     private WebElement cancelButton6;
 
 // ==================================================================
-    public AddImagePage(AppiumDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+
+    private final Base $;
+
+    public AddImagePage(Base base) {
+        $ = base;
+        PageFactory.initElements(new AppiumFieldDecorator($.getDriver()), this);
     }
 
     public void setImageFromCamera(){
+        Base.log("method is started");
         thumbnail.get(0).click();
         shutterButtonPhoto.click();
         doneButton.click();
         nextBtn.click();
+        Base.log("method is finished");
     }
 
 

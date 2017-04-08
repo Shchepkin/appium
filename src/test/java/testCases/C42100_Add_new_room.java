@@ -1,45 +1,71 @@
 package testCases;
 
-import io.appium.java_client.AppiumDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.Base;
 
 /**
- * Created by installer on 3/28/17.
+ * PRECONDITION:
+ * Account has no room
  */
-public class C42100_Add_new_room extends Base {
+public class C42100_Add_new_room{
 
     private String login, pass, server, name, actual;
+    private Base $;
 
-    public C42100_Add_new_room(AppiumDriver driver, String locale_) {
-        super(driver, locale_);
-        
-        log("TEST IS STARTED");
-        pass = "qwe123";
-        name = "room_number_";
-        login = "ajax1@i.ua";
-        server = "Production";
+    @Parameters({ "deviceName_" })
+    @BeforeClass
+    public void init(String deviceName_){
+        $ = new Base(deviceName_);
+        $.initPageObjects($.getDriver());
 
-        log("start from IntroPage");
-        introPage.goToAuthorization();
-        authorizationPage.loginToTheServer(login, pass, server);
+        Base.log("get credentials for login");
+        login = $.getCredsWithKey("login");
+        pass = $.getCredsWithKey("password");
+        server = $.getCredsWithKey("server");
 
-        log("waiting for Pincode PopUp");
-        check.waitElementWithoutPin(dashboardHeader.menuDrawer, 3);
+        $.loginPage.loginWithPinCancel(login, pass, server);
 
-        log("tap the Room Page button in the footer");
-        dashboard.footerRooms.click();
+        Base.log("tap the Room Page button in the footer");
+        $.dashboard.goToTheRoomPage();
+    }
 
-        log("add Room without image");
-        roomsPage.addRoom("Without image", 0);
+    @Test(priority = 1, enabled = true)
+    public void First_room_without_image() {
+        Base.log("add Room without image");
+        $.roomsPage.addRoom("Without image", 0);
 
-        log("add Room with image from camera");
-        roomsPage.addRoom("Camera image", 1);
+        Assert.assertTrue($.roomsPage.isRoomPresens("Without image"));
+    }
 
-        log("add Room with image from popup gallery");
-        roomsPage.addRoom("Gallery image", 2, 2);
+    @Test(priority = 2, enabled = true)
+    public void Gallery_image() {
+        Base.log("close pop up if present");
+        $.nav.cancelIt();
 
-        log("TEST IS FINISHED");
+        Base.log("add Room with image from popup gallery");
+        $.roomsPage.addRoom("Gallery image", 2, 2);
+
+        Assert.assertTrue($.roomsPage.isRoomPresens("Gallery image"));
+    }
+
+    @Test(priority = 3, enabled = true)
+    public void Camera_image() {
+        Base.log("close pop up if present");
+        $.nav.cancelIt();
+
+        Base.log("add Room with image from camera");
+        $.roomsPage.addRoom("Camera image", 1);
+
+        Assert.assertTrue($.roomsPage.isRoomPresens("Camera image"));
+    }
+
+    @AfterClass
+    public void endSuit() {
+        $.getDriver().quit();
     }
 
 }
