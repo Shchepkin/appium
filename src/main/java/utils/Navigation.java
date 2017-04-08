@@ -75,7 +75,7 @@ public class Navigation{
     private WebElement image;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/settings")
-    private WebElement settingsBtn;
+    private WebElement settingsButton;
 
 //======================================================================================================================
 // Footer
@@ -423,12 +423,13 @@ public class Navigation{
 // GO
 //======================================================================================================================
     public void nextButtonClick(){nextButton.click();}
-
     public WebElement getNextButton() {return nextButton;}
 
     public void goBack() {
         backBtn.click();
     }
+
+    public void goToSettings(){settingsButton.click();}
 
     public boolean goToTheRemotePage(){
         Base.log("method is started");

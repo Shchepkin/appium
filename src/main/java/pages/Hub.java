@@ -27,11 +27,14 @@ public class Hub{
 //----------------------------------------------------------------------------------------------------------------------
     private final Base $;
     private final AppiumDriver driver;
-    private String sendInvitesButtonText;
+    private String sendInvitesButtonText,armedText, disarmedText, patrialArmedText;
 
     public Hub(Base base) {
         $ = base;
         this.driver = $.getDriver();
+        armedText = $.getLocalizeTextForKey("armed");
+        disarmedText = $.getLocalizeTextForKey("disarmed");
+        patrialArmedText = $.getLocalizeTextForKey("partially_armed");
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -67,6 +70,38 @@ public class Hub{
         hubSettingsUsersImage.click();
 
         $.wait.element(userStatus, 10, true);
+        Base.log("method is finished");
+    }
+
+    public void arm() {
+        Base.log("method is started");
+
+        $.dashboard.goToTheRemotePage();
+        $.remotePage.clickArmButton();
+        $.nav.confirmIt();
+
+        $.wait.elementWithText(armedText, 10, true);
+        Base.log("method is finished");
+    }
+
+    public void disarm() {
+        Base.log("method is started");
+
+        $.dashboard.goToTheRemotePage();
+        $.remotePage.clickDisarmButton();
+
+        $.wait.elementWithText(disarmedText, 10, true);
+        Base.log("method is finished");
+    }
+
+    public void partialArm() {
+        Base.log("method is started");
+
+        $.dashboard.goToTheRemotePage();
+        $.remotePage.clickPartialArmButton();
+        $.nav.confirmIt();
+
+        $.wait.elementWithText(patrialArmedText, 10, true);
         Base.log("method is finished");
     }
 

@@ -8,11 +8,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import org.testng.annotations.Test;
-import utils.*;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class User{
 

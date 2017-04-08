@@ -15,10 +15,10 @@ public class PinPage {
     private WebElement contentText;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
-    public WebElement cancelBtn;
+    private WebElement cancelBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
-    public WebElement confirmBtn;
+    private WebElement confirmBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/description")
     private WebElement description;
@@ -91,10 +91,10 @@ public class PinPage {
             WebDriverWait iWait = new WebDriverWait (driver, 30);
             iWait.until(ExpectedConditions.visibilityOf(cancelBtn));
             cancelBtn.click();
-            $.log("window with PIN acceptation is displayed and canceled");
+            Base.log("window with PIN acceptation is displayed and canceled");
 
         } catch (NoSuchElementException e) {
-            $.log("window with PIN acceptation isn't displayed");
+            Base.log("window with PIN acceptation isn't displayed");
         }
     }
 
@@ -104,10 +104,10 @@ public class PinPage {
             WebDriverWait iWait = new WebDriverWait (driver, 30);
             iWait.until(ExpectedConditions.visibilityOf(confirmBtn));
             confirmBtn.click();
-            $.log("Window with PIN acceptation is displayed and confirmed.");
+            Base.log("Window with PIN acceptation is displayed and confirmed.");
 
         } catch (NoSuchElementException e) {
-            $.log("Window with PIN acceptation isn't displayed.");
+            Base.log("Window with PIN acceptation isn't displayed.");
         }
     }
 

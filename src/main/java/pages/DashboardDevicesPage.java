@@ -3,9 +3,10 @@ package pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import utils.Imitator;
+import org.testng.Assert;
 
 import java.util.ArrayList;
 
@@ -14,9 +15,15 @@ public class DashboardDevicesPage{
     @AndroidFindBy(id = "com.ajaxsystems:id/footerTitle")
     private WebElement addDeviceButton;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/unpair")
+    private WebElement unpairButton;
+
 //----------------------------------------------------------------------------------------------------------------------
     @AndroidFindBy(id = "com.ajaxsystems:id/rooms")
-    private WebElement setRoomButton;
+    private WebElement setRoomButtonElement;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/room")
+    private WebElement roomOfDeviceLocator;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/image")
     private ArrayList<WebElement> allRoomObjects;
@@ -46,6 +53,19 @@ public class DashboardDevicesPage{
         addDeviceButton.click();
     }
 
+    public void unpairButtonClick(){
+        Base.log("click delete button");
+        unpairButton.click();
+    }
+
+    public void goToDeviceSettingsPage(){
+        Base.log("click on Device tab (room element)");
+        roomOfDeviceLocator.click();
+
+        Base.log("click Settings Button");
+        $.nav.goToSettings();
+    }
+
     public void fillFieldsWith(String deviceName, String devID){
         Base.log("fill name field with \"" + deviceName + "\"");
         nameField.sendKeys(deviceName);
@@ -59,12 +79,7 @@ public class DashboardDevicesPage{
     public void setRoom(int numOfRoom) {
         if (numOfRoom > 0) {
             Base.log("click Set Room button");
-            setRoomButton.click();
-//            try {
-//                Thread.sleep(5000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            setRoomButtonElement.click();
 
             $.wait.element(roomObject, 10, true);
 
@@ -79,7 +94,6 @@ public class DashboardDevicesPage{
     public void addNew(int devId, int devNumber, int devType, String devName, int roomNumber) {
         Base.log("add devices to imitator");
         $.imitator.addDevice(devId, devNumber, devType);
-//        imitator.getDeviceList();
 
         Base.log("add devices \"" + devName + "\" to Hub");
         $.nav.scrollBottom();
@@ -110,6 +124,42 @@ public class DashboardDevicesPage{
     private class name{
     }
 
+    public String getFirstDeviceName(){
+        String roomXpath = "*[@resource-id = 'com.ajaxsystems:id/room']";
+        String nameXpath = "*[@resource-id = 'com.ajaxsystems:id/name']";
+        String xPath = "//" + roomXpath + "/preceding-sibling::" + nameXpath;
+        return driver.findElementByXPath(xPath).getText();
+    }
+
+    public void deleteAllDevices() {
+        String successText = $.getLocalizeTextForKey("Deleting_success1");
+        int counter = 0;
+
+        try {
+            while (true) {
+                if ($.wait.element($.dashboardHeader.getMenuDrawer(), 5, true)){
+                    String devName = getFirstDeviceName();
+                    goToDeviceSettingsPage();
+                    $.nav.scrollBottom();
+                    unpairButtonClick();
+                    $.nav.confirmIt();
+                    Assert.assertTrue($.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
+                    $.wait.element($.dashboardHeader.getMenuDrawer(), 5, true);
+                    Base.log("device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
+                    counter++;
+
+                }else if ($.nav.getCancelButton().isDisplayed()){
+                    $.nav.cancelIt();
+                }else {
+                    break;
+                }
+            }
+        }catch (NoSuchElementException e){
+            Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
+        }
+        Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one device found\n");
+        Base.log(1, "devices are not found, number of deleted devices: " + counter);
+    }
 
     public boolean dellBy(String by) {
         boolean result = false;

@@ -9,13 +9,10 @@ import pages.Base;
 
 /**
  * PRECONDITION
- * There are:
- * - one hub, so  at least master-user present
- * - at least one active user
- * - at least one pending user
+ * - one hub
+ * - at least three devices
  */
 public class C44142_Device_delete {
-
     private Base $;
 
     @Parameters({ "deviceName_" })
@@ -29,13 +26,50 @@ public class C44142_Device_delete {
     }
 
     @Test(priority = 1, enabled = false)
-    public void one_device_deleting() {
-        $.user.deleteAllPending();
+    public void While_Hub_Disarmed() {
+        String successText = $.getLocalizeTextForKey("Deleting_success1");
+
+        Base.log(2, "get name of first device from device list");
+        String devName = $.devicesPage.getFirstDeviceName();
+
+        $.devicesPage.goToDeviceSettingsPage();
+
+        Base.log("scroll bottom and tap Delete button");
+        $.nav.scrollBottom();
+        $.devicesPage.unpairButtonClick();
+
+        Base.log("confirm proposition from popUp");
+        $.nav.confirmIt();
+
+        Assert.assertTrue($.wait.elementWithText(successText, 10, true));
+        Base.log("device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
+
+        Assert.assertTrue($.dashboardHeader.getMenuDrawer().isDisplayed());
+        Base.log("device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
     }
 
     @Test(priority = 2, enabled = true)
+    public void While_Hub_Armed() {
+        String expectedSnackBarText = $.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
+        $.hub.arm();
+        $.dashboard.goToTheDevicesPage();
+        $.devicesPage.goToDeviceSettingsPage();
+        $.wait.element($.popUp.getSnackBarElement(), 5, true);
+        String actualSnackBarText = $.popUp.getSnackBarText();
+        Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "Fail");
+    }
+
+    @Test(priority = 2, enabled = false)
+    public void While_Hub_Partial_Armed() {
+        String snackBarText = $.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
+        $.hub.partialArm();
+
+        $.devicesPage.deleteAllDevices();
+    }
+
+    @Test(priority = 2, enabled = false)
     public void all_device_deleting() {
-        $.user.deleteAllGuests();
+        $.devicesPage.deleteAllDevices();
     }
 
     @AfterClass
