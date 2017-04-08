@@ -5,6 +5,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 public class Hub{
 
@@ -66,6 +67,39 @@ public class Hub{
         hubSettingsUsersImage.click();
 
         $.wait.element(userStatus, 10, true);
+        Base.log("method is finished");
+    }
+
+    public void addNew() {
+        Base.log("method is started");
+
+        Base.log("get creds for hubName and hubMasterKey");
+        String hubName = $.getCredsWithKey("hubName");
+        String hubMasterKey = $.getCredsWithKey("hubMasterKey");
+
+
+        if ($.dashboardHeader.getMenuDrawer().isDisplayed()){
+            if ($.dashboard.getPlusButton().isDisplayed()){
+                Base.log("add Hub by Plus Button");
+                $.dashboard.plusButtonClick();
+            }else {
+                Base.log("add Hub from Main Menu");
+                $.dashboardHeader.getMenuDrawer().click();
+                $.menuPage.addHubButtonClick();
+            }
+        }
+
+        Base.log("choose manual Hub adding ");
+        $.nav.nextButtonClick();
+
+        $.dashboard.fillFieldsWith(hubName, hubMasterKey);
+        $.nav.confirmIt();
+
+        $.wait.invisibilityOfWaiter(true);
+        Assert.assertFalse($.check.isErrorPresent(2), "Hub adding failed!");
+
+        Assert.assertTrue($.wait.element($.dashboardHeader.getGprsImage(), 10, true));
+        Base.log("hub successfully added!");
         Base.log("method is finished");
     }
 }

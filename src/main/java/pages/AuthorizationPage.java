@@ -49,6 +49,7 @@ public class AuthorizationPage{
 //----------------------------------------------------------------------------------------------------------------------
 
     private final Base $;
+    private boolean result;
 
     public AuthorizationPage(Base base) {
         $ = base;
@@ -105,6 +106,37 @@ public class AuthorizationPage{
         Assert.assertTrue($.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
 
         Base.log("Method is finished");
+    }
+
+
+    public boolean loginWithPinCancel() {
+        Base.log("Method is started");
+
+        Base.log("get credentials for login");
+        String login = $.getCredsWithKey("login");
+        String password = $.getCredsWithKey("password");
+        String server = $.getCredsWithKey("server");
+
+        Base.log("start from IntroPage");
+        loginButtonOnIntro.click();
+
+        loginToTheServer(login, password, server);
+
+        Base.log("wait until LoaderLogo become invisible");
+        $.wait.invisibilityOfLoaderLogo(true);
+
+        Base.log("waiting for Pincode PopUp and cancel it");
+        if ($.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 10)){
+            Base.log("Login successfully!");
+            result = true;
+        }else {
+            Base.log("Login failed!");
+            result = false;
+        }
+//        Assert.assertTrue($.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
+
+        Base.log("Method is finished");
+        return result;
     }
 
 

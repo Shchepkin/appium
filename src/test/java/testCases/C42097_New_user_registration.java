@@ -8,6 +8,10 @@ import org.testng.annotations.Test;
 import pages.*;
 import utils.Sql;
 
+/**
+ * PRECONDITION
+ */
+
 public class C42097_New_user_registration{
 
     private String userName, login, pass, phone, server;
@@ -23,19 +27,10 @@ public class C42097_New_user_registration{
         login = $.getCredsWithKey("login");
         pass = $.getCredsWithKey("password");
         server = $.getCredsWithKey("server");
-        login = $.getCredsWithKey("phone");
-        pass = $.getCredsWithKey("userName");
+        phone = $.getCredsWithKey("phone");
+        userName = $.getCredsWithKey("userName");
 
         $.sql.getDelete("Phone", "%" + phone + "%");
-
-
-//        login = "ajaxsys33@bigmir.net";
-//        phone = "971112234";
-//        pass = "qwe";
-//        userName = "name";
-//        server = "Develop";
-
-
     }
 
     @Test(priority = 1, enabled = true)
@@ -68,7 +63,7 @@ public class C42097_New_user_registration{
 //        $.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 30);
 //
 //        Assert.assertTrue($.wait.element($.dashboardHeader.getMenuDrawer(), 15, true), "Login failed!\n");
-        Assert.assertTrue( $.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 30), "Login failed!\n");
+        Assert.assertTrue( $.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 100), "Login failed!\n");
     }
 
     @AfterClass

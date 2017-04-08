@@ -3,7 +3,6 @@ package pages;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -15,8 +14,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
 import utils.*;
 
 import java.io.*;
@@ -55,9 +52,9 @@ public class Base {
     public ForgotPasswordPage forgotPasswordPage;
     public ValidationCodePage validationCodePage;
     public DashboardRemotePage remotePage;
-    public DashboardDevicesPage device;
+    public DashboardDevicesPage devicesPage;
 
-    private AppiumDriver driver = null;
+    private AndroidDriver driver = null;
     private Path path;
     private String jsonString, collection;
     private String locale;
@@ -65,7 +62,7 @@ public class Base {
     private Map localizeKeys, creds, dbSettings;
 
     private ArrayList<String> jsonStringArray;
-    private String deviceName, UDID, platformVersion, URL, appPath;
+    private String deviceName, UDID, platformVersion, URL, appPath, appPackage, appActivity;
 
     public Base(String deviceName_) {
         log("setup is started");
@@ -73,25 +70,25 @@ public class Base {
 
         log("set driver variables");
         deviceName = deviceName_;
-        URL = creds.get("URL").toString();
-        UDID = creds.get("UDID").toString();
-        locale = creds.get("locale").toString();
-        appPath = creds.get("appPath").toString();
-        platformVersion = creds.get("platformVersion").toString();
+        URL = getCredsWithKey("URL");
+        UDID = getCredsWithKey("UDID");
+        locale = getCredsWithKey("locale");
+        appPath = getCredsWithKey("appPath");
+        platformVersion = getCredsWithKey("platformVersion");
+        appPackage = getCredsWithKey("appPackage");
+        appActivity = getCredsWithKey("appActivity");
 
         log("get localizeKeys Map with locale \"" + locale + "\"");
         localizeKeys = getLocalizeKeys(locale);
         dbSettings = getDbSettings();
     }
 
-    public Base(AppiumDriver driver) {
+    public Base(AndroidDriver driver) {
         initPageObjects(driver);
     }
 
 
-    public void initPageObjects(AppiumDriver driver) {
-        log(2, "init Wait()");
-        wait = new Wait(this);
+    public void initPageObjects(AndroidDriver driver) {
 
         log(2, "init Navigation()");
         nav = new Navigation(this);
@@ -102,26 +99,29 @@ public class Base {
         log(2, "init Hub()");
         hub = new Hub(this);
 
+        log(2, "init Wait()");
+        wait = new Wait(this);
+
         log(2, "init Check()");
         check = new Check(this);
 
         log(2, "init PopUp()");
         popUp = new PopUp(this);
 
-        log(2, "init DashboardDevicesPage()");
-        device = new DashboardDevicesPage(this);
-
         log(2, "init RegistrationPage()");
         regPage = new RegistrationPage(this);
+
+        log(2, "init DashboardActivePINPage()");
+        pinPage = new PinPage(this);
 
         log(2, "init MenuMainPage()");
         menuPage = new MainMenuPage(this);
 
-        log(2, "init IntroPage()");
-        introPage = new IntroPage(this);
-
         log(2, "init Dashboard()");
         dashboard = new Dashboard(this);
+
+        log(2, "init IntroPage()");
+        introPage = new IntroPage(this);
 
         log(2, "init AuthorizationPage()");
         loginPage = new AuthorizationPage(this);
@@ -135,6 +135,9 @@ public class Base {
         log(2, "init MenuAccountPage()");
         accountPage = new AccountMenuPage(this);
 
+        log(2, "init DashboardDevicesPage()");
+        devicesPage = new DashboardDevicesPage(this);
+
         log(2, "init AddImagePage()");
         addImagePage = new AddImagePage(this);
 
@@ -143,9 +146,6 @@ public class Base {
 
         log(2, "init ValidationCodePage()");
         validationCodePage = new ValidationCodePage(this);
-
-        log(2, "init DashboardActivePINPage()");
-        pinPage = new PinPage(this);
 
         log(2, "init DashboardHeader()");
         header = new DashboardHeader(this);
@@ -419,18 +419,18 @@ public class Base {
         log("Method is finished");
     }
 
-    //**********************************************************************************************************************
-// Appium Driver
+//**********************************************************************************************************************
+// AndroidDriver
 //**********************************************************************************************************************
 
-    public AppiumDriver getDriver() {
+    public AndroidDriver getDriver() {
         if (driver == null) {
             driver = initDriver();
         }
         return driver;
     }
 
-    private AppiumDriver initDriver() {
+    private AndroidDriver initDriver() {
         log("Method is started");
         try {
             log(2, "get .apk file");
@@ -446,8 +446,8 @@ public class Base {
             capabilities.setCapability("platformVersion", platformVersion);
             capabilities.setCapability("platformName", "Android");
             capabilities.setCapability("app", app.getAbsolutePath());
-            capabilities.setCapability("appPackage", "com.ajaxsystems");
-            capabilities.setCapability("appActivity", "com.ajaxsystems.ui.activity.LauncherActivity");
+            capabilities.setCapability("appPackage", appPackage);
+            capabilities.setCapability("appActivity", appActivity);
 
             log(2, "implement Android driver");
             driver = new AndroidDriver(new URL("http://" + URL), capabilities);

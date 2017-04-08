@@ -10,11 +10,11 @@ import pages.Base;
 /**
  * PRECONDITION
  * There are:
- * - one hub, so  at least one master-user present
+ * - one hub, so  at least master-user present
  * - at least one active user
  * - at least one pending user
  */
-public class C44141_User_delete{
+public class C44142_Device_delete {
 
     private Base $;
 
@@ -26,29 +26,16 @@ public class C44141_User_delete{
 
         Base.log("login without Pin");
         $.loginPage.loginWithPinCancel();
-
-        $.hub.goToTheUserlistPage();
     }
 
     @Test(priority = 1, enabled = false)
-    public void all_pending_users() {
+    public void one_device_deleting() {
         $.user.deleteAllPending();
     }
 
     @Test(priority = 2, enabled = true)
-    public void all_guest_users() {
+    public void all_device_deleting() {
         $.user.deleteAllGuests();
-    }
-
-    @Test(priority = 3, enabled = false)
-    public void master_user() {
-        $.user.deleteMasterUser();
-        $.nav.cancelIt();
-
-        Assert.assertTrue($.dashboard.getPlusButton().isDisplayed());
-
-        Base.log("return hub for next tests");
-        $.hub.addNew();
     }
 
     @AfterClass

@@ -51,7 +51,6 @@ public class DashboardHeader{
 
     public boolean isMenuIconPresent(int timer){
         boolean result = false;
-
         return result;
     }
 

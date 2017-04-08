@@ -225,7 +225,7 @@ public class Check{
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf($.popUp.errorPic));
 
-            Base.log("Error message is shown with text: \"" + $.popUp.getContentText() + "\"");
+            Base.log(3, "Error message is shown with text: \"" + $.popUp.getContentText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {

@@ -6,7 +6,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class MainMenuPage{
+public class MainMenuPage {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/menuTitle")
     private WebElement menuTitle;
@@ -23,8 +23,7 @@ public class MainMenuPage{
     @AndroidFindBy(id = "com.ajaxsystems:id/settings")
     private WebElement settingsButton;
 
-
-//----------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------
     private final Base $;
     private final AppiumDriver driver;
 
@@ -33,6 +32,15 @@ public class MainMenuPage{
         this.driver = $.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+
 //----------------------------------------------------------------------------------------------------------------------
+
+    public WebElement getAddHubButton() {
+        return addHubButton;
+    }
+
+    public void addHubButtonClick() {
+        addHubButton.click();
+    }
 
 }

@@ -4,6 +4,12 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.Base;
 
+/**
+ * PRECONDITION
+ * - account exist and validated
+ * -
+ */
+
 public class C42098_Login_to_the_existing_account{
 
     private String login, pass, server, expectedText, actual;

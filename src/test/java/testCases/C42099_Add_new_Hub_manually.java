@@ -9,13 +9,12 @@ import org.testng.annotations.Test;
 import pages.Base;
 
 /**
- * PRECONDITION:
+ * PRECONDITION
  * Account has no hub
  */
 public class C42099_Add_new_Hub_manually{
 
-    private String login, pass, server, hubName, hubMasterKey, expected, actual;
-    private WebElement[] elements;
+    private String hubName, hubMasterKey, expected, actual;
     private Base $;
 
     @Parameters({ "deviceName_" })
@@ -24,17 +23,10 @@ public class C42099_Add_new_Hub_manually{
         $ = new Base(deviceName_);
         $.initPageObjects($.getDriver());
 
-        Base.log("get credentials for login");
-        login = $.getCredsWithKey("login");
-        pass = $.getCredsWithKey("password");
-        server = $.getCredsWithKey("server");
-
         hubName = $.getCredsWithKey("hubName");
         hubMasterKey = $.getCredsWithKey("hubMasterKey");
 
-//        String hubKey = "12345123451234512345";
-
-        $.loginPage.loginWithPinCancel(login, pass, server);
+        $.loginPage.loginWithPinCancel();
     }
 
     @Test(priority = 1, enabled = true)
