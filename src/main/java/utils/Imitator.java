@@ -1,9 +1,9 @@
 package utils;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import jssc.*;
-import org.openqa.selenium.support.PageFactory;
+import jssc.SerialPort;
+import jssc.SerialPortEvent;
+import jssc.SerialPortEventListener;
+import jssc.SerialPortList;
 import pages.Base;
 
 public class Imitator{

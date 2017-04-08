@@ -1,7 +1,6 @@
 package utils;
 
 import org.testng.Assert;
-import org.testng.Reporter;
 import pages.Base;
 
 import javax.mail.*;
@@ -20,8 +19,8 @@ public class Email{
     private Store store;
     private Message message[];
 
-    public String emailCode;
-    public String emailText;
+    private String emailCode;
+    private String emailText;
 
     public Email(String host, String user, String password) {
         try {
@@ -45,16 +44,13 @@ public class Email{
 
             openFolderAndGetMessages();
 
-
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
 
 
-    public Message[] openFolderAndGetMessages() {
+    private Message[] openFolderAndGetMessages() {
         try {
             Base.log("\n=== Start process for opening folder.");
 
@@ -117,7 +113,7 @@ public class Email{
     }
 
 
-    public String getEmailTextFromNewMessage() {
+    private String getEmailTextFromNewMessage() {
         try {
             if (message.length > 0) {
                 Base.log("\n=== Start process for getting text from e-mail.");
@@ -145,11 +141,7 @@ public class Email{
 
             } else Base.log("> There are no messages found.");
 
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (MessagingException | IOException e) {
             e.printStackTrace();
         }
         return emailText;
@@ -171,8 +163,6 @@ public class Email{
             Base.log("> Close the store and folder objects");
             closeAll();
 
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -192,8 +182,6 @@ public class Email{
                 Base.log("> Store is closed.");
             }else Base.log("> Store is already closed.");
 
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }

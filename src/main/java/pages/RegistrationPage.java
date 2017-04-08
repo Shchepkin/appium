@@ -11,20 +11,17 @@ import java.util.List;
 
 public class RegistrationPage{
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/back")
-    public WebElement backBtn;
-
     @AndroidFindBy(id = "com.ajaxsystems:id/photo")
-    public WebElement userPic;
+    private WebElement userPic;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
-    public WebElement nameField;
+    private WebElement nameField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/login")
-    public WebElement emailField;
+    private WebElement emailField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/loginConfirm")
-    public WebElement emailConfirmField;
+    private WebElement emailConfirmField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/code")
     private WebElement phoneCountryCode;
@@ -33,17 +30,16 @@ public class RegistrationPage{
     private List<WebElement> phoneCountryCodeList;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/phone")
-    public AndroidElement phoneField;
+    private AndroidElement phoneField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/password")
-    public WebElement passwordField;
+    private WebElement passwordField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/passwordConfirm")
-    public WebElement passwordConfirmField;
+    private WebElement passwordConfirmField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/agreement")
-    public WebElement userAgreementCheckbox;
-
+    private WebElement userAgreementCheckbox;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
     private WebElement registrationButtonLink;

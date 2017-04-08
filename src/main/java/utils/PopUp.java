@@ -20,7 +20,7 @@ public class PopUp{
     public WebElement errorPic;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/content_text")
-    public WebElement contentText;
+    private WebElement contentTextElement;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/timerText")
     private WebElement timerText;
@@ -123,9 +123,9 @@ public class PopUp{
         try {
             Base.log(2, "waiting " + timer + " seconds for the element ");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions.textToBePresentInElement(contentText, searchingText));
+            iWait.until(ExpectedConditions.textToBePresentInElement(contentTextElement, searchingText));
 
-            Base.log(2, "element is shown with text: \"" + contentText.getText() + "\"");
+            Base.log(2, "element is shown with text: \"" + contentTextElement.getText() + "\"");
             result = true;
         } catch (NoSuchElementException e) {
             Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
@@ -140,10 +140,17 @@ public class PopUp{
     }
 
     public String getContentText() {
-        return contentText.getText();
+        return contentTextElement.getText();
     }
 
-    public WebElement getSnackBar() {
+    public WebElement getContentTextElement() {
+        return contentTextElement;
+    }
+
+    public WebElement getSnackBarElement() {
         return snackBar;
+    }
+    public String  getSnackBarText() {
+        return snackBar.getText();
     }
 }

@@ -1,11 +1,9 @@
 package utils;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -98,7 +96,7 @@ public class Check{
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period, int tryCount, boolean confirmPopupProposition){
         Base.log("Method is started");
         result = false;
-        WebElement[] elements = new WebElement[]{$.popUp.getSnackBar(), $.popUp.loadingWindow};
+        WebElement[] elements = new WebElement[]{$.popUp.getSnackBarElement(), $.popUp.loadingWindow};
 
         for (int i = 1; i <= tryCount; i++) {
             Base.log(3, "click the element link, try count #" +i);
@@ -125,7 +123,7 @@ public class Check{
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, boolean confirmPopupProposition){
         Base.log("Method is started");
         result = false;
-        WebElement[] elements = new WebElement[]{$.popUp.getSnackBar(), $.popUp.loadingWindow};
+        WebElement[] elements = new WebElement[]{$.popUp.getSnackBarElement(), $.popUp.loadingWindow};
 
         Base.log(3, "click the element link");
         elementForClick.click();
@@ -146,7 +144,7 @@ public class Check{
         switch (numOfFoundElement){
             case 0: Base.log(3, "no PopUp is shown or this moment is missed"); break;
             case 1: Base.log(3, "snackBar is shown, the text was previously displayed"); break;
-            case 2: Base.log(3, "PopUp is shown with text: \"" + $.popUp.contentText.getText() + "\"");
+            case 2: Base.log(3, "PopUp is shown with text: \"" + $.popUp.getContentText() + "\"");
                 WebElement[] elements = new WebElement[]{$.nav.getCancelButton(), $.popUp.errorPic};
                 numOfFoundElement = waitElements(elements, 5);
                 switch (numOfFoundElement){
@@ -161,7 +159,7 @@ public class Check{
                             $.nav.getCancelButton().click();
                         }
                         break;
-                    case 2: Base.log(4, "ERROR is shown with text: \"" + $.popUp.contentText.getText() + "\""); break;
+                    case 2: Base.log(4, "ERROR is shown with text: \"" + $.popUp.getContentText() + "\""); break;
                     default: break;
                 }
             default: break;
@@ -207,9 +205,9 @@ public class Check{
         try {
             Base.log(2, "waiting " + timer + " seconds for SnackBar");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions.visibilityOf($.popUp.getSnackBar()));
+            iWait.until(ExpectedConditions.visibilityOf($.popUp.getSnackBarElement()));
 
-            Base.log("SnackBar is shown with text: \"" + $.popUp.getSnackBar().getText() + "\"");
+            Base.log("SnackBar is shown with text: \"" + $.popUp.getSnackBarText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
