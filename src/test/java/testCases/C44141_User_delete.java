@@ -16,43 +16,43 @@ import pages.Base;
  */
 public class C44141_User_delete{
 
-    private Base $;
+    private Base base;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
-        $ = new Base(deviceName_);
-        $.initPageObjects($.getDriver());
+        base = new Base(deviceName_);
+        base.initPageObjects(base.getDriver());
 
         Base.log("login without Pin");
-        $.loginPage.loginWithPinCancel();
+        base.loginPage.loginWithPinCancel();
 
-        $.hub.goToTheUserlistPage();
+        base.hub.goToTheUserlistPage();
     }
 
     @Test(priority = 1, enabled = false)
     public void all_pending_users() {
-        $.user.deleteAllPending();
+        base.user.deleteAllPending();
     }
 
     @Test(priority = 2, enabled = true)
     public void all_guest_users() {
-        $.user.deleteAllGuests();
+        base.user.deleteAllGuests();
     }
 
     @Test(priority = 3, enabled = false)
     public void master_user() {
-        $.user.deleteMasterUser();
-        $.nav.cancelIt();
+        base.user.deleteMasterUser();
+        base.nav.cancelIt();
 
-        Assert.assertTrue($.dashboard.getPlusButton().isDisplayed());
+        Assert.assertTrue(base.dashboard.getPlusButton().isDisplayed());
 
         Base.log("return hub for next tests");
-        $.hub.addNew();
+        base.hub.addNew();
     }
 
     @AfterClass
     public void endSuit() {
-        $.getDriver().quit();
+        base.getDriver().quit();
     }
 }

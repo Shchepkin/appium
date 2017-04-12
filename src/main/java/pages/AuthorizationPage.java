@@ -48,12 +48,12 @@ public class AuthorizationPage{
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Base $;
+    private final Base base;
     private boolean result;
 
     public AuthorizationPage(Base base) {
-        $ = base;
-        PageFactory.initElements(new AppiumFieldDecorator($.getDriver()), this);
+        this.base = base;
+        PageFactory.initElements(new AppiumFieldDecorator(base.getDriver()), this);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -100,10 +100,10 @@ public class AuthorizationPage{
         loginToTheServer(login, password, server);
 
         Base.log("wait until LoaderLogo become invisible");
-        $.wait.invisibilityOfLoaderLogo(true);
+        base.wait.invisibilityOfLoaderLogo(true);
 
         Base.log("waiting for Pincode PopUp and cancel it");
-        Assert.assertTrue($.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
+        Assert.assertTrue(base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
 
         Base.log("Method is finished");
     }
@@ -113,9 +113,9 @@ public class AuthorizationPage{
         Base.log("Method is started");
 
         Base.log("get credentials for login");
-        String login = $.getCredsWithKey("login");
-        String password = $.getCredsWithKey("password");
-        String server = $.getCredsWithKey("server");
+        String login = base.getCredsWithKey("login");
+        String password = base.getCredsWithKey("password");
+        String server = base.getCredsWithKey("server");
 
         Base.log("start from IntroPage");
         loginButtonOnIntro.click();
@@ -123,17 +123,17 @@ public class AuthorizationPage{
         loginToTheServer(login, password, server);
 
         Base.log("wait until LoaderLogo become invisible");
-        $.wait.invisibilityOfLoaderLogo(true);
+        base.wait.invisibilityOfLoaderLogo(true);
 
         Base.log("waiting for Pincode PopUp and cancel it");
-        if ($.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 10)){
+        if (base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10)){
             Base.log("Login successfully!");
             result = true;
         }else {
             Base.log("Login failed!");
             result = false;
         }
-//        Assert.assertTrue($.check.waitElementWithoutPin($.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
+//        Assert.assertTrue(base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
 
         Base.log("Method is finished");
         return result;
@@ -144,7 +144,7 @@ public class AuthorizationPage{
         Base.log("Method is started");
 
         Base.log("select server type: \"" + server + "\"");
-        $.nav.longTapButton(loginBtn, 2);
+        base.nav.longTapButton(loginBtn, 2);
 
         switch (server) {
             case "Debug":  serverDebug.click();
