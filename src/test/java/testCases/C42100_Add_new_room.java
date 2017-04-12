@@ -16,58 +16,58 @@ import pages.Base;
 public class C42100_Add_new_room{
 
     private String login, pass, server, name, actual;
-    private Base $;
+    private Base base;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
-        $ = new Base(deviceName_);
-        $.initPageObjects($.getDriver());
+        base = new Base(deviceName_);
+        base.initPageObjects(base.getDriver());
 
         Base.log("get credentials for login");
-        login = $.getCredsWithKey("login");
-        pass = $.getCredsWithKey("password");
-        server = $.getCredsWithKey("server");
+        login = base.getCredsWithKey("login");
+        pass = base.getCredsWithKey("password");
+        server = base.getCredsWithKey("server");
 
-        $.loginPage.loginWithPinCancel(login, pass, server);
+        base.loginPage.loginWithPinCancel(login, pass, server);
 
         Base.log("tap the Room Page button in the footer");
-        $.dashboard.goToTheRoomPage();
+        base.dashboard.goToTheRoomPage();
     }
 
     @Test(priority = 1, enabled = true)
     public void First_room_without_image() {
         Base.log("add Room without image");
-        $.roomsPage.addRoom("Without image", 0);
+        base.roomsPage.addRoom("Without image", 0);
 
-        Assert.assertTrue($.roomsPage.isRoomPresens("Without image"));
+        Assert.assertTrue(base.roomsPage.isRoomPresens("Without image"));
     }
 
     @Test(priority = 2, enabled = true)
     public void Gallery_image() {
         Base.log("close pop up if present");
-        $.nav.cancelIt();
+        base.nav.cancelIt();
 
         Base.log("add Room with image from popup gallery");
-        $.roomsPage.addRoom("Gallery image", 2, 2);
+        base.roomsPage.addRoom("Gallery image", 2, 2);
 
-        Assert.assertTrue($.roomsPage.isRoomPresens("Gallery image"));
+        Assert.assertTrue(base.roomsPage.isRoomPresens("Gallery image"));
     }
 
     @Test(priority = 3, enabled = true)
     public void Camera_image() {
         Base.log("close pop up if present");
-        $.nav.cancelIt();
+        base.nav.cancelIt();
 
         Base.log("add Room with image from camera");
-        $.roomsPage.addRoom("Camera image", 1);
+        base.roomsPage.addRoom("Camera image", 1);
 
-        Assert.assertTrue($.roomsPage.isRoomPresens("Camera image"));
+        Assert.assertTrue(base.roomsPage.isRoomPresens("Camera image"));
     }
 
     @AfterClass
     public void endSuit() {
-        $.getDriver().quit();
+        base.getDriver().quit();
     }
 
 }

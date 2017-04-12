@@ -10,70 +10,84 @@ import pages.Base;
 /**
  * PRECONDITION
  * - one hub
- * - at least three devices
+ * - at least three devices with different names
  */
 public class C44142_Device_delete {
-    private Base $;
+    private Base base;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
-        $ = new Base(deviceName_);
-        $.initPageObjects($.getDriver());
+        base = new Base(deviceName_);
+        base.initPageObjects(base.getDriver());
 
         Base.log("login without Pin");
-        $.loginPage.loginWithPinCancel();
+        base.loginPage.loginWithPinCancel();
     }
 
     @Test(priority = 1, enabled = false)
     public void While_Hub_Disarmed() {
-        String successText = $.getLocalizeTextForKey("Deleting_success1");
+        String successText = base.getLocalizeTextForKey("Deleting_success1");
 
         Base.log(2, "get name of first device from device list");
-        String devName = $.devicesPage.getFirstDeviceName();
+        String devName = base.devicesPage.getFirstDeviceName();
 
-        $.devicesPage.goToDeviceSettingsPage();
+        base.devicesPage.goToDeviceSettingsPage();
 
         Base.log("scroll bottom and tap Delete button");
-        $.nav.scrollBottom();
-        $.devicesPage.unpairButtonClick();
+        base.nav.scrollBottom();
+        base.devicesPage.unpairButtonClick();
 
         Base.log("confirm proposition from popUp");
-        $.nav.confirmIt();
+        base.nav.confirmIt();
 
-        Assert.assertTrue($.wait.elementWithText(successText, 10, true));
-        Base.log("device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
+        Assert.assertTrue(base.wait.elementWithText(successText, 10, true));
 
-        Assert.assertTrue($.dashboardHeader.getMenuDrawer().isDisplayed());
+        base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
+
+        Assert.assertTrue(base.devicesPage.checkIsDeleted(devName));
         Base.log("device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = false)
     public void While_Hub_Armed() {
-        String expectedSnackBarText = $.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
-        $.hub.arm();
-        $.dashboard.goToTheDevicesPage();
-        $.devicesPage.goToDeviceSettingsPage();
-        $.wait.element($.popUp.getSnackBarElement(), 5, true);
-        String actualSnackBarText = $.popUp.getSnackBarText();
-        Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "Fail");
+        String expectedSnackBarText = base.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
+        base.hub.arm();
+        base.dashboard.goToTheDevicesPage();
+        base.devicesPage.goToDeviceSettingsPage();
+        base.wait.element(base.popUp.getSnackBarElement(), 5, true);
+        String actualSnackBarText = base.popUp.getSnackBarText();
+        Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
+        Base.log("SnackBar with error text is successfully shown");
+
+        Base.log("disarm hub");
+        base.nav.goBack();
+        base.hub.disarm();
     }
 
     @Test(priority = 2, enabled = false)
     public void While_Hub_Partial_Armed() {
-        String snackBarText = $.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
-        $.hub.partialArm();
+        String expectedSnackBarText = base.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
+        base.hub.partialArm();
+        base.dashboard.goToTheDevicesPage();
+        base.devicesPage.goToDeviceSettingsPage();
+        base.wait.element(base.popUp.getSnackBarElement(), 5, true);
+        String actualSnackBarText = base.popUp.getSnackBarText();
+        Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
+        Base.log("SnackBar with error text is successfully shown");
 
-        $.devicesPage.deleteAllDevices();
+        Base.log("disarm hub");
+        base.nav.goBack();
+        base.hub.disarm();
     }
 
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 2, enabled = true)
     public void all_device_deleting() {
-        $.devicesPage.deleteAllDevices();
+        base.devicesPage.deleteAllDevices();
     }
 
     @AfterClass
     public void endSuit() {
-        $.getDriver().quit();
+        base.getDriver().quit();
     }
 }

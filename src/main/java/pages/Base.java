@@ -59,7 +59,7 @@ public class Base {
     private String jsonString, collection;
     private String locale;
 
-    private Map localizeKeys, creds, dbSettings;
+    private Map localizeKeys, creds, dbSettings, appSet;
 
     private ArrayList<String> jsonStringArray;
     private String deviceName, UDID, platformVersion, URL, appPath, appPackage, appActivity;
@@ -67,19 +67,24 @@ public class Base {
     public Base(String deviceName_) {
         log("setup is started");
         creds = getJsonCollection("deviceData.json", deviceName_);
+        appSet = getJsonCollection("deviceData.json", "appSet");
 
-        log("set driver variables");
+        log(2, "set creds for driver");
         deviceName = deviceName_;
         URL = getCredsWithKey("URL");
         UDID = getCredsWithKey("UDID");
         locale = getCredsWithKey("locale");
-        appPath = getCredsWithKey("appPath");
         platformVersion = getCredsWithKey("platformVersion");
-        appPackage = getCredsWithKey("appPackage");
-        appActivity = getCredsWithKey("appActivity");
 
-        log("get localizeKeys Map with locale \"" + locale + "\"");
+        log(2, "set creds for app");
+        appPath = getAppSetWithKey("appPath");
+        appPackage = getAppSetWithKey("appPackage");
+        appActivity = getAppSetWithKey("appActivity");
+
+        log(2, "get localizeKeys Map with locale \"" + locale + "\"");
         localizeKeys = getLocalizeKeys(locale);
+
+        log(2, "get creds for DataBase");
         dbSettings = getDbSettings();
     }
 
@@ -168,6 +173,10 @@ public class Base {
 
     public String getCredsWithKey(String key){
         return creds.get(key).toString();
+    }
+
+    public String getAppSetWithKey(String key){
+        return appSet.get(key).toString();
     }
 
     public String getDbSettingsWithKey(String key){

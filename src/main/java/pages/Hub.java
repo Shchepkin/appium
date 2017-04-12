@@ -25,23 +25,23 @@ public class Hub{
     private WebElement userStatus;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
     private String sendInvitesButtonText,armedText, disarmedText, patrialArmedText;
 
     public Hub(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
-        armedText = $.getLocalizeTextForKey("armed");
-        disarmedText = $.getLocalizeTextForKey("disarmed");
-        patrialArmedText = $.getLocalizeTextForKey("partially_armed");
+        this.base = base;
+        this.driver = base.getDriver();
+        armedText = base.getLocalizeTextForKey("armed");
+        disarmedText = base.getLocalizeTextForKey("disarmed");
+        patrialArmedText = base.getLocalizeTextForKey("partially_armed");
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 
     public void goToTheUserInvitationPage() {
         Base.log("method is started");
-        sendInvitesButtonText = $.getLocalizeTextForKey("send_invites");
+        sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
 
         Base.log("click on hub");
         hubImageOnDeviceList.click();
@@ -52,8 +52,8 @@ public class Hub{
         Base.log("click Users tab");
         hubSettingsUsersImage.click();
 
-        $.wait.element(userStatus, 10, true);
-        $.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.wait.element(userStatus, 10, true);
+        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
         Base.log("method is finished");
     }
 
@@ -69,39 +69,39 @@ public class Hub{
         Base.log("click Users tab");
         hubSettingsUsersImage.click();
 
-        $.wait.element(userStatus, 10, true);
+        base.wait.element(userStatus, 10, true);
         Base.log("method is finished");
     }
 
     public void arm() {
         Base.log("method is started");
 
-        $.dashboard.goToTheRemotePage();
-        $.remotePage.clickArmButton();
-        $.nav.confirmIt();
+        base.dashboard.goToTheRemotePage();
+        base.remotePage.clickArmButton();
+        base.nav.confirmIt();
 
-        $.wait.elementWithText(armedText, 10, true);
+        base.wait.elementWithText(armedText, 10, true);
         Base.log("method is finished");
     }
 
     public void disarm() {
         Base.log("method is started");
 
-        $.dashboard.goToTheRemotePage();
-        $.remotePage.clickDisarmButton();
+        base.dashboard.goToTheRemotePage();
+        base.remotePage.clickDisarmButton();
 
-        $.wait.elementWithText(disarmedText, 10, true);
+        base.wait.elementWithText(disarmedText, 10, true);
         Base.log("method is finished");
     }
 
     public void partialArm() {
         Base.log("method is started");
 
-        $.dashboard.goToTheRemotePage();
-        $.remotePage.clickPartialArmButton();
-        $.nav.confirmIt();
+        base.dashboard.goToTheRemotePage();
+        base.remotePage.clickPartialArmButton();
+        base.nav.confirmIt();
 
-        $.wait.elementWithText(patrialArmedText, 10, true);
+        base.wait.elementWithText(patrialArmedText, 10, true);
         Base.log("method is finished");
     }
 
@@ -109,31 +109,31 @@ public class Hub{
         Base.log("method is started");
 
         Base.log("get creds for hubName and hubMasterKey");
-        String hubName = $.getCredsWithKey("hubName");
-        String hubMasterKey = $.getCredsWithKey("hubMasterKey");
+        String hubName = base.getCredsWithKey("hubName");
+        String hubMasterKey = base.getCredsWithKey("hubMasterKey");
 
 
-        if ($.dashboardHeader.getMenuDrawer().isDisplayed()){
-            if ($.dashboard.getPlusButton().isDisplayed()){
+        if (base.dashboardHeader.getMenuDrawer().isDisplayed()){
+            if (base.dashboard.getPlusButton().isDisplayed()){
                 Base.log("add Hub by Plus Button");
-                $.dashboard.plusButtonClick();
+                base.dashboard.plusButtonClick();
             }else {
                 Base.log("add Hub from Main Menu");
-                $.dashboardHeader.getMenuDrawer().click();
-                $.menuPage.addHubButtonClick();
+                base.dashboardHeader.getMenuDrawer().click();
+                base.menuPage.addHubButtonClick();
             }
         }
 
         Base.log("choose manual Hub adding ");
-        $.nav.nextButtonClick();
+        base.nav.nextButtonClick();
 
-        $.dashboard.fillFieldsWith(hubName, hubMasterKey);
-        $.nav.confirmIt();
+        base.dashboard.fillFieldsWith(hubName, hubMasterKey);
+        base.nav.confirmIt();
 
-        $.wait.invisibilityOfWaiter(true);
-        Assert.assertFalse($.check.isErrorPresent(2), "Hub adding failed!");
+        base.wait.invisibilityOfWaiter(true);
+        Assert.assertFalse(base.check.isErrorPresent(2), "Hub adding failed!");
 
-        Assert.assertTrue($.wait.element($.dashboardHeader.getGprsImage(), 10, true));
+        Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 10, true));
         Base.log("hub successfully added!");
         Base.log("method is finished");
     }

@@ -79,11 +79,11 @@ public class Dashboard{
     private WebElement footerRemote;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
 
     public Dashboard(Base base) {
-        $ = base;
-        PageFactory.initElements(new AppiumFieldDecorator($.getDriver()), this);
+        this.base = base;
+        PageFactory.initElements(new AppiumFieldDecorator(base.getDriver()), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -99,15 +99,13 @@ public class Dashboard{
         plusButton.click();
     }
 
-    public void footerRemoteClick() {
-        footerRemote.click();
-    }
-
     public void goToTheRoomPage() {
+        Base.log(2, "click Rooms button in the footer");
         footerRooms.click();
     }
 
     public void goToTheRemotePage() {
+        Base.log(2, "click Remote button in the footer");
         footerRemote.click();
     }
     public void goToTheNotificationPage() {

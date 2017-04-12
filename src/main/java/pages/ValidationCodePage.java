@@ -26,13 +26,13 @@ public class ValidationCodePage{
     private WebElement cancelBtn;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
     private boolean result;
 
     public ValidationCodePage(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ public class ValidationCodePage{
     public void getAndFillValidationCodes(String row, String value){
         Base.log("Method is started");
 
-        Map tokenMap = $.sql.getTokenMap(row, value);
+        Map tokenMap = base.sql.getTokenMap(row, value);
         Base.log(2, "SMS token: " + tokenMap.get("smsToken"));
         Base.log(2, "Email token: " + tokenMap.get("emailToken"));
 

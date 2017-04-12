@@ -13,14 +13,14 @@ import pages.Base;
 public class Check{
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
     private boolean result;
     private int numOfFoundElement;
 
     public Check(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ public class Check{
 
         } catch (NoSuchElementException e) {
             // is failed - make screenshot
-            $.getScreenShot();
+            base.getScreenShot();
 
             // creation report
             Assert.fail("Test failed - no such element was appeared during " + timer + " seconds\n" + e);
@@ -96,7 +96,7 @@ public class Check{
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period, int tryCount, boolean confirmPopupProposition){
         Base.log("Method is started");
         result = false;
-        WebElement[] elements = new WebElement[]{$.popUp.getSnackBarElement(), $.popUp.loadingWindow};
+        WebElement[] elements = new WebElement[]{base.popUp.getSnackBarElement(), base.popUp.loadingWindow};
 
         for (int i = 1; i <= tryCount; i++) {
             Base.log(3, "click the element link, try count #" +i);
@@ -107,7 +107,7 @@ public class Check{
 
             checkNum(numOfFoundElement, confirmPopupProposition);
 
-            if (!$.wait.element(elementForClick, 1, true)) {
+            if (!base.wait.element(elementForClick, 1, true)) {
                 Base.log(3, "element for click is not shown now");
                 result = true;
                 break;
@@ -123,7 +123,7 @@ public class Check{
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, boolean confirmPopupProposition){
         Base.log("Method is started");
         result = false;
-        WebElement[] elements = new WebElement[]{$.popUp.getSnackBarElement(), $.popUp.loadingWindow};
+        WebElement[] elements = new WebElement[]{base.popUp.getSnackBarElement(), base.popUp.loadingWindow};
 
         Base.log(3, "click the element link");
         elementForClick.click();
@@ -144,22 +144,22 @@ public class Check{
         switch (numOfFoundElement){
             case 0: Base.log(3, "no PopUp is shown or this moment is missed"); break;
             case 1: Base.log(3, "snackBar is shown, the text was previously displayed"); break;
-            case 2: Base.log(3, "PopUp is shown with text: \"" + $.popUp.getContentText() + "\"");
-                WebElement[] elements = new WebElement[]{$.nav.getCancelButton(), $.popUp.errorPic};
+            case 2: Base.log(3, "PopUp is shown with text: \"" + base.popUp.getContentText() + "\"");
+                WebElement[] elements = new WebElement[]{base.nav.getCancelButton(), base.popUp.errorPic};
                 numOfFoundElement = waitElements(elements, 5);
                 switch (numOfFoundElement){
                     case 0: Base.log(3, "PopUp is shown, but without errors and any propositions"); break;
                     case 1:
                         if (confirmPopupProposition){
                             Base.log("confirm Popup Proposition");
-                            $.nav.getConfirmButton().click();
+                            base.nav.getConfirmButton().click();
                         }
                         else {
                             Base.log("cancel Popup Proposition");
-                            $.nav.getCancelButton().click();
+                            base.nav.getCancelButton().click();
                         }
                         break;
-                    case 2: Base.log(4, "ERROR is shown with text: \"" + $.popUp.getContentText() + "\""); break;
+                    case 2: Base.log(4, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\""); break;
                     default: break;
                 }
             default: break;
@@ -174,10 +174,10 @@ public class Check{
         try {
             Base.log(2, "waiting " + timer + " seconds for the element ");
 
-            WebElement[] elements = new WebElement[]{element, $.nav.getCancelButton()};
+            WebElement[] elements = new WebElement[]{element, base.nav.getCancelButton()};
             if (waitElements(elements, 5) == 2) {
                 Base.log("Pincode PopUp is shown - cancel it!");
-                $.nav.cancelIt();
+                base.nav.cancelIt();
             }
 
             Base.log(2, "element " + element + " is shown with text: \"" + element.getText() + "\"");
@@ -186,12 +186,12 @@ public class Check{
         } catch (NoSuchElementException e) {
             Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            $.getScreenShot();
+            base.getScreenShot();
 
         } catch (TimeoutException e) {
             Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            $.getScreenShot();
+            base.getScreenShot();
         }
         return result;
     }
@@ -205,14 +205,14 @@ public class Check{
         try {
             Base.log(2, "waiting " + timer + " seconds for SnackBar");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions.visibilityOf($.popUp.getSnackBarElement()));
+            iWait.until(ExpectedConditions.visibilityOf(base.popUp.getSnackBarElement()));
 
-            Base.log("SnackBar is shown with text: \"" + $.popUp.getSnackBarText() + "\"");
+            Base.log("SnackBar is shown with text: \"" + base.popUp.getSnackBarText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
             Base.log("SnackBar is not shown:\n\n" + e + "\n");
-            $.getScreenShot();
+            base.getScreenShot();
         }
         return result;
     }
@@ -221,14 +221,14 @@ public class Check{
         Base.log("Method is started");
         try {
             WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions.visibilityOf($.popUp.errorPic));
+            iWait.until(ExpectedConditions.visibilityOf(base.popUp.errorPic));
 
-            Base.log(3, "Error message is shown with text: \"" + $.popUp.getContentText() + "\"");
+            Base.log(3, "Error message is shown with text: \"" + base.popUp.getContentText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
             Base.log("Error message is not shown");
-            $.getScreenShot();
+            base.getScreenShot();
             result = false;
         }
         return result;

@@ -77,15 +77,15 @@ public class PopUp{
     private WebElement userAgreementCheckbox;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
     private boolean result;
     private long start, finish;
 
 
     public PopUp(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -100,11 +100,11 @@ public class PopUp{
             switch (flag) {
                 case 1:
                     Base.log("loading PopUp is shown, so click Confirm Button");
-                    $.nav.confirmIt();
+                    base.nav.confirmIt();
                     break;
                 default:
                     Base.log("loading PopUp is shown, so click Cancel Button");
-                    $.nav.cancelIt();
+                    base.nav.cancelIt();
                     break;
             }
         }
@@ -130,11 +130,11 @@ public class PopUp{
         } catch (NoSuchElementException e) {
             Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){$.getScreenShot();}
+            if (makeScreenShot){base.getScreenShot();}
         } catch (TimeoutException e) {
             Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){$.getScreenShot();}
+            if (makeScreenShot){base.getScreenShot();}
         }
         return result;
     }

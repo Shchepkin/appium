@@ -48,12 +48,12 @@ public class RegistrationPage{
     private WebElement dashboardLink;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
 
     public RegistrationPage(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -69,17 +69,17 @@ public class RegistrationPage{
 
     public void fakeRegistration(String email, String password, String phone, String server) {
         Base.log("Method is started");
-        $.introPage.goToAuthorization();
-        $.loginPage.chooseServer(server);
-        $.nav.goBack();
-        $.introPage.goToRegistration();
+        base.introPage.goToAuthorization();
+        base.loginPage.chooseServer(server);
+        base.nav.goBack();
+        base.introPage.goToRegistration();
         nameField.sendKeys("fakeRegistration");
         emailField.sendKeys(email);
         emailConfirmField.sendKeys(email);
         phoneField.sendKeys(phone);
-        $.nav.swipeUp();
+        base.nav.swipeUp();
         passwordField.sendKeys(password);
-        $.nav.swipeUp();
+        base.nav.swipeUp();
         passwordConfirmField.sendKeys(password);
         registrationButtonLink.click();
     }
@@ -88,17 +88,17 @@ public class RegistrationPage{
 
     public void fillFields(String name, String email, String password, String phone, String server) {
         Base.log("Method is started");
-        $.introPage.goToAuthorization();
-        $.loginPage.chooseServer(server);
-        $.nav.goBack();
-        $.introPage.goToRegistration();
+        base.introPage.goToAuthorization();
+        base.loginPage.chooseServer(server);
+        base.nav.goBack();
+        base.introPage.goToRegistration();
         nameField.sendKeys(name);
         emailField.sendKeys(email);
         emailConfirmField.sendKeys(email);
         phoneField.sendKeys(phone);
-        $.nav.swipeUp();
+        base.nav.swipeUp();
         passwordField.sendKeys(password);
-        $.nav.swipeUp();
+        base.nav.swipeUp();
         passwordConfirmField.sendKeys(password);
     }
 
@@ -110,16 +110,16 @@ public class RegistrationPage{
 
         Base.log("fill and confirm email with: \"" + email + "\"");
         emailField.sendKeys(email);
-        $.nav.swipeUp();
+        base.nav.swipeUp();
         emailConfirmField.sendKeys(email);
 
         Base.log("fill phone with: \"" + phone + "\"");
         phoneField.sendKeys(phone);
 
         Base.log("fill and confirm password with: \"" + password + "\"");
-        $.nav.swipeUp();
+        base.nav.swipeUp();
         passwordField.sendKeys(password);
-        $.nav.swipeUp();
+        base.nav.swipeUp();
         passwordConfirmField.sendKeys(password);
 
         Base.log("Method is finished");
@@ -128,7 +128,7 @@ public class RegistrationPage{
 
     public void confirmAgrimentCheckBox() {
         Base.log("Method is started");
-        $.nav.swipeUp();
+        base.nav.swipeUp();
         userAgreementCheckbox.click();
         Base.log("Method is finished");
     }
@@ -136,7 +136,7 @@ public class RegistrationPage{
     public void setUserPic(int imageNumber) {
         Base.log("Method is started");
         userPic.click();
-        $.addImagePage.setImageFromGallery(imageNumber);
+        base.addImagePage.setImageFromGallery(imageNumber);
         Base.log("Method is finished");
     }
 
@@ -146,11 +146,11 @@ public class RegistrationPage{
         switch (type){
             case 1: Base.log("add image from camera");
                 userPic.click();
-                $.addImagePage.setImageFromCamera();
+                base.addImagePage.setImageFromCamera();
                 break;
             case 2: Base.log("add image from gallery");
                 userPic.click();
-                $.addImagePage.setImageFromGallery(imageNumber);
+                base.addImagePage.setImageFromGallery(imageNumber);
                 break;
             default: Base.log("without image");
                 break;

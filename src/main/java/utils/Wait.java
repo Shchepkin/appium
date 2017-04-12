@@ -11,15 +11,15 @@ import pages.Base;
 public class Wait{
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
     private String waiterText;
     private boolean result;
 
     public Wait(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
-        waiterText = $.getLocalizeTextForKey("request_send");
+        this.base = base;
+        this.driver = base.getDriver();
+        waiterText = base.getLocalizeTextForKey("request_send");
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -39,13 +39,13 @@ public class Wait{
             Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
-                $.getScreenShot();
+                base.getScreenShot();
             }
         } catch (TimeoutException e) {
             Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
-                $.getScreenShot();
+                base.getScreenShot();
             }
         }
         return result;
@@ -56,15 +56,16 @@ public class Wait{
     public boolean loaderWithText(boolean visibility, String searchingText, int timer, boolean makeScreenShot) {
         Base.log("Method is started");
         result = false;
+        String xPath = "//*[contains(@resource-id,'com.ajaxsystems:id/content_text') and @text='" + searchingText + "']";
 
         try {
             Base.log(2, "waiting for " + timer + " seconds for the element with text \"" + searchingText + "\"");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
 
             if(visibility){
-                iWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/content_text') and @text='" + searchingText + "']"))));
+                iWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(xPath))));
             }else {
-                iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/content_text') and @text='" + searchingText + "']")));
+                iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xPath)));
             }
 
             Base.log(2, "element is shown with text: \"" + searchingText + "\"");
@@ -73,13 +74,13 @@ public class Wait{
             Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
-                $.getScreenShot();
+                base.getScreenShot();
             }
         } catch (TimeoutException e) {
             Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
-                $.getScreenShot();
+                base.getScreenShot();
             }
         }
         return result;
@@ -100,12 +101,12 @@ public class Wait{
             Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
-                $.getScreenShot();}
+                base.getScreenShot();}
         } catch (TimeoutException e) {
             Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
-                $.getScreenShot();}
+                base.getScreenShot();}
         }
         return result;
     }
@@ -145,12 +146,12 @@ public class Wait{
             Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
-                $.getScreenShot();}
+                base.getScreenShot();}
         } catch (TimeoutException e) {
             Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
-                $.getScreenShot();}
+                base.getScreenShot();}
         }
         return result;
     }
@@ -173,18 +174,19 @@ public class Wait{
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(elementForWaiting));
 
+
             Base.log(2, "element " + elementForWaiting + " is shown with text: \"" + elementForWaiting.getText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
             Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){$.getScreenShot();}
+            if (makeScreenShot){base.getScreenShot();}
 
         } catch (TimeoutException e) {
             Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
-            if (makeScreenShot){$.getScreenShot();}
+            if (makeScreenShot){base.getScreenShot();}
         }
         return result;
     }

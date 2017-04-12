@@ -46,19 +46,19 @@ public class User{
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
     private boolean result;
 
     private String sendInvitesButtonText, inviteFailText, adminStatusText, userStatusText;
 
     public User(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
-        sendInvitesButtonText = $.getLocalizeTextForKey("send_invites");
-        inviteFailText = $.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
-        adminStatusText = $.getLocalizeTextForKey("admin");
-        userStatusText = $.getLocalizeTextForKey("user");
+        this.base = base;
+        this.driver = base.getDriver();
+        sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
+        inviteFailText = base.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
+        adminStatusText = base.getLocalizeTextForKey("admin");
+        userStatusText = base.getLocalizeTextForKey("user");
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
@@ -66,7 +66,7 @@ public class User{
 
     public void fillUserEmailsField(String inviteEmail) {
         inviteUsersField.sendKeys(inviteEmail);
-        $.nav.nextButtonClick();
+        base.nav.nextButtonClick();
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -75,20 +75,20 @@ public class User{
         Base.log("Method is started");
         result = false;
 
-        $.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
         Base.log("fill email field with \"" + userEmail + "\"");
         inviteUsersField.sendKeys(userEmail);
 
         Base.log("click add button and confirm proposition");
-        $.check.clickElementAndWaitingPopup($.nav.getNextButton(), true);
+        base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
         Base.log("click add button and confirm proposition");
-        $.check.clickElementAndWaitingPopup($.nav.getNextButton(), true);
+        base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Assert.assertFalse($.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
-        $.wait.invisibilityOfWaiter(true);
-        Assert.assertTrue($.wait.element(userStatus, 10, true), "User page is not shown \n");
+        Assert.assertFalse(base.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        base.wait.invisibilityOfWaiter(true);
+        Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
         Base.log("Method is finished");
     }
@@ -100,20 +100,20 @@ public class User{
         result = false;
 
         Base.log("searching and clicking the Send Invites Button");
-        $.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
         Base.log("click the Add From Contact List Button");
         addButtonFromContactList.click();
 
-        $.nav.scrollToElementWith("email", "up", userEmail, true);
-        $.nav.nextButtonClick();
+        base.nav.scrollToElementWith("email", "up", userEmail, true);
+        base.nav.nextButtonClick();
 
         Base.log("click add button and confirm proposition");
-        $.check.clickElementAndWaitingPopup($.nav.getNextButton(), true);
+        base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Assert.assertFalse($.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
-        $.wait.invisibilityOfWaiter(true);
-        Assert.assertTrue($.wait.element(userStatus, 10, true), "User page is not shown \n");
+        Assert.assertFalse(base.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        base.wait.invisibilityOfWaiter(true);
+        Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
         Base.log("Method is finished");
     }
@@ -127,7 +127,7 @@ public class User{
         int counter = 0;
 
         Base.log("click send Invites Button");
-        $.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
         Base.log("concat all emails from array to the one string");
         for (String userEmail : usersForEmailField) {
@@ -139,18 +139,18 @@ public class User{
         inviteUsersField.sendKeys(emailListString);
 
         Base.log("click Add button");
-        $.nav.nextButtonClick();
-        if(!$.check.forSnackBarIsPresent(3)) {
+        base.nav.nextButtonClick();
+        if(!base.check.forSnackBarIsPresent(3)) {
 
             Base.log("confirm proposition");
-            $.nav.confirmIt();
-            $.wait.invisibilityOfWaiter();
+            base.nav.confirmIt();
+            base.wait.invisibilityOfWaiter();
 
-            $.check.isElementDisplayed(userStatus, 15);
+            base.check.isElementDisplayed(userStatus, 15);
 
             Base.log("check whether new user is added");
             for (String userEmail : usersForEmailField) {
-                if ($.nav.scrollToElementWith("text", "up", userEmail, false)) {
+                if (base.nav.scrollToElementWith("text", "up", userEmail, false)) {
                     counter++;
                 }
             }
@@ -173,11 +173,11 @@ public class User{
     public void addUserListFromEmailField(String nameOfJsonCollection) {
         Base.log("Method is started");
         Base.log(3, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
-        ArrayList<String> userListFromJson = $.getJsonStringArray("emails.json", nameOfJsonCollection);
+        ArrayList<String> userListFromJson = base.getJsonStringArray("emails.json", nameOfJsonCollection);
         String emailListString = "";
 
         Base.log("click send Invites Button");
-        $.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
         Base.log("concat all emails from array to the one string");
         for (String userEmail : userListFromJson) {
@@ -189,11 +189,11 @@ public class User{
         inviteUsersField.sendKeys(emailListString);
 
         Base.log("click Add button");
-        $.nav.nextButtonClick();
+        base.nav.nextButtonClick();
 
-        Assert.assertFalse($.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
-        $.wait.invisibilityOfWaiter(true);
-        Assert.assertTrue($.wait.element(userStatus, 15, true), "User page is not shown \n");
+        Assert.assertFalse(base.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        base.wait.invisibilityOfWaiter(true);
+        Assert.assertTrue(base.wait.element(userStatus, 15, true), "User page is not shown \n");
 
         Base.log("Method is finished");
     }
@@ -206,7 +206,7 @@ public class User{
         result = false;
 
         Base.log("searching and clicking the Send Invites Button");
-        $.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
         Base.log("click the Add From Contact List Button");
         addButtonFromContactList.click();
@@ -217,7 +217,7 @@ public class User{
 
             if(firstTime > 0){
                 Base.log("scrolling to the start of list");
-                $.nav.scrollTop();
+                base.nav.scrollTop();
             }
             firstTime++;
 
@@ -226,14 +226,14 @@ public class User{
         }
 
         Base.log("click Save button");
-        $.nav.nextButtonClick();
+        base.nav.nextButtonClick();
 
         Base.log("click add button and confirm proposition");
-        $.check.clickElementAndWaitingPopup($.nav.getNextButton(), true);
+        base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Assert.assertFalse($.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
-        $.wait.invisibilityOfWaiter();
-        Assert.assertTrue($.wait.element(userStatus, 10, true), "User page is not shown \n");
+        Assert.assertFalse(base.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        base.wait.invisibilityOfWaiter();
+        Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
         Base.log("Method is finished");
     }
@@ -245,10 +245,10 @@ public class User{
         String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
 
         for (int i = 1; i < 3; i++) {
-            if ($.nav.scrollToElementWith(typeBy, "up", userEmail, true)) {
-                $.check.forSnackBarIsPresent(2);
+            if (base.nav.scrollToElementWith(typeBy, "up", userEmail, true)) {
+                base.check.forSnackBarIsPresent(2);
                 try {
-                    $.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
+                    base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
                     Base.log("element \"" + userEmail + "\" is activated successfully");
                     result = true;
                     break;
@@ -272,7 +272,7 @@ public class User{
         String unregisteredUser = usersForMixedAdd.get(1);
         String userForContactList = usersForMixedAdd.get(2);
 
-        $.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
         Base.log("fill email field with \"" + registeredUser + " " + unregisteredUser + "\"");
         inviteUsersField.sendKeys(registeredUser + " " + unregisteredUser);
@@ -284,14 +284,14 @@ public class User{
         activateUserInContactListBy("email", userForContactList);
 
         Base.log("click Save button");
-        $.nav.nextButtonClick();
+        base.nav.nextButtonClick();
 
         Base.log("click add button and confirm proposition");
-        $.check.clickElementAndWaitingPopup($.nav.getNextButton(), true);
+        base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Assert.assertFalse($.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
-        $.wait.invisibilityOfWaiter(true);
-        Assert.assertTrue($.wait.element(userStatus, 10, true), "User page is not shown \n");
+        Assert.assertFalse(base.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        base.wait.invisibilityOfWaiter(true);
+        Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
         Base.log("Method is finished");
     }
@@ -313,11 +313,11 @@ public class User{
 
             if(firstTime > 0){
                 Base.log("scrolling to the start of list");
-                $.nav.scrollTop();
+                base.nav.scrollTop();
             }
             firstTime++;
 
-            if ($.nav.scrollToElementWith(byType, "up", userEmail, false)) {
+            if (base.nav.scrollToElementWith(byType, "up", userEmail, false)) {
                 Base.log("new user with email \"" + userEmail + "\" is added successfully");
                 counter++;
             }
@@ -340,10 +340,10 @@ public class User{
         String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
         String deleteElementXpath = "/ancestor::android.widget.LinearLayout[1]//*[@resource-id = 'com.ajaxsystems:id/delete']";
 
-        if ($.nav.scrollToElementWith("name", "up", pendingUserName, false)) {
+        if (base.nav.scrollToElementWith("name", "up", pendingUserName, false)) {
 
             try {
-                $.wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
+                base.wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
                 Base.log("new user with email \"" + pendingUserName + "\" has the DELETE button");
                 result = true;
 
@@ -360,7 +360,7 @@ public class User{
     public boolean isDeleteIconPresent(String pendingUserName) {
         WebElement pendingUserForCheck = findPendingFrom("name", pendingUserName);
 
-        if ($.nav.scrollToElement(pendingUserForCheck, "up")) {
+        if (base.nav.scrollToElement(pendingUserForCheck, "up")) {
             Base.log("new user with email \"" + pendingUserName + "\" has the DELETE button");
             result = true;
 
@@ -375,7 +375,7 @@ public class User{
 
     public void deletePendingByName(String pendingUserName) {
         WebElement pendingUserForDelete = findPendingFrom("name", pendingUserName);
-        $.nav.scrollToElement(pendingUserForDelete, "up");
+        base.nav.scrollToElement(pendingUserForDelete, "up");
         pendingUserForDelete.click();
     }
 
@@ -384,18 +384,18 @@ public class User{
     public boolean deleteAllPending() {
         result = false;
         int counter = 0;
-        String successText = $.getLocalizeTextForKey("Com_executed1");
+        String successText = base.getLocalizeTextForKey("Com_executed1");
         while (true) {
 
-            if($.nav.scrollToElement(deleteButton, "up")){
+            if(base.nav.scrollToElement(deleteButton, "up")){
 
                 Base.log("tap User Delete button and confirm popUp proposition");
                 deleteButton.click();
-                $.nav.confirmIt();
+                base.nav.confirmIt();
 
-                $.wait.invisibilityOfWaiter(true);
+                base.wait.invisibilityOfWaiter(true);
 
-                Assert.assertTrue($.wait.elementWithText(successText, 5, true), "SUCCESS text is not shown");
+                Assert.assertTrue(base.wait.elementWithText(successText, 5, true), "SUCCESS text is not shown");
                 Base.log("SUCCESS text is shown");
                 counter++;
             } else {
@@ -426,9 +426,9 @@ public class User{
         Assert.assertNotNull(status,"expected object: \"User Status localized text\", ");
 
         if (status.equalsIgnoreCase(userStatusText)){
-            successText = $.getLocalizeTextForKey("user_guest_detach");
+            successText = base.getLocalizeTextForKey("user_guest_detach");
         }else if (status.equalsIgnoreCase(adminStatusText)){
-            successText = $.getLocalizeTextForKey("Detach_success1");
+            successText = base.getLocalizeTextForKey("Detach_success1");
         }else {
             Assert.fail("localized text for User Status was not found");
         }
@@ -442,16 +442,16 @@ public class User{
         try {
             WebElement settingsButton = driver.findElementByXPath(xPath);
             while (true) {
-                if($.wait.element(settingsButton, 5, true)){
+                if(base.wait.element(settingsButton, 5, true)){
                     String email = driver.findElementByXPath(xPath + emailXpath).getText();
                     Base.log(1, "delete user with email \"" + email + "\"");
                     settingsButton.click();
-//                    $.nav.scrollToElement(deleteButton, "up");
-                    $.nav.scrollBottom();
+//                    base.nav.scrollToElement(deleteButton, "up");
+                    base.nav.scrollBottom();
                     Base.log(1, "tap delete button");
                     deleteButton.click();
-                    $.nav.confirmIt();
-                    Assert.assertTrue($.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
+                    base.nav.confirmIt();
+                    Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
                     Base.log(1, "user with email \"" + email + "\" is deleted successfully and SUCCESS text is shown");
                     counter++;
                 } else {break;}
@@ -479,7 +479,7 @@ public class User{
                 break;
         }
         WebElement pendingUserElement = driver.findElementByXPath(xPath);
-        $.nav.scrollToElement(pendingUserElement, "up");
+        base.nav.scrollToElement(pendingUserElement, "up");
         return pendingUserElement;
     }
 
