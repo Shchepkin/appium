@@ -39,13 +39,13 @@ public class DashboardRemotePage{
     private WebElement spaceControlImage;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
     private boolean result;
 
     public DashboardRemotePage(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ public class DashboardRemotePage{
         Base.log("method is started");
         result = false;
 
-        $.dashboard.footerRemoteClick();
+        base.dashboard.goToTheRemotePage();
         if (spaceControlImage.isDisplayed()) {
             result = true;
         }

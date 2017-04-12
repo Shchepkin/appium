@@ -36,12 +36,12 @@ public class AccountMenuPage{
     private WebElement logoutImage;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
 
     public AccountMenuPage(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------

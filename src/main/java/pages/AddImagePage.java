@@ -56,11 +56,11 @@ public class AddImagePage{
 
 // ==================================================================
 
-    private final Base $;
+    private final Base base;
 
     public AddImagePage(Base base) {
-        $ = base;
-        PageFactory.initElements(new AppiumFieldDecorator($.getDriver()), this);
+        this.base = base;
+        PageFactory.initElements(new AppiumFieldDecorator(base.getDriver()), this);
     }
 
     public void setImageFromCamera(){

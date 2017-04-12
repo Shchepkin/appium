@@ -15,37 +15,37 @@ import pages.Base;
 public class C42099_Add_new_Hub_manually{
 
     private String hubName, hubMasterKey, expected, actual;
-    private Base $;
+    private Base base;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
-        $ = new Base(deviceName_);
-        $.initPageObjects($.getDriver());
+        base = new Base(deviceName_);
+        base.initPageObjects(base.getDriver());
 
-        hubName = $.getCredsWithKey("hubName");
-        hubMasterKey = $.getCredsWithKey("hubMasterKey");
+        hubName = base.getCredsWithKey("hubName");
+        hubMasterKey = base.getCredsWithKey("hubMasterKey");
 
-        $.loginPage.loginWithPinCancel();
+        base.loginPage.loginWithPinCancel();
     }
 
     @Test(priority = 1, enabled = true)
     public void Add_first_Hub() {
 
         Base.log("tap to the Plus Button");
-        $.dashboard.plusButtonClick();
+        base.dashboard.plusButtonClick();
 
         Base.log("choose manual Hub adding ");
-        $.nav.nextButtonClick();
+        base.nav.nextButtonClick();
 
-        $.dashboard.fillFieldsWith(hubName, hubMasterKey);
-        $.nav.confirmIt();
+        base.dashboard.fillFieldsWith(hubName, hubMasterKey);
+        base.nav.confirmIt();
 
-//        $.wait.invisibilityElementWithText(waiterText, true);
-        $.wait.invisibilityOfWaiter(true);
-        Assert.assertFalse($.check.isErrorPresent(3), "Hub adding failed!");
+//        base.wait.invisibilityElementWithText(waiterText, true);
+        base.wait.invisibilityOfWaiter(true);
+        Assert.assertFalse(base.check.isErrorPresent(3), "Hub adding failed!");
 
-        Assert.assertTrue($.wait.element($.dashboardHeader.getGprsImage(), 15, true));
+        Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 15, true));
         Base.log("hub successfully added!");
         Base.log("Method is finished");
     }
@@ -55,6 +55,6 @@ public class C42099_Add_new_Hub_manually{
 
     @AfterClass
     public void endSuit() {
-        $.getDriver().quit();
+        base.getDriver().quit();
     }
 }

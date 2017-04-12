@@ -39,11 +39,13 @@ public class DashboardDevicesPage{
     private WebElement idField;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
+    private boolean result;
+
     public DashboardDevicesPage(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -63,14 +65,14 @@ public class DashboardDevicesPage{
         roomOfDeviceLocator.click();
 
         Base.log("click Settings Button");
-        $.nav.goToSettings();
+        base.nav.goToSettings();
     }
 
     public void fillFieldsWith(String deviceName, String devID){
         Base.log("fill name field with \"" + deviceName + "\"");
         nameField.sendKeys(deviceName);
 
-        $.hideKeyboard();
+        base.hideKeyboard();
 
         Base.log("fill ID field with \"" + devID + "\"");
         idField.sendKeys(devID);
@@ -81,7 +83,7 @@ public class DashboardDevicesPage{
             Base.log("click Set Room button");
             setRoomButtonElement.click();
 
-            $.wait.element(roomObject, 10, true);
+            base.wait.element(roomObject, 10, true);
 
             Base.log("set room number as \"" + numOfRoom + "\"");
             allRoomObjects.get(numOfRoom - 1).click();
@@ -93,26 +95,24 @@ public class DashboardDevicesPage{
 
     public void addNew(int devId, int devNumber, int devType, String devName, int roomNumber) {
         Base.log("add devices to imitator");
-        $.imitator.addDevice(devId, devNumber, devType);
+        base.imitator.addDevice(devId, devNumber, devType);
 
         Base.log("add devices \"" + devName + "\" to Hub");
-        $.nav.scrollBottom();
+        base.nav.scrollBottom();
         addDeviceButtonClick();
         fillFieldsWith(devName, String.valueOf(devId));
-        $.hideKeyboard();
+        base.hideKeyboard();
         setRoom(roomNumber);
 
         Base.log("add devices button click");
-        $.nav.confirmIt();
+        base.nav.confirmIt();
 
         Base.log("device turn on");
-        $.imitator.registerDevice(devId);
+        base.imitator.registerDevice(devId);
     }
 
-    public boolean checkIsNewDeviceAdded(String roomName) {
-        boolean result = false;
-
-        if ($.nav.scrollToElementWith("name", "up", roomName, false)) {
+    public boolean checkIsNewAdded(String roomName) {
+        if (base.nav.scrollToElementWith("name", "up", roomName, false)) {
             Base.log("new device with name \"" + roomName + "\" is added successfully");
             result = true;
         }else {
@@ -121,7 +121,17 @@ public class DashboardDevicesPage{
         }
         return result;
     }
-    private class name{
+
+
+    public boolean checkIsDeleted(String deviceName) {
+        if (base.nav.scrollToElementWith("name", "up", deviceName, false)) {
+            Base.log("device with name \"" + deviceName + "\" is still displayed in the DeviceList");
+            result = false;
+        }else {
+            Base.log(3, "device with name \"" + deviceName + "\" is not displayed in the DeviceList");
+            result = true;
+        }
+        return result;
     }
 
     public String getFirstDeviceName(){
@@ -132,24 +142,24 @@ public class DashboardDevicesPage{
     }
 
     public void deleteAllDevices() {
-        String successText = $.getLocalizeTextForKey("Deleting_success1");
+        String successText = base.getLocalizeTextForKey("Deleting_success1");
         int counter = 0;
-
         try {
             while (true) {
-                if ($.wait.element($.dashboardHeader.getMenuDrawer(), 5, true)){
+                if (base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true)){
                     String devName = getFirstDeviceName();
                     goToDeviceSettingsPage();
-                    $.nav.scrollBottom();
+                    base.nav.scrollBottom();
                     unpairButtonClick();
-                    $.nav.confirmIt();
-                    Assert.assertTrue($.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
-                    $.wait.element($.dashboardHeader.getMenuDrawer(), 5, true);
+                    base.nav.confirmIt();
+                    Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
+                    base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
+                    checkIsDeleted(devName);
                     Base.log("device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
                     counter++;
 
-                }else if ($.nav.getCancelButton().isDisplayed()){
-                    $.nav.cancelIt();
+                }else if (base.nav.getCancelButton().isDisplayed()){
+                    base.nav.cancelIt();
                 }else {
                     break;
                 }

@@ -1,9 +1,6 @@
 package utils;
 
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import pages.Base;
 
@@ -34,11 +31,11 @@ public class Sql{
     public Map tokenMap;
 
     //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private boolean result;
 
     public Sql(Base base) {
-        $ = base;
+        this.base = base;
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -217,9 +214,9 @@ public class Sql{
     private Connection getConnection (){
         Base.log("Method is started");
 
-        url = $.getDbSettingsWithKey("url");
-        user = $.getDbSettingsWithKey("user");
-        password = $.getDbSettingsWithKey("password");
+        url = base.getDbSettingsWithKey("url");
+        user = base.getDbSettingsWithKey("user");
+        password = base.getDbSettingsWithKey("password");
 
         for (int i = 1; i <= 10; i++) {
             try {

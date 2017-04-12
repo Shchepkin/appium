@@ -30,12 +30,12 @@ public class ForgotPasswordPage{
     public WebElement toast;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
 
     public ForgotPasswordPage(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------

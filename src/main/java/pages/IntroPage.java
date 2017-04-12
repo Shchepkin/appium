@@ -27,12 +27,12 @@ public class IntroPage{
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
 
     public IntroPage(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -50,8 +50,8 @@ public class IntroPage{
     public void setServer(String server) {
         Base.log("Method is started");
         loginBtn.click();
-        $.loginPage.chooseServer(server);
-        $.nav.goBack();
+        base.loginPage.chooseServer(server);
+        base.nav.goBack();
         Base.log("Method is finished");
     }
 }

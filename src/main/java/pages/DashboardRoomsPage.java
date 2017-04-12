@@ -31,14 +31,14 @@ public class DashboardRoomsPage{
     private WebElement addRoomPlusBtn;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
     private boolean result;
     private WebElement[] elements;
 
     public DashboardRoomsPage(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -63,11 +63,11 @@ public class DashboardRoomsPage{
         switch (type){
             case 1: Base.log("add image from camera");
                 addRoomImageBtn.click();
-                $.addImagePage.setImageFromCamera();
+                base.addImagePage.setImageFromCamera();
                 break;
             case 2: Base.log("add image from gallery");
                 addRoomImageBtn.click();
-                $.addImagePage.setImageFromGallery(imageNumber);
+                base.addImagePage.setImageFromGallery(imageNumber);
                 break;
             default: Base.log("add room without image");
                 driver.hideKeyboard();
@@ -91,11 +91,11 @@ public class DashboardRoomsPage{
         switch (roomType){
             case 1: Base.log("add image from camera");
                 addRoomImageBtn.click();
-                $.addImagePage.setImageFromCamera();
+                base.addImagePage.setImageFromCamera();
                 break;
             case 2: Base.log("add image from gallery");
                 addRoomImageBtn.click();
-                $.addImagePage.setImageFromGallery(1);
+                base.addImagePage.setImageFromGallery(1);
                 break;
             default: Base.log("add room without image");
                 driver.hideKeyboard();
@@ -112,8 +112,8 @@ public class DashboardRoomsPage{
         elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
 
         Base.log("choice the Add Room button");
-        $.nav.scrollBottom();
-        switch ($.check.waitElements(elements, 2)){
+        base.nav.scrollBottom();
+        switch (base.check.waitElements(elements, 2)){
             case 1: addRoomBtn.click(); break;
             case 2: addRoomPlusBtn.click(); break;
             default: Base.log(3, "Something was wrong!"); break;

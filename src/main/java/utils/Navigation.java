@@ -101,7 +101,7 @@ public class Navigation{
     private WebElement spaceControlImageOnRemotePage;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base $;
+    private final Base base;
     private final AppiumDriver driver;
     private boolean result;
     private long start, finish;
@@ -111,8 +111,8 @@ public class Navigation{
     private ArrayList<String> current;
 
     public Navigation(Base base) {
-        $ = base;
-        this.driver = $.getDriver();
+        this.base = base;
+        this.driver = base.getDriver();
         etalon = new ArrayList<>();
         current = new ArrayList<>();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
@@ -349,7 +349,7 @@ public class Navigation{
 
         while (true){
 
-            if ($.wait.element(elementForSearch, 2, true)){
+            if (base.wait.element(elementForSearch, 2, true)){
                 result = true;
                 break;
 
