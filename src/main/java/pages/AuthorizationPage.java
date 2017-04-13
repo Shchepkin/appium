@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
+import java.util.concurrent.TimeUnit;
+
 public class AuthorizationPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/login")
@@ -48,12 +50,12 @@ public class AuthorizationPage{
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Base base;
+    private Base base;
     private boolean result;
 
     public AuthorizationPage(Base base) {
         this.base = base;
-        PageFactory.initElements(new AppiumFieldDecorator(base.getDriver()), this);
+        PageFactory.initElements(new AppiumFieldDecorator(base.getDriver(), Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 
 //----------------------------------------------------------------------------------------------------------------------

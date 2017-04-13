@@ -1,9 +1,12 @@
 package pages;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.concurrent.TimeUnit;
 
 public class Dashboard{
 
@@ -80,10 +83,12 @@ public class Dashboard{
 
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
+    private AppiumDriver driver;
 
     public Dashboard(Base base) {
         this.base = base;
-        PageFactory.initElements(new AppiumFieldDecorator(base.getDriver()), this);
+        this.driver = base.getDriver();
+        PageFactory.initElements(new AppiumFieldDecorator(driver, 30, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 

@@ -65,7 +65,7 @@ public class C44142_Device_delete {
         base.hub.disarm();
     }
 
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 3, enabled = false)
     public void While_Hub_Partial_Armed() {
         String expectedSnackBarText = base.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
         base.hub.partialArm();
@@ -81,8 +81,8 @@ public class C44142_Device_delete {
         base.hub.disarm();
     }
 
-    @Test(priority = 2, enabled = true)
-    public void all_device_deleting() {
+    @Test(priority = 4, enabled = false)
+    public void All_Device_Deleting() {
         base.devicesPage.deleteAllDevices();
     }
 

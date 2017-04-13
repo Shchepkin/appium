@@ -24,7 +24,7 @@ public class Imitator{
         Base.log("method is started");
 
         try {
-            serialPort = new SerialPort("/dev/ttyUSB3");
+            serialPort = new SerialPort("/dev/ttyS0");
 
             Base.log("print all available ports");
             for (String portName: SerialPortList.getPortNames()) {

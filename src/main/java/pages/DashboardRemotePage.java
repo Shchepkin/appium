@@ -6,6 +6,8 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.concurrent.TimeUnit;
+
 public class DashboardRemotePage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/arm")
@@ -46,7 +48,7 @@ public class DashboardRemotePage{
     public DashboardRemotePage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 
