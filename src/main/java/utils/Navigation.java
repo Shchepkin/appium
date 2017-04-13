@@ -77,6 +77,10 @@ public class Navigation{
     @AndroidFindBy(id = "com.ajaxsystems:id/image")
     private WebElement image;
 
+    public WebElement getSettingsButton() {
+        return settingsButton;
+    }
+
     @AndroidFindBy(id = "com.ajaxsystems:id/settings")
     private WebElement settingsButton;
 
@@ -426,13 +430,18 @@ public class Navigation{
 // GO
 //======================================================================================================================
     public void nextButtonClick(){nextButton.click();}
+
     public WebElement getNextButton() {return nextButton;}
 
     public void goBack() {
         backBtn.click();
     }
 
-    public void goToSettings(){settingsButton.click();}
+    public void goToSettings(){
+        WebDriverWait iWait = new WebDriverWait(driver, 5);
+        iWait.until(ExpectedConditions.visibilityOf(settingsButton));
+        settingsButton.click();
+    }
 
     public boolean goToTheRemotePage(){
         Base.log("method is started");

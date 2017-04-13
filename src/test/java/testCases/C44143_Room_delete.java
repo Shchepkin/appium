@@ -56,39 +56,27 @@ public class C44143_Room_delete {
 
     @Test(priority = 2, enabled = true)
     public void While_Hub_Armed() {
-        String expectedSnackBarText = base.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
         base.hub.arm();
         base.dashboard.goToTheRoomPage();
-        base.roomsPage.goToRoomSettingsPage();
-        base.wait.element(base.popUp.getSnackBarElement(), 5, true);
-        String actualSnackBarText = base.popUp.getSnackBarText();
-        Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
-        Base.log("SnackBar with error text is successfully shown");
+        Assert.assertFalse(base.check.isElementDisplayed(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
 
         Base.log("disarm hub");
-        base.nav.goBack();
         base.hub.disarm();
     }
 
     @Test(priority = 3, enabled = true)
     public void While_Hub_Partial_Armed() {
-        String expectedSnackBarText = base.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
         base.hub.partialArm();
         base.dashboard.goToTheRoomPage();
-        base.roomsPage.goToRoomSettingsPage();
-        base.wait.element(base.popUp.getSnackBarElement(), 5, true);
-        String actualSnackBarText = base.popUp.getSnackBarText();
-        Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
-        Base.log("SnackBar with error text is successfully shown");
+        Assert.assertFalse(base.check.isElementDisplayed(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
 
         Base.log("disarm hub");
-        base.nav.goBack();
         base.hub.disarm();
     }
 
     @Test(priority = 4, enabled = true)
     public void All_Rooms_Deleting() {
-        base.devicesPage.deleteAllDevices();
+        base.roomsPage.deleteAllRooms();
     }
 
 
