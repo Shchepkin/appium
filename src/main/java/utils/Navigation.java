@@ -3,15 +3,18 @@ package utils;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+import io.appium.java_client.pagefactory.TimeOutDuration;
+import io.appium.java_client.pagefactory.WithTimeout;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.Base;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class Navigation{
@@ -98,7 +101,7 @@ public class Navigation{
 //======================================================================================================================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/spaceControl")
-    private WebElement spaceControlImageOnRemotePage;
+    private WebElement spaceControlImage;
 
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
@@ -445,7 +448,7 @@ public class Navigation{
 
         footerRemote.click();
 
-        if (spaceControlImageOnRemotePage.isDisplayed()) {
+        if (spaceControlImage.isDisplayed()) {
             result = true;
         }
         Base.log("Method is finished");
@@ -457,21 +460,31 @@ public class Navigation{
 //======================================================================================================================
     public void confirmIt() {
         try {
+            start = System.nanoTime();
             okBtn.click();
             Base.log("OK button is pressed");
         }catch (Exception e){
             Base.log(2, "OK Button was not found\n\n" + e.getMessage() + "\n");
 
+            finish = System.nanoTime();
+            Base.log(2, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
+
             try {
+                start = System.nanoTime();
                 confirmButton.click();
                 Base.log("Confirm button is pressed");
             }catch (Exception e1){
+                finish = System.nanoTime();
+                Base.log(2, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
                 Base.log(2, "Confirm button was not found\n\n" + e1.getMessage() + "\n");
 
                 try {
+                    start = System.nanoTime();
                     addButton.click();
                     Base.log("Confirm button is pressed");
                 }catch (Exception e2){
+                    finish = System.nanoTime();
+                    Base.log(2, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
                     Base.log(2, "Add button was not found\n\n" + e2.getMessage() + "\n");
                 }
             }

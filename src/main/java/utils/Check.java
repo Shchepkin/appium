@@ -198,7 +198,7 @@ public class Check{
 
 //======================================================================================================================
 
-    public boolean forSnackBarIsPresent(int timer) {
+    public boolean isSnackBarPresent(int timer) {
         Base.log("Method is started");
         result = false;
 
@@ -230,6 +230,17 @@ public class Check{
             Base.log("Error message is not shown");
             base.getScreenShot();
             result = false;
+        }
+        return result;
+    }
+
+    public boolean isDeletedBy(String type, String value) {
+        if (base.nav.scrollToElementWith("name", "up", value, false)) {
+            Base.log("element with value \"" + value + "\" is still displayed in the List");
+            result = false;
+        }else {
+            Base.log(3, "element with value \"" + value + "\" is not displayed in the List");
+            result = true;
         }
         return result;
     }

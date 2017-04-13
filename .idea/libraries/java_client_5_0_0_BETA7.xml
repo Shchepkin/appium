@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="java-client-5.0.0-BETA7">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/java-client-5.0.0-BETA7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

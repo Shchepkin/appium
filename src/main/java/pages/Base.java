@@ -53,6 +53,7 @@ public class Base {
     public ValidationCodePage validationCodePage;
     public DashboardRemotePage remotePage;
     public DashboardDevicesPage devicesPage;
+    public static int TIMEOUT = 10;
 
     private AndroidDriver driver = null;
     private Path path;
@@ -91,7 +92,6 @@ public class Base {
     public Base(AndroidDriver driver) {
         initPageObjects(driver);
     }
-
 
     public void initPageObjects(AndroidDriver driver) {
 
@@ -249,9 +249,9 @@ public class Base {
         return dbSettings;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // JSON
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public Map getJsonCollection(String filePath, String collection) {
         log("Method is started");
@@ -275,7 +275,7 @@ public class Base {
         } catch (Exception e) {
             log(4, "Exception\n" + e + "\n");
         }
-        log("Method is finished");
+        log(2, "Method is finished");
         return jsonCollection;
     }
 
@@ -310,7 +310,7 @@ public class Base {
         }
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     private Path getApplicationStartUp() throws UnsupportedEncodingException, MalformedURLException {
         log("Method is started");
@@ -335,7 +335,7 @@ public class Base {
         return path;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     private String loadJSON(String path) throws IOException {
         log("Method is started");
@@ -348,9 +348,9 @@ public class Base {
         return new String(buf);
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // LOG
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public static void log(String message) {
         Throwable t = new Throwable();
@@ -406,9 +406,9 @@ public class Base {
         }
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Keyboard
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public void hideKeyboard() {
         try {
@@ -428,9 +428,9 @@ public class Base {
         log("Method is finished");
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // AndroidDriver
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public AndroidDriver getDriver() {
         if (driver == null) {
@@ -445,7 +445,6 @@ public class Base {
             log(2, "get .apk file");
             File app = new File(appPath);
 
-            //Settings ajaxMobileApp AndroidDriver
             log(2, "set capabilities settings");
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability(MobileCapabilityType.TAKES_SCREENSHOT, "true");
@@ -461,8 +460,10 @@ public class Base {
             log(2, "implement Android driver");
             driver = new AndroidDriver(new URL("http://" + URL), capabilities);
 
-            log(2, "set timeouts");
-            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+            log(2, "App Context: " + driver.getContextHandles().toString());
+
+            log(2, "set implicitlyWait");
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         } catch (MalformedURLException e) {
             log(4, "MalformedURLException\n" + e);

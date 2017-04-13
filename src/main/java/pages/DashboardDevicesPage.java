@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class DashboardDevicesPage{
 
@@ -39,14 +40,14 @@ public class DashboardDevicesPage{
     private WebElement idField;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base base;
-    private final AppiumDriver driver;
+    private Base base;
+    private AppiumDriver driver;
     private boolean result;
 
     public DashboardDevicesPage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 

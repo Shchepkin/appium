@@ -10,9 +10,9 @@ import pages.Base;
 /**
  * PRECONDITION
  * - one hub
- * - at least three devices with different names
+ * - at least three rooms with different names
  */
-public class C44142_Device_delete {
+public class C44143_Room_delete {
     private Base base;
 
     @Parameters({ "deviceName_" })
@@ -23,38 +23,43 @@ public class C44142_Device_delete {
 
         Base.log("login without Pin");
         base.loginPage.loginWithPinCancel();
+
+        base.dashboard.goToTheRoomPage();
     }
 
-    @Test(priority = 1, enabled = false)
+
+
+    @Test(priority = 1, enabled = true)
     public void While_Hub_Disarmed() {
         String successText = base.getLocalizeTextForKey("Deleting_success1");
 
-        Base.log(2, "get name of first device from device list");
-        String devName = base.devicesPage.getFirstDeviceName();
+        Base.log(2, "get name of first room from rooms list");
+        String roomName = base.roomsPage.getFirstRoomName();
 
-        base.devicesPage.goToDeviceSettingsPage();
+        base.roomsPage.goToRoomSettingsPage();
 
         Base.log("scroll bottom and tap Delete button");
         base.nav.scrollBottom();
-        base.devicesPage.unpairButtonClick();
+        base.roomsPage.deleteButtonClick();
 
         Base.log("confirm proposition from popUp");
         base.nav.confirmIt();
 
         Assert.assertTrue(base.wait.elementWithText(successText, 10, true));
 
+        base.nav.cancelIt();
         base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
 
-        Assert.assertTrue(base.devicesPage.checkIsDeleted(devName));
-        Base.log("device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
+        Assert.assertTrue(base.check.isDeletedBy("name", roomName));
+        Base.log("room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
     }
 
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 2, enabled = true)
     public void While_Hub_Armed() {
         String expectedSnackBarText = base.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
         base.hub.arm();
-        base.dashboard.goToTheDevicesPage();
-        base.devicesPage.goToDeviceSettingsPage();
+        base.dashboard.goToTheRoomPage();
+        base.roomsPage.goToRoomSettingsPage();
         base.wait.element(base.popUp.getSnackBarElement(), 5, true);
         String actualSnackBarText = base.popUp.getSnackBarText();
         Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
@@ -65,12 +70,12 @@ public class C44142_Device_delete {
         base.hub.disarm();
     }
 
-    @Test(priority = 3, enabled = false)
+    @Test(priority = 3, enabled = true)
     public void While_Hub_Partial_Armed() {
         String expectedSnackBarText = base.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
         base.hub.partialArm();
-        base.dashboard.goToTheDevicesPage();
-        base.devicesPage.goToDeviceSettingsPage();
+        base.dashboard.goToTheRoomPage();
+        base.roomsPage.goToRoomSettingsPage();
         base.wait.element(base.popUp.getSnackBarElement(), 5, true);
         String actualSnackBarText = base.popUp.getSnackBarText();
         Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
@@ -81,10 +86,11 @@ public class C44142_Device_delete {
         base.hub.disarm();
     }
 
-    @Test(priority = 4, enabled = false)
-    public void All_Device_Deleting() {
+    @Test(priority = 4, enabled = true)
+    public void All_Rooms_Deleting() {
         base.devicesPage.deleteAllDevices();
     }
+
 
     @AfterClass
     public void endSuit() {
