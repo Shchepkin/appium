@@ -9,6 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 public class PinPage {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/content_text")
@@ -81,7 +83,7 @@ public class PinPage {
     public PinPage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 

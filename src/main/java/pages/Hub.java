@@ -1,11 +1,15 @@
 package pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+
+import java.util.concurrent.TimeUnit;
 
 public class Hub{
 
@@ -22,11 +26,11 @@ public class Hub{
     private WebElement hubSettingsBtn;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/status")
-    private WebElement userStatus;
+    private AndroidElement userStatus;
 
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
-    private final AppiumDriver driver;
+    private final AndroidDriver driver;
     private String sendInvitesButtonText,armedText, disarmedText, patrialArmedText;
 
     public Hub(Base base) {
@@ -35,7 +39,7 @@ public class Hub{
         armedText = base.getLocalizeTextForKey("armed");
         disarmedText = base.getLocalizeTextForKey("disarmed");
         patrialArmedText = base.getLocalizeTextForKey("partially_armed");
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 

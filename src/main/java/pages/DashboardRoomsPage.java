@@ -2,13 +2,22 @@ package pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class DashboardRoomsPage{
 
@@ -30,16 +39,19 @@ public class DashboardRoomsPage{
     @AndroidFindBy(id = "com.ajaxsystems:id/footerImage")
     private WebElement addRoomPlusBtn;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/delete")
+    private AndroidElement deleteButton;
+
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
-    private final AppiumDriver driver;
+    private final AndroidDriver driver;
     private boolean result;
     private WebElement[] elements;
 
     public DashboardRoomsPage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -139,4 +151,49 @@ public class DashboardRoomsPage{
         Base.log("Method is finished");
         return result;
     }
+
+    public String getFirstRoomName(){
+        return roomNameField.getText();
+    }
+
+    public void goToRoomSettingsPage(){
+        Base.log("click Settings Button");
+        base.nav.goToSettings();
+    }
+
+    public void deleteButtonClick(){
+        Base.log("click delete button");
+        deleteButton.click();
+    }
+
+    public void deleteAllRooms() {
+        String successText = base.getLocalizeTextForKey("Deleting_success1");
+        int counter = 0;
+        try {
+            while (true) {
+                if (base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true)){
+                    String roomName = getFirstRoomName();
+                    goToRoomSettingsPage();
+                    base.nav.scrollBottom();
+                    deleteButtonClick();
+                    base.nav.confirmIt();
+                    Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
+                    base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
+                    base.check.isDeletedBy("name", roomName);
+                    Base.log("room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
+                    counter++;
+
+                }else if (base.nav.getCancelButton().isDisplayed()){
+                    base.nav.cancelIt();
+                }else {
+                    break;
+                }
+            }
+        }catch (NoSuchElementException e){
+            Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
+        }
+        Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one element found\n");
+        Base.log(1, "element are not found, number of deleted elements: " + counter);
+    }
+
 }

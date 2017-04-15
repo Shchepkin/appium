@@ -24,7 +24,7 @@ public class Check{
     }
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void isElementDisplayed(WebElement element, int timer) {
+    public boolean isElementDisplayed(WebElement element, int timer) {
         Base.log("Method is started");
 
         try {
@@ -32,14 +32,15 @@ public class Check{
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(element));
             Base.log("element is shown with text: \"" + element.getText() + "\"");
+            result = true;
 
         } catch (NoSuchElementException e) {
             // is failed - make screenshot
             base.getScreenShot();
-
-            // creation report
-            Assert.fail("Test failed - no such element was appeared during " + timer + " seconds\n" + e);
+            result = false;
+            Base.log("no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
         }
+        return result;
     }
 
 
@@ -198,7 +199,7 @@ public class Check{
 
 //======================================================================================================================
 
-    public boolean forSnackBarIsPresent(int timer) {
+    public boolean isSnackBarPresent(int timer) {
         Base.log("Method is started");
         result = false;
 
@@ -230,6 +231,17 @@ public class Check{
             Base.log("Error message is not shown");
             base.getScreenShot();
             result = false;
+        }
+        return result;
+    }
+
+    public boolean isDeletedBy(String type, String value) {
+        if (base.nav.scrollToElementWith("name", "up", value, false)) {
+            Base.log("element with value \"" + value + "\" is still displayed in the List");
+            result = false;
+        }else {
+            Base.log(3, "element with value \"" + value + "\" is not displayed in the List");
+            result = true;
         }
         return result;
     }

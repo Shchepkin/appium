@@ -6,6 +6,8 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.concurrent.TimeUnit;
+
 public class AccountMenuPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/logout")
@@ -36,13 +38,13 @@ public class AccountMenuPage{
     private WebElement logoutImage;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base base;
-    private final AppiumDriver driver;
+    private Base base;
+    private AppiumDriver driver;
 
     public AccountMenuPage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 

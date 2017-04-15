@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class User{
 
@@ -60,7 +61,7 @@ public class User{
         adminStatusText = base.getLocalizeTextForKey("admin");
         userStatusText = base.getLocalizeTextForKey("user");
 
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -86,7 +87,7 @@ public class User{
         Base.log("click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Assert.assertFalse(base.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
@@ -111,7 +112,7 @@ public class User{
         Base.log("click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Assert.assertFalse(base.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
@@ -140,7 +141,7 @@ public class User{
 
         Base.log("click Add button");
         base.nav.nextButtonClick();
-        if(!base.check.forSnackBarIsPresent(3)) {
+        if(!base.check.isSnackBarPresent(3)) {
 
             Base.log("confirm proposition");
             base.nav.confirmIt();
@@ -191,7 +192,7 @@ public class User{
         Base.log("click Add button");
         base.nav.nextButtonClick();
 
-        Assert.assertFalse(base.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 15, true), "User page is not shown \n");
 
@@ -231,7 +232,7 @@ public class User{
         Base.log("click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Assert.assertFalse(base.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter();
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
@@ -246,7 +247,7 @@ public class User{
 
         for (int i = 1; i < 3; i++) {
             if (base.nav.scrollToElementWith(typeBy, "up", userEmail, true)) {
-                base.check.forSnackBarIsPresent(2);
+                base.check.isSnackBarPresent(2);
                 try {
                     base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
                     Base.log("element \"" + userEmail + "\" is activated successfully");
@@ -289,7 +290,7 @@ public class User{
         Base.log("click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Assert.assertFalse(base.check.forSnackBarIsPresent(3), "SnackBar is shown with error text \n");
+        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
