@@ -21,7 +21,7 @@ public class C44142_Device_delete {
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
-        Base.log("login without Pin");
+        Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
     }
 
@@ -29,16 +29,16 @@ public class C44142_Device_delete {
     public void While_Hub_Disarmed() {
         String successText = base.getLocalizeTextForKey("Deleting_success1");
 
-        Base.log(2, "get name of first device from device list");
+        Base.log(4, "get name of first device from device list");
         String devName = base.devicesPage.getFirstDeviceName();
 
         base.devicesPage.goToDeviceSettingsPage();
 
-        Base.log("scroll bottom and tap Delete button");
+        Base.log(1, "scroll bottom and tap Delete button");
         base.nav.scrollBottom();
         base.devicesPage.unpairButtonClick();
 
-        Base.log("confirm proposition from popUp");
+        Base.log(1, "confirm proposition from popUp");
         base.nav.confirmIt();
 
         Assert.assertTrue(base.wait.elementWithText(successText, 10, true));
@@ -46,7 +46,7 @@ public class C44142_Device_delete {
         base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
 
         Assert.assertTrue(base.devicesPage.checkIsDeleted(devName));
-        Base.log("device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
+        Base.log(1, "device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
     }
 
     @Test(priority = 2, enabled = false)
@@ -58,9 +58,9 @@ public class C44142_Device_delete {
         base.wait.element(base.popUp.getSnackBarElement(), 5, true);
         String actualSnackBarText = base.popUp.getSnackBarText();
         Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
-        Base.log("SnackBar with error text is successfully shown");
+        Base.log(1, "SnackBar with error text is successfully shown");
 
-        Base.log("disarm hub");
+        Base.log(1, "disarm hub");
         base.nav.goBack();
         base.hub.disarm();
     }
@@ -74,9 +74,9 @@ public class C44142_Device_delete {
         base.wait.element(base.popUp.getSnackBarElement(), 5, true);
         String actualSnackBarText = base.popUp.getSnackBarText();
         Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
-        Base.log("SnackBar with error text is successfully shown");
+        Base.log(1, "SnackBar with error text is successfully shown");
 
-        Base.log("disarm hub");
+        Base.log(1, "disarm hub");
         base.nav.goBack();
         base.hub.disarm();
     }

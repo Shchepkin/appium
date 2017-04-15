@@ -24,20 +24,20 @@ public class C42100_Add_new_room{
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
-        Base.log("get credentials for login");
+        Base.log(1, "get credentials for login");
         login = base.getCredsWithKey("login");
         pass = base.getCredsWithKey("password");
         server = base.getCredsWithKey("server");
 
         base.loginPage.loginWithPinCancel(login, pass, server);
 
-        Base.log("tap the Room Page button in the footer");
+        Base.log(1, "tap the Room Page button in the footer");
         base.dashboard.goToTheRoomPage();
     }
 
     @Test(priority = 1, enabled = true)
     public void First_room_without_image() {
-        Base.log("add Room without image");
+        Base.log(1, "add Room without image");
         base.roomsPage.addRoom("Without image", 0);
 
         Assert.assertTrue(base.roomsPage.isRoomPresens("Without image"));
@@ -45,10 +45,10 @@ public class C42100_Add_new_room{
 
     @Test(priority = 2, enabled = true)
     public void Gallery_image() {
-        Base.log("close pop up if present");
+        Base.log(1, "close pop up if present");
         base.nav.cancelIt();
 
-        Base.log("add Room with image from popup gallery");
+        Base.log(1, "add Room with image from popup gallery");
         base.roomsPage.addRoom("Gallery image", 2, 2);
 
         Assert.assertTrue(base.roomsPage.isRoomPresens("Gallery image"));
@@ -56,10 +56,10 @@ public class C42100_Add_new_room{
 
     @Test(priority = 3, enabled = true)
     public void Camera_image() {
-        Base.log("close pop up if present");
+        Base.log(1, "close pop up if present");
         base.nav.cancelIt();
 
-        Base.log("add Room with image from camera");
+        Base.log(1, "add Room with image from camera");
         base.roomsPage.addRoom("Camera image", 1);
 
         Assert.assertTrue(base.roomsPage.isRoomPresens("Camera image"));

@@ -21,7 +21,7 @@ public class C44143_Room_delete {
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
-        Base.log("login without Pin");
+        Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
 
         base.dashboard.goToTheRoomPage();
@@ -33,16 +33,16 @@ public class C44143_Room_delete {
     public void While_Hub_Disarmed() {
         String successText = base.getLocalizeTextForKey("Deleting_success1");
 
-        Base.log(2, "get name of first room from rooms list");
+        Base.log(4, "get name of first room from rooms list");
         String roomName = base.roomsPage.getFirstRoomName();
 
         base.roomsPage.goToRoomSettingsPage();
 
-        Base.log("scroll bottom and tap Delete button");
+        Base.log(1, "scroll bottom and tap Delete button");
         base.nav.scrollBottom();
         base.roomsPage.deleteButtonClick();
 
-        Base.log("confirm proposition from popUp");
+        Base.log(1, "confirm proposition from popUp");
         base.nav.confirmIt();
 
         Assert.assertTrue(base.wait.elementWithText(successText, 10, true));
@@ -51,7 +51,7 @@ public class C44143_Room_delete {
         base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
 
         Assert.assertTrue(base.check.isDeletedBy("name", roomName));
-        Base.log("room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
+        Base.log(1, "room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
     }
 
     @Test(priority = 2, enabled = false)
@@ -60,7 +60,7 @@ public class C44143_Room_delete {
         base.dashboard.goToTheRoomPage();
         Assert.assertFalse(base.check.isElementDisplayed(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
 
-        Base.log("disarm hub");
+        Base.log(1, "disarm hub");
         base.hub.disarm();
     }
 
@@ -70,7 +70,7 @@ public class C44143_Room_delete {
         base.dashboard.goToTheRoomPage();
         Assert.assertFalse(base.check.isElementDisplayed(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
 
-        Base.log("disarm hub");
+        Base.log(1, "disarm hub");
         base.hub.disarm();
     }
 

@@ -93,10 +93,10 @@ public class Dashboard{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void fillFieldsWith(String hubName, String hubKey){
-        Base.log("fill Name Field with \"" + hubName + "\"");
+        Base.log(1, "fill Name Field with \"" + hubName + "\"");
         nameField.sendKeys(hubName);
 
-        Base.log("fill Hub Key Field with \"" + hubKey + "\"");
+        Base.log(1, "fill Hub Key Field with \"" + hubKey + "\"");
         hubKeyField.sendKeys(hubKey);
     }
 
@@ -105,12 +105,12 @@ public class Dashboard{
     }
 
     public void goToTheRoomPage() {
-        Base.log(2, "click Rooms button in the footer");
+        Base.log(4, "click Rooms button in the footer");
         footerRooms.click();
     }
 
     public void goToTheRemotePage() {
-        Base.log(2, "click Remote button in the footer");
+        Base.log(4, "click Remote button in the footer");
         footerRemote.click();
     }
     public void goToTheNotificationPage() {

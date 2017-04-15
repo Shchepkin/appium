@@ -24,26 +24,26 @@ public class C42176_Virtual_Space_Control{
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
-        Base.log("get localized keys");
+        Base.log(1, "get localized keys");
         armedText = base.getLocalizeTextForKey("armed");
         disarmedText = base.getLocalizeTextForKey("disarmed");
         patrialArmedText = base.getLocalizeTextForKey("partially_armed");
 
-        Base.log("login without Pin");
+        Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
 
-        Base.log("go to the Remote Page");
+        Base.log(1, "go to the Remote Page");
         base.dashboard.goToTheRemotePage();
     }
 
     @Test(priority = 1, enabled = true)
     public void Click_Arm_Button() {
 
-        Base.log("make precondition disarmed state");
+        Base.log(1, "make precondition disarmed state");
         base.remotePage.clickDisarmButton();
         Assert.assertTrue(base.wait.elementWithText(armedText, 10, true), "Text \"" + armedText + "\" is not found");
 
-        Base.log("click Arm Button and confirm if there is shown popUp");
+        Base.log(1, "click Arm Button and confirm if there is shown popUp");
         base.check.clickElementAndWaitingPopup(base.remotePage.getArmButton(), true);
         Assert.assertTrue(base.wait.elementWithText(armedText, 10, true), "Text \"" + armedText + "\" is not found");
     }
@@ -51,7 +51,7 @@ public class C42176_Virtual_Space_Control{
     @Test(priority = 2, enabled = true)
     public void Click_Partial_Arm_Button() {
 
-        Base.log("click Partial Arm Button and confirm if there is shown popUp");
+        Base.log(1, "click Partial Arm Button and confirm if there is shown popUp");
         base.check.clickElementAndWaitingPopup(base.remotePage.getPartialArmButton(), true);
         Assert.assertTrue(base.wait.elementWithText(patrialArmedText, 10, true), "Text \"" + patrialArmedText + "\" is not found");
     }
@@ -59,7 +59,7 @@ public class C42176_Virtual_Space_Control{
     @Test(priority = 3, enabled = true)
     public void Click_Disarm_Button() {
 
-        Base.log("click Disarm Button");
+        Base.log(1, "click Disarm Button");
         base.remotePage.clickDisarmButton();
         Assert.assertTrue(base.wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found");
     }

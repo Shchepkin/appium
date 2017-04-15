@@ -53,14 +53,14 @@ public class DashboardRemotePage{
 //----------------------------------------------------------------------------------------------------------------------
 
     public boolean goToTheRemotePage(){
-        Base.log("method is started");
+        Base.log(1, "method is started");
         result = false;
 
         base.dashboard.goToTheRemotePage();
         if (spaceControlImage.isDisplayed()) {
             result = true;
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
         return result;
     }
 

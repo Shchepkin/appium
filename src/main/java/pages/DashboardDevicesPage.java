@@ -52,41 +52,41 @@ public class DashboardDevicesPage{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addDeviceButtonClick(){
-        Base.log("click Add Device button");
+        Base.log(1, "click Add Device button");
         addDeviceButton.click();
     }
 
     public void unpairButtonClick(){
-        Base.log("click delete button");
+        Base.log(1, "click delete button");
         unpairButton.click();
     }
 
     public void goToDeviceSettingsPage(){
-        Base.log("click on Device tab (room element)");
+        Base.log(1, "click on Device tab (room element)");
         roomOfDeviceLocator.click();
 
-        Base.log("click Settings Button");
+        Base.log(1, "click Settings Button");
         base.nav.goToSettings();
     }
 
     public void fillFieldsWith(String deviceName, String devID){
-        Base.log("fill name field with \"" + deviceName + "\"");
+        Base.log(1, "fill name field with \"" + deviceName + "\"");
         nameField.sendKeys(deviceName);
 
         base.hideKeyboard();
 
-        Base.log("fill ID field with \"" + devID + "\"");
+        Base.log(1, "fill ID field with \"" + devID + "\"");
         idField.sendKeys(devID);
     }
 
     public void setRoom(int numOfRoom) {
         if (numOfRoom > 0) {
-            Base.log("click Set Room button");
+            Base.log(1, "click Set Room button");
             setRoomButtonElement.click();
 
             base.wait.element(roomObject, 10, true);
 
-            Base.log("set room number as \"" + numOfRoom + "\"");
+            Base.log(1, "set room number as \"" + numOfRoom + "\"");
             allRoomObjects.get(numOfRoom - 1).click();
         } else {
             Base.log(3, "invalid number of Room, number has to be > 0");
@@ -95,26 +95,26 @@ public class DashboardDevicesPage{
     }
 
     public void addNew(int devId, int devNumber, int devType, String devName, int roomNumber) {
-        Base.log("add devices to imitator");
+        Base.log(1, "add devices to imitator");
         base.imitator.addDevice(devId, devNumber, devType);
 
-        Base.log("add devices \"" + devName + "\" to Hub");
+        Base.log(1, "add devices \"" + devName + "\" to Hub");
         base.nav.scrollBottom();
         addDeviceButtonClick();
         fillFieldsWith(devName, String.valueOf(devId));
         base.hideKeyboard();
         setRoom(roomNumber);
 
-        Base.log("add devices button click");
+        Base.log(1, "add devices button click");
         base.nav.confirmIt();
 
-        Base.log("device turn on");
+        Base.log(1, "device turn on");
         base.imitator.registerDevice(devId);
     }
 
     public boolean checkIsNewAdded(String roomName) {
         if (base.nav.scrollToElementWith("name", "up", roomName, false)) {
-            Base.log("new device with name \"" + roomName + "\" is added successfully");
+            Base.log(1, "new device with name \"" + roomName + "\" is added successfully");
             result = true;
         }else {
             Base.log(3, "device with name \"" + roomName + "\" is not added");
@@ -126,7 +126,7 @@ public class DashboardDevicesPage{
 
     public boolean checkIsDeleted(String deviceName) {
         if (base.nav.scrollToElementWith("name", "up", deviceName, false)) {
-            Base.log("device with name \"" + deviceName + "\" is still displayed in the DeviceList");
+            Base.log(1, "device with name \"" + deviceName + "\" is still displayed in the DeviceList");
             result = false;
         }else {
             Base.log(3, "device with name \"" + deviceName + "\" is not displayed in the DeviceList");
@@ -156,7 +156,7 @@ public class DashboardDevicesPage{
                     Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
                     base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
                     checkIsDeleted(devName);
-                    Base.log("device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
+                    Base.log(1, "device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
                     counter++;
 
                 }else if (base.nav.getCancelButton().isDisplayed()){
@@ -186,7 +186,7 @@ public class DashboardDevicesPage{
         }
 
 //        if (nav.scrollToElementWith("name", "up", roomName, false)) {
-//            Base.log("new device with name \"" + roomName + "\" is added successfully");
+//            Base.log(1, "new device with name \"" + roomName + "\" is added successfully");
 //            result = true;
 //        }else {
 //            Base.log(3, "device with name \"" + roomName + "\" is not added");

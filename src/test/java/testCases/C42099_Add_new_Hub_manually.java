@@ -32,10 +32,10 @@ public class C42099_Add_new_Hub_manually{
     @Test(priority = 1, enabled = true)
     public void Add_first_Hub() {
 
-        Base.log("tap to the Plus Button");
+        Base.log(1, "tap to the Plus Button");
         base.dashboard.plusButtonClick();
 
-        Base.log("choose manual Hub adding ");
+        Base.log(1, "choose manual Hub adding ");
         base.nav.nextButtonClick();
 
         base.dashboard.fillFieldsWith(hubName, hubMasterKey);
@@ -46,8 +46,8 @@ public class C42099_Add_new_Hub_manually{
         Assert.assertFalse(base.check.isErrorPresent(3), "Hub adding failed!");
 
         Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 15, true));
-        Base.log("hub successfully added!");
-        Base.log("Method is finished");
+        Base.log(1, "hub successfully added!");
+        Base.log(1, "Method is finished");
     }
 
     @Test(priority = 1, enabled = false)

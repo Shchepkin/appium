@@ -24,7 +24,7 @@ public class C42102_Add_new_guest_user{
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
-        Base.log("login without Pin");
+        Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
 
         base.hub.goToTheUserlistPage();

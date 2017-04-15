@@ -69,12 +69,12 @@ public class AddImagePage{
     }
 
     public void setImageFromCamera(){
-        Base.log("method is started");
+        Base.log(1, "method is started");
         thumbnail.get(0).click();
         shutterButtonPhoto.click();
         doneButton.click();
         nextBtn.click();
-        Base.log("method is finished");
+        Base.log(1, "method is finished");
     }
 
 

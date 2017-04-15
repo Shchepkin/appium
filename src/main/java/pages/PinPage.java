@@ -93,10 +93,10 @@ public class PinPage {
             WebDriverWait iWait = new WebDriverWait (driver, 30);
             iWait.until(ExpectedConditions.visibilityOf(cancelBtn));
             cancelBtn.click();
-            Base.log("window with PIN acceptation is displayed and canceled");
+            Base.log(1, "window with PIN acceptation is displayed and canceled");
 
         } catch (NoSuchElementException e) {
-            Base.log("window with PIN acceptation isn't displayed");
+            Base.log(1, "window with PIN acceptation isn't displayed");
         }
     }
 
@@ -106,10 +106,10 @@ public class PinPage {
             WebDriverWait iWait = new WebDriverWait (driver, 30);
             iWait.until(ExpectedConditions.visibilityOf(confirmBtn));
             confirmBtn.click();
-            Base.log("Window with PIN acceptation is displayed and confirmed.");
+            Base.log(1, "Window with PIN acceptation is displayed and confirmed.");
 
         } catch (NoSuchElementException e) {
-            Base.log("Window with PIN acceptation isn't displayed.");
+            Base.log(1, "Window with PIN acceptation isn't displayed.");
         }
     }
 

@@ -44,6 +44,9 @@ public class User{
     public ArrayList<String> getUsersForMixedAdd() {
         return usersForMixedAdd;
     }
+    public WebElement getDeleteButton() {
+        return deleteButton;
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -73,83 +76,83 @@ public class User{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addFromEmailField(String userEmail) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
 
         base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
-        Base.log("fill email field with \"" + userEmail + "\"");
+        Base.log(1, "fill email field with \"" + userEmail + "\"");
         inviteUsersField.sendKeys(userEmail);
 
-        Base.log("click add button and confirm proposition");
+        Base.log(1, "click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Base.log("click add button and confirm proposition");
+        Base.log(1, "click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
         Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addFromContactList(String userEmail) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
 
-        Base.log("searching and clicking the Send Invites Button");
+        Base.log(1, "searching and clicking the Send Invites Button");
         base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
-        Base.log("click the Add From Contact List Button");
+        Base.log(1, "click the Add From Contact List Button");
         addButtonFromContactList.click();
 
         base.nav.scrollToElementWith("email", "up", userEmail, true);
         base.nav.nextButtonClick();
 
-        Base.log("click add button and confirm proposition");
+        Base.log(1, "click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
         Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     public boolean addFromEmailField() {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
         String emailListString = "";
         int counter = 0;
 
-        Base.log("click send Invites Button");
+        Base.log(1, "click send Invites Button");
         base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
-        Base.log("concat all emails from array to the one string");
+        Base.log(1, "concat all emails from array to the one string");
         for (String userEmail : usersForEmailField) {
-            Base.log("concat email \"" + userEmail + "\" to the string");
+            Base.log(1, "concat email \"" + userEmail + "\" to the string");
             emailListString = emailListString.concat(userEmail + " ");
         }
 
-        Base.log("send emailList String to the Users Field");
+        Base.log(1, "send emailList String to the Users Field");
         inviteUsersField.sendKeys(emailListString);
 
-        Base.log("click Add button");
+        Base.log(1, "click Add button");
         base.nav.nextButtonClick();
         if(!base.check.isSnackBarPresent(3)) {
 
-            Base.log("confirm proposition");
+            Base.log(1, "confirm proposition");
             base.nav.confirmIt();
             base.wait.invisibilityOfWaiter();
 
             base.check.isElementDisplayed(userStatus, 15);
 
-            Base.log("check whether new user is added");
+            Base.log(1, "check whether new user is added");
             for (String userEmail : usersForEmailField) {
                 if (base.nav.scrollToElementWith("text", "up", userEmail, false)) {
                     counter++;
@@ -157,7 +160,7 @@ public class User{
             }
 
             if (counter == usersForEmailField.size()) {
-                Base.log("all new user is shown in the userList");
+                Base.log(1, "all new user is shown in the userList");
                 result = true;
             }else {
                 result = false;
@@ -165,78 +168,78 @@ public class User{
         }else {
             result = false;
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
         return result;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addUserListFromEmailField(String nameOfJsonCollection) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         Base.log(3, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
         ArrayList<String> userListFromJson = base.getJsonStringArray("emails.json", nameOfJsonCollection);
         String emailListString = "";
 
-        Base.log("click send Invites Button");
+        Base.log(1, "click send Invites Button");
         base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
-        Base.log("concat all emails from array to the one string");
+        Base.log(1, "concat all emails from array to the one string");
         for (String userEmail : userListFromJson) {
-            Base.log("concat email \"" + userEmail + "\" to the string");
+            Base.log(1, "concat email \"" + userEmail + "\" to the string");
             emailListString = emailListString.concat(userEmail + " ");
         }
 
-        Base.log("send emailList String to the Users Field");
+        Base.log(1, "send emailList String to the Users Field");
         inviteUsersField.sendKeys(emailListString);
 
-        Base.log("click Add button");
+        Base.log(1, "click Add button");
         base.nav.nextButtonClick();
 
         Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 15, true), "User page is not shown \n");
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addFromContactList() {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         Base.log(3, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
         result = false;
 
-        Base.log("searching and clicking the Send Invites Button");
+        Base.log(1, "searching and clicking the Send Invites Button");
         base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
-        Base.log("click the Add From Contact List Button");
+        Base.log(1, "click the Add From Contact List Button");
         addButtonFromContactList.click();
 
-        Base.log("start Add user process");
+        Base.log(1, "start Add user process");
         int firstTime = 0;
         for (String userEmail : usersForContactList) {
 
             if(firstTime > 0){
-                Base.log("scrolling to the start of list");
+                Base.log(1, "scrolling to the start of list");
                 base.nav.scrollTop();
             }
             firstTime++;
 
-            Base.log("activate user with email \"" + userEmail + "\" in the Contacts List");
+            Base.log(1, "activate user with email \"" + userEmail + "\" in the Contacts List");
             activateUserInContactListBy("email", userEmail);
         }
 
-        Base.log("click Save button");
+        Base.log(1, "click Save button");
         base.nav.nextButtonClick();
 
-        Base.log("click add button and confirm proposition");
+        Base.log(1, "click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
         Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter();
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -250,7 +253,7 @@ public class User{
                 base.check.isSnackBarPresent(2);
                 try {
                     base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
-                    Base.log("element \"" + userEmail + "\" is activated successfully");
+                    Base.log(1, "element \"" + userEmail + "\" is activated successfully");
                     result = true;
                     break;
 
@@ -267,7 +270,7 @@ public class User{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addMixedUsers() {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
         String registeredUser = usersForMixedAdd.get(0);
         String unregisteredUser = usersForMixedAdd.get(1);
@@ -275,26 +278,26 @@ public class User{
 
         base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
 
-        Base.log("fill email field with \"" + registeredUser + " " + unregisteredUser + "\"");
+        Base.log(1, "fill email field with \"" + registeredUser + " " + unregisteredUser + "\"");
         inviteUsersField.sendKeys(registeredUser + " " + unregisteredUser);
 
-        Base.log("click the Add From Contact List Button");
+        Base.log(1, "click the Add From Contact List Button");
         addButtonFromContactList.click();
 
-        Base.log("activate user with email \"" + userForContactList + "\" in the Contacts List");
+        Base.log(1, "activate user with email \"" + userForContactList + "\" in the Contacts List");
         activateUserInContactListBy("email", userForContactList);
 
-        Base.log("click Save button");
+        Base.log(1, "click Save button");
         base.nav.nextButtonClick();
 
-        Base.log("click add button and confirm proposition");
+        Base.log(1, "click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
         Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -313,20 +316,20 @@ public class User{
         for (String userEmail : userList) {
 
             if(firstTime > 0){
-                Base.log("scrolling to the start of list");
+                Base.log(1, "scrolling to the start of list");
                 base.nav.scrollTop();
             }
             firstTime++;
 
             if (base.nav.scrollToElementWith(byType, "up", userEmail, false)) {
-                Base.log("new user with email \"" + userEmail + "\" is added successfully");
+                Base.log(1, "new user with email \"" + userEmail + "\" is added successfully");
                 counter++;
             }
         }
 
         Base.log(3, "added " + counter + " new users from " + userList.size());
         if (counter == userList.size()) {
-            Base.log("all users are added");
+            Base.log(1, "all users are added");
             result = true;
         } else {
             Base.log(3, "not all users are added");
@@ -345,7 +348,7 @@ public class User{
 
             try {
                 base.wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
-                Base.log("new user with email \"" + pendingUserName + "\" has the DELETE button");
+                Base.log(1, "new user with email \"" + pendingUserName + "\" has the DELETE button");
                 result = true;
 
             }catch (Exception e){
@@ -362,7 +365,7 @@ public class User{
         WebElement pendingUserForCheck = findPendingFrom("name", pendingUserName);
 
         if (base.nav.scrollToElement(pendingUserForCheck, "up")) {
-            Base.log("new user with email \"" + pendingUserName + "\" has the DELETE button");
+            Base.log(1, "new user with email \"" + pendingUserName + "\" has the DELETE button");
             result = true;
 
         } else {
@@ -390,21 +393,21 @@ public class User{
 
             if(base.nav.scrollToElement(deleteButton, "up")){
 
-                Base.log("tap User Delete button and confirm popUp proposition");
+                Base.log(1, "tap User Delete button and confirm popUp proposition");
                 deleteButton.click();
                 base.nav.confirmIt();
 
                 base.wait.invisibilityOfWaiter(true);
 
                 Assert.assertTrue(base.wait.elementWithText(successText, 5, true), "SUCCESS text is not shown");
-                Base.log("SUCCESS text is shown");
+                Base.log(1, "SUCCESS text is shown");
                 counter++;
             } else {
                 break;
             }
         }
         Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one pending user was found\n");
-        Base.log("pending users are not found, number of deleted users: " + counter);
+        Base.log(1, "pending users are not found, number of deleted users: " + counter);
         result = true;
         return result;
     }
