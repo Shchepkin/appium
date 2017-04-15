@@ -65,81 +65,81 @@ public class DashboardRoomsPage{
      * @param imageNumber - if use room with type 2 y can set 1, 2 or 3 image from PopUp, other values set number to 1 for default
      */
     public void addRoom(String roomName, int type, int imageNumber) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
         clickAddRoomButton();
 
-        Base.log("fill Room name field with: \"" + roomName + "\"");
+        Base.log(1, "fill Room name field with: \"" + roomName + "\"");
         roomNameField.sendKeys(roomName);
 
         switch (type){
-            case 1: Base.log("add image from camera");
+            case 1: Base.log(1, "add image from camera");
                 addRoomImageBtn.click();
                 base.addImagePage.setImageFromCamera();
                 break;
-            case 2: Base.log("add image from gallery");
+            case 2: Base.log(1, "add image from gallery");
                 addRoomImageBtn.click();
                 base.addImagePage.setImageFromGallery(imageNumber);
                 break;
-            default: Base.log("add room without image");
+            default: Base.log(1, "add room without image");
                 driver.hideKeyboard();
                 break;
         }
 
-        Base.log("tap Save button");
+        Base.log(1, "tap Save button");
         saveButton.click();
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
     public void addRoom(String roomName, int roomType) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
         clickAddRoomButton();
 
-        Base.log("fill Room name field with: \"" + roomName + "\"");
+        Base.log(1, "fill Room name field with: \"" + roomName + "\"");
         roomNameField.sendKeys(roomName);
 
         switch (roomType){
-            case 1: Base.log("add image from camera");
+            case 1: Base.log(1, "add image from camera");
                 addRoomImageBtn.click();
                 base.addImagePage.setImageFromCamera();
                 break;
-            case 2: Base.log("add image from gallery");
+            case 2: Base.log(1, "add image from gallery");
                 addRoomImageBtn.click();
                 base.addImagePage.setImageFromGallery(1);
                 break;
-            default: Base.log("add room without image");
+            default: Base.log(1, "add room without image");
                 driver.hideKeyboard();
                 break;
         }
-        Base.log("tap Save button");
+        Base.log(1, "tap Save button");
         saveButton.click();
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
     private void clickAddRoomButton (){
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
 
-        Base.log("choice the Add Room button");
+        Base.log(1, "choice the Add Room button");
         base.nav.scrollBottom();
         switch (base.check.waitElements(elements, 2)){
             case 1: addRoomBtn.click(); break;
             case 2: addRoomPlusBtn.click(); break;
             default: Base.log(3, "Something was wrong!"); break;
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
     public boolean isRoomPresens(String roomName) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
         for (WebElement roomNameElement : roomNameList) {
             if (roomNameElement.getText().equals(roomName)) {
                 result = true;
-                Base.log("room with name \"" + roomName + "\" successfully added!");
+                Base.log(1, "room with name \"" + roomName + "\" successfully added!");
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
@@ -148,7 +148,7 @@ public class DashboardRoomsPage{
                 break;
             }
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
         return result;
     }
 
@@ -157,12 +157,12 @@ public class DashboardRoomsPage{
     }
 
     public void goToRoomSettingsPage(){
-        Base.log("click Settings Button");
+        Base.log(1, "click Settings Button");
         base.nav.goToSettings();
     }
 
     public void deleteButtonClick(){
-        Base.log("click delete button");
+        Base.log(1, "click delete button");
         deleteButton.click();
     }
 
@@ -180,7 +180,7 @@ public class DashboardRoomsPage{
                     Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
                     base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
                     base.check.isDeletedBy("name", roomName);
-                    Base.log("room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
+                    Base.log(1, "room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
                     counter++;
 
                 }else if (base.nav.getCancelButton().isDisplayed()){

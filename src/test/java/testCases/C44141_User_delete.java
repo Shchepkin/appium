@@ -24,7 +24,7 @@ public class C44141_User_delete{
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
-        Base.log("login without Pin");
+        Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
 
         base.hub.goToTheUserlistPage();
@@ -47,7 +47,7 @@ public class C44141_User_delete{
 
         Assert.assertTrue(base.dashboard.getPlusButton().isDisplayed());
 
-        Base.log("return hub for next tests");
+        Base.log(1, "return hub for next tests");
         base.hub.addNew();
     }
 

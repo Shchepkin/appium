@@ -35,31 +35,31 @@ public class C42097_New_user_registration{
 
     @Test(priority = 1, enabled = true)
     public void With_Validation() {
-        Base.log("start from Intro Page and click Registration button");
+        Base.log(1, "start from Intro Page and click Registration button");
         base.introPage.setServer(server);
         base.introPage.goToRegistration();
 
-        Base.log("registration process");
+        Base.log(1, "registration process");
         base.regPage.setUserPic(1);
         base.regPage.fillFields(userName, login, pass, phone);
         base.regPage.confirmAgrimentCheckBox();
 
         base.check.clickElementAndWaitingPopup(base.regPage.getRegistrationButtonLink(), 5, 2, false);
 
-        Base.log("waiting for Validation Code Page");
+        Base.log(1, "waiting for Validation Code Page");
         Assert.assertTrue(base.wait.element(base.validationCodePage.getSmsCodeField(), 60, true));
 
-        Base.log("get and fill Validation Codes");
+        Base.log(1, "get and fill Validation Codes");
         base.validationCodePage.getAndFillValidationCodes("Phone", "%" + phone + "%");
         base.nav.confirmIt();
 
-        Base.log("waiting for Welcome Page with dashboard link");
+        Base.log(1, "waiting for Welcome Page with dashboard link");
         Assert.assertTrue(base.wait.element(base.regPage.getDashboardLink(), 30, true));
 
-        Base.log("Welcome Page is shown, so go to the dashboard");
+        Base.log(1, "Welcome Page is shown, so go to the dashboard");
         base.check.clickElementAndWaitingPopup(base.regPage.getDashboardLink(), 5, 3, false);
 
-//        Base.log("waiting for Pincode PopUp and cancel it");
+//        Base.log(1, "waiting for Pincode PopUp and cancel it");
 //        base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 30);
 //
 //        Assert.assertTrue(base.wait.element(base.dashboardHeader.getMenuDrawer(), 15, true), "Login failed!\n");

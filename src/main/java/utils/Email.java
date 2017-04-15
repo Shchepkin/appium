@@ -29,16 +29,16 @@ public class Email{
             this.password = password;
 
             // Get system settings
-            Base.log("Get system settings");
+            Base.log(1, "Get system settings");
             Properties props = System.getProperties();
             props.put("mail.pop3.host", host);
 
             // Get session
-            Base.log("Get session");
+            Base.log(1, "Get session");
             Session session = Session.getDefaultInstance(props, null);
 
             // Get store
-            Base.log("Get store");
+            Base.log(1, "Get store");
             store = session.getStore("pop3");
             store.connect(host, user, password);
 
@@ -52,15 +52,15 @@ public class Email{
 
     private Message[] openFolderAndGetMessages() {
         try {
-            Base.log("\n=== Start process for opening folder.");
+            Base.log(1, "\n=== Start process for opening folder.");
 
             // Get folder
-            Base.log("> Get inbox folder");
+            Base.log(1, "> Get inbox folder");
             folder = store.getFolder("INBOX");
             folder.open(Folder.READ_ONLY);
 
             // Get messages from Folder
-            Base.log("> Get messages from inbox folder");
+            Base.log(1, "> Get messages from inbox folder");
             message = folder.getMessages();
 
         } catch (MessagingException e) {
@@ -70,11 +70,11 @@ public class Email{
     }
 
     public Message[] checkNewMessage() {
-        Base.log("\n=== Start process for checking New Message.");
+        Base.log(1, "\n=== Start process for checking New Message.");
         int counter = 30;
         while (message.length == 0 & counter > 0) {
 
-            Base.log("\n> Attempts left: " + counter + "\n-------------------");
+            Base.log(1, "\n> Attempts left: " + counter + "\n-------------------");
             openFolderAndGetMessages();
 
             try {
@@ -87,7 +87,7 @@ public class Email{
         if (counter <= 0) {
             Assert.fail("> Timeout error! New E-mail is NOT found!");
         } else {
-            Base.log("> New E-mail is found");
+            Base.log(1, "> New E-mail is found");
             try {
                 folder = store.getFolder("INBOX");
                 folder.open(Folder.READ_WRITE);
@@ -100,14 +100,14 @@ public class Email{
     }
 
     public String getValidationCode() {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         String input = getEmailTextFromNewMessage();
         if (emailText != null) {
             Pattern pattern = Pattern.compile("[\\d]{6}");
             Matcher matcher = pattern.matcher(input);
             matcher.find();
             emailCode = matcher.group();
-            Base.log("> E-mail Validation code is: " + emailCode);
+            Base.log(1, "> E-mail Validation code is: " + emailCode);
         }
         return emailCode;
     }
@@ -116,30 +116,30 @@ public class Email{
     private String getEmailTextFromNewMessage() {
         try {
             if (message.length > 0) {
-                Base.log("\n=== Start process for getting text from e-mail.");
-                Base.log("> There are found new messages. So get the newest one.");
+                Base.log(1, "\n=== Start process for getting text from e-mail.");
+                Base.log(1, "> There are found new messages. So get the newest one.");
                 Message m = folder.getMessage(folder.getMessageCount());
 
                 if (m.getSize() > 0) {
-                    Base.log("> Get Message is successfully.");
+                    Base.log(1, "> Get Message is successfully.");
                 } else {
                     Assert.fail("> Get Message is fail!");
                 }
 
                 if (m.isMimeType("text/plain")) {
-                    Base.log("> CONTENT-TYPE: " + m.getContentType());
+                    Base.log(1, "> CONTENT-TYPE: " + m.getContentType());
                     emailText = String.valueOf(m.getContent());
                 } else if (m.isMimeType("multipart/*")) {
-                    Base.log("> CONTENT-TYPE: " + m.getContentType());
-                    Base.log("> Get Multipart content.");
+                    Base.log(1, "> CONTENT-TYPE: " + m.getContentType());
+                    Base.log(1, "> Get Multipart content.");
                     Multipart mp = (Multipart) m.getContent();
 
-                    Base.log("> Get Body Part from content.");
+                    Base.log(1, "> Get Body Part from content.");
                     BodyPart bp = mp.getBodyPart(0);
                     emailText = String.valueOf(bp.getContent());
                 }
 
-            } else Base.log("> There are no messages found.");
+            } else Base.log(1, "> There are no messages found.");
 
         } catch (MessagingException | IOException e) {
             e.printStackTrace();
@@ -150,17 +150,17 @@ public class Email{
     public void deleteAllMessage() {
         try {
             if (message.length > 0) {
-                Base.log("\n=== Start process of deleting all message.");
-                Base.log("> Number of messages: " + message.length);
+                Base.log(1, "\n=== Start process of deleting all message.");
+                Base.log(1, "> Number of messages: " + message.length);
                 for (Message m : message) {
                     m.setFlag(Flags.Flag.DELETED, true);
                     System.out.println(m.getMessageNumber() + ": Deleted\nFROM: " + m.getFrom()[0] + "\nSubject: " + m.getSubject() + "\nSentDate" + m.getSentDate() + "\n");
                 }
                 // folder.setFlags(1, 1, new Flags(Flags.Flag.DELETED));
-            } else Base.log("> There is no messages found.");
+            } else Base.log(1, "> There is no messages found.");
 
             // close the store and folder objects
-            Base.log("> Close the store and folder objects");
+            Base.log(1, "> Close the store and folder objects");
             closeAll();
 
         } catch (MessagingException e) {
@@ -170,17 +170,17 @@ public class Email{
 
     public void closeAll() {
         try {
-            Base.log("\n=== Start closing process of all folders and stores.");
+            Base.log(1, "\n=== Start closing process of all folders and stores.");
             // close the store and folder objects
             if(folder.isOpen()){
                 folder.close(true);
-                Base.log("> Folder is closed.");
-            }else Base.log("> Folder is already closed.");
+                Base.log(1, "> Folder is closed.");
+            }else Base.log(1, "> Folder is already closed.");
 
             if(store.isConnected()){
                 store.close();
-                Base.log("> Store is closed.");
-            }else Base.log("> Store is already closed.");
+                Base.log(1, "> Store is closed.");
+            }else Base.log(1, "> Store is already closed.");
 
         } catch (MessagingException e) {
             e.printStackTrace();

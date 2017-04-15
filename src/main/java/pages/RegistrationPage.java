@@ -69,7 +69,7 @@ public class RegistrationPage{
 //====================================================================================
 
     public void fakeRegistration(String email, String password, String phone, String server) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         base.introPage.goToAuthorization();
         base.loginPage.chooseServer(server);
         base.nav.goBack();
@@ -88,7 +88,7 @@ public class RegistrationPage{
 
 
     public void fillFields(String name, String email, String password, String phone, String server) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         base.introPage.goToAuthorization();
         base.loginPage.chooseServer(server);
         base.nav.goBack();
@@ -104,63 +104,63 @@ public class RegistrationPage{
     }
 
     public void fillFields(String name, String email, String password, String phone) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
-        Base.log("fill name with: \"" + name + "\"");
+        Base.log(1, "fill name with: \"" + name + "\"");
         nameField.sendKeys(name);
 
-        Base.log("fill and confirm email with: \"" + email + "\"");
+        Base.log(1, "fill and confirm email with: \"" + email + "\"");
         emailField.sendKeys(email);
         base.nav.swipeUp();
         emailConfirmField.sendKeys(email);
 
-        Base.log("fill phone with: \"" + phone + "\"");
+        Base.log(1, "fill phone with: \"" + phone + "\"");
         phoneField.sendKeys(phone);
 
-        Base.log("fill and confirm password with: \"" + password + "\"");
+        Base.log(1, "fill and confirm password with: \"" + password + "\"");
         base.nav.swipeUp();
         passwordField.sendKeys(password);
         base.nav.swipeUp();
         passwordConfirmField.sendKeys(password);
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
 
     public void confirmAgrimentCheckBox() {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         base.nav.swipeUp();
         userAgreementCheckbox.click();
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
     public void setUserPic(int imageNumber) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         userPic.click();
         base.addImagePage.setImageFromGallery(imageNumber);
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
     public void setUserPic(int type, int imageNumber) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
         switch (type){
-            case 1: Base.log("add image from camera");
+            case 1: Base.log(1, "add image from camera");
                 userPic.click();
                 base.addImagePage.setImageFromCamera();
                 break;
-            case 2: Base.log("add image from gallery");
+            case 2: Base.log(1, "add image from gallery");
                 userPic.click();
                 base.addImagePage.setImageFromGallery(imageNumber);
                 break;
-            default: Base.log("without image");
+            default: Base.log(1, "without image");
                 break;
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
     public void setPhoneCountryCode() {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
     }
 
 }

@@ -25,24 +25,24 @@ public class Wait{
 
 
     public boolean elementWithText(String searchingText, int timer, boolean makeScreenShot) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
 
         try {
-            Base.log(2, "waiting " + timer + " seconds for the element with text \"" + searchingText + "\"");
+            Base.log(4, "waiting " + timer + " seconds for the element with text \"" + searchingText + "\"");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//android.widget.TextView[@text='" + searchingText + "']"))));
 
-            Base.log(2, "element is shown with text: \"" + searchingText + "\"");
+            Base.log(4, "element is shown with text: \"" + searchingText + "\"");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();
             }
         } catch (TimeoutException e) {
-            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();
@@ -54,12 +54,12 @@ public class Wait{
 
 
     public boolean loaderWithText(boolean visibility, String searchingText, int timer, boolean makeScreenShot) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
         String xPath = "//*[contains(@resource-id,'com.ajaxsystems:id/content_text') and @text='" + searchingText + "']";
 
         try {
-            Base.log(2, "waiting for " + timer + " seconds for the element with text \"" + searchingText + "\"");
+            Base.log(4, "waiting for " + timer + " seconds for the element with text \"" + searchingText + "\"");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
 
             if(visibility){
@@ -68,16 +68,16 @@ public class Wait{
                 iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xPath)));
             }
 
-            Base.log(2, "element is shown with text: \"" + searchingText + "\"");
+            Base.log(4, "element is shown with text: \"" + searchingText + "\"");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();
             }
         } catch (TimeoutException e) {
-            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();
@@ -87,23 +87,23 @@ public class Wait{
     }
 
     public boolean invisibilityElementWithText(String waiterText, boolean makeScreenShot) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
 
         try {
-            Base.log(2, "waiting 100 seconds while Waiter become Invisible");
+            Base.log(4, "waiting 100 seconds while Waiter become Invisible");
             WebDriverWait iWait = new WebDriverWait(driver, 100);
             iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='" + waiterText + "']")));
 
-            Base.log(2, "waiter is gone");
+            Base.log(4, "waiter is gone");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();}
         } catch (TimeoutException e) {
-            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();}
@@ -113,7 +113,7 @@ public class Wait{
 
 
     public boolean invisibilityOfWaiter(boolean makeScreenShot) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
         Base.log(3, "waiterText: \"" + waiterText + "\"");
 //        waiterText = getLocalizeTextForKey("request_send");
@@ -122,9 +122,9 @@ public class Wait{
     }
 
     public boolean invisibilityOfWaiter() {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
-        Base.log(2, "waiting 100 seconds while Waiter become Invisible");
+        Base.log(4, "waiting 100 seconds while Waiter become Invisible");
         WebDriverWait iWait = new WebDriverWait(driver, 100);
         iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ajaxsystems:id/progress")));
         result = true;
@@ -132,23 +132,23 @@ public class Wait{
     }
 
     public boolean invisibilityOfLoaderLogo(boolean makeScreenShot) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
 
         try {
-            Base.log(2, "waiting 100 seconds while LoaderLogo become Invisible");
+            Base.log(4, "waiting 100 seconds while LoaderLogo become Invisible");
             WebDriverWait iWait = new WebDriverWait(driver, 100);
             iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ajaxsystems:id/loaderLogo")));
 
-            Base.log(2, "waiter is gone");
+            Base.log(4, "waiter is gone");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();}
         } catch (TimeoutException e) {
-            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();}
@@ -167,24 +167,24 @@ public class Wait{
     wait.element(elementForWaiting, 5, true)
      */
     public boolean element(WebElement elementForWaiting, int timer, boolean makeScreenShot) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
         try {
-            Base.log(2, "waiting " + timer + " seconds for the element ");
+            Base.log(4, "waiting " + timer + " seconds for the element ");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(elementForWaiting));
 
 
-            Base.log(2, "element " + elementForWaiting + " is shown with text: \"" + elementForWaiting.getText() + "\"");
+            Base.log(4, "element " + elementForWaiting + " is shown with text: \"" + elementForWaiting.getText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
-            Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){base.getScreenShot();}
 
         } catch (TimeoutException e) {
-            Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){base.getScreenShot();}
         }

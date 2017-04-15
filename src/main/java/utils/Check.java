@@ -17,6 +17,7 @@ public class Check{
     private final AppiumDriver driver;
     private boolean result;
     private int numOfFoundElement;
+    public LocalizedTextFor localizedTextFor = new LocalizedTextFor();
 
     public Check(Base base) {
         this.base = base;
@@ -25,20 +26,20 @@ public class Check{
 //----------------------------------------------------------------------------------------------------------------------
 
     public boolean isElementDisplayed(WebElement element, int timer) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
         try {
             // assert is the element displayed on the page
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(element));
-            Base.log("element is shown with text: \"" + element.getText() + "\"");
+            Base.log(1, "element is shown with text: \"" + element.getText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
             // is failed - make screenshot
             base.getScreenShot();
             result = false;
-            Base.log("no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
+            Base.log(1, "no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
         }
         return result;
     }
@@ -57,29 +58,29 @@ public class Check{
         waitElements(elements, 5));
      */
     public int waitElements (WebElement[] elements, int period) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         numOfFoundElement = 0;
         result = false;
         for (int i = 1; i <= period; i++) {
             int counter = 1;
-            Base.log("start waiting period #" + i);
+            Base.log(1, "start waiting period #" + i);
 
             for (WebElement el : elements) {
                 try {
-                    Base.log("element " + el + " is shown with text: \"" + el.getText() + "\"");
+                    Base.log(1, "element " + el + " is shown with text: \"" + el.getText() + "\"");
                     result = true;
                     numOfFoundElement = counter;
                     break;
                 } catch (NoSuchElementException e) {
-                    Base.log(4, "NoSuchElementException, element " + counter + " is not shown");
+                    Base.log(14, "NoSuchElementException, element " + counter + " is not shown");
                 } catch (TimeoutException e) {
-                    Base.log(4, "Timeout Exception, element " + counter + " is not shown");
+                    Base.log(14, "Timeout Exception, element " + counter + " is not shown");
                 }
                 counter ++;
             }
             if (result) {break;}
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
         return numOfFoundElement;
     }
 
@@ -95,7 +96,7 @@ public class Check{
           clickElementAndWaitingPopup(popUp.cancelButton, 3, 3, false)
      */
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period, int tryCount, boolean confirmPopupProposition){
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
         WebElement[] elements = new WebElement[]{base.popUp.getSnackBarElement(), base.popUp.loadingWindow};
 
@@ -103,7 +104,7 @@ public class Check{
             Base.log(3, "click the element link, try count #" +i);
             elementForClick.click();
 
-            Base.log("waiting for: 1.snackBar  2.loadingWindow");
+            Base.log(1, "waiting for: 1.snackBar  2.loadingWindow");
             numOfFoundElement = waitElements(elements, period);
 
             checkNum(numOfFoundElement, confirmPopupProposition);
@@ -115,26 +116,26 @@ public class Check{
             }
             Base.log(3, "element for click is shown again");
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
         return result;
     }
 
 //======================================================================================================================
 
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, boolean confirmPopupProposition){
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
         WebElement[] elements = new WebElement[]{base.popUp.getSnackBarElement(), base.popUp.loadingWindow};
 
         Base.log(3, "click the element link");
         elementForClick.click();
 
-        Base.log("waiting for: 1.snackBar  2.loadingWindow");
+        Base.log(1, "waiting for: 1.snackBar  2.loadingWindow");
         numOfFoundElement = waitElements(elements, 4);
 
         checkNum(numOfFoundElement, confirmPopupProposition);
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
         return result;
     }
 
@@ -152,15 +153,15 @@ public class Check{
                     case 0: Base.log(3, "PopUp is shown, but without errors and any propositions"); break;
                     case 1:
                         if (confirmPopupProposition){
-                            Base.log("confirm Popup Proposition");
+                            Base.log(1, "confirm Popup Proposition");
                             base.nav.getConfirmButton().click();
                         }
                         else {
-                            Base.log("cancel Popup Proposition");
+                            Base.log(1, "cancel Popup Proposition");
                             base.nav.getCancelButton().click();
                         }
                         break;
-                    case 2: Base.log(4, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\""); break;
+                    case 2: Base.log(14, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\""); break;
                     default: break;
                 }
             default: break;
@@ -170,27 +171,27 @@ public class Check{
 //======================================================================================================================
 
     public boolean waitElementWithoutPin(WebElement element, int timer) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
         try {
-            Base.log(2, "waiting " + timer + " seconds for the element ");
+            Base.log(4, "waiting " + timer + " seconds for the element ");
 
             WebElement[] elements = new WebElement[]{element, base.nav.getCancelButton()};
             if (waitElements(elements, 5) == 2) {
-                Base.log("Pincode PopUp is shown - cancel it!");
+                Base.log(1, "Pincode PopUp is shown - cancel it!");
                 base.nav.cancelIt();
             }
 
-            Base.log(2, "element " + element + " is shown with text: \"" + element.getText() + "\"");
+            Base.log(4, "element " + element + " is shown with text: \"" + element.getText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
-            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             base.getScreenShot();
 
         } catch (TimeoutException e) {
-            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             base.getScreenShot();
         }
@@ -200,26 +201,26 @@ public class Check{
 //======================================================================================================================
 
     public boolean isSnackBarPresent(int timer) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         result = false;
 
         try {
-            Base.log(2, "waiting " + timer + " seconds for SnackBar");
+            Base.log(4, "waiting " + timer + " seconds for SnackBar");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(base.popUp.getSnackBarElement()));
 
-            Base.log("SnackBar is shown with text: \"" + base.popUp.getSnackBarText() + "\"");
+            Base.log(1, "SnackBar is shown with text: \"" + base.popUp.getSnackBarText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
-            Base.log("SnackBar is not shown:\n\n" + e + "\n");
+            Base.log(1, "SnackBar is not shown:\n\n" + e + "\n");
             base.getScreenShot();
         }
         return result;
     }
 
     public boolean isErrorPresent(int timer) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         try {
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(base.popUp.errorPic));
@@ -228,7 +229,7 @@ public class Check{
             result = true;
 
         } catch (NoSuchElementException e) {
-            Base.log("Error message is not shown");
+            Base.log(1, "Error message is not shown");
             base.getScreenShot();
             result = false;
         }
@@ -237,12 +238,36 @@ public class Check{
 
     public boolean isDeletedBy(String type, String value) {
         if (base.nav.scrollToElementWith("name", "up", value, false)) {
-            Base.log("element with value \"" + value + "\" is still displayed in the List");
+            Base.log(1, "element with value \"" + value + "\" is still displayed in the List");
             result = false;
         }else {
             Base.log(3, "element with value \"" + value + "\" is not displayed in the List");
             result = true;
         }
         return result;
+    }
+
+    public boolean isCancelButtonPresent(){
+        if (base.nav.getCancelButton().isDisplayed() || base.nav.getCancelBtn().isDisplayed()){
+            return true;
+        }else return false;
+    }
+
+    public class LocalizedTextFor{
+
+        public void hubUnpair() {
+            Base.log(1, "get expected and actual localized text");
+            String actualText = base.popUp.getContentText();
+            String expectedText = base.getLocalizeTextForKey("Detach_success1");
+
+            Base.log(1, "checking of localized text");
+            System.out.println("actual: " + actualText);
+            System.out.println("expected: " + expectedText);
+
+            Assert.assertEquals(expectedText, actualText, "expected text is not equals actual");
+
+            Base.log(1, "checking of localized text is successfully passed");
+        }
+
     }
 }

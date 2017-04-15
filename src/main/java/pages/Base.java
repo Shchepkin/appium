@@ -27,7 +27,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Base {
 
-// TODO validate lines color if parameter is not valid (on registration page for example bg_state_mUseColor	-1754827 = red, and -11711155 = grey)
+    public static int TIMEOUT = 5;
+    private static final int LOG_LEVEL = 3;
 
     public Sql sql;
     public Hub hub;
@@ -53,7 +54,6 @@ public class Base {
     public ValidationCodePage validationCodePage;
     public DashboardRemotePage remotePage;
     public DashboardDevicesPage devicesPage;
-    public static int TIMEOUT = 10;
 
     private AndroidDriver driver = null;
     private Path path;
@@ -66,26 +66,26 @@ public class Base {
     private String deviceName, UDID, platformVersion, URL, appPath, appPackage, appActivity;
 
     public Base(String deviceName_) {
-        log("setup is started");
+        log(1, "setup is started");
         creds = getJsonCollection("deviceData.json", deviceName_);
         appSet = getJsonCollection("deviceData.json", "appSet");
 
-        log(2, "set creds for driver");
+        log(4, "set creds for driver");
         deviceName = deviceName_;
         URL = getCredsWithKey("URL");
         UDID = getCredsWithKey("UDID");
         locale = getCredsWithKey("locale");
         platformVersion = getCredsWithKey("platformVersion");
 
-        log(2, "set creds for app");
+        log(4, "set creds for app");
         appPath = getAppSetWithKey("appPath");
         appPackage = getAppSetWithKey("appPackage");
         appActivity = getAppSetWithKey("appActivity");
 
-        log(2, "get localizeKeys Map with locale \"" + locale + "\"");
+        log(4, "get localizeKeys Map with locale \"" + locale + "\"");
         localizeKeys = getLocalizeKeys(locale);
 
-        log(2, "get creds for DataBase");
+        log(4, "get creds for DataBase");
         dbSettings = getDbSettings();
     }
 
@@ -95,73 +95,73 @@ public class Base {
 
     public void initPageObjects(AndroidDriver driver) {
 
-        log(2, "init Navigation()");
+        log(4, "init Navigation()");
         nav = new Navigation(this);
 
-        log(2, "init Sql()");
+        log(4, "init Sql()");
         sql = new Sql(this);
 
-        log(2, "init Hub()");
+        log(4, "init Hub()");
         hub = new Hub(this);
 
-        log(2, "init Wait()");
+        log(4, "init Wait()");
         wait = new Wait(this);
 
-        log(2, "init Check()");
+        log(4, "init Check()");
         check = new Check(this);
 
-        log(2, "init PopUp()");
+        log(4, "init PopUp()");
         popUp = new PopUp(this);
 
-        log(2, "init RegistrationPage()");
+        log(4, "init RegistrationPage()");
         regPage = new RegistrationPage(this);
 
-        log(2, "init DashboardActivePINPage()");
+        log(4, "init DashboardActivePINPage()");
         pinPage = new PinPage(this);
 
-        log(2, "init MenuMainPage()");
+        log(4, "init MenuMainPage()");
         menuPage = new MainMenuPage(this);
 
-        log(2, "init Dashboard()");
+        log(4, "init Dashboard()");
         dashboard = new Dashboard(this);
 
-        log(2, "init IntroPage()");
+        log(4, "init IntroPage()");
         introPage = new IntroPage(this);
 
-        log(2, "init AuthorizationPage()");
+        log(4, "init AuthorizationPage()");
         loginPage = new AuthorizationPage(this);
 
-        log(2, "init DashboardRoomsPage()");
+        log(4, "init DashboardRoomsPage()");
         roomsPage = new DashboardRoomsPage(this);
 
-        log(2, "init DashboardRemotePage()");
+        log(4, "init DashboardRemotePage()");
         remotePage = new DashboardRemotePage(this);
 
-        log(2, "init MenuAccountPage()");
+        log(4, "init MenuAccountPage()");
         accountPage = new AccountMenuPage(this);
 
-        log(2, "init DashboardDevicesPage()");
+        log(4, "init DashboardDevicesPage()");
         devicesPage = new DashboardDevicesPage(this);
 
-        log(2, "init AddImagePage()");
+        log(4, "init AddImagePage()");
         addImagePage = new AddImagePage(this);
 
-        log(2, "init DashboardHeader()");
+        log(4, "init DashboardHeader()");
         dashboardHeader = new DashboardHeader(this);
 
-        log(2, "init ValidationCodePage()");
+        log(4, "init ValidationCodePage()");
         validationCodePage = new ValidationCodePage(this);
 
-        log(2, "init DashboardHeader()");
+        log(4, "init DashboardHeader()");
         header = new DashboardHeader(this);
 
-        log(2, "init DashboardHeader()");
+        log(4, "init DashboardHeader()");
         user = new User(this);
 
-        log(2, "init Imitator()");
+        log(4, "init Imitator()");
         imitator = new Imitator();
 
-        log(2, "init ForgotPasswordPage()");
+        log(4, "init ForgotPasswordPage()");
         forgotPasswordPage = new ForgotPasswordPage(this);
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
@@ -184,14 +184,14 @@ public class Base {
     }
 
     private Map getLocalizeKeys(String locale) {
-        log("Method is started");
+        log(1, "Method is started");
         log(3, "locale: \"" + locale + "\"");
         localizeKeys = new HashMap<>();
         try {
-            log(2, "get Application start up path");
+            log(4, "get Application start up path");
             path = getApplicationStartUp();
 
-            log(2, "get json content ");
+            log(4, "get json content ");
             collection = loadJSON(path + "/classes/lokaliseKeys/collection.json");
             jsonString = loadJSON(path + "/classes/lokaliseKeys/" + locale + ".json");
 
@@ -199,7 +199,7 @@ public class Base {
             JsonObject jo = parser.parse(jsonString).getAsJsonObject();
             Gson gson = new Gson();
 
-            log(2, "create localizeKeys map ");
+            log(4, "create localizeKeys map ");
             List collectionList = gson.fromJson(parser.parse(collection).getAsJsonObject().getAsJsonArray("paramsArray"), List.class);
             for (Object i : collectionList) {
                 Map map = gson.fromJson(jo.get(i.toString()).getAsJsonObject(), HashMap.class);
@@ -207,45 +207,45 @@ public class Base {
             }
 
         } catch (UnsupportedEncodingException e) {
-            log(4, "UnsupportedEncodingException" + e);
+            log(14, "UnsupportedEncodingException" + e);
             e.printStackTrace();
         } catch (MalformedURLException e) {
-            log(4, "MalformedURLException" + e);
+            log(14, "MalformedURLException" + e);
             e.printStackTrace();
         } catch (FileNotFoundException e) {
-            log(4, "FileNotFoundException" + e);
+            log(14, "FileNotFoundException" + e);
             e.printStackTrace();
         } catch (IOException e) {
-            log(4, "IOException" + e);
+            log(14, "IOException" + e);
             e.printStackTrace();
         }
-        log("Method is finished");
+        log(1, "Method is finished");
         return localizeKeys;
     }
 
     private Map getDbSettings() {
-        log("Method is started");
+        log(1, "Method is started");
         try {
             dbSettings = new HashMap<>();
 
-            log(2, "get Application start up path");
+            log(4, "get Application start up path");
             path = getApplicationStartUp();
 
-            log(2, "get json content ");
+            log(4, "get json content ");
             jsonString = loadJSON(path + "/classes/db.json");
 
             JsonParser parser = new JsonParser();
             JsonObject jo = parser.parse(jsonString).getAsJsonObject();
             Gson gson = new Gson();
 
-            log(2, "create DB settings map ");
+            log(4, "create DB settings map ");
             Map map = gson.fromJson(jo.get("DB").getAsJsonObject(), HashMap.class);
             dbSettings.putAll(map);
 
         } catch (Exception e) {
-            log(4, "Exception\n" + e + "\n");
+            log(14, "Exception\n" + e + "\n");
         }
-        log("Method is finished");
+        log(1, "Method is finished");
         return dbSettings;
     }
 
@@ -254,53 +254,53 @@ public class Base {
 //----------------------------------------------------------------------------------------------------------------------
 
     public Map getJsonCollection(String filePath, String collection) {
-        log("Method is started");
+        log(1, "Method is started");
         Map<String, String> jsonCollection = new HashMap<>();
         try {
 
-            log(2, "get Application start up path");
+            log(4, "get Application start up path");
             path = getApplicationStartUp();
 
-            log(2, "get json content ");
+            log(4, "get json content ");
             jsonString = loadJSON(path + "/classes/" + filePath);
 
             JsonParser parser = new JsonParser();
             JsonObject jo = parser.parse(jsonString).getAsJsonObject();
             Gson gson = new Gson();
 
-            log(2, "create collection map ");
+            log(4, "create collection map ");
             Map map = gson.fromJson(jo.get(collection).getAsJsonObject(), HashMap.class);
             jsonCollection.putAll(map);
 
         } catch (Exception e) {
-            log(4, "Exception\n" + e + "\n");
+            log(14, "Exception\n" + e + "\n");
         }
-        log(2, "Method is finished");
+        log(4, "Method is finished");
         return jsonCollection;
     }
 
     public ArrayList<String> getJsonStringArray(String filePath, String collection) {
-        log("Method is started");
+        log(1, "Method is started");
         jsonStringArray = new ArrayList<>();
         try {
 
-            log(2, "get Application start up path");
+            log(4, "get Application start up path");
             path = getApplicationStartUp();
 
-            log(2, "get json content from file");
+            log(4, "get json content from file");
             FileReader reader = new FileReader(path + "/classes/" + filePath);
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 
-            log(2, "create collection array ");
+            log(4, "create collection array ");
             jsonStringArray.addAll((JSONArray) jsonObject.get(collection));
 
         } catch (Exception e) {
-            log(4, "Exception\n" + e.getMessage() + "\n");
+            log(14, "Exception\n" + e.getMessage() + "\n");
         }
-        log("created " + jsonStringArray.size() + " elements in arrayList");
+        log(1, "created " + jsonStringArray.size() + " elements in arrayList");
         printArray(jsonStringArray);
-        log("Method is finished");
+        log(1, "Method is finished");
         return jsonStringArray;
     }
 
@@ -313,7 +313,7 @@ public class Base {
 //----------------------------------------------------------------------------------------------------------------------
 
     private Path getApplicationStartUp() throws UnsupportedEncodingException, MalformedURLException {
-        log("Method is started");
+        log(1, "Method is started");
         URL startupUrl = getClass().getProtectionDomain().getCodeSource()
                 .getLocation();
         Path path = null;
@@ -331,42 +331,26 @@ public class Base {
             }
         }
         path = path.getParent();
-        log("Method is finished");
+        log(1, "Method is finished");
         return path;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     private String loadJSON(String path) throws IOException {
-        log("Method is started");
+        log(1, "Method is started");
         byte[] buf;
         try (RandomAccessFile f = new RandomAccessFile(path, "r")) {
             buf = new byte[(int) f.length()];
             f.read(buf);
         }
-        log("Method is finished");
+        log(1, "Method is finished");
         return new String(buf);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // LOG
 //----------------------------------------------------------------------------------------------------------------------
-
-    public static void log(String message) {
-        Throwable t = new Throwable();
-        StackTraceElement trace[] = t.getStackTrace();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
-        Date timeStamp = new Date();
-        String typeOfMessage = "INFO ";
-
-        // We need element with index 0 - it's current element "log"
-        if (trace.length > 1) {
-            StackTraceElement element = trace[1];
-            System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-        } else {
-            System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
-        }
-    }
 
     public static void log(int type, String message) {
         Throwable t = new Throwable();
@@ -379,30 +363,36 @@ public class Base {
                 typeOfMessage = "INFO ";
                 break;
             case 2:
-                typeOfMessage = "DEBUG";
+                typeOfMessage = "ERROR";
                 break;
             case 3:
                 typeOfMessage = "WARN ";
                 break;
             case 4:
-                typeOfMessage = "ERROR";
+                typeOfMessage = "DEBUG";
+                break;
+            case 5:
+                typeOfMessage = "NODEF";
                 break;
             default:
                 typeOfMessage = "NODEF";
                 break;
         }
 
-        // We need element with index 0 - it's current element "log"
-        if (trace.length > 1) {
-            StackTraceElement element = trace[1];
-            if (type >= 3) {
-                System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
 
+        if (type <= LOG_LEVEL) {
+            // We need element with index 0 - it's current element "log"
+            if (trace.length > 1) {
+                StackTraceElement element = trace[1];
+                if (type >= 3) {
+                    System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+
+                } else {
+                    System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+                }
             } else {
-                System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+                System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
             }
-        } else {
-            System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
         }
     }
 
@@ -414,18 +404,18 @@ public class Base {
         try {
             driver.hideKeyboard();
         } catch (Exception e) {
-            log(2, "Exeption: \n\n" + e + "\n");
+            log(4, "Exeption: \n\n" + e + "\n");
         }
     }
 
     public void openKeyboard() {
-        log("Method is started");
+        log(1, "Method is started");
         try {
             driver.hideKeyboard();
         } catch (Exception e) {
-            log(2, "Exception: \n\n" + e + "\n");
+            log(4, "Exception: \n\n" + e + "\n");
         }
-        log("Method is finished");
+        log(1, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -440,12 +430,12 @@ public class Base {
     }
 
     private AndroidDriver initDriver() {
-        log("Method is started");
+        log(1, "Method is started");
         try {
-            log(2, "get .apk file");
+            log(4, "get .apk file");
             File app = new File(appPath);
 
-            log(2, "set capabilities settings");
+            log(4, "set capabilities settings");
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability(MobileCapabilityType.TAKES_SCREENSHOT, "true");
             capabilities.setCapability(CapabilityType.BROWSER_NAME, "Android");
@@ -457,18 +447,18 @@ public class Base {
             capabilities.setCapability("appPackage", appPackage);
             capabilities.setCapability("appActivity", appActivity);
 
-            log(2, "implement Android driver");
+            log(4, "implement Android driver");
             driver = new AndroidDriver(new URL("http://" + URL), capabilities);
 
-            log(2, "App Context: " + driver.getContextHandles().toString());
+            log(4, "App Context: " + driver.getContextHandles().toString());
 
-            log(2, "set implicitlyWait");
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            log(4, "set implicitlyWait");
+            driver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
 
         } catch (MalformedURLException e) {
-            log(4, "MalformedURLException\n" + e);
+            log(14, "MalformedURLException\n" + e);
         }
-        log("Method is finished");
+        log(1, "Method is finished");
         return driver;
     }
 
@@ -497,7 +487,7 @@ public class Base {
 
             log(3, "Path to screenshot: " + targetFile.getAbsolutePath());
         } catch (IOException e1) {
-            log(4, "IOException:\n\n" + e1 + "\n");
+            log(14, "IOException:\n\n" + e1 + "\n");
         }
     }
 

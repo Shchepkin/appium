@@ -91,48 +91,48 @@ public class PopUp{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void waitLoadingPopUp(int flag){
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         WebDriverWait iWait = new WebDriverWait (driver, 10);
         try {
             // assert is the element displayed on the page
-            Base.log(2, "waiting 10 seconds for loading PopUp");
+            Base.log(4, "waiting 10 seconds for loading PopUp");
             iWait.until(ExpectedConditions.visibilityOf(loadingWindow));
             switch (flag) {
                 case 1:
-                    Base.log("loading PopUp is shown, so click Confirm Button");
+                    Base.log(1, "loading PopUp is shown, so click Confirm Button");
                     base.nav.confirmIt();
                     break;
                 default:
-                    Base.log("loading PopUp is shown, so click Cancel Button");
+                    Base.log(1, "loading PopUp is shown, so click Cancel Button");
                     base.nav.cancelIt();
                     break;
             }
         }
         catch (NoSuchElementException e) {
-            Base.log(4, "NoSuchElementException, loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
+            Base.log(14, "NoSuchElementException, loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
         }
         catch (TimeoutException e) {
-            Base.log(4, "TimeoutException loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
+            Base.log(14, "TimeoutException loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
         }
     }
 
 
     public boolean waitLoaderPopUpWithText(String searchingText, int timer, boolean makeScreenShot) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
         try {
-            Base.log(2, "waiting " + timer + " seconds for the element ");
+            Base.log(4, "waiting " + timer + " seconds for the element ");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.textToBePresentInElement(contentTextElement, searchingText));
 
-            Base.log(2, "element is shown with text: \"" + contentTextElement.getText() + "\"");
+            Base.log(4, "element is shown with text: \"" + contentTextElement.getText() + "\"");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){base.getScreenShot();}
         } catch (TimeoutException e) {
-            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){base.getScreenShot();}
         }

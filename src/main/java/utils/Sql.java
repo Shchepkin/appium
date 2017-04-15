@@ -49,7 +49,7 @@ public class Sql{
             sql.getDelete("Phone", "%1216815329%");
      */
     public void getDelete(String row, String value) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         selectList = new ArrayList();
 
         String query = "DELETE FROM csa_accounts WHERE " + row + " LIKE '" + value + "'";
@@ -59,7 +59,7 @@ public class Sql{
         try {
             connection = getConnection();
 
-            Base.log(2, "getting Statement object to execute query");
+            Base.log(4, "getting Statement object to execute query");
             stmt = connection.createStatement();
 
             Base.log(3, "this objects will be deleted: ");
@@ -73,12 +73,12 @@ public class Sql{
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         } finally {
-            Base.log("close all connections");
+            Base.log(1, "close all connections");
             try {connection.close();} catch (SQLException se) { /*can't do anything */ }
             try {stmt.close();}catch (SQLException se) { /*can't do anything */ }
             try {rs.close();} catch (SQLException se) { /*can't do anything */ }
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
 
@@ -93,7 +93,7 @@ public class Sql{
             System.out.println(selectList);
      */
     public ArrayList getSelect(String row, String value) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         validationToken = new ArrayList();
         selectList = new ArrayList();
 
@@ -105,10 +105,10 @@ public class Sql{
         try {
             connection = getConnection();
 
-            Base.log("getting Statement object to execute query");
+            Base.log(1, "getting Statement object to execute query");
             stmt = connection.createStatement();
 
-            Base.log(2, "executing query: [ " + query + " ]");
+            Base.log(4, "executing query: [ " + query + " ]");
             rs = stmt.executeQuery(query);
 
             while (rs.next()) {
@@ -128,13 +128,13 @@ public class Sql{
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         } finally {
-            Base.log("close all connections");
+            Base.log(1, "close all connections");
             try {connection.close();} catch (SQLException se) { /*can't do anything */ }
             try {stmt.close();}catch (SQLException se) { /*can't do anything */ }
             try {rs.close();} catch (SQLException se) { /*can't do anything */ }
         }
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
         return selectList;
     }
 
@@ -155,7 +155,7 @@ public class Sql{
             tokenMap.get("emailToken");
      */
     public Map getTokenMap(String row, String value) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
         tokenMap = new HashMap();
         validationToken = new ArrayList();
 
@@ -182,14 +182,14 @@ public class Sql{
         else {
             String input = validationToken.get(0).toString();
 
-            Base.log("Validation Token Array is not empty, so we get string and clear Array");
+            Base.log(1, "Validation Token Array is not empty, so we get string and clear Array");
             validationToken.clear();
 
-            Base.log("create matcher");
+            Base.log(1, "create matcher");
             Pattern pattern = Pattern.compile("[\\d]{6}");
             Matcher matcher = pattern.matcher(input);
 
-            Base.log("add matcher value to the Validation Token Array");
+            Base.log(1, "add matcher value to the Validation Token Array");
                 while(matcher.find()){
                     validationToken.add(matcher.group());
                 }
@@ -201,7 +201,7 @@ public class Sql{
                 tokenMap.put("emailToken", validationToken.get(1));
             }
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
         return tokenMap;
     }
 
@@ -212,7 +212,7 @@ public class Sql{
      * @return Connection connection
      */
     private Connection getConnection (){
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
         url = base.getDbSettingsWithKey("url");
         user = base.getDbSettingsWithKey("user");
@@ -220,9 +220,9 @@ public class Sql{
 
         for (int i = 1; i <= 10; i++) {
             try {
-                Base.log("opening database connection to MySQL server, attempt #" + i);
+                Base.log(1, "opening database connection to MySQL server, attempt #" + i);
                 connection = DriverManager.getConnection(url, user, password);
-                Base.log("connection to MySQL server is successfully opened");
+                Base.log(1, "connection to MySQL server is successfully opened");
                 break;
 
             }catch (Exception e){
@@ -235,7 +235,7 @@ public class Sql{
                 }
             }
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
         return connection;
     }
 }

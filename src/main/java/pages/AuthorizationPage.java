@@ -61,91 +61,91 @@ public class AuthorizationPage{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void loginToTheServer(String login, String password) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
-        Base.log(2, "fill the login field with data: [" + login + "]");
+        Base.log(4, "fill the login field with data: [" + login + "]");
         loginField.sendKeys(login);
 
-        Base.log(2, "fill the password field with data: [" + password + "]");
+        Base.log(4, "fill the password field with data: [" + password + "]");
         passwordField.sendKeys(password);
 
-        Base.log(2, "click login button");
+        Base.log(4, "click login button");
         loginBtn.click();
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
     public void loginToTheServer(String login, String password, String server) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
-        Base.log(2, "fill the login field with data: \"" + login + "\"");
+        Base.log(4, "fill the login field with data: \"" + login + "\"");
         loginField.sendKeys(login);
 
-        Base.log(2, "fill the password field with data: \"" + password + "\"");
+        Base.log(4, "fill the password field with data: \"" + password + "\"");
         passwordField.sendKeys(password);
 
         chooseServer(server);
 
-        Base.log(2, "click login button");
+        Base.log(4, "click login button");
         loginBtn.click();
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
 
     public void loginWithPinCancel(String login, String password, String server) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
-        Base.log("start from IntroPage");
+        Base.log(1, "start from IntroPage");
         loginButtonOnIntro.click();
 
         loginToTheServer(login, password, server);
 
-        Base.log("wait until LoaderLogo become invisible");
+        Base.log(1, "wait until LoaderLogo become invisible");
         base.wait.invisibilityOfLoaderLogo(true);
 
-        Base.log("waiting for Pincode PopUp and cancel it");
+        Base.log(1, "waiting for Pincode PopUp and cancel it");
         Assert.assertTrue(base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
 
     public boolean loginWithPinCancel() {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
-        Base.log("get credentials for login");
+        Base.log(1, "get credentials for login");
         String login = base.getCredsWithKey("login");
         String password = base.getCredsWithKey("password");
         String server = base.getCredsWithKey("server");
 
-        Base.log("start from IntroPage");
+        Base.log(1, "start from IntroPage");
         loginButtonOnIntro.click();
 
         loginToTheServer(login, password, server);
 
-        Base.log("wait until LoaderLogo become invisible");
+        Base.log(1, "wait until LoaderLogo become invisible");
         base.wait.invisibilityOfLoaderLogo(true);
 
-        Base.log("waiting for Pincode PopUp and cancel it");
+        Base.log(1, "waiting for Pincode PopUp and cancel it");
         if (base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10)){
-            Base.log("Login successfully!");
+            Base.log(1, "Login successfully!");
             result = true;
         }else {
-            Base.log("Login failed!");
+            Base.log(1, "Login failed!");
             result = false;
         }
 //        Assert.assertTrue(base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
 
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
         return result;
     }
 
 
     public void chooseServer(String server) {
-        Base.log("Method is started");
+        Base.log(1, "Method is started");
 
-        Base.log("select server type: \"" + server + "\"");
+        Base.log(1, "select server type: \"" + server + "\"");
         base.nav.longTapButton(loginBtn, 2);
 
         switch (server) {
@@ -164,7 +164,7 @@ public class AuthorizationPage{
             default: serverProduction.click();
                 break;
         }
-        Base.log("Method is finished");
+        Base.log(1, "Method is finished");
     }
 
 }

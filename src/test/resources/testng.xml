@@ -35,7 +35,8 @@
             <!--<class name="testCases.C42097_New_user_registration"/>-->
             <!--<class name="testCases.C44141_User_delete"/>-->
             <!--<class name="testCases.C44142_Device_delete"/>-->
-            <class name="testCases.C44143_Room_delete"/>
+            <!--<class name="testCases.C44143_Room_delete"/>-->
+            <class name="testCases.C44144_Hub_delete"/>
         </classes>
     </test>
     <!---->

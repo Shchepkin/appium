@@ -14,47 +14,47 @@ public class Imitator{
 
     public Imitator() {
         SerialPortSetup();
-        Base.log("clear imitator memory");
+        Base.log(1, "clear imitator memory");
         clearMemory();
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     private void SerialPortSetup() {
-        Base.log("method is started");
+        Base.log(1, "method is started");
 
         try {
             serialPort = new SerialPort("/dev/ttyS0");
 
-            Base.log("print all available ports");
+            Base.log(1, "print all available ports");
             for (String portName: SerialPortList.getPortNames()) {
                 System.out.println(portName);
             }
 
-            Base.log("open port ");
+            Base.log(1, "open port ");
             serialPort.openPort();
 
-            Base.log("set port params: BAUDRATE, DATABITS, STOPBITS,PARITY)");
+            Base.log(1, "set port params: BAUDRATE, DATABITS, STOPBITS,PARITY)");
             serialPort.setParams(SerialPort.BAUDRATE_57600,
                                  SerialPort.DATABITS_8,
                                  SerialPort.STOPBITS_1,
                                  SerialPort.PARITY_NONE);
 
-            Base.log("switch on hardware flow control");
+            Base.log(1, "switch on hardware flow control");
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
-            Base.log("serialPort Mask to reaction on data in buffer");
+            Base.log(1, "serialPort Mask to reaction on data in buffer");
             serialPort.setEventsMask(SerialPort.MASK_RXCHAR);
             serialPort.addEventListener(new PortReader());
 
         } catch (Exception ex) {
             Base.log(3, "Exception: \n" + ex + "\n");
         }
-        Base.log("method is finished");
+        Base.log(1, "method is finished");
     }
 
     public void sendCommand(String command){
-        Base.log("send command");
+        Base.log(1, "send command");
         try {
             serialPort.writeString(command +"\n");
         }catch (Exception ex) {
