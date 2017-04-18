@@ -100,7 +100,7 @@ public class Email{
     }
 
     public String getValidationCode() {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         String input = getEmailTextFromNewMessage();
         if (emailText != null) {
             Pattern pattern = Pattern.compile("[\\d]{6}");

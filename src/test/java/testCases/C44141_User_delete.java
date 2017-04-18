@@ -27,7 +27,7 @@ public class C44141_User_delete{
         Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
 
-        base.hub.goToTheUserlistPage();
+        base.nav.gotoPage.userList();
     }
 
     @Test(priority = 1, enabled = false)

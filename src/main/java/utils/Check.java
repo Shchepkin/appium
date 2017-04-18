@@ -26,7 +26,7 @@ public class Check{
 //----------------------------------------------------------------------------------------------------------------------
 
     public boolean isElementDisplayed(WebElement element, int timer) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         try {
             // assert is the element displayed on the page
@@ -58,7 +58,7 @@ public class Check{
         waitElements(elements, 5));
      */
     public int waitElements (WebElement[] elements, int period) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         numOfFoundElement = 0;
         result = false;
         for (int i = 1; i <= period; i++) {
@@ -80,7 +80,7 @@ public class Check{
             }
             if (result) {break;}
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return numOfFoundElement;
     }
 
@@ -96,7 +96,7 @@ public class Check{
           clickElementAndWaitingPopup(popUp.cancelButton, 3, 3, false)
      */
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, int period, int tryCount, boolean confirmPopupProposition){
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
         WebElement[] elements = new WebElement[]{base.popUp.getSnackBarElement(), base.popUp.loadingWindow};
 
@@ -116,14 +116,14 @@ public class Check{
             }
             Base.log(3, "element for click is shown again");
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return result;
     }
 
 //======================================================================================================================
 
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, boolean confirmPopupProposition){
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
         WebElement[] elements = new WebElement[]{base.popUp.getSnackBarElement(), base.popUp.loadingWindow};
 
@@ -135,7 +135,7 @@ public class Check{
 
         checkNum(numOfFoundElement, confirmPopupProposition);
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return result;
     }
 
@@ -171,7 +171,7 @@ public class Check{
 //======================================================================================================================
 
     public boolean waitElementWithoutPin(WebElement element, int timer) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         try {
             Base.log(4, "waiting " + timer + " seconds for the element ");
@@ -201,7 +201,7 @@ public class Check{
 //======================================================================================================================
 
     public boolean isSnackBarPresent(int timer) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
 
         try {
@@ -220,7 +220,7 @@ public class Check{
     }
 
     public boolean isErrorPresent(int timer) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         try {
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(base.popUp.errorPic));

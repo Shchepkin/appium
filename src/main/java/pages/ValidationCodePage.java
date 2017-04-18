@@ -40,7 +40,7 @@ public class ValidationCodePage{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void getAndFillValidationCodes(String row, String value){
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         Map tokenMap = base.sql.getTokenMap(row, value);
         Base.log(4, "SMS token: " + tokenMap.get("smsToken"));
@@ -49,7 +49,7 @@ public class ValidationCodePage{
         Base.log(1, "fill tokens to the fields");
         smsCodeField.sendKeys(tokenMap.get("smsToken").toString());
         emailCodeField.sendKeys(tokenMap.get("emailToken").toString());
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
 
     }
 

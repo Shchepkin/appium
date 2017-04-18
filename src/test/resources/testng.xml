@@ -30,13 +30,13 @@
         <classes>
             <!--<class name="testCases.C42100_Add_new_room"/>-->
             <!--<class name="testCases.C42102_Add_new_guest_user"/>-->
-            <!--<class name="testCases.C42176_Virtual_Space_Control"/>-->
+            <class name="testCases.C42176_Virtual_Space_Control"/>
             <!--<class name="testCases.C43875_Add_new_device"/>-->
             <!--<class name="testCases.C42097_New_user_registration"/>-->
             <!--<class name="testCases.C44141_User_delete"/>-->
             <!--<class name="testCases.C44142_Device_delete"/>-->
             <!--<class name="testCases.C44143_Room_delete"/>-->
-            <class name="testCases.C44144_Hub_delete"/>
+            <!--<class name="testCases.C44144_Hub_delete"/>-->
         </classes>
     </test>
     <!---->

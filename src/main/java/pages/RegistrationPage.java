@@ -69,7 +69,7 @@ public class RegistrationPage{
 //====================================================================================
 
     public void fakeRegistration(String email, String password, String phone, String server) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         base.introPage.goToAuthorization();
         base.loginPage.chooseServer(server);
         base.nav.goBack();
@@ -88,7 +88,7 @@ public class RegistrationPage{
 
 
     public void fillFields(String name, String email, String password, String phone, String server) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         base.introPage.goToAuthorization();
         base.loginPage.chooseServer(server);
         base.nav.goBack();
@@ -104,7 +104,7 @@ public class RegistrationPage{
     }
 
     public void fillFields(String name, String email, String password, String phone) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         Base.log(1, "fill name with: \"" + name + "\"");
         nameField.sendKeys(name);
@@ -123,26 +123,26 @@ public class RegistrationPage{
         base.nav.swipeUp();
         passwordConfirmField.sendKeys(password);
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
 
     public void confirmAgrimentCheckBox() {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         base.nav.swipeUp();
         userAgreementCheckbox.click();
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void setUserPic(int imageNumber) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         userPic.click();
         base.addImagePage.setImageFromGallery(imageNumber);
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void setUserPic(int type, int imageNumber) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         switch (type){
             case 1: Base.log(1, "add image from camera");
@@ -156,11 +156,11 @@ public class RegistrationPage{
             default: Base.log(1, "without image");
                 break;
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void setPhoneCountryCode() {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
     }
 
 }

@@ -91,7 +91,7 @@ public class PopUp{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void waitLoadingPopUp(int flag){
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         WebDriverWait iWait = new WebDriverWait (driver, 10);
         try {
             // assert is the element displayed on the page
@@ -118,7 +118,7 @@ public class PopUp{
 
 
     public boolean waitLoaderPopUpWithText(String searchingText, int timer, boolean makeScreenShot) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         try {
             Base.log(4, "waiting " + timer + " seconds for the element ");

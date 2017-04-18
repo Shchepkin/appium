@@ -54,6 +54,7 @@ public class Base {
     public ValidationCodePage validationCodePage;
     public DashboardRemotePage remotePage;
     public DashboardDevicesPage devicesPage;
+    public DashboardNotificationsPage notificationsPage;
 
     private AndroidDriver driver = null;
     private Path path;
@@ -104,6 +105,9 @@ public class Base {
         log(4, "init Hub()");
         hub = new Hub(this);
 
+        log(4, "init User()");
+        user = new User(this);
+
         log(4, "init Wait()");
         wait = new Wait(this);
 
@@ -112,6 +116,9 @@ public class Base {
 
         log(4, "init PopUp()");
         popUp = new PopUp(this);
+
+        log(4, "init Imitator()");
+        imitator = new Imitator();
 
         log(4, "init RegistrationPage()");
         regPage = new RegistrationPage(this);
@@ -152,14 +159,11 @@ public class Base {
         log(4, "init ValidationCodePage()");
         validationCodePage = new ValidationCodePage(this);
 
+        log(4, "init NotificationsPage()");
+        notificationsPage = new DashboardNotificationsPage(this);
+
         log(4, "init DashboardHeader()");
         header = new DashboardHeader(this);
-
-        log(4, "init DashboardHeader()");
-        user = new User(this);
-
-        log(4, "init Imitator()");
-        imitator = new Imitator();
 
         log(4, "init ForgotPasswordPage()");
         forgotPasswordPage = new ForgotPasswordPage(this);

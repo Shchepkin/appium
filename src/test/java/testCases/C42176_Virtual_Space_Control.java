@@ -15,7 +15,7 @@ import pages.Base;
  */
 public class C42176_Virtual_Space_Control{
 
-    private String armedText, disarmedText, patrialArmedText;
+    private String armedText, disarmedText, patrialArmedText, actual, expected;
     private Base base;
 
     @Parameters({ "deviceName_" })
@@ -33,10 +33,10 @@ public class C42176_Virtual_Space_Control{
         base.loginPage.loginWithPinCancel();
 
         Base.log(1, "go to the Remote Page");
-        base.dashboard.goToTheRemotePage();
+        base.nav.gotoPage.Remote();
     }
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     public void Click_Arm_Button() {
 
         Base.log(1, "make precondition disarmed state");
@@ -48,7 +48,7 @@ public class C42176_Virtual_Space_Control{
         Assert.assertTrue(base.wait.elementWithText(armedText, 10, true), "Text \"" + armedText + "\" is not found");
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = false)
     public void Click_Partial_Arm_Button() {
 
         Base.log(1, "click Partial Arm Button and confirm if there is shown popUp");
@@ -56,12 +56,48 @@ public class C42176_Virtual_Space_Control{
         Assert.assertTrue(base.wait.elementWithText(patrialArmedText, 10, true), "Text \"" + patrialArmedText + "\" is not found");
     }
 
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 3, enabled = false)
     public void Click_Disarm_Button() {
 
         Base.log(1, "click Disarm Button");
         base.remotePage.clickDisarmButton();
         Assert.assertTrue(base.wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found");
+    }
+
+    @Test(priority = 3, enabled = true)
+    public void Click_Alarm_Button() {
+
+        Base.log(1, "open Notification page for erasing badge counter");
+        base.nav.gotoPage.Notifications();
+
+        Base.log(1, "open Remote page");
+        base.nav.gotoPage.Remote();
+
+        Base.log(1, "click Alarm Button");
+        base.remotePage.clickAlarmButton();
+
+        Base.log(1, "wait for badge appear");
+        base.wait.element(base.notificationsPage.getBadgeOnNotificationTab(), 10, true);
+
+        Base.log(1, "check number oin badge");
+        expected = "1";
+        actual = base.notificationsPage.getBadgeOnNotificationTab().getText();
+        System.out.println("expected: " + expected);
+        System.out.println("actual: " + actual);
+        Assert.assertTrue(actual.equals(expected));
+
+        Base.log(1, "click Alarm Button");
+        base.remotePage.clickAlarmButton();
+
+        Base.log(1, "wait for badge appear");
+        base.wait.element(base.notificationsPage.getBadgeOnNotificationTab(), 10, true);
+
+        Base.log(1, "check number oin badge");
+        expected = "2";
+        actual = base.notificationsPage.getBadgeOnNotificationTab().getText();
+        System.out.println("expected: " + expected);
+        System.out.println("actual: " + actual);
+        Assert.assertTrue(actual.equals(expected));
     }
 
     @AfterClass

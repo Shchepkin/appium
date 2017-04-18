@@ -41,13 +41,12 @@ public class C42099_Add_new_Hub_manually{
         base.dashboard.fillFieldsWith(hubName, hubMasterKey);
         base.nav.confirmIt();
 
-//        base.wait.invisibilityElementWithText(waiterText, true);
         base.wait.invisibilityOfWaiter(true);
         Assert.assertFalse(base.check.isErrorPresent(3), "Hub adding failed!");
 
         Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 15, true));
         Base.log(1, "hub successfully added!");
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     @Test(priority = 1, enabled = false)

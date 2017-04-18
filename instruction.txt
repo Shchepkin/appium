@@ -33,6 +33,10 @@ installer@ajaxGod ~/Android/Sdk/build-tools/25.0.0 $ ./aapt dump badging ~/Andro
 """ Спросить версию """
 command = 'ver'
 
+""" Установить версию """
+command = 'ver xxxxx'
+xxxxx - произвольная стринга
+
 """ Установить параметры сокета/свича (одинаковые для всех)"""
 command = 'pow %s %s %s %s' % (soc_stat, soc_i, soc_u, soc_power)
 
@@ -56,10 +60,8 @@ temp: температура датчика
 """
 command = "ext %s %s %s" % (str(dev_id)[-6:], bat, temp_)
 
-
 """ Приписать девайс к централи """
 command = 'reg %s' % str(dev_id)[-6:]
-
 
 """ Имитировать тревогу """
 command = 'alm %s' % dev_id
@@ -72,7 +74,6 @@ System.out.println("time " + String.format("%4.2f",(float)(finish - start)/10000
 The list of accepted attribute names can be found in boolean attributes and string attributes.
 
 The boolean attributes are:
-
 enabled
 checkable
 checked
@@ -85,11 +86,7 @@ selected
 displayed
 
 The string attibutes are:
-
 contentDescription
 text
 className
 resourceId
-I tested this using the python bindings.
-
-Credit goes to TikhomirovSergey in a github comment.

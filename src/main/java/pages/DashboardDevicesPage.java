@@ -123,18 +123,6 @@ public class DashboardDevicesPage{
         return result;
     }
 
-
-    public boolean checkIsDeleted(String deviceName) {
-        if (base.nav.scrollToElementWith("name", "up", deviceName, false)) {
-            Base.log(1, "device with name \"" + deviceName + "\" is still displayed in the DeviceList");
-            result = false;
-        }else {
-            Base.log(3, "device with name \"" + deviceName + "\" is not displayed in the DeviceList");
-            result = true;
-        }
-        return result;
-    }
-
     public String getFirstDeviceName(){
         String roomXpath = "*[@resource-id = 'com.ajaxsystems:id/room']";
         String nameXpath = "*[@resource-id = 'com.ajaxsystems:id/name']";
@@ -142,7 +130,7 @@ public class DashboardDevicesPage{
         return driver.findElementByXPath(xPath).getText();
     }
 
-    public void deleteAllDevices() {
+    public boolean deleteAllDevices() {
         String successText = base.getLocalizeTextForKey("Deleting_success1");
         int counter = 0;
         try {
@@ -153,11 +141,16 @@ public class DashboardDevicesPage{
                     base.nav.scrollBottom();
                     unpairButtonClick();
                     base.nav.confirmIt();
-                    Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
-                    base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
-                    checkIsDeleted(devName);
-                    Base.log(1, "device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
-                    counter++;
+
+                    if (base.wait.elementWithText(successText, 10, true)){
+                        base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
+                        base.check.isDeletedBy("name", devName);
+                        Base.log(1, "device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
+                        counter++;
+                    }else {
+                        Base.log(3, "SUCCESS text is not shown");
+                        return false;
+                    }
 
                 }else if (base.nav.getCancelButton().isDisplayed()){
                     base.nav.cancelIt();
@@ -168,9 +161,17 @@ public class DashboardDevicesPage{
         }catch (NoSuchElementException e){
             Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
         }
-        Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one device found\n");
-        Base.log(1, "devices are not found, number of deleted devices: " + counter);
+        if (counter > 0) {
+            Base.log(1, "element are not found, number of deleted elements: " + counter);
+            result = true;
+        }else {
+            Base.log(3, "Test impossible, because precondition isn't valid - no one element found");
+            result = false;
+        }
+        return result;
     }
+
+
 
     public boolean dellBy(String by) {
         boolean result = false;

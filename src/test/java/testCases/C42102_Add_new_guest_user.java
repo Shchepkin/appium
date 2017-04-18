@@ -27,7 +27,7 @@ public class C42102_Add_new_guest_user{
         Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
 
-        base.hub.goToTheUserlistPage();
+        base.nav.gotoPage.userList();
     }
 
     @Test(priority = 1, enabled = true)

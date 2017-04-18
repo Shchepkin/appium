@@ -65,7 +65,7 @@ public class DashboardRoomsPage{
      * @param imageNumber - if use room with type 2 y can set 1, 2 or 3 image from PopUp, other values set number to 1 for default
      */
     public void addRoom(String roomName, int type, int imageNumber) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         clickAddRoomButton();
 
@@ -89,11 +89,11 @@ public class DashboardRoomsPage{
         Base.log(1, "tap Save button");
         saveButton.click();
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void addRoom(String roomName, int roomType) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         clickAddRoomButton();
 
@@ -116,11 +116,11 @@ public class DashboardRoomsPage{
         Base.log(1, "tap Save button");
         saveButton.click();
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     private void clickAddRoomButton (){
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
 
         Base.log(1, "choice the Add Room button");
@@ -130,11 +130,11 @@ public class DashboardRoomsPage{
             case 2: addRoomPlusBtn.click(); break;
             default: Base.log(3, "Something was wrong!"); break;
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public boolean isRoomPresens(String roomName) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
         for (WebElement roomNameElement : roomNameList) {
             if (roomNameElement.getText().equals(roomName)) {
@@ -148,7 +148,7 @@ public class DashboardRoomsPage{
                 break;
             }
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return result;
     }
 
@@ -166,7 +166,7 @@ public class DashboardRoomsPage{
         deleteButton.click();
     }
 
-    public void deleteAllRooms() {
+    public boolean deleteAllRooms() {
         String successText = base.getLocalizeTextForKey("Deleting_success1");
         int counter = 0;
         try {
@@ -177,11 +177,15 @@ public class DashboardRoomsPage{
                     base.nav.scrollBottom();
                     deleteButtonClick();
                     base.nav.confirmIt();
-                    Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
-                    base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
-                    base.check.isDeletedBy("name", roomName);
-                    Base.log(1, "room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
-                    counter++;
+                    if (base.wait.elementWithText(successText, 10, true)){
+                        base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
+                        base.check.isDeletedBy("name", roomName);
+                        Base.log(1, "room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
+                        counter++;
+                    }else {
+                        Base.log(3, "SUCCESS text is not shown");
+                        return false;
+                    }
 
                 }else if (base.nav.getCancelButton().isDisplayed()){
                     base.nav.cancelIt();
@@ -192,8 +196,14 @@ public class DashboardRoomsPage{
         }catch (NoSuchElementException e){
             Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
         }
-        Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one element found\n");
-        Base.log(1, "element are not found, number of deleted elements: " + counter);
+        if (counter > 0) {
+            Base.log(1, "element are not found, number of deleted elements: " + counter);
+            result = true;
+        }else {
+            Base.log(2, "Test impossible, because precondition isn't valid - no one element found");
+            result = false;
+        }
+        return result;
     }
 
 }
