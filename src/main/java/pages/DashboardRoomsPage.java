@@ -166,7 +166,7 @@ public class DashboardRoomsPage{
         deleteButton.click();
     }
 
-    public void deleteAllRooms() {
+    public boolean deleteAllRooms() {
         String successText = base.getLocalizeTextForKey("Deleting_success1");
         int counter = 0;
         try {
@@ -177,11 +177,15 @@ public class DashboardRoomsPage{
                     base.nav.scrollBottom();
                     deleteButtonClick();
                     base.nav.confirmIt();
-                    Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
-                    base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
-                    base.check.isDeletedBy("name", roomName);
-                    Base.log(1, "room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
-                    counter++;
+                    if (base.wait.elementWithText(successText, 10, true)){
+                        base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
+                        base.check.isDeletedBy("name", roomName);
+                        Base.log(1, "room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
+                        counter++;
+                    }else {
+                        Base.log(3, "SUCCESS text is not shown");
+                        return false;
+                    }
 
                 }else if (base.nav.getCancelButton().isDisplayed()){
                     base.nav.cancelIt();
@@ -192,8 +196,14 @@ public class DashboardRoomsPage{
         }catch (NoSuchElementException e){
             Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
         }
-        Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one element found\n");
-        Base.log(1, "element are not found, number of deleted elements: " + counter);
+        if (counter > 0) {
+            Base.log(1, "element are not found, number of deleted elements: " + counter);
+            result = true;
+        }else {
+            Base.log(2, "Test impossible, because precondition isn't valid - no one element found");
+            result = false;
+        }
+        return result;
     }
 
 }

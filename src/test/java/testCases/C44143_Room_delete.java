@@ -77,7 +77,7 @@ public class C44143_Room_delete {
     @Test(priority = 4, enabled = true)
     public void All_Rooms_Deleting() {
         base.dashboard.goToTheRoomPage();
-        base.roomsPage.deleteAllRooms();
+        Assert.assertTrue(base.roomsPage.deleteAllRooms());
     }
 
 
