@@ -33,7 +33,7 @@ public class C42176_Virtual_Space_Control{
         base.loginPage.loginWithPinCancel();
 
         Base.log(1, "go to the Remote Page");
-        base.dashboard.goToTheRemotePage();
+        base.nav.gotoPage.Remote();
     }
 
     @Test(priority = 1, enabled = true)
@@ -61,6 +61,14 @@ public class C42176_Virtual_Space_Control{
 
         Base.log(1, "click Disarm Button");
         base.remotePage.clickDisarmButton();
+        Assert.assertTrue(base.wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found");
+    }
+
+    @Test(priority = 3, enabled = true)
+    public void Click_Alarm_Button() {
+
+        Base.log(1, "click Disarm Button");
+        base.remotePage.clickAlarmButton();
         Assert.assertTrue(base.wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found");
     }
 

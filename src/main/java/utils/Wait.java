@@ -167,7 +167,7 @@ public class Wait{
     wait.element(elementForWaiting, 5, true)
      */
     public boolean element(WebElement elementForWaiting, int timer, boolean makeScreenShot) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         try {
             Base.log(4, "waiting " + timer + " seconds for the element ");
@@ -188,6 +188,7 @@ public class Wait{
             result = false;
             if (makeScreenShot){base.getScreenShot();}
         }
+        Base.log(4, "Method is finished");
         return result;
     }
 

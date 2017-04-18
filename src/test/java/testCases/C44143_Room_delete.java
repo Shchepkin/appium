@@ -24,7 +24,7 @@ public class C44143_Room_delete {
         Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
 
-        base.dashboard.goToTheRoomPage();
+        base.nav.gotoPage.Rooms();
     }
 
 

@@ -59,10 +59,6 @@ public class C42097_New_user_registration{
         Base.log(1, "Welcome Page is shown, so go to the dashboard");
         base.check.clickElementAndWaitingPopup(base.regPage.getDashboardLink(), 5, 3, false);
 
-//        Base.log(1, "waiting for Pincode PopUp and cancel it");
-//        base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 30);
-//
-//        Assert.assertTrue(base.wait.element(base.dashboardHeader.getMenuDrawer(), 15, true), "Login failed!\n");
         Assert.assertTrue( base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 100), "Login failed!\n");
     }
 

@@ -41,7 +41,6 @@ public class C42099_Add_new_Hub_manually{
         base.dashboard.fillFieldsWith(hubName, hubMasterKey);
         base.nav.confirmIt();
 
-//        base.wait.invisibilityElementWithText(waiterText, true);
         base.wait.invisibilityOfWaiter(true);
         Assert.assertFalse(base.check.isErrorPresent(3), "Hub adding failed!");
 

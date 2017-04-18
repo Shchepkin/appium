@@ -45,7 +45,7 @@ public class C44142_Device_delete {
 
         base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
 
-        Assert.assertTrue(base.devicesPage.checkIsDeleted(devName));
+        Assert.assertTrue(base.check.isDeletedBy("name", devName));
         Base.log(1, "device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
     }
 

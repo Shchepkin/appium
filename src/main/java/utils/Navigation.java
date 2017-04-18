@@ -475,8 +475,12 @@ public class Navigation{
         return result;
     }
 
+//----------------------------------------------------------------------------------------------------------------------
+//  GoToPage
+//----------------------------------------------------------------------------------------------------------------------
     public class GoToPage {
 
+        // dashboard
         public void Devices() {
             backToDashboard();
             footerDevices.click();
@@ -495,6 +499,11 @@ public class Navigation{
         public void Remote() {
             backToDashboard();
             footerRemote.click();
+        }
+
+        public void Registration() {
+            Base.log(1, "tap Registration Button");
+            base.introPage.getRegistrationBtn().click();
         }
 
         public void hubSettings() {
@@ -519,6 +528,7 @@ public class Navigation{
             base.wait.element(base.hub.getUserStatus(), 10, true);
         }
 
+
         private void backToDashboard(){
             while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
 
@@ -536,7 +546,6 @@ public class Navigation{
         }
 
     }
-
 
 //======================================================================================================================
 // CONFIRMATION
