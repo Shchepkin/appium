@@ -46,7 +46,7 @@ public class C42099_Add_new_Hub_manually{
 
         Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 15, true));
         Base.log(1, "hub successfully added!");
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     @Test(priority = 1, enabled = false)

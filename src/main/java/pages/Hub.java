@@ -64,7 +64,7 @@ public class Hub{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void goToTheUserInvitationPage() {
-        Base.log(1, "method is started");
+        Base.log(4, "Method is started");
         sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
 
         Base.log(1, "click on hub");
@@ -78,11 +78,11 @@ public class Hub{
 
         base.wait.element(userStatus, 10, true);
         base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
-        Base.log(1, "method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void goToTheUserlistPage() {
-        Base.log(1, "method is started");
+        Base.log(4, "Method is started");
 
         Base.log(1, "click on Hub tab");
         hubImageOnDeviceList.click();
@@ -94,40 +94,40 @@ public class Hub{
         hubSettingsUsersImage.click();
 
         base.wait.element(userStatus, 10, true);
-        Base.log(1, "method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void arm() {
-        Base.log(1, "method is started");
+        Base.log(4, "Method is started");
         base.nav.gotoPage.Remote();
         base.remotePage.clickArmButton();
         base.nav.confirmIt();
 
         base.wait.elementWithText(armedText, 10, true);
-        Base.log(1, "method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void disarm() {
-        Base.log(1, "method is started");
+        Base.log(4, "Method is started");
         base.nav.gotoPage.Remote();
         base.remotePage.clickDisarmButton();
 
         base.wait.elementWithText(disarmedText, 10, true);
-        Base.log(1, "method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void partialArm() {
-        Base.log(1, "method is started");
+        Base.log(4, "Method is started");
         base.nav.gotoPage.Remote();
         base.remotePage.clickPartialArmButton();
         base.nav.confirmIt();
 
         base.wait.elementWithText(patrialArmedText, 10, true);
-        Base.log(1, "method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void addNew() {
-        Base.log(1, "method is started");
+        Base.log(4, "Method is started");
 
         Base.log(1, "get creds for hubName and hubMasterKey");
         String hubName = base.getCredsWithKey("hubName");
@@ -156,7 +156,7 @@ public class Hub{
 
         Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 10, true));
         Base.log(1, "hub successfully added!");
-        Base.log(1, "method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public class DeleteFrom {

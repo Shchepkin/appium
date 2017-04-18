@@ -76,7 +76,7 @@ public class User{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addFromEmailField(String userEmail) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
 
         base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
@@ -94,13 +94,13 @@ public class User{
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addFromContactList(String userEmail) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
 
         Base.log(1, "searching and clicking the Send Invites Button");
@@ -119,13 +119,13 @@ public class User{
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     public boolean addFromEmailField() {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
         String emailListString = "";
         int counter = 0;
@@ -168,14 +168,14 @@ public class User{
         }else {
             result = false;
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return result;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addUserListFromEmailField(String nameOfJsonCollection) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         Base.log(3, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
         ArrayList<String> userListFromJson = base.getJsonStringArray("emails.json", nameOfJsonCollection);
         String emailListString = "";
@@ -199,13 +199,13 @@ public class User{
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 15, true), "User page is not shown \n");
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addFromContactList() {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         Base.log(3, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
         result = false;
 
@@ -239,7 +239,7 @@ public class User{
         base.wait.invisibilityOfWaiter();
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -270,7 +270,7 @@ public class User{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addMixedUsers() {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         String registeredUser = usersForMixedAdd.get(0);
         String unregisteredUser = usersForMixedAdd.get(1);
@@ -297,7 +297,7 @@ public class User{
         base.wait.invisibilityOfWaiter(true);
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------

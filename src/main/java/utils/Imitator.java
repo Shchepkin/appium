@@ -21,7 +21,7 @@ public class Imitator{
 //----------------------------------------------------------------------------------------------------------------------
 
     private void SerialPortSetup() {
-        Base.log(1, "method is started");
+        Base.log(4, "Method is started");
 
         try {
             serialPort = new SerialPort("/dev/ttyS0");
@@ -50,7 +50,7 @@ public class Imitator{
         } catch (Exception ex) {
             Base.log(3, "Exception: \n" + ex + "\n");
         }
-        Base.log(1, "method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void sendCommand(String command){

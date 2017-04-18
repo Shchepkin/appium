@@ -65,7 +65,7 @@ public class DashboardRoomsPage{
      * @param imageNumber - if use room with type 2 y can set 1, 2 or 3 image from PopUp, other values set number to 1 for default
      */
     public void addRoom(String roomName, int type, int imageNumber) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         clickAddRoomButton();
 
@@ -89,11 +89,11 @@ public class DashboardRoomsPage{
         Base.log(1, "tap Save button");
         saveButton.click();
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void addRoom(String roomName, int roomType) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         clickAddRoomButton();
 
@@ -116,11 +116,11 @@ public class DashboardRoomsPage{
         Base.log(1, "tap Save button");
         saveButton.click();
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     private void clickAddRoomButton (){
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
 
         Base.log(1, "choice the Add Room button");
@@ -130,11 +130,11 @@ public class DashboardRoomsPage{
             case 2: addRoomPlusBtn.click(); break;
             default: Base.log(3, "Something was wrong!"); break;
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public boolean isRoomPresens(String roomName) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
         for (WebElement roomNameElement : roomNameList) {
             if (roomNameElement.getText().equals(roomName)) {
@@ -148,7 +148,7 @@ public class DashboardRoomsPage{
                 break;
             }
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return result;
     }
 

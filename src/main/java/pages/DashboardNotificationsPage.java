@@ -16,6 +16,10 @@ public class DashboardNotificationsPage{
     @AndroidFindBy(id = "com.ajaxsystems:id/badge")
     private WebElement badgeOnNotificationTab;
 
+    public WebElement getBadgeOnNotificationTab() {
+        return badgeOnNotificationTab;
+    }
+
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
     private final AppiumDriver driver;

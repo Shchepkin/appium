@@ -49,7 +49,7 @@ public class Sql{
             sql.getDelete("Phone", "%1216815329%");
      */
     public void getDelete(String row, String value) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         selectList = new ArrayList();
 
         String query = "DELETE FROM csa_accounts WHERE " + row + " LIKE '" + value + "'";
@@ -78,7 +78,7 @@ public class Sql{
             try {stmt.close();}catch (SQLException se) { /*can't do anything */ }
             try {rs.close();} catch (SQLException se) { /*can't do anything */ }
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
 
@@ -93,7 +93,7 @@ public class Sql{
             System.out.println(selectList);
      */
     public ArrayList getSelect(String row, String value) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         validationToken = new ArrayList();
         selectList = new ArrayList();
 
@@ -134,7 +134,7 @@ public class Sql{
             try {rs.close();} catch (SQLException se) { /*can't do anything */ }
         }
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return selectList;
     }
 
@@ -155,7 +155,7 @@ public class Sql{
             tokenMap.get("emailToken");
      */
     public Map getTokenMap(String row, String value) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         tokenMap = new HashMap();
         validationToken = new ArrayList();
 
@@ -201,7 +201,7 @@ public class Sql{
                 tokenMap.put("emailToken", validationToken.get(1));
             }
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return tokenMap;
     }
 
@@ -212,7 +212,7 @@ public class Sql{
      * @return Connection connection
      */
     private Connection getConnection (){
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         url = base.getDbSettingsWithKey("url");
         user = base.getDbSettingsWithKey("user");
@@ -235,7 +235,7 @@ public class Sql{
                 }
             }
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return connection;
     }
 }

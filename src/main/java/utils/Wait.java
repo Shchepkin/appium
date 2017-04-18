@@ -25,7 +25,7 @@ public class Wait{
 
 
     public boolean elementWithText(String searchingText, int timer, boolean makeScreenShot) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
 
         try {
@@ -54,7 +54,7 @@ public class Wait{
 
 
     public boolean loaderWithText(boolean visibility, String searchingText, int timer, boolean makeScreenShot) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
         String xPath = "//*[contains(@resource-id,'com.ajaxsystems:id/content_text') and @text='" + searchingText + "']";
 
@@ -87,7 +87,7 @@ public class Wait{
     }
 
     public boolean invisibilityElementWithText(String waiterText, boolean makeScreenShot) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
 
         try {
@@ -113,7 +113,7 @@ public class Wait{
 
 
     public boolean invisibilityOfWaiter(boolean makeScreenShot) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
         Base.log(3, "waiterText: \"" + waiterText + "\"");
 //        waiterText = getLocalizeTextForKey("request_send");
@@ -122,7 +122,7 @@ public class Wait{
     }
 
     public boolean invisibilityOfWaiter() {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
         Base.log(4, "waiting 100 seconds while Waiter become Invisible");
         WebDriverWait iWait = new WebDriverWait(driver, 100);
@@ -132,7 +132,7 @@ public class Wait{
     }
 
     public boolean invisibilityOfLoaderLogo(boolean makeScreenShot) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
 
         try {

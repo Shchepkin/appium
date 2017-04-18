@@ -139,7 +139,7 @@ public class Navigation{
 // Swipe
 //----------------------------------------------------------------------------------------------------------------------
     public void swipeUp() {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(1, "Screen dimension is " + screenSize);
@@ -153,11 +153,11 @@ public class Navigation{
         Base.log(1, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void swipeUp(int duration, double heightPart) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(1, "Screen dimension is " + screenSize);
@@ -170,11 +170,11 @@ public class Navigation{
         Base.log(1, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void swipeDown() {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(1, "Screen dimension is " + screenSize);
@@ -188,11 +188,11 @@ public class Navigation{
         Base.log(1, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
     public void swipeDown(int duration, double heightPart) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(1, "Screen dimension is " + screenSize);
@@ -205,7 +205,7 @@ public class Navigation{
         Base.log(1, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 //======================================================================================================================
 // Scroll
@@ -221,7 +221,7 @@ public class Navigation{
      *                  "down"  - for scrolling to the top of screen
      */
     private void scrollScreenToTheEnd(String direction){
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         start = System.nanoTime();
         flag = false;
         counter = 0;
@@ -254,7 +254,7 @@ public class Navigation{
         }
         finish = System.nanoTime();
         Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
 //======================================================================================================================
@@ -277,7 +277,7 @@ public class Navigation{
 
     public boolean scrollToElementWith(String typeOfElement, String direction, String textOfSearchingElement, boolean click) {
         start = System.nanoTime();
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
         WebElement searchingElement;
 
@@ -345,14 +345,14 @@ public class Navigation{
         }
         finish = System.nanoTime();
         Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return result;
     }
 
 
     public boolean scrollToElement(WebElement elementForSearch, String direction) {
         start = System.nanoTime();
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         result = false;
 
         counter = 0;
@@ -395,7 +395,7 @@ public class Navigation{
         }
         finish = System.nanoTime();
         Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return result;
     }
 
@@ -403,7 +403,7 @@ public class Navigation{
 //======================================================================================================================
 
     private ArrayList <String> compare(ArrayList<String> etalon, ArrayList<String> current){
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
         flag = false;
 
         if (etalon.containsAll(current) && counter < 1) {
@@ -418,7 +418,7 @@ public class Navigation{
             etalon.addAll(current);
             flag = false;
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
        return etalon;
     }
 
@@ -428,13 +428,13 @@ public class Navigation{
 //======================================================================================================================
 
     public void longTapButton(WebElement element, int timer) {
-        Base.log(1, "Method is started");
+        Base.log(4, "Method is started");
 
         Base.log(4, "long tap for " + timer + " seconds");
         timer = timer * 1000;
         driver.tap(1, element, timer);
 
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
     }
 
 //======================================================================================================================
@@ -455,7 +455,7 @@ public class Navigation{
     }
 
     public boolean goToTheRemotePage(){
-        Base.log(1, "method is started");
+        Base.log(4, "Method is started");
         result = false;
 
         try {
@@ -471,7 +471,7 @@ public class Navigation{
         if (spaceControlImage.isDisplayed()) {
             result = true;
         }
-        Base.log(1, "Method is finished");
+        Base.log(4, "Method is finished");
         return result;
     }
 
