@@ -174,7 +174,6 @@ public class Wait{
      */
     public boolean element(WebElement elementForWaiting, int timer, boolean makeScreenShot) {
         Base.log(4, "Method is started");
-        Base.log(4, "Method is started");
         try {
             Base.log(4, "waiting " + timer + " seconds for the element ");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
