@@ -109,11 +109,12 @@ public class PopUp{
             }
         }
         catch (NoSuchElementException e) {
-            Base.log(14, "NoSuchElementException, loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
+            Base.log(2, "NoSuchElementException, loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
         }
         catch (TimeoutException e) {
-            Base.log(14, "TimeoutException loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
+            Base.log(2, "TimeoutException loading PopUp is not shown: \n\n\033[31;49m" + e + "\033[39;49m\n");
         }
+        Base.log(4, "Method is finished");
     }
 
 
@@ -128,14 +129,15 @@ public class PopUp{
             Base.log(4, "element is shown with text: \"" + contentTextElement.getText() + "\"");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){base.getScreenShot();}
         } catch (TimeoutException e) {
-            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){base.getScreenShot();}
         }
+        Base.log(4, "Method is finished");
         return result;
     }
 

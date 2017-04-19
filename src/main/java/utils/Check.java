@@ -72,9 +72,9 @@ public class Check{
                     numOfFoundElement = counter;
                     break;
                 } catch (NoSuchElementException e) {
-                    Base.log(14, "NoSuchElementException, element " + counter + " is not shown");
+                    Base.log(2, "NoSuchElementException, element " + counter + " is not shown");
                 } catch (TimeoutException e) {
-                    Base.log(14, "Timeout Exception, element " + counter + " is not shown");
+                    Base.log(2, "Timeout Exception, element " + counter + " is not shown");
                 }
                 counter ++;
             }
@@ -161,7 +161,7 @@ public class Check{
                             base.nav.getCancelButton().click();
                         }
                         break;
-                    case 2: Base.log(14, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\""); break;
+                    case 2: Base.log(2, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\""); break;
                     default: break;
                 }
             default: break;
@@ -186,12 +186,12 @@ public class Check{
             result = true;
 
         } catch (NoSuchElementException e) {
-            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             base.getScreenShot();
 
         } catch (TimeoutException e) {
-            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             base.getScreenShot();
         }

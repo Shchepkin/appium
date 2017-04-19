@@ -211,16 +211,16 @@ public class Base {
             }
 
         } catch (UnsupportedEncodingException e) {
-            log(14, "UnsupportedEncodingException" + e);
+            log(2, "UnsupportedEncodingException" + e);
             e.printStackTrace();
         } catch (MalformedURLException e) {
-            log(14, "MalformedURLException" + e);
+            log(2, "MalformedURLException" + e);
             e.printStackTrace();
         } catch (FileNotFoundException e) {
-            log(14, "FileNotFoundException" + e);
+            log(2, "FileNotFoundException" + e);
             e.printStackTrace();
         } catch (IOException e) {
-            log(14, "IOException" + e);
+            log(2, "IOException" + e);
             e.printStackTrace();
         }
         log(1, "Method is finished");
@@ -247,7 +247,7 @@ public class Base {
             dbSettings.putAll(map);
 
         } catch (Exception e) {
-            log(14, "Exception\n" + e + "\n");
+            log(2, "Exception\n" + e + "\n");
         }
         log(1, "Method is finished");
         return dbSettings;
@@ -277,7 +277,7 @@ public class Base {
             jsonCollection.putAll(map);
 
         } catch (Exception e) {
-            log(14, "Exception\n" + e + "\n");
+            log(2, "Exception\n" + e + "\n");
         }
         log(4, "Method is finished");
         return jsonCollection;
@@ -300,7 +300,7 @@ public class Base {
             jsonStringArray.addAll((JSONArray) jsonObject.get(collection));
 
         } catch (Exception e) {
-            log(14, "Exception\n" + e.getMessage() + "\n");
+            log(2, "Exception\n" + e.getMessage() + "\n");
         }
         log(1, "created " + jsonStringArray.size() + " elements in arrayList");
         printArray(jsonStringArray);
@@ -460,7 +460,7 @@ public class Base {
             driver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
 
         } catch (MalformedURLException e) {
-            log(14, "MalformedURLException\n" + e);
+            log(2, "MalformedURLException\n" + e);
         }
         log(1, "Method is finished");
         return driver;
@@ -491,7 +491,7 @@ public class Base {
 
             log(3, "Path to screenshot: " + targetFile.getAbsolutePath());
         } catch (IOException e1) {
-            log(14, "IOException:\n\n" + e1 + "\n");
+            log(2, "IOException:\n\n" + e1 + "\n");
         }
     }
 

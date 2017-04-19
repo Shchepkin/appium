@@ -36,18 +36,19 @@ public class Wait{
             Base.log(4, "element is shown with text: \"" + searchingText + "\"");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();
             }
         } catch (TimeoutException e) {
-            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();
             }
         }
+        Base.log(4, "Method is finished");
         return result;
     }
 
@@ -71,18 +72,19 @@ public class Wait{
             Base.log(4, "element is shown with text: \"" + searchingText + "\"");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();
             }
         } catch (TimeoutException e) {
-            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();
             }
         }
+        Base.log(4, "Method is finished");
         return result;
     }
 
@@ -98,16 +100,17 @@ public class Wait{
             Base.log(4, "waiter is gone");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();}
         } catch (TimeoutException e) {
-            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();}
         }
+        Base.log(4, "Method is finished");
         return result;
     }
 
@@ -118,6 +121,7 @@ public class Wait{
         Base.log(3, "waiterText: \"" + waiterText + "\"");
 //        waiterText = getLocalizeTextForKey("request_send");
         invisibilityElementWithText(waiterText, makeScreenShot);
+        Base.log(4, "Method is finished");
         return result;
     }
 
@@ -128,6 +132,7 @@ public class Wait{
         WebDriverWait iWait = new WebDriverWait(driver, 100);
         iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ajaxsystems:id/progress")));
         result = true;
+        Base.log(4, "Method is finished");
         return result;
     }
 
@@ -143,16 +148,17 @@ public class Wait{
             Base.log(4, "waiter is gone");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(14, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();}
         } catch (TimeoutException e) {
-            Base.log(14, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();}
         }
+        Base.log(4, "Method is finished");
         return result;
     }
 
@@ -168,7 +174,7 @@ public class Wait{
      */
     public boolean element(WebElement elementForWaiting, int timer, boolean makeScreenShot) {
         Base.log(4, "Method is started");
-
+        Base.log(4, "Method is started");
         try {
             Base.log(4, "waiting " + timer + " seconds for the element ");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
