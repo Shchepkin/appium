@@ -188,7 +188,7 @@ public class Base {
     }
 
     private Map getLocalizeKeys(String locale) {
-        log(1, "Method is started");
+        log(4, "Method is started");
         log(3, "locale: \"" + locale + "\"");
         localizeKeys = new HashMap<>();
         try {
@@ -223,12 +223,12 @@ public class Base {
             log(2, "IOException" + e);
             e.printStackTrace();
         }
-        log(1, "Method is finished");
+        log(4, "Method is finished");
         return localizeKeys;
     }
 
     private Map getDbSettings() {
-        log(1, "Method is started");
+        log(4, "Method is started");
         try {
             dbSettings = new HashMap<>();
 
@@ -249,7 +249,7 @@ public class Base {
         } catch (Exception e) {
             log(2, "Exception\n" + e + "\n");
         }
-        log(1, "Method is finished");
+        log(4, "Method is finished");
         return dbSettings;
     }
 
@@ -258,7 +258,7 @@ public class Base {
 //----------------------------------------------------------------------------------------------------------------------
 
     public Map getJsonCollection(String filePath, String collection) {
-        log(1, "Method is started");
+        log(4, "Method is started");
         Map<String, String> jsonCollection = new HashMap<>();
         try {
 
@@ -277,14 +277,14 @@ public class Base {
             jsonCollection.putAll(map);
 
         } catch (Exception e) {
-            log(2, "Exception\n" + e + "\n");
+            log(2, "Exception: " + e);
         }
         log(4, "Method is finished");
         return jsonCollection;
     }
 
     public ArrayList<String> getJsonStringArray(String filePath, String collection) {
-        log(1, "Method is started");
+        log(4, "Method is started");
         jsonStringArray = new ArrayList<>();
         try {
 
@@ -302,9 +302,9 @@ public class Base {
         } catch (Exception e) {
             log(2, "Exception\n" + e.getMessage() + "\n");
         }
-        log(1, "created " + jsonStringArray.size() + " elements in arrayList");
+        log(4, "created " + jsonStringArray.size() + " elements in arrayList");
         printArray(jsonStringArray);
-        log(1, "Method is finished");
+        log(4, "Method is finished");
         return jsonStringArray;
     }
 
@@ -317,7 +317,7 @@ public class Base {
 //----------------------------------------------------------------------------------------------------------------------
 
     private Path getApplicationStartUp() throws UnsupportedEncodingException, MalformedURLException {
-        log(1, "Method is started");
+        log(4, "Method is started");
         URL startupUrl = getClass().getProtectionDomain().getCodeSource()
                 .getLocation();
         Path path = null;
@@ -335,20 +335,20 @@ public class Base {
             }
         }
         path = path.getParent();
-        log(1, "Method is finished");
+        log(4, "Method is finished");
         return path;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     private String loadJSON(String path) throws IOException {
-        log(1, "Method is started");
+        log(4, "Method is started");
         byte[] buf;
         try (RandomAccessFile f = new RandomAccessFile(path, "r")) {
             buf = new byte[(int) f.length()];
             f.read(buf);
         }
-        log(1, "Method is finished");
+        log(4, "Method is finished");
         return new String(buf);
     }
 
@@ -388,7 +388,7 @@ public class Base {
             // We need element with index 0 - it's current element "log"
             if (trace.length > 1) {
                 StackTraceElement element = trace[1];
-                if (type >= 3) {
+                if (type == 2 || type == 3) {
                     System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
 
                 } else {
@@ -434,7 +434,7 @@ public class Base {
     }
 
     private AndroidDriver initDriver() {
-        log(1, "Method is started");
+        log(4, "Method is started");
         try {
             log(4, "get .apk file");
             File app = new File(appPath);
@@ -462,15 +462,16 @@ public class Base {
         } catch (MalformedURLException e) {
             log(2, "MalformedURLException\n" + e);
         }
-        log(1, "Method is finished");
+        log(4, "Method is finished");
         return driver;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // ScreenShot
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public void getScreenShot() {
+        log(4, "Method is started");
         try {
             Date currentDate = new Date();
 
@@ -493,6 +494,58 @@ public class Base {
         } catch (IOException e1) {
             log(2, "IOException:\n\n" + e1 + "\n");
         }
+        log(4, "Method is finished");
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// DataProvider
+//----------------------------------------------------------------------------------------------------------------------
+
+    public Object[][] getDataProviderObjects(String pathToFileWithData) {
+        log(4, "Method is started");
+        ArrayList<Map> listOfMaps = listOfMaps(pathToFileWithData);
+
+        log(4, "put maps from listOfMaps to the array");
+        Object[][] objects = new Object[listOfMaps.size()][1];
+        for (int i = 0; i < listOfMaps.size(); i++) {
+            objects[i][0] = listOfMaps.get(i);
+        }
+
+        log(4, "Method is finished");
+        return objects;
+    }
+
+    public Iterator<Object[]> getDataProviderIterator(String pathToFileWithData) {
+        log(4, "Method is started");
+        ArrayList<Map> listOfMaps = listOfMaps(pathToFileWithData);
+
+        log(4, "put maps from listOfMaps to the Collection of objects");
+        Collection<Object[]> objects = new ArrayList<Object[]>();
+        for (int i = 0; i < listOfMaps.size(); i++) {
+            objects.add(new Object[] {listOfMaps.get(i)});
+        }
+
+        log(4, "Method is finished");
+        return objects.iterator();
+    }
+
+    private ArrayList<Map> listOfMaps(String pathToFileWithData){
+        log(4, "Method is started");
+        ArrayList<Map> listOfMaps = new ArrayList<>();
+        Map map;
+        int i = 0;
+        while (true){
+            log(4, "get collection from json");
+            map = getJsonCollection(pathToFileWithData, String.valueOf(i));
+            if(map.isEmpty()){
+                log(4, "Method is started");
+                break;
+            }
+            log(4, "add this Map to the listOfMaps");
+            listOfMaps.add(map);
+            i++;
+        }
+        return listOfMaps;
     }
 
 }
