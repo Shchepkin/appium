@@ -3,7 +3,7 @@ package tmp;
 import org.testng.annotations.*;
 import pages.Base;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -20,17 +20,30 @@ public class dataProvider {
 
     }
 
-    @Test(dataProvider = "dataMethod")
-    public void negativeLogin (Map param) {
+    @DataProvider
+    public Object[][] dataProviderObjects() {
+        return base.getDataProviderObjects("negativeLoginData.json");
+    }
+
+    @DataProvider
+    public Iterator<Object[]> dataProviderIterator() {
+        return base.getDataProviderIterator("negativeLoginData.json");
+    }
+
+    @Test(dataProvider = "dataProviderObjects")
+    public void negativeLoginObjects (Map param) {
         System.out.println("Start test");
         System.out.println("comment: " + param.get("comment"));
         System.out.println("login: " + param.get("login"));
         System.out.println("password: " + param.get("password"));
     }
 
-    @DataProvider
-    public Object[][] dataMethod() {
-        return base.getDataProviderValues("negativeLoginData.json");
+    @Test(dataProvider = "dataProviderIterator")
+    public void negativeLoginIterator (Map param) {
+        System.out.println("Start test");
+        System.out.println("comment: " + param.get("comment"));
+        System.out.println("login: " + param.get("login"));
+        System.out.println("password: " + param.get("password"));
     }
 
     @AfterClass

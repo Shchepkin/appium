@@ -317,7 +317,7 @@ public class Base {
 //----------------------------------------------------------------------------------------------------------------------
 
     private Path getApplicationStartUp() throws UnsupportedEncodingException, MalformedURLException {
-        log(1, "Method is started");
+        log(4, "Method is started");
         URL startupUrl = getClass().getProtectionDomain().getCodeSource()
                 .getLocation();
         Path path = null;
@@ -335,7 +335,7 @@ public class Base {
             }
         }
         path = path.getParent();
-        log(1, "Method is finished");
+        log(4, "Method is finished");
         return path;
     }
 
@@ -497,7 +497,39 @@ public class Base {
         log(4, "Method is finished");
     }
 
-    public Object[][] getDataProviderValues(String pathToFileWithData) {
+//----------------------------------------------------------------------------------------------------------------------
+// DataProvider
+//----------------------------------------------------------------------------------------------------------------------
+
+    public Object[][] getDataProviderObjects(String pathToFileWithData) {
+        log(4, "Method is started");
+        ArrayList<Map> listOfMaps = listOfMaps(pathToFileWithData);
+
+        log(4, "put maps from listOfMaps to the array");
+        Object[][] objects = new Object[listOfMaps.size()][1];
+        for (int i = 0; i < listOfMaps.size(); i++) {
+            objects[i][0] = listOfMaps.get(i);
+        }
+
+        log(4, "Method is finished");
+        return objects;
+    }
+
+    public Iterator<Object[]> getDataProviderIterator(String pathToFileWithData) {
+        log(4, "Method is started");
+        ArrayList<Map> listOfMaps = listOfMaps(pathToFileWithData);
+
+        log(4, "put maps from listOfMaps to the Collection of objects");
+        Collection<Object[]> objects = new ArrayList<Object[]>();
+        for (int i = 0; i < listOfMaps.size(); i++) {
+            objects.add(new Object[] {listOfMaps.get(i)});
+        }
+
+        log(4, "Method is finished");
+        return objects.iterator();
+    }
+
+    private ArrayList<Map> listOfMaps(String pathToFileWithData){
         log(4, "Method is started");
         ArrayList<Map> listOfMaps = new ArrayList<>();
         Map map;
@@ -513,15 +545,7 @@ public class Base {
             listOfMaps.add(map);
             i++;
         }
-
-        log(4, "put maps from listOfMaps to the array");
-        Object[][] objects = new Object[listOfMaps.size()][1];
-        for (int j = 0; j < listOfMaps.size(); j++) {
-            objects[j][0] = listOfMaps.get(j);
-        }
-
-        log(4, "Method is finished");
-        return objects;
+        return listOfMaps;
     }
 
 }
