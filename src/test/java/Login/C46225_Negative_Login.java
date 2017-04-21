@@ -13,7 +13,7 @@ import java.util.Map;
  * -
  */
 
-public class C46224_Positive_Login {
+public class C46225_Negative_Login {
 
     private String login, pass, server, expectedText, actual;
     private Base base;
@@ -26,23 +26,24 @@ public class C46224_Positive_Login {
     }
 
     @DataProvider
-    public Object[][] dataProviderObjects() {
-        return base.getDataProviderObjects("positiveLoginData.json");
+    public Iterator<Object[]> dataProviderIterator() {
+        return base.getDataProviderIterator("negativeLoginData.json");
     }
 
-    @Test(dataProvider = "dataProviderObjects")
-    public void Different_parameters (Map param) {
+    @Test(dataProvider = "dataProviderIterator")
+    public void parameters (Map param) {
         Base.log(1, "test started");
+
         login = param.get("login").toString();
-        pass = param.get("password").toString();
+        pass = param.get("pass").toString();
         server = base.getCredsWithKey("server");
 
-        System.out.println("comment: " + param.get("comment"));
-        System.out.println("login: " + param.get("login"));
-        System.out.println("password: " + param.get("password"));
+        Base.log(1,"comment: " + param.get("comment"));
+        Base.log(1,"login: \"" + login + "\"");
+        Base.log(1,"password: " + pass + "\"");
 
-        Assert.assertTrue(base.loginPage.loginWithPinCancel(login, pass, server));
-        base.loginPage.logOut();
+        base.loginPage.loginToTheServer(login, pass, server);
+        Assert.assertTrue(base.wait.visibilityOfSnackBar(90, true), "SnackBar is not shown");
         Base.log(1, "test finished");
     }
 
