@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class C46224_Positive_Login {
 
-    private String login, pass, server, expectedText, actual;
+    private String server;
     private Base base;
 
     @Parameters({ "deviceName_" })
@@ -23,27 +23,26 @@ public class C46224_Positive_Login {
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
+        server = base.getCredsWithKey("server");
     }
 
     @DataProvider
-    public Object[][] dataProviderObjects() {
-        return base.getDataProviderObjects("positiveLoginData.json");
+    public Iterator<Object[]> dataProviderIterator() {
+        return base.getDataProviderIterator("positiveLoginData.json");
     }
 
-    @Test(dataProvider = "dataProviderObjects")
-    public void Test (Map param) {
-        Base.log(1, "test started");
-        login = param.get("login").toString();
-        pass = param.get("password").toString();
-        server = base.getCredsWithKey("server");
+    @Test(dataProvider = "dataProviderIterator")
+    public void parameters (Map param) {
+        String login = param.get("login").toString();
+        String pass = param.get("pass").toString();
 
-        System.out.println("comment: " + param.get("comment"));
-        System.out.println("login: " + param.get("login"));
-        System.out.println("password: " + param.get("password"));
+
+        System.out.println(param.get("comment"));
+        System.out.println("login   : \"" + param.get("login") + "\"");
+        System.out.println("password: \"" + param.get("pass") + "\"");
 
         Assert.assertTrue(base.loginPage.loginWithPinCancel(login, pass, server));
         base.loginPage.logOut();
-        Base.log(1, "test finished");
     }
 
     @AfterClass

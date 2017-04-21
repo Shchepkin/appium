@@ -37,8 +37,8 @@
             <!--<class name="testCases.C44142_Device_delete"/>-->
             <!--<class name="testCases.C44143_Room_delete"/>-->
             <!--<class name="testCases.C44144_Hub_delete"/>-->
-            <!--<class name="Login.C46224_Positive_Login"/>-->
-            <class name="Login.C46225_Negative_Login"/>
+            <class name="Login.C46224_Positive_Login"/>
+            <!--<class name="Login.C46225_Negative_Login"/>-->
             <!--<class name="tmp.dataProvider"/>-->
         </classes>
     </test>
