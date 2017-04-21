@@ -96,15 +96,15 @@ public class AuthorizationPage{
     public boolean loginWithPinCancel(String login, String password, String server) {
         Base.log(4, "Method is started");
 
-        Base.log(1, "start from IntroPage");
+        Base.log(4, "start from IntroPage");
         loginButtonOnIntro.click();
 
         loginToTheServer(login, password, server);
 
-        Base.log(1, "wait until LoaderLogo become invisible");
+        Base.log(4, "wait until LoaderLogo become invisible");
         base.wait.invisibilityOfLoaderLogo(true);
 
-        Base.log(1, "waiting for Pincode PopUp and cancel it");
+        Base.log(4, "waiting for Pincode PopUp and cancel it");
         if (base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10)){
            return true;
         }else return false;
@@ -145,7 +145,7 @@ public class AuthorizationPage{
     public void chooseServer(String server) {
         Base.log(4, "Method is started");
 
-        Base.log(1, "select server type: \"" + server + "\"");
+        Base.log(4, "select server type: \"" + server + "\"");
         base.nav.longTapButton(loginBtn, 2);
 
         switch (server) {

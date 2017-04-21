@@ -28,7 +28,7 @@ public class Imitator{
 
             Base.log(4, "print all available ports");
             for (String portName: SerialPortList.getPortNames()) {
-                System.out.println(portName);
+                Base.log(4, portName);
             }
 
             Base.log(4, "open port ");

@@ -445,6 +445,7 @@ public class Navigation{
     public WebElement getNextButton() {return nextButton;}
 
     public void goBack() {
+        Base.log(4, "tap Back button");
         backButton.click();
     }
 

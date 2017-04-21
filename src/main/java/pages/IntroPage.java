@@ -40,19 +40,21 @@ public class IntroPage{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void goToAuthorization() {
-        Base.log(4, "Method is started");
+        Base.log(4, "tap Login button");
         loginBtn.click();
     }
 
     public void goToRegistration() {
-        Base.log(4, "Method is started");
+        Base.log(4, "tap Registration button");
         registrationBtn.click();
     }
 
     public void setServer(String server) {
-        Base.log(4, "Method is started");
+        Base.log(4, "tap Login button");
         loginBtn.click();
+
         base.loginPage.chooseServer(server);
+
         base.nav.goBack();
         Base.log(4, "Method is finished");
     }

@@ -139,7 +139,7 @@ public class Wait{
     public boolean visibilityOfSnackBar(int timer, boolean makeScreenShot) {
         Base.log(4, "Method is started");
         if(element(base.popUp.getSnackBarElement(), timer, makeScreenShot)){
-            Base.log(1, "SnackBar text: \"" + base.popUp.getSnackBarText() + "\"");
+            Base.log(4, "SnackBar text: \"" + base.popUp.getSnackBarText() + "\"");
             return  true;
         }else {
             return false;
