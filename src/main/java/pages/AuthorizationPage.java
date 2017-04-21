@@ -93,7 +93,7 @@ public class AuthorizationPage{
     }
 
 
-    public void loginWithPinCancel(String login, String password, String server) {
+    public boolean loginWithPinCancel(String login, String password, String server) {
         Base.log(4, "Method is started");
 
         Base.log(1, "start from IntroPage");
@@ -105,10 +105,10 @@ public class AuthorizationPage{
         base.wait.invisibilityOfLoaderLogo(true);
 
         Base.log(1, "waiting for Pincode PopUp and cancel it");
-        Assert.assertTrue(base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
-
-        Base.log(4, "Method is finished");
-    }
+        if (base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10)){
+           return true;
+        }else return false;
+     }
 
 
     public boolean loginWithPinCancel() {
@@ -165,6 +165,22 @@ public class AuthorizationPage{
                 break;
         }
         Base.log(4, "Method is finished");
+    }
+
+    public void logOut() {
+        Base.log(4, "Method is started");
+
+        Base.log(4, "tap menu icon");
+        base.dashboardHeader.getMenuDrawer().click();
+
+        Base.log(4, "tap Account Button");
+        base.menuPage.getAccountButton().click();
+
+        Base.log(4, "tap Logout Button");
+        base.accountPage.getLogoutBtn().click();
+
+        Base.log(4, "wait Login Button on Intro page");
+        base.wait.element(base.introPage.getLoginBtn(), 15, true);
     }
 
 }
