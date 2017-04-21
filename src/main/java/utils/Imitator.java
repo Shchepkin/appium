@@ -14,7 +14,7 @@ public class Imitator{
 
     public Imitator() {
         SerialPortSetup();
-        Base.log(1, "clear imitator memory");
+        Base.log(4, "clear imitator memory");
         clearMemory();
     }
 
@@ -26,24 +26,24 @@ public class Imitator{
         try {
             serialPort = new SerialPort("/dev/ttyS0");
 
-            Base.log(1, "print all available ports");
+            Base.log(4, "print all available ports");
             for (String portName: SerialPortList.getPortNames()) {
                 System.out.println(portName);
             }
 
-            Base.log(1, "open port ");
+            Base.log(4, "open port ");
             serialPort.openPort();
 
-            Base.log(1, "set port params: BAUDRATE, DATABITS, STOPBITS,PARITY)");
+            Base.log(4, "set port params: BAUDRATE, DATABITS, STOPBITS,PARITY)");
             serialPort.setParams(SerialPort.BAUDRATE_57600,
                                  SerialPort.DATABITS_8,
                                  SerialPort.STOPBITS_1,
                                  SerialPort.PARITY_NONE);
 
-            Base.log(1, "switch on hardware flow control");
+            Base.log(4, "switch on hardware flow control");
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
-            Base.log(1, "serialPort Mask to reaction on data in buffer");
+            Base.log(4, "serialPort Mask to reaction on data in buffer");
             serialPort.setEventsMask(SerialPort.MASK_RXCHAR);
             serialPort.addEventListener(new PortReader());
 
