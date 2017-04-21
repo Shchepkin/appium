@@ -17,11 +17,12 @@ public class Check{
     private final AppiumDriver driver;
     private boolean result;
     private int numOfFoundElement;
-    public LocalizedTextFor localizedTextFor = new LocalizedTextFor();
+    public LocalizedTextFor localizedTextFor;
 
     public Check(Base base) {
         this.base = base;
         this.driver = base.getDriver();
+        localizedTextFor = new LocalizedTextFor();
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -63,11 +64,11 @@ public class Check{
         result = false;
         for (int i = 1; i <= period; i++) {
             int counter = 1;
-            Base.log(1, "start waiting period #" + i);
+            Base.log(4, "start waiting period #" + i);
 
             for (WebElement el : elements) {
                 try {
-                    Base.log(1, "element " + el + " is shown with text: \"" + el.getText() + "\"");
+                    Base.log(4, "element " + el + " is shown with text: \"" + el.getText() + "\"");
                     result = true;
                     numOfFoundElement = counter;
                     break;
