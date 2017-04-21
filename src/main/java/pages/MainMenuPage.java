@@ -45,4 +45,15 @@ public class MainMenuPage {
         addHubButton.click();
     }
 
+    public WebElement getAccountButton() {
+        return accountButton;
+    }
+
+    public WebElement getLogsButton() {
+        return logsButton;
+    }
+
+    public WebElement getSettingsButton() {
+        return settingsButton;
+    }
 }

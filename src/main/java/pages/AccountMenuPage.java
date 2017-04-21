@@ -48,4 +48,7 @@ public class AccountMenuPage{
     }
 //----------------------------------------------------------------------------------------------------------------------
 
+    public WebElement getLogoutBtn() {
+        return logoutBtn;
+    }
 }

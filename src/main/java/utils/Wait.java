@@ -136,6 +136,16 @@ public class Wait{
         return result;
     }
 
+    public boolean visibilityOfSnackBar(int timer, boolean makeScreenShot) {
+        Base.log(4, "Method is started");
+        if(element(base.popUp.getSnackBarElement(), timer, makeScreenShot)){
+            Base.log(4, "SnackBar text: \"" + base.popUp.getSnackBarText() + "\"");
+            return  true;
+        }else {
+            return false;
+        }
+    }
+
     public boolean invisibilityOfLoaderLogo(boolean makeScreenShot) {
         Base.log(4, "Method is started");
         result = false;

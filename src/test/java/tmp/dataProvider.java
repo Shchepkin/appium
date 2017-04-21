@@ -25,10 +25,6 @@ public class dataProvider {
         return base.getDataProviderObjects("negativeLoginData.json");
     }
 
-    @DataProvider
-    public Iterator<Object[]> dataProviderIterator() {
-        return base.getDataProviderIterator("negativeLoginData.json");
-    }
 
     @Test(dataProvider = "dataProviderObjects")
     public void negativeLoginObjects (Map param) {
@@ -37,6 +33,12 @@ public class dataProvider {
         System.out.println("login: " + param.get("login"));
         System.out.println("password: " + param.get("password"));
     }
+
+    @DataProvider
+    public Iterator<Object[]> dataProviderIterator() {
+        return base.getDataProviderIterator("negativeLoginData.json");
+    }
+
 
     @Test(dataProvider = "dataProviderIterator")
     public void negativeLoginIterator (Map param) {
