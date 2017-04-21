@@ -33,14 +33,14 @@ public class Check{
             // assert is the element displayed on the page
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(element));
-            Base.log(1, "element is shown with text: \"" + element.getText() + "\"");
+            Base.log(4, "element is shown with text: \"" + element.getText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
             // is failed - make screenshot
             base.getScreenShot();
             result = false;
-            Base.log(1, "no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
+            Base.log(4, "no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
         }
         return result;
     }
@@ -105,7 +105,7 @@ public class Check{
             Base.log(3, "click the element link, try count #" +i);
             elementForClick.click();
 
-            Base.log(1, "waiting for: 1.snackBar  2.loadingWindow");
+            Base.log(4, "waiting for: 1.snackBar  2.loadingWindow");
             numOfFoundElement = waitElements(elements, period);
 
             checkNum(numOfFoundElement, confirmPopupProposition);
@@ -131,7 +131,7 @@ public class Check{
         Base.log(3, "click the element link");
         elementForClick.click();
 
-        Base.log(1, "waiting for: 1.snackBar  2.loadingWindow");
+        Base.log(4, "waiting for: 1.snackBar  2.loadingWindow");
         numOfFoundElement = waitElements(elements, 4);
 
         checkNum(numOfFoundElement, confirmPopupProposition);
@@ -154,11 +154,11 @@ public class Check{
                     case 0: Base.log(3, "PopUp is shown, but without errors and any propositions"); break;
                     case 1:
                         if (confirmPopupProposition){
-                            Base.log(1, "confirm Popup Proposition");
+                            Base.log(4, "confirm Popup Proposition");
                             base.nav.getConfirmButton().click();
                         }
                         else {
-                            Base.log(1, "cancel Popup Proposition");
+                            Base.log(4, "cancel Popup Proposition");
                             base.nav.getCancelButton().click();
                         }
                         break;
@@ -179,7 +179,7 @@ public class Check{
 
             WebElement[] elements = new WebElement[]{element, base.nav.getCancelButton()};
             if (waitElements(elements, 5) == 2) {
-                Base.log(1, "Pincode PopUp is shown - cancel it!");
+                Base.log(4, "Pincode PopUp is shown - cancel it!");
                 base.nav.cancelIt();
             }
 
@@ -210,11 +210,11 @@ public class Check{
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(base.popUp.getSnackBarElement()));
 
-            Base.log(1, "SnackBar is shown with text: \"" + base.popUp.getSnackBarText() + "\"");
+            Base.log(4, "SnackBar is shown with text: \"" + base.popUp.getSnackBarText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {
-            Base.log(1, "SnackBar is not shown:\n\n" + e + "\n");
+            Base.log(4, "SnackBar is not shown:\n\n" + e + "\n");
             base.getScreenShot();
         }
         return result;
@@ -230,7 +230,7 @@ public class Check{
             result = true;
 
         } catch (NoSuchElementException e) {
-            Base.log(1, "Error message is not shown");
+            Base.log(4, "Error message is not shown");
             base.getScreenShot();
             result = false;
         }
@@ -239,7 +239,7 @@ public class Check{
 
     public boolean isDeletedBy(String type, String value) {
         if (base.nav.scrollToElementWith("name", "up", value, false)) {
-            Base.log(1, "element with value \"" + value + "\" is still displayed in the List");
+            Base.log(4, "element with value \"" + value + "\" is still displayed in the List");
             result = false;
         }else {
             Base.log(3, "element with value \"" + value + "\" is not displayed in the List");
@@ -257,17 +257,17 @@ public class Check{
     public class LocalizedTextFor{
 
         public void hubUnpair() {
-            Base.log(1, "get expected and actual localized text");
+            Base.log(4, "get expected and actual localized text");
             String actualText = base.popUp.getContentText();
             String expectedText = base.getLocalizeTextForKey("Detach_success1");
 
-            Base.log(1, "checking of localized text");
+            Base.log(4, "checking of localized text");
             System.out.println("actual: " + actualText);
             System.out.println("expected: " + expectedText);
 
             Assert.assertEquals(expectedText, actualText, "expected text is not equals actual");
 
-            Base.log(1, "checking of localized text is successfully passed");
+            Base.log(4, "checking of localized text is successfully passed");
         }
 
     }
