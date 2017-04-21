@@ -13,7 +13,7 @@ import java.util.Map;
  * -
  */
 
-public class C46224_Positive {
+public class C46224_Positive_Login {
 
     private String login, pass, server, expectedText, actual;
     private Base base;

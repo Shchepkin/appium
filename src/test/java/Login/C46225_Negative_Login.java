@@ -10,7 +10,6 @@ import java.util.Map;
 /**
  * PRECONDITION
  * - account exist and validated
- * -
  */
 
 public class C46225_Negative_Login {
