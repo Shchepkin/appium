@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class Base {
 
     public static int TIMEOUT = 5;
-    private static final int LOG_LEVEL = 3;
+    private static final int LOG_LEVEL = 5;
 
     public Sql sql;
     public Hub hub;
@@ -65,6 +65,7 @@ public class Base {
 
     private ArrayList<String> jsonStringArray;
     private String deviceName, UDID, platformVersion, URL, appPath, appPackage, appActivity;
+    public static final String logFile = logfileName();
 
     public Base(String deviceName_) {
         log(1, "setup is started");
@@ -88,6 +89,7 @@ public class Base {
 
         log(4, "get creds for DataBase");
         dbSettings = getDbSettings();
+
     }
 
     public Base(AndroidDriver driver) {
@@ -120,6 +122,9 @@ public class Base {
         log(4, "init Imitator()");
         imitator = new Imitator();
 
+        log(4, "init DashboardHeader()");
+        header = new DashboardHeader(this);
+
         log(4, "init RegistrationPage()");
         regPage = new RegistrationPage(this);
 
@@ -144,11 +149,11 @@ public class Base {
         log(4, "init DashboardRemotePage()");
         remotePage = new DashboardRemotePage(this);
 
-        log(4, "init MenuAccountPage()");
-        accountPage = new AccountMenuPage(this);
-
         log(4, "init DashboardDevicesPage()");
         devicesPage = new DashboardDevicesPage(this);
+
+        log(4, "init MenuAccountPage()");
+        accountPage = new AccountMenuPage(this);
 
         log(4, "init AddImagePage()");
         addImagePage = new AddImagePage(this);
@@ -161,9 +166,6 @@ public class Base {
 
         log(4, "init NotificationsPage()");
         notificationsPage = new DashboardNotificationsPage(this);
-
-        log(4, "init DashboardHeader()");
-        header = new DashboardHeader(this);
 
         log(4, "init ForgotPasswordPage()");
         forgotPasswordPage = new ForgotPasswordPage(this);
@@ -357,6 +359,7 @@ public class Base {
 //----------------------------------------------------------------------------------------------------------------------
 
     public static void log(int type, String message) {
+
         Throwable t = new Throwable();
         StackTraceElement trace[] = t.getStackTrace();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
@@ -383,23 +386,113 @@ public class Base {
                 break;
         }
 
-
-        if (type <= LOG_LEVEL) {
-            // We need element with index 0 - it's current element "log"
-            if (trace.length > 1) {
-                StackTraceElement element = trace[1];
-                if (type == 2 || type == 3) {
-                    System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-
+            if (type <= LOG_LEVEL) {
+                // We need element with index 0 - it's current element "log"
+                if (trace.length > 1) {
+                    StackTraceElement element = trace[1];
+                    if (type == 2 || type == 3) {
+//                        System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+                        String d = String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+                        write(d);
+                    } else {
+//                        System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+                        String d = String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+                        write(d);
+                    }
                 } else {
-                    System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+//                    System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
+                    String d = String.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
+                    write(d);
                 }
-            } else {
-                System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
             }
+
+    }
+
+    private static final String logfileName(){
+        String fullPathToFile, filename;
+
+        try {
+            Date currentDate = new Date();
+
+            // Create formatted date and time for folders and filenames
+            SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd");
+            SimpleDateFormat time = new SimpleDateFormat("HHmmss");
+
+            // Creating folder and filename for logfile
+            filename = date.format(currentDate) + "_" + time.format(currentDate) + ".log";
+            fullPathToFile = "logs/" + filename;
+
+            File file = new File(fullPathToFile);
+            if(file.createNewFile()){
+                System.out.println("log: \"" + fullPathToFile + "\"");
+            }else {
+                System.out.println("log File already exist: \"" + fullPathToFile + "\"");
+            }
+
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+        return fullPathToFile;
+    }
+
+
+    private static void write(String text) {
+        try(FileWriter writer = new FileWriter(logFile, true)) {
+            writer.write(text);
+            writer.flush();
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
         }
     }
 
+
+//
+//    public static void log(int type, String message) {
+//
+//        Throwable t = new Throwable();
+//        StackTraceElement trace[] = t.getStackTrace();
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
+//        Date timeStamp = new Date();
+//        String typeOfMessage;
+//        switch (type) {
+//            case 1:
+//                typeOfMessage = "INFO ";
+//                break;
+//            case 2:
+//                typeOfMessage = "ERROR";
+//                break;
+//            case 3:
+//                typeOfMessage = "WARN ";
+//                break;
+//            case 4:
+//                typeOfMessage = "DEBUG";
+//                break;
+//            case 5:
+//                typeOfMessage = "NODEF";
+//                break;
+//            default:
+//                typeOfMessage = "NODEF";
+//                break;
+//        }
+//
+//
+//        if (type <= LOG_LEVEL) {
+//            // We need element with index 0 - it's current element "log"
+//            if (trace.length > 1) {
+//                StackTraceElement element = trace[1];
+//                if (type == 2 || type == 3) {
+//                    System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+//
+//                } else {
+//                    System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+//                }
+//            } else {
+//                System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
+//            }
+//        }
+//    }
+//
 //----------------------------------------------------------------------------------------------------------------------
 // Keyboard
 //----------------------------------------------------------------------------------------------------------------------
@@ -503,7 +596,7 @@ public class Base {
 
     public Object[][] getDataProviderObjects(String pathToFileWithData) {
         log(4, "Method is started");
-        ArrayList<Map> listOfMaps = listOfMaps(pathToFileWithData);
+        ArrayList<Map> listOfMaps = listOfMapsForDataProvider(pathToFileWithData);
 
         log(4, "put maps from listOfMaps to the array");
         Object[][] objects = new Object[listOfMaps.size()][1];
@@ -517,10 +610,10 @@ public class Base {
 
     public Iterator<Object[]> getDataProviderIterator(String pathToFileWithData) {
         log(4, "Method is started");
-        ArrayList<Map> listOfMaps = listOfMaps(pathToFileWithData);
+        ArrayList<Map> listOfMaps = listOfMapsForDataProvider(pathToFileWithData);
 
         log(4, "put maps from listOfMaps to the Collection of objects");
-        Collection<Object[]> objects = new ArrayList<Object[]>();
+        Collection<Object[]> objects = new ArrayList<>();
         for (int i = 0; i < listOfMaps.size(); i++) {
             objects.add(new Object[] {listOfMaps.get(i)});
         }
@@ -529,7 +622,7 @@ public class Base {
         return objects.iterator();
     }
 
-    private ArrayList<Map> listOfMaps(String pathToFileWithData){
+    private ArrayList<Map> listOfMapsForDataProvider(String pathToFileWithData){
         log(4, "Method is started");
         ArrayList<Map> listOfMaps = new ArrayList<>();
         Map map;
@@ -541,7 +634,7 @@ public class Base {
                 log(4, "Method is started");
                 break;
             }
-            log(4, "add this Map to the listOfMaps");
+            log(4, "add this Map to the listOfMapsForDataProvider");
             listOfMaps.add(map);
             i++;
         }
