@@ -29,6 +29,7 @@ public class Base {
 
     public static int TIMEOUT = 5;
     private static final int LOG_LEVEL = 5;
+    private static final boolean LOG_VIEW = false;
 
     public Sql sql;
     public Hub hub;
@@ -359,7 +360,6 @@ public class Base {
 //----------------------------------------------------------------------------------------------------------------------
 
     public static void log(int type, String message) {
-
         Throwable t = new Throwable();
         StackTraceElement trace[] = t.getStackTrace();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
@@ -386,27 +386,35 @@ public class Base {
                 break;
         }
 
-            if (type <= LOG_LEVEL) {
-                // We need element with index 0 - it's current element "log"
-                if (trace.length > 1) {
-                    StackTraceElement element = trace[1];
-                    if (type == 2 || type == 3) {
-//                        System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-                        String d = String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-                        write(d);
-                    } else {
-//                        System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-                        String d = String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-                        write(d);
+        if (type <= LOG_LEVEL) {
+            // We need element with index 0 - it's current element "log"
+            if (trace.length > 1) {
+                StackTraceElement element = trace[1];
+                if (type == 2 || type == 3) {
+                    if (LOG_VIEW){
+                        System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
                     }
+                    String logFormattedString = String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+                    write(logFormattedString);
                 } else {
-//                    System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
-                    String d = String.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
-                    write(d);
+                    if (LOG_VIEW) {
+                        System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+                    }
+                    String logFormattedString = String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
+                    write(logFormattedString);
                 }
+            } else {
+                if (LOG_VIEW) {
+                    System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
+                }
+                String logFormattedString = String.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
+                write(logFormattedString);
             }
+        }
 
     }
+
+
 
     private static final String logfileName(){
         String fullPathToFile, filename;
@@ -446,53 +454,6 @@ public class Base {
         }
     }
 
-
-//
-//    public static void log(int type, String message) {
-//
-//        Throwable t = new Throwable();
-//        StackTraceElement trace[] = t.getStackTrace();
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
-//        Date timeStamp = new Date();
-//        String typeOfMessage;
-//        switch (type) {
-//            case 1:
-//                typeOfMessage = "INFO ";
-//                break;
-//            case 2:
-//                typeOfMessage = "ERROR";
-//                break;
-//            case 3:
-//                typeOfMessage = "WARN ";
-//                break;
-//            case 4:
-//                typeOfMessage = "DEBUG";
-//                break;
-//            case 5:
-//                typeOfMessage = "NODEF";
-//                break;
-//            default:
-//                typeOfMessage = "NODEF";
-//                break;
-//        }
-//
-//
-//        if (type <= LOG_LEVEL) {
-//            // We need element with index 0 - it's current element "log"
-//            if (trace.length > 1) {
-//                StackTraceElement element = trace[1];
-//                if (type == 2 || type == 3) {
-//                    System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-//
-//                } else {
-//                    System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-//                }
-//            } else {
-//                System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
-//            }
-//        }
-//    }
-//
 //----------------------------------------------------------------------------------------------------------------------
 // Keyboard
 //----------------------------------------------------------------------------------------------------------------------
