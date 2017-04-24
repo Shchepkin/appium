@@ -56,22 +56,22 @@ public class C44143_Room_delete {
 
     @Test(priority = 2, enabled = false)
     public void While_Hub_Armed() {
-        base.hub.arm();
+        base.hub.security.arm();
         base.dashboard.goToTheRoomPage();
         Assert.assertFalse(base.check.isElementDisplayed(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
 
         Base.log(1, "disarm hub");
-        base.hub.disarm();
+        base.hub.security.disarm();
     }
 
     @Test(priority = 3, enabled = true)
     public void While_Hub_Partial_Armed() {
-        base.hub.partialArm();
+        base.hub.security.partialArm();
         base.dashboard.goToTheRoomPage();
         Assert.assertFalse(base.check.isElementDisplayed(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
 
         Base.log(1, "disarm hub");
-        base.hub.disarm();
+        base.hub.security.disarm();
     }
 
     @Test(priority = 4, enabled = true)

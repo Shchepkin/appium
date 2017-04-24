@@ -484,21 +484,26 @@ public class Navigation{
         // dashboard
         public void Devices() {
             backToDashboard();
+            Base.log(1, "tap Devices Button");
             footerDevices.click();
         }
 
         public void Rooms() {
             backToDashboard();
+            Base.log(1, "tap Rooms Button");
             footerRooms.click();
         }
 
         public void Notifications() {
             backToDashboard();
+            Base.log(1, "tap Notifications Button");
             footerNotifications.click();
         }
 
         public void Remote() {
+            Base.log(1, "back to Dashboard");
             backToDashboard();
+            Base.log(1, "tap Remote Button");
             footerRemote.click();
         }
 
@@ -533,7 +538,7 @@ public class Navigation{
         private void backToDashboard(){
             while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
 
-                if (base.wait.element(backButton, 2, true)) {
+                if (base.wait.element(backButton, 1, true)) {
                     Base.log(1, "tap back button");
                     backButton.click();
 
@@ -541,9 +546,10 @@ public class Navigation{
                     cancelIt();
 
                 } else {
-                    Base.log(4, "Dashboard is not reached");
+                    Base.log(3, "Dashboard is not reached");
                 }
             }
+            Base.log(1, "Dashboard is reached");
         }
 
     }

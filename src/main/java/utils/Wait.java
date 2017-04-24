@@ -29,11 +29,11 @@ public class Wait{
         result = false;
 
         try {
-            Base.log(4, "waiting " + timer + " seconds for the element with text \"" + searchingText + "\"");
+            Base.log(1, "waiting " + timer + " seconds for the element with text \"" + searchingText + "\"");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//android.widget.TextView[@text='" + searchingText + "']"))));
 
-            Base.log(4, "element is shown with text: \"" + searchingText + "\"");
+            Base.log(1, "element is shown with text: \"" + searchingText + "\"");
             result = true;
         } catch (NoSuchElementException e) {
             Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
@@ -58,7 +58,7 @@ public class Wait{
         String xPath = "//*[contains(@resource-id,'com.ajaxsystems:id/content_text') and @text='" + searchingText + "']";
 
         try {
-            Base.log(4, "waiting for " + timer + " seconds for the element with text \"" + searchingText + "\"");
+            Base.log(1, "waiting for " + timer + " seconds for the element with text \"" + searchingText + "\"");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
 
             if(visibility){
@@ -67,7 +67,7 @@ public class Wait{
                 iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xPath)));
             }
 
-            Base.log(4, "element is shown with text: \"" + searchingText + "\"");
+            Base.log(1, "element is shown with text: \"" + searchingText + "\"");
             result = true;
         } catch (NoSuchElementException e) {
             Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
@@ -91,11 +91,11 @@ public class Wait{
         result = false;
 
         try {
-            Base.log(4, "waiting 100 seconds while Waiter become Invisible");
+            Base.log(1, "waiting 100 seconds while Waiter become Invisible");
             WebDriverWait iWait = new WebDriverWait(driver, 100);
             iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='" + waiterText + "']")));
 
-            Base.log(4, "waiter is gone");
+            Base.log(1, "waiter is gone");
             result = true;
         } catch (NoSuchElementException e) {
             Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
@@ -135,9 +135,9 @@ public class Wait{
     }
 
     public boolean visibilityOfSnackBar(int timer, boolean makeScreenShot) {
-        Base.log(4, "Method is started");
+        Base.log(1, "waiting for SnackBar");
         if(element(base.popUp.getSnackBarElement(), timer, makeScreenShot)){
-            Base.log(4, "SnackBar text: \"" + base.popUp.getSnackBarText() + "\"");
+            Base.log(1, "SnackBar text: \"" + base.popUp.getSnackBarText() + "\"");
             return  true;
         }else {
             return false;
@@ -156,12 +156,12 @@ public class Wait{
             Base.log(1, "waiter is gone");
             result = true;
         } catch (NoSuchElementException e) {
-            Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();}
         } catch (TimeoutException e) {
-            Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
             result = false;
             if (makeScreenShot){
                 base.getScreenShot();}
@@ -182,7 +182,7 @@ public class Wait{
                     )
             );
 
-            Base.log(1, "successfully");
+            Base.log(1, "Main Menu icon or PIN popUp is shown");
             return true;
 
         } catch (NoSuchElementException e) {
@@ -210,11 +210,11 @@ public class Wait{
     public boolean element(WebElement elementForWaiting, int timer, boolean makeScreenShot) {
         Base.log(4, "Method is started");
         try {
-            Base.log(4, "waiting " + timer + " seconds for the element ");
+            Base.log(1, "waiting " + timer + " seconds for the element ");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(elementForWaiting));
 
-            Base.log(4, "element " + elementForWaiting + " is shown with text: \"" + elementForWaiting.getText() + "\"");
+            Base.log(1, "element " + elementForWaiting + " is shown with text: \"" + elementForWaiting.getText() + "\"");
             result = true;
 
         } catch (NoSuchElementException e) {

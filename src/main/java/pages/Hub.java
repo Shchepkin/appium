@@ -77,8 +77,6 @@ public class Hub{
             base.nav.gotoPage.Remote();
             base.remotePage.clickArmButton();
             base.nav.confirmIt();
-
-            base.wait.elementWithText(armedText, 10, true);
             Base.log(4, "Method is finished");
         }
 
@@ -86,22 +84,29 @@ public class Hub{
             Base.log(4, "Method is started");
             base.nav.gotoPage.Remote();
             base.remotePage.clickDisarmButton();
-
-            base.wait.elementWithText(disarmedText, 10, true);
             Base.log(4, "Method is finished");
         }
 
         public void partialArm() {
             Base.log(4, "Method is started");
             base.nav.gotoPage.Remote();
+
             base.remotePage.clickPartialArmButton();
             base.nav.confirmIt();
-
-            base.wait.elementWithText(patrialArmedText, 10, true);
             Base.log(4, "Method is finished");
         }
 
-        public void alarm(){}
+        public void alarm(){
+            Base.log(4, "Method is started");
+
+            Base.log(1, "go to Remote page");
+            base.nav.gotoPage.Remote();
+
+            base.remotePage.clickAlarmButton();
+
+            base.wait.element(base.remotePage.getSpaceControlImage(), 10, true);
+            Base.log(4, "Method is finished");
+        }
     }
 
     public void goToTheUserInvitationPage() {

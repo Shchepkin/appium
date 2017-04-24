@@ -27,43 +27,15 @@
 
     <test name="LG">
         <classes>
-            <class name="testCases.C42099_Add_new_Hub_manually"/>
-            <class name="testCases.C42100_Add_new_room"/>
-            <class name="testCases.C42102_Add_new_guest_user"/>
+            <!--<class name="testCases.C42097_New_user_registration"/>-->
+            <!--<class name="testCases.C42099_Add_new_Hub_manually"/>-->
+            <!--<class name="Login.C46225_Negative_Login"/>-->
+            <!--<class name="Login.C46224_Positive_Login"/>-->
+            <!--<class name="testCases.C42100_Add_new_room"/>-->
+            <!--<class name="testCases.C42102_Add_new_guest_user"/>-->
             <class name="testCases.C42176_Virtual_Space_Control"/>
         </classes>
     </test>
-
-    <test name="C42099_Add_new_Hub_manually">
-        <classes><class name="testCases.C42099_Add_new_Hub_manually"/></classes>
-    </test>
-
-    <test name="C42100_Add_new_room">
-        <classes>
-            <class name="testCases.C42100_Add_new_room"/>
-        </classes>
-    </test>
-
-    <test name="C42102_Add_new_guest_user">
-        <classes>
-            <class name="testCases.C42102_Add_new_guest_user"/>
-        </classes>
-    </test>
-
-    <test name="C42176_Virtual_Space_Control">
-        <classes>
-            <class name="testCases.C42176_Virtual_Space_Control"/>
-        </classes>
-    </test>
-
-    <test name="C43875_Add_new_device">
-        <classes>
-            <class name="testCases.C43875_Add_new_device"/>
-        </classes>
-    </test>
-
-
-
 
 
     <!--<test name="LG">-->

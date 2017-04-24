@@ -29,7 +29,7 @@ public class Base {
 
     public static int TIMEOUT = 5;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW = true;
+    private static final boolean LOG_VIEW = false;
 
     public Sql sql;
     public Hub hub;
@@ -69,7 +69,7 @@ public class Base {
     public static final String logFile = logfileName();
 
     public Base(String deviceName_) {
-        log(1, "setup is started");
+        log(4, "setup is started");
         creds = getJsonCollection("deviceData.json", deviceName_);
         appSet = getJsonCollection("deviceData.json", "appSet");
 

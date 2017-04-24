@@ -128,9 +128,19 @@ public class AuthorizationPage{
             Base.log(1, "Login successfully!");
         }
 
-        if (base.wait.element(base.nav.getCancelButton(), 3, true)) {
-            Base.log(1, "Pincode PopUp is shown - cancel it!");
-            base.nav.cancelIt();
+        Base.log(1, "check is there popUp present");
+        for (int i = 0; i < 2; i++) {
+
+            if (base.wait.element(base.nav.getCancelButton(), 2, true)) {
+                Base.log(1, "Pincode PopUp is shown - cancel it!");
+                base.nav.cancelIt();
+                break;
+            } else {
+                Base.log(1, "popUp is not present");
+                base.nav.gotoPage.Rooms();
+                base.nav.gotoPage.Devices();
+
+            }
         }
 
         Base.log(4, "Method is finished");
