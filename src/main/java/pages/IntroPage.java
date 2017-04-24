@@ -50,12 +50,11 @@ public class IntroPage{
     }
 
     public void setServer(String server) {
-        Base.log(4, "tap Login button");
+        Base.log(1, "tap Login button");
         loginBtn.click();
 
         base.loginPage.chooseServer(server);
 
         base.nav.goBack();
-        Base.log(4, "Method is finished");
     }
 }

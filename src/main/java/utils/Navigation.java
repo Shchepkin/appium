@@ -21,7 +21,7 @@ public class Navigation{
 
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-    private WebElement cancelBtn;
+    private WebElement cancel;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
     private WebElement cancelButton;
@@ -41,8 +41,8 @@ public class Navigation{
     public WebElement getCancelButton() {
         return cancelButton;
     }
-    public WebElement getCancelBtn() {
-        return cancelBtn;
+    public WebElement getCancel() {
+        return cancel;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -510,7 +510,7 @@ public class Navigation{
         public void hubSettings() {
             gotoPage.Devices();
             base.hub.getHubImageOnDeviceList().click();
-            base.hub.getHubSettingsButton().click();
+            base.hub.getSettingsButton().click();
         }
 
         public void userList() {
@@ -521,7 +521,7 @@ public class Navigation{
             base.hub.getHubImageOnDeviceList().click();
 
             Base.log(1, "click Users tab");
-            base.hub.getHubSettingsButton().click();
+            base.hub.getSettingsButton().click();
 
             Base.log(1, "click Users tab");
             base.hub.getHubSettingsUsersImage().click();
@@ -537,7 +537,7 @@ public class Navigation{
                     Base.log(1, "tap back button");
                     backButton.click();
 
-                } else if (cancelButton.isDisplayed() || cancelBtn.isDisplayed()) {
+                } else if (cancelButton.isDisplayed() || cancel.isDisplayed()) {
                     cancelIt();
 
                 } else {
@@ -586,7 +586,7 @@ public class Navigation{
 
     public void cancelIt() {
         try {
-            cancelBtn.click();
+            cancel.click();
             Base.log(1, "Cancel button is pressed");
         }catch (Exception e){
             Base.log(4, "first Cancel Button was not found\n\n" + e.getMessage() + "\n");

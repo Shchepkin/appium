@@ -23,25 +23,70 @@
     <!--</test>-->
     <!---->
 
+    <parameter name="deviceName_" value="LG"/>
+
     <test name="LG">
-        <parameter name="deviceName_" value="LG"/>
-        <!--<parameter name="UDID_" value="SWIVR8YHDI7TYTS8"/>-->
-        <!--<parameter name="platformVersion_" value="5.1"/>-->
         <classes>
+            <class name="testCases.C42099_Add_new_Hub_manually"/>
+            <class name="testCases.C42100_Add_new_room"/>
+            <class name="testCases.C42102_Add_new_guest_user"/>
+            <class name="testCases.C42176_Virtual_Space_Control"/>
+        </classes>
+    </test>
+
+    <test name="C42099_Add_new_Hub_manually">
+        <classes><class name="testCases.C42099_Add_new_Hub_manually"/></classes>
+    </test>
+
+    <test name="C42100_Add_new_room">
+        <classes>
+            <class name="testCases.C42100_Add_new_room"/>
+        </classes>
+    </test>
+
+    <test name="C42102_Add_new_guest_user">
+        <classes>
+            <class name="testCases.C42102_Add_new_guest_user"/>
+        </classes>
+    </test>
+
+    <test name="C42176_Virtual_Space_Control">
+        <classes>
+            <class name="testCases.C42176_Virtual_Space_Control"/>
+        </classes>
+    </test>
+
+    <test name="C43875_Add_new_device">
+        <classes>
+            <class name="testCases.C43875_Add_new_device"/>
+        </classes>
+    </test>
+
+
+
+
+
+    <!--<test name="LG">-->
+        <!--<parameter name="deviceName_" value="LG"/>-->
+        <!--<classes>-->
+            <!--<class name="testCases.C42097_New_user_registration"/>-->
+            <!--<class name="testCases.C42098_Login_to_the_existing_account"/>-->
+            <!--<class name="testCases.C42099_Add_new_Hub_manually"/>-->
             <!--<class name="testCases.C42100_Add_new_room"/>-->
             <!--<class name="testCases.C42102_Add_new_guest_user"/>-->
             <!--<class name="testCases.C42176_Virtual_Space_Control"/>-->
             <!--<class name="testCases.C43875_Add_new_device"/>-->
-            <!--<class name="testCases.C42097_New_user_registration"/>-->
             <!--<class name="testCases.C44141_User_delete"/>-->
             <!--<class name="testCases.C44142_Device_delete"/>-->
             <!--<class name="testCases.C44143_Room_delete"/>-->
             <!--<class name="testCases.C44144_Hub_delete"/>-->
             <!--<class name="Login.C46224_Positive_Login"/>-->
-            <class name="Login.C46225_Negative_Login"/>
+            <!--<class name="Login.C46225_Negative_Login"/>-->
             <!--<class name="tmp.dataProvider"/>-->
-        </classes>
-    </test>
+        <!--</classes>-->
+    <!--</test>-->
+
+
     <!---->
     <!--<test name="Xiaomi">-->
         <!--<parameter name="deviceName_" value="Xiaomi"/>-->

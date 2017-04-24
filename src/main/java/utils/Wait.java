@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.w3c.dom.Element;
 import pages.Base;
 
 public class Wait{
@@ -22,7 +23,6 @@ public class Wait{
         waiterText = base.getLocalizeTextForKey("request_send");
     }
 //----------------------------------------------------------------------------------------------------------------------
-
 
     public boolean elementWithText(String searchingText, int timer, boolean makeScreenShot) {
         Base.log(4, "Method is started");
@@ -51,8 +51,6 @@ public class Wait{
         Base.log(4, "Method is finished");
         return result;
     }
-
-
 
     public boolean loaderWithText(boolean visibility, String searchingText, int timer, boolean makeScreenShot) {
         Base.log(4, "Method is started");
@@ -128,7 +126,7 @@ public class Wait{
     public boolean invisibilityOfWaiter() {
         Base.log(4, "Method is started");
         result = false;
-        Base.log(4, "waiting 100 seconds while Waiter become Invisible");
+        Base.log(1, "waiting 100 seconds while Waiter become Invisible");
         WebDriverWait iWait = new WebDriverWait(driver, 100);
         iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ajaxsystems:id/progress")));
         result = true;
@@ -151,11 +149,11 @@ public class Wait{
         result = false;
 
         try {
-            Base.log(4, "waiting 100 seconds while LoaderLogo become Invisible");
+            Base.log(1, "waiting 100 seconds while LoaderLogo become Invisible");
             WebDriverWait iWait = new WebDriverWait(driver, 100);
             iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ajaxsystems:id/loaderLogo")));
 
-            Base.log(4, "waiter is gone");
+            Base.log(1, "waiter is gone");
             result = true;
         } catch (NoSuchElementException e) {
             Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
@@ -170,6 +168,33 @@ public class Wait{
         }
         Base.log(4, "Method is finished");
         return result;
+    }
+
+    public boolean menuIconOrPinPopUp(int timer, boolean makeScreenShot) {
+        Base.log(4, "Method is started");
+        try {
+            Base.log(1, "waiting " + timer + " seconds for menuIcon Or Pin PopUp");
+            WebDriverWait iWait = new WebDriverWait(driver, timer);
+            iWait.until(ExpectedConditions
+                    .or(
+                            ExpectedConditions.visibilityOf(base.dashboardHeader.getMenuDrawer()),
+                            ExpectedConditions.visibilityOf(base.nav.getCancelButton())
+                    )
+            );
+
+            Base.log(1, "successfully");
+            return true;
+
+        } catch (NoSuchElementException e) {
+            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+            if (makeScreenShot){base.getScreenShot();}
+
+        } catch (TimeoutException e) {
+            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+            if (makeScreenShot){base.getScreenShot();}
+        }
+        Base.log(4, "Method is finished");
+        return false;
     }
 
 
@@ -189,7 +214,6 @@ public class Wait{
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.visibilityOf(elementForWaiting));
 
-
             Base.log(4, "element " + elementForWaiting + " is shown with text: \"" + elementForWaiting.getText() + "\"");
             result = true;
 
@@ -206,5 +230,4 @@ public class Wait{
         Base.log(4, "Method is finished");
         return result;
     }
-
 }

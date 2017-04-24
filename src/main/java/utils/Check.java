@@ -249,7 +249,7 @@ public class Check{
     }
 
     public boolean isCancelButtonPresent(){
-        if (base.nav.getCancelButton().isDisplayed() || base.nav.getCancelBtn().isDisplayed()){
+        if (base.nav.getCancelButton().isDisplayed() || base.nav.getCancel().isDisplayed()){
             return true;
         }else return false;
     }

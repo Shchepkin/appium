@@ -80,7 +80,11 @@ public class AddImagePage{
 
     public void setImageFromGallery(int imageNumber){
         if (imageNumber > 3 || imageNumber < 1) {imageNumber = 1;}
+
+        Base.log(1, "tap image in popUp");
         thumbnail.get(imageNumber + 2).click();
+
+        Base.log(1, "tap Next Button");
         nextBtn.click();
     }
 

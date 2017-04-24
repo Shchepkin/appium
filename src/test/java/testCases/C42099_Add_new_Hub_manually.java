@@ -1,6 +1,5 @@
 package testCases;
 
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -46,11 +45,14 @@ public class C42099_Add_new_Hub_manually{
 
         Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 15, true));
         Base.log(1, "hub successfully added!");
-        Base.log(4, "Method is finished");
     }
 
-    @Test(priority = 1, enabled = false)
-    public void Add_Hub_from_menu() {}
+    @Test(priority = 1, enabled = true)
+    public void Add_First_Hub_from_menu() {
+        Base.log(1, "delete hub");
+        base.hub.deleteFrom.hubSettings(false);
+        base.hub.addNewManual();
+    }
 
     @AfterClass
     public void endSuit() {

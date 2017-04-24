@@ -29,7 +29,7 @@ public class Base {
 
     public static int TIMEOUT = 5;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW = false;
+    private static final boolean LOG_VIEW = true;
 
     public Sql sql;
     public Hub hub;

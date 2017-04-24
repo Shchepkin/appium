@@ -31,6 +31,9 @@ public class PopUp{
     @AndroidFindBy(id = "com.ajaxsystems:id/loading")
     public WebElement loadingWindow;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/loaderLogo")
+    private WebElement loaderLogo;
+
     @AndroidFindBy(id = "com.ajaxsystems:id/progress")
     private WebElement progressImage;
 
@@ -89,6 +92,28 @@ public class PopUp{
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
+    public String getContentText() {
+    return contentTextElement.getText();
+}
+
+    public WebElement getLoaderLogo() {
+        return loaderLogo;
+    }
+
+    public WebElement getContentTextElement() {
+        return contentTextElement;
+    }
+
+    public WebElement getSnackBarElement() {
+        return snackBar;
+    }
+
+    public String  getSnackBarText() {
+        return snackBar.getText();
+    }
+
+
+
 
     public void waitLoadingPopUp(int flag){
         Base.log(4, "Method is started");
@@ -141,18 +166,5 @@ public class PopUp{
         return result;
     }
 
-    public String getContentText() {
-        return contentTextElement.getText();
-    }
 
-    public WebElement getContentTextElement() {
-        return contentTextElement;
-    }
-
-    public WebElement getSnackBarElement() {
-        return snackBar;
-    }
-    public String  getSnackBarText() {
-        return snackBar.getText();
-    }
 }

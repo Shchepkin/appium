@@ -86,7 +86,7 @@
 //        s.log("registration process");
 //        regPage.setUserPic(1);
 //        regPage.fillFields(name, login, pass, phone);
-//        regPage.confirmAgrimentCheckBox();
+//        regPage.confirmAgreementCheckBox();
 //
 //        check.clickElementAndWaitingPopup(regPage.registrationBtn, 5, 3, false);
 //

@@ -6,6 +6,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -66,6 +67,16 @@ public class RegistrationPage{
         return registrationButtonLink;
     }
 
+    public void registrationButtonClick() {
+        Base.log(1, "tap Registration Button");
+        registrationButtonLink.click();
+    }
+
+    public void dashboardLinkClick() {
+        Base.log(1, "tap Dashboard Link");
+        dashboardLink.click();
+    }
+
 //====================================================================================
 
     public void fakeRegistration(String email, String password, String phone, String server) {
@@ -115,6 +126,7 @@ public class RegistrationPage{
         emailConfirmField.sendKeys(email);
 
         Base.log(1, "fill phone with: \"" + phone + "\"");
+        base.nav.swipeUp();
         phoneField.sendKeys(phone);
 
         Base.log(1, "fill and confirm password with: \"" + password + "\"");
@@ -127,7 +139,7 @@ public class RegistrationPage{
     }
 
 
-    public void confirmAgrimentCheckBox() {
+    public void confirmAgreementCheckBox() {
         Base.log(4, "Method is started");
         base.nav.swipeUp();
         userAgreementCheckbox.click();
@@ -136,7 +148,10 @@ public class RegistrationPage{
 
     public void setUserPic(int imageNumber) {
         Base.log(4, "Method is started");
+
+        Base.log(1, "tap User Pic icon");
         userPic.click();
+
         base.addImagePage.setImageFromGallery(imageNumber);
         Base.log(4, "Method is finished");
     }
@@ -161,6 +176,61 @@ public class RegistrationPage{
 
     public void setPhoneCountryCode() {
         Base.log(4, "Method is started");
+    }
+
+    public boolean registrationNewUser (){
+
+            String userName, login, pass, phone, server;
+
+
+
+
+
+
+                login = base.getCredsWithKey("login");
+                pass = base.getCredsWithKey("password");
+                server = base.getCredsWithKey("server");
+                phone = base.getCredsWithKey("phone");
+                userName = base.getCredsWithKey("userName");
+
+
+
+
+
+                Base.log(1, "start from Intro Page and click Registration button");
+                base.introPage.setServer(server);
+                base.introPage.goToRegistration();
+
+                Base.log(1, "registration process");
+                base.regPage.setUserPic(1);
+                base.regPage.fillFields(userName, login, pass, phone);
+                base.regPage.confirmAgreementCheckBox();
+
+                base.regPage.registrationButtonClick();
+                base.wait.invisibilityOfWaiter();
+
+                Base.log(1, "check is SnackBar present on page");
+                Assert.assertFalse(base.wait.visibilityOfSnackBar(5, true), "SnackBar is shown with error text");
+
+                Base.log(1, "waiting for Validation Code Page");
+                base.wait.element(base.validationCodePage.getSmsCodeField(), 60, true);
+
+                Base.log(1, "get and fill Validation Codes");
+                base.validationCodePage.getAndFillValidationCodes("Phone", "%" + phone + "%");
+                base.nav.confirmIt();
+
+                Base.log(1, "waiting for Welcome Page with dashboard link");
+                Assert.assertTrue(base.wait.element(base.regPage.getDashboardLink(), 30, true));
+
+                Base.log(1, "Welcome Page is shown, so go to the dashboard");
+                base.regPage.dashboardLinkClick();
+                base.wait.invisibilityOfLoaderLogo(true);
+//        base.check.clickElementAndWaitingPopup(base.regPage.getDashboardLink(), 5, 3, false);
+
+                Assert.assertTrue( base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 100), "Login failed!\n");
+
+
+        return false;
     }
 
 }
