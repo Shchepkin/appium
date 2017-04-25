@@ -133,7 +133,7 @@ public class Wait{
         return result;
     }
 
-    public boolean visibilityOfSnackBarWithText(String text, int timer) {
+    public boolean visibilityOfSnackBarWithText(String expectedText, int timer) {
         try {
             Base.log(1, "waiting for SnackBar with get text");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
@@ -141,10 +141,10 @@ public class Wait{
 
             String actualSnackBarText = base.popUp.getSnackBarText();
             Base.log(1, "Actual SnackBar text: \"" + actualSnackBarText + "\"");
-            Base.log(1, "Expected SnackBar text: \"" + text + "\"");
-            if (actualSnackBarText.equalsIgnoreCase(text)) {
-                return  true;
-            }else {
+            Base.log(1, "Expected SnackBar text: \"" + expectedText + "\"");
+            if (actualSnackBarText.equalsIgnoreCase(expectedText)) {
+                return true;
+            } else {
                 return false;
             }
 
