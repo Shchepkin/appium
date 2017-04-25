@@ -51,7 +51,7 @@ public class C42102_Add_new_guest_user{
         Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForMixedAdd()), "Add users with mixed style is failed");
     }
 
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 4, enabled = true)
     public void Check_is_unreg_user_in_pending_list() {
 
         String unregisteredUserEmail = base.user.getUsersForMixedAdd().get(1);
