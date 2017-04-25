@@ -63,13 +63,13 @@ public class AuthorizationPage{
     public void loginToTheServer(String login, String password) {
         Base.log(4, "Method is started");
 
-        Base.log(4, "fill the login field with data: [" + login + "]");
+        Base.log(1, "fill the login field with data: \"" + login + "\"");
         loginField.sendKeys(login);
 
-        Base.log(4, "fill the password field with data: [" + password + "]");
+        Base.log(1, "fill the password field with data: \"" + password + "\"");
         passwordField.sendKeys(password);
 
-        Base.log(4, "click login button");
+        Base.log(1, "click login button");
         loginBtn.click();
 
         Base.log(4, "Method is finished");
@@ -78,7 +78,7 @@ public class AuthorizationPage{
     public void loginToTheServer(String login, String password, String server) {
         Base.log(4, "Method is started");
 
-        Base.log(1, "fill the login field with data: \"" + login + "\"");
+        Base.log(1, "fill the login field with data: \"" + login + "\"", true);
         loginField.sendKeys(login);
 
         Base.log(1, "fill the password field with data: \"" + password + "\"");
@@ -101,7 +101,7 @@ public class AuthorizationPage{
 
         loginToTheServer(login, password, server);
 
-        Base.log(4, "wait until LoaderLogo become invisible");
+        Base.log(1, "wait until LoaderLogo become invisible");
         base.wait.invisibilityOfLoaderLogo(true);
 
         Base.log(4, "waiting for Pincode PopUp and cancel it");
