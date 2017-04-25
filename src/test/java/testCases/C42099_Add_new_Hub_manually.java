@@ -13,7 +13,7 @@ import pages.Base;
  */
 public class C42099_Add_new_Hub_manually{
 
-    private String hubName, hubMasterKey, expected, actual;
+    private String hubName, hubMasterKey;
     private Base base;
 
     @Parameters({ "deviceName_" })
@@ -31,24 +31,25 @@ public class C42099_Add_new_Hub_manually{
     @Test(priority = 1, enabled = true)
     public void Add_first_Hub() {
 
-        Base.log(1, "tap to the Plus Button");
+        Base.log(1, "tap to the Plus Button", true);
         base.dashboard.plusButtonClick();
 
-        Base.log(1, "choose manual Hub adding ");
+        Base.log(1, "choose manual Hub adding", true);
         base.nav.nextButtonClick();
 
         base.dashboard.fillFieldsWith(hubName, hubMasterKey);
+
+        Base.log(1, "confirm it", true);
         base.nav.confirmIt();
 
         base.wait.invisibilityOfWaiter(true);
-        Assert.assertFalse(base.check.isErrorPresent(3), "Hub adding failed!");
 
         Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 15, true));
-        Base.log(1, "hub successfully added!");
+        Base.log(1, "hub successfully added!", true);
     }
 
-    @Test(priority = 1, enabled = true)
-    public void Add_First_Hub_from_menu() {
+    @Test(priority = 2, enabled = false)
+    public void Add_Hub_from_menu() {
         Base.log(1, "delete hub");
         base.hub.deleteFrom.hubSettings(false);
         base.hub.addNewManual();
