@@ -21,7 +21,7 @@ public class Navigation{
 
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-    private WebElement cancelBtn;
+    private WebElement cancel;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
     private WebElement cancelButton;
@@ -41,8 +41,8 @@ public class Navigation{
     public WebElement getCancelButton() {
         return cancelButton;
     }
-    public WebElement getCancelBtn() {
-        return cancelBtn;
+    public WebElement getCancel() {
+        return cancel;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -484,21 +484,26 @@ public class Navigation{
         // dashboard
         public void Devices() {
             backToDashboard();
+            Base.log(1, "tap Devices Button");
             footerDevices.click();
         }
 
         public void Rooms() {
             backToDashboard();
+            Base.log(1, "tap Rooms Button");
             footerRooms.click();
         }
 
         public void Notifications() {
             backToDashboard();
+            Base.log(1, "tap Notifications Button");
             footerNotifications.click();
         }
 
         public void Remote() {
+            Base.log(1, "back to Dashboard");
             backToDashboard();
+            Base.log(1, "tap Remote Button");
             footerRemote.click();
         }
 
@@ -510,7 +515,7 @@ public class Navigation{
         public void hubSettings() {
             gotoPage.Devices();
             base.hub.getHubImageOnDeviceList().click();
-            base.hub.getHubSettingsButton().click();
+            base.hub.getSettingsButton().click();
         }
 
         public void userList() {
@@ -521,7 +526,7 @@ public class Navigation{
             base.hub.getHubImageOnDeviceList().click();
 
             Base.log(1, "click Users tab");
-            base.hub.getHubSettingsButton().click();
+            base.hub.getSettingsButton().click();
 
             Base.log(1, "click Users tab");
             base.hub.getHubSettingsUsersImage().click();
@@ -533,17 +538,18 @@ public class Navigation{
         private void backToDashboard(){
             while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
 
-                if (base.wait.element(backButton, 2, true)) {
+                if (base.wait.element(backButton, 1, true)) {
                     Base.log(1, "tap back button");
                     backButton.click();
 
-                } else if (cancelButton.isDisplayed() || cancelBtn.isDisplayed()) {
+                } else if (cancelButton.isDisplayed() || cancel.isDisplayed()) {
                     cancelIt();
 
                 } else {
-                    Base.log(4, "Dashboard is not reached");
+                    Base.log(3, "Dashboard is not reached");
                 }
             }
+            Base.log(1, "Dashboard is reached");
         }
 
     }
@@ -586,7 +592,7 @@ public class Navigation{
 
     public void cancelIt() {
         try {
-            cancelBtn.click();
+            cancel.click();
             Base.log(1, "Cancel button is pressed");
         }catch (Exception e){
             Base.log(4, "first Cancel Button was not found\n\n" + e.getMessage() + "\n");

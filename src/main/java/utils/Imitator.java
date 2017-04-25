@@ -24,7 +24,7 @@ public class Imitator{
         Base.log(4, "Method is started");
 
         try {
-            serialPort = new SerialPort("/dev/ttyS0");
+            serialPort = new SerialPort("/dev/ttyUSB3");
 
             Base.log(4, "print all available ports");
             for (String portName: SerialPortList.getPortNames()) {
@@ -105,7 +105,7 @@ public class Imitator{
             if (event.isRXCHAR() && event.getEventValue() > 0) {
                 try {
                     String data = serialPort.readString(event.getEventValue());
-                    System.out.println(data);
+                    Base.log(4, data);
 
                 } catch (Exception ex) {
                     Base.log(3, "Exception \n" + ex + "\n");

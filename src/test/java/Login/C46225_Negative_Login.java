@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class C46225_Negative_Login {
 
-    private String login, pass, server, expectedText, actualText;
     private Base base;
 
     @Parameters({ "deviceName_" })
@@ -22,7 +21,7 @@ public class C46225_Negative_Login {
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-        server = base.getCredsWithKey("server");
+        String server = base.getCredsWithKey("server");
 
         base.introPage.goToAuthorization();
         base.loginPage.chooseServer(server);
@@ -36,17 +35,17 @@ public class C46225_Negative_Login {
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
 
-        login = param.get("login").toString();
-        pass = param.get("pass").toString();
+        String comment = param.get("comment").toString();
+        String login = param.get("login").toString();
+        String pass = param.get("pass").toString();
+        String expectedText;
 
-        System.out.println(param.get("comment"));
-        System.out.println("login: \"" + login + "\"");
-        System.out.println("password: \"" + pass + "\"");
+        Base.log(1, comment, true);
+        Base.log(1, "login: \"" + login + "\"", true);
+        Base.log(1, "password: \"" + pass + "\"", true);
 
         System.out.println("");
         base.loginPage.loginToTheServer(login, pass);
-
-        Assert.assertTrue(base.wait.visibilityOfSnackBar(90, true), "SnackBar is not shown");
 
         if (login.isEmpty() || pass.isEmpty()){
             expectedText = base.getLocalizeTextForKey("please_fill_in_all_of_the_required_fields");
@@ -54,13 +53,7 @@ public class C46225_Negative_Login {
             expectedText = base.getLocalizeTextForKey("Login_bad_credentials0");
         }
 
-        actualText = base.popUp.getSnackBarText();
-
-        System.out.println("expected: \"" + expectedText + "\"");
-        System.out.println("actual: \"" + actualText + "\"");
-
-        Assert.assertEquals(actualText, expectedText);
-        System.out.println("\n");
+        Assert.assertTrue(base.wait.visibilityOfSnackBarWithText(expectedText, 15));
     }
 
     @AfterClass

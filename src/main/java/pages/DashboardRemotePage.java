@@ -25,6 +25,8 @@ public class DashboardRemotePage{
     @AndroidFindBy(id = "com.ajaxsystems:id/securityText")
     private WebElement securityText;
 
+
+
     @AndroidFindBy(id = "com.ajaxsystems:id/spaceControl")
     private WebElement spaceControlImage;
 
@@ -40,6 +42,9 @@ public class DashboardRemotePage{
     public WebElement getArmButton() {
         return armButton;
     }
+    public WebElement getSpaceControlImage() {
+        return spaceControlImage;
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
@@ -54,18 +59,22 @@ public class DashboardRemotePage{
 
 
     public void clickAlarmButton(){
+        Base.log(1, "tap Alarm Button");
         alarmButton.click();
     }
 
     public void clickArmButton(){
+        Base.log(1, "tap Arm Button");
         armButton.click();
     }
 
     public void clickDisarmButton(){
+        Base.log(1, "tap Disarm Button");
         disarmButton.click();
     }
 
     public void clickPartialArmButton(){
+        Base.log(1, "tap PartialArm Button");
         partialArmButton.click();
     }
 

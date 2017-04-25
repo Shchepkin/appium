@@ -62,12 +62,11 @@ public class Sql{
             Base.log(4, "getting Statement object to execute query");
             stmt = connection.createStatement();
 
-            Base.log(3, "this objects will be deleted: ");
             for (Object sqlResult : selectList) {
-                System.out.println("\033[31;49m" + sqlResult + "\033[39;49m");
+                Base.log(3, "this objects will be deleted: \"\033[31;49m" + sqlResult + "\"\033[39;49m");
             }
 
-            Base.log(3, "delete objects");
+            Base.log(4, "delete objects");
             stmt.executeUpdate(query);
 
         } catch (SQLException sqlEx) {
@@ -120,7 +119,7 @@ public class Sql{
                 String login = rs.getString("Login");
 
                 validationToken.add(confirmationToken);
-                f.format("%-5d %-12s %-8s %-20s %-20s %-1s\n", id, innerID, role, phone, confirmationToken, login);
+                f.format("\n%-5d %-12s %-8s %-20s %-20s %-1s", id, innerID, role, phone, confirmationToken, login);
             }
 
             selectList.add(f);

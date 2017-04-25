@@ -12,6 +12,7 @@ import pages.Base;
  * There are:
  * - at least one Hub
  * - at least one room
+ * - hub disarmed
  */
 public class C42176_Virtual_Space_Control{
 
@@ -32,72 +33,70 @@ public class C42176_Virtual_Space_Control{
         Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
 
-        Base.log(1, "go to the Remote Page");
-        base.nav.gotoPage.Remote();
     }
 
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void Click_Arm_Button() {
-
-        Base.log(1, "make precondition disarmed state");
-        base.remotePage.clickDisarmButton();
-        Assert.assertTrue(base.wait.elementWithText(armedText, 10, true), "Text \"" + armedText + "\" is not found");
-
         Base.log(1, "click Arm Button and confirm if there is shown popUp");
-        base.check.clickElementAndWaitingPopup(base.remotePage.getArmButton(), true);
-        Assert.assertTrue(base.wait.elementWithText(armedText, 10, true), "Text \"" + armedText + "\" is not found");
+        base.hub.security.arm();
+        Assert.assertTrue(base.wait.elementWithText(armedText, 10, true), "Text \"" + armedText + "\" is not found\n");
+        System.out.println("text \"" + armedText + "\" shown successfully");
     }
 
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 2, enabled = true)
     public void Click_Partial_Arm_Button() {
-
         Base.log(1, "click Partial Arm Button and confirm if there is shown popUp");
-        base.check.clickElementAndWaitingPopup(base.remotePage.getPartialArmButton(), true);
-        Assert.assertTrue(base.wait.elementWithText(patrialArmedText, 10, true), "Text \"" + patrialArmedText + "\" is not found");
-    }
-
-    @Test(priority = 3, enabled = false)
-    public void Click_Disarm_Button() {
-
-        Base.log(1, "click Disarm Button");
-        base.remotePage.clickDisarmButton();
-        Assert.assertTrue(base.wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found");
+        base.hub.security.partialArm();
+        Assert.assertTrue(base.wait.elementWithText(patrialArmedText, 10, true), "Text \"" + patrialArmedText + "\" is not found\n");
+        System.out.println("text \"" + patrialArmedText + "\" shown successfully");
     }
 
     @Test(priority = 3, enabled = true)
+    public void Click_Disarm_Button() {
+        Base.log(1, "Disarm hub");
+        base.hub.security.disarm();
+        Assert.assertTrue(base.wait.elementWithText(disarmedText, 10, true), "Text \"" + disarmedText + "\" is not found\n");
+        System.out.println("text \"" + disarmedText + "\" shown successfully");
+    }
+
+    @Test(priority = 4, enabled = true)
     public void Click_Alarm_Button() {
 
         Base.log(1, "open Notification page for erasing badge counter");
         base.nav.gotoPage.Notifications();
-
-        Base.log(1, "open Remote page");
-        base.nav.gotoPage.Remote();
-
-        Base.log(1, "click Alarm Button");
-        base.remotePage.clickAlarmButton();
+        base.hub.security.alarm();
 
         Base.log(1, "wait for badge appear");
         base.wait.element(base.notificationsPage.getBadgeOnNotificationTab(), 10, true);
 
-        Base.log(1, "check number oin badge");
+        Base.log(1, "check number on badge");
         expected = "1";
         actual = base.notificationsPage.getBadgeOnNotificationTab().getText();
+
+        System.out.println("Check badge after first alarm");
         System.out.println("expected: " + expected);
         System.out.println("actual: " + actual);
-        Assert.assertTrue(actual.equals(expected));
 
-        Base.log(1, "click Alarm Button");
-        base.remotePage.clickAlarmButton();
+        Base.log(1, "\nexpected: " + expected + "\nactual: " + actual);
+        Assert.assertTrue(actual.equals(expected));
+        Base.log(1, "successfully");
+
+        base.hub.security.alarm();
 
         Base.log(1, "wait for badge appear");
         base.wait.element(base.notificationsPage.getBadgeOnNotificationTab(), 10, true);
 
-        Base.log(1, "check number oin badge");
+        Base.log(1, "check number on badge");
         expected = "2";
         actual = base.notificationsPage.getBadgeOnNotificationTab().getText();
+
+        System.out.println("Check badge second first alarm");
         System.out.println("expected: " + expected);
         System.out.println("actual: " + actual);
+
+        Base.log(1, "\nexpected: " + expected + "\nactual: " + actual);
         Assert.assertTrue(actual.equals(expected));
+        Base.log(1, "successfully");
     }
 
     @AfterClass

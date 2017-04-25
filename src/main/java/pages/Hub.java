@@ -22,7 +22,7 @@ public class Hub{
     private WebElement hubImageOnDeviceList;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/settings")
-    private WebElement hubSettingsButton;
+    private WebElement settingsButton;
 
 
 
@@ -38,8 +38,8 @@ public class Hub{
     public WebElement getHubImageOnDeviceList() {
         return hubImageOnDeviceList;
     }
-    public WebElement getHubSettingsButton() {
-        return hubSettingsButton;
+    public WebElement getSettingsButton() {
+        return settingsButton;
     }
     public AndroidElement getUnpairButton() {
         return unpairButton;
@@ -52,6 +52,8 @@ public class Hub{
     private final AndroidDriver driver;
     private String sendInvitesButtonText,armedText, disarmedText, patrialArmedText;
     public DeleteFrom deleteFrom = new DeleteFrom();
+    public AddNew addNew = new AddNew();
+    public Security security = new Security();
 
     public Hub(Base base) {
         this.base = base;
@@ -63,6 +65,50 @@ public class Hub{
     }
 //----------------------------------------------------------------------------------------------------------------------
 
+    public class AddNew {
+        public void fromMenu(){}
+        public void fromPlusButton(){}
+    }
+
+    public class Security {
+
+        public void arm() {
+            Base.log(4, "Method is started");
+            base.nav.gotoPage.Remote();
+            base.remotePage.clickArmButton();
+            base.nav.confirmIt();
+            Base.log(4, "Method is finished");
+        }
+
+        public void disarm() {
+            Base.log(4, "Method is started");
+            base.nav.gotoPage.Remote();
+            base.remotePage.clickDisarmButton();
+            Base.log(4, "Method is finished");
+        }
+
+        public void partialArm() {
+            Base.log(4, "Method is started");
+            base.nav.gotoPage.Remote();
+
+            base.remotePage.clickPartialArmButton();
+            base.nav.confirmIt();
+            Base.log(4, "Method is finished");
+        }
+
+        public void alarm(){
+            Base.log(4, "Method is started");
+
+            Base.log(1, "go to Remote page");
+            base.nav.gotoPage.Remote();
+
+            base.remotePage.clickAlarmButton();
+
+            base.wait.element(base.remotePage.getSpaceControlImage(), 10, true);
+            Base.log(4, "Method is finished");
+        }
+    }
+
     public void goToTheUserInvitationPage() {
         Base.log(4, "Method is started");
         sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
@@ -71,7 +117,7 @@ public class Hub{
         hubImageOnDeviceList.click();
 
         Base.log(1, "click Hub Settings button");
-        hubSettingsButton.click();
+        settingsButton.click();
 
         Base.log(1, "click Users tab");
         hubSettingsUsersImage.click();
@@ -88,7 +134,7 @@ public class Hub{
         hubImageOnDeviceList.click();
 
         Base.log(1, "click Hub Settings button");
-        hubSettingsButton.click();
+        settingsButton.click();
 
         Base.log(1, "click Users tab");
         hubSettingsUsersImage.click();
@@ -97,36 +143,8 @@ public class Hub{
         Base.log(4, "Method is finished");
     }
 
-    public void arm() {
-        Base.log(4, "Method is started");
-        base.nav.gotoPage.Remote();
-        base.remotePage.clickArmButton();
-        base.nav.confirmIt();
 
-        base.wait.elementWithText(armedText, 10, true);
-        Base.log(4, "Method is finished");
-    }
-
-    public void disarm() {
-        Base.log(4, "Method is started");
-        base.nav.gotoPage.Remote();
-        base.remotePage.clickDisarmButton();
-
-        base.wait.elementWithText(disarmedText, 10, true);
-        Base.log(4, "Method is finished");
-    }
-
-    public void partialArm() {
-        Base.log(4, "Method is started");
-        base.nav.gotoPage.Remote();
-        base.remotePage.clickPartialArmButton();
-        base.nav.confirmIt();
-
-        base.wait.elementWithText(patrialArmedText, 10, true);
-        Base.log(4, "Method is finished");
-    }
-
-    public void addNew() {
+    public void addNewManual() {
         Base.log(4, "Method is started");
 
         Base.log(1, "get creds for hubName and hubMasterKey");
@@ -134,13 +152,17 @@ public class Hub{
         String hubMasterKey = base.getCredsWithKey("hubMasterKey");
 
 
-        if (base.dashboardHeader.getMenuDrawer().isDisplayed()){
-            if (base.dashboard.getPlusButton().isDisplayed()){
+        if (base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)){
+            if (base.wait.element(base.dashboard.getPlusButton(), 2, true)){
                 Base.log(1, "add Hub by Plus Button");
                 base.dashboard.plusButtonClick();
             }else {
                 Base.log(1, "add Hub from Main Menu");
+
+                Base.log(1, "tap Main Menu icon");
                 base.dashboardHeader.getMenuDrawer().click();
+
+                Base.log(1, "tap Add Hub button");
                 base.menuPage.addHubButtonClick();
             }
         }
@@ -203,8 +225,7 @@ public class Hub{
 
                 case "master":
                     base.nav.gotoPage.userList();
-//                    base.hub.gotoMasterUserSettings();
-                    base.hub.hubSettingsButton.click();
+                    base.hub.settingsButton.click();
                     base.nav.scrollBottom();
                     base.user.getDeleteButton().click();
 

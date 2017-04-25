@@ -48,7 +48,7 @@ public class C44141_User_delete{
         Assert.assertTrue(base.dashboard.getPlusButton().isDisplayed());
 
         Base.log(1, "return hub for next tests");
-        base.hub.addNew();
+        base.hub.addNewManual();
     }
 
     @AfterClass

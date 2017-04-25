@@ -29,7 +29,7 @@ public class C44144_Hub_delete {
     @Test(priority = 1, enabled = true)
     public void While_Hub_Armed() {
         Base.log(1, "Arm hub from Remote Page");
-        base.hub.arm();
+        base.hub.security.arm();
         base.nav.gotoPage.hubSettings();
         base.wait.element(base.popUp.getSnackBarElement(), 5, true);
         String actualSnackBarText = base.popUp.getSnackBarText();
@@ -41,13 +41,13 @@ public class C44144_Hub_delete {
         Base.log(1, "SnackBar with error text is successfully shown");
 
         Base.log(1, "disarm hub");
-        base.hub.disarm();
+        base.hub.security.disarm();
     }
 
     @Test(priority = 2, enabled = true)
     public void While_Hub_Partial_Armed() {
         Base.log(1, "Partially Arm hub from Remote Page");
-        base.hub.partialArm();
+        base.hub.security.partialArm();
         base.nav.gotoPage.hubSettings();
         base.wait.element(base.popUp.getSnackBarElement(), 5, true);
         String actualSnackBarText = base.popUp.getSnackBarText();
@@ -58,7 +58,7 @@ public class C44144_Hub_delete {
         Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
         Base.log(1, "SnackBar with error text is successfully shown");
         Base.log(1, "disarm hub");
-        base.hub.disarm();
+        base.hub.security.disarm();
     }
 
     @Test(priority = 3, enabled = true)
@@ -70,7 +70,7 @@ public class C44144_Hub_delete {
     @Test(priority = 4, enabled = true)
     public void From_Hub_Settings() {
         Base.log(1, "return hub for next tests");
-        base.hub.addNew();
+        base.hub.addNewManual();
         base.hub.deleteFrom.hubSettings(true);
         Assert.assertTrue(base.wait.element(base.dashboard.getPlusButton(),10, true), "dashboard with Plus Button does not shown\n");
     }

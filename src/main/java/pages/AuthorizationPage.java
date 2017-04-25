@@ -63,13 +63,13 @@ public class AuthorizationPage{
     public void loginToTheServer(String login, String password) {
         Base.log(4, "Method is started");
 
-        Base.log(4, "fill the login field with data: [" + login + "]");
+        Base.log(1, "fill the login field with data: \"" + login + "\"");
         loginField.sendKeys(login);
 
-        Base.log(4, "fill the password field with data: [" + password + "]");
+        Base.log(1, "fill the password field with data: \"" + password + "\"");
         passwordField.sendKeys(password);
 
-        Base.log(4, "click login button");
+        Base.log(1, "click login button");
         loginBtn.click();
 
         Base.log(4, "Method is finished");
@@ -78,15 +78,15 @@ public class AuthorizationPage{
     public void loginToTheServer(String login, String password, String server) {
         Base.log(4, "Method is started");
 
-        Base.log(4, "fill the login field with data: \"" + login + "\"");
+        Base.log(1, "fill the login field with data: \"" + login + "\"", true);
         loginField.sendKeys(login);
 
-        Base.log(4, "fill the password field with data: \"" + password + "\"");
+        Base.log(1, "fill the password field with data: \"" + password + "\"");
         passwordField.sendKeys(password);
 
         chooseServer(server);
 
-        Base.log(4, "click login button");
+        Base.log(1, "click login button");
         loginBtn.click();
 
         Base.log(4, "Method is finished");
@@ -101,7 +101,7 @@ public class AuthorizationPage{
 
         loginToTheServer(login, password, server);
 
-        Base.log(4, "wait until LoaderLogo become invisible");
+        Base.log(1, "wait until LoaderLogo become invisible");
         base.wait.invisibilityOfLoaderLogo(true);
 
         Base.log(4, "waiting for Pincode PopUp and cancel it");
@@ -111,7 +111,7 @@ public class AuthorizationPage{
      }
 
 
-    public boolean loginWithPinCancel() {
+    public void loginWithPinCancel() {
         Base.log(4, "Method is started");
 
         Base.log(1, "get credentials for login");
@@ -119,33 +119,36 @@ public class AuthorizationPage{
         String password = base.getCredsWithKey("password");
         String server = base.getCredsWithKey("server");
 
-        Base.log(1, "start from IntroPage");
+        Base.log(1, "tap Login Button");
         loginButtonOnIntro.click();
 
         loginToTheServer(login, password, server);
 
-        Base.log(1, "wait until LoaderLogo become invisible");
-        base.wait.invisibilityOfLoaderLogo(true);
-
-        Base.log(1, "waiting for Pincode PopUp and cancel it");
-        if (base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10)){
+        if (base.wait.menuIconOrPinPopUp(100, true)){
             Base.log(1, "Login successfully!");
-            result = true;
-        }else {
-            Base.log(1, "Login failed!");
-            result = false;
         }
-//        Assert.assertTrue(base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10), "Login failed!");
+
+        Base.log(1, "check is there popUp present");
+        for (int i = 0; i < 2; i++) {
+
+            if (base.wait.element(base.nav.getCancelButton(), 2, true)) {
+                Base.log(1, "Pincode PopUp is shown - cancel it!");
+                base.nav.cancelIt();
+                break;
+            } else {
+                Base.log(1, "popUp is not present");
+                base.nav.gotoPage.Rooms();
+                base.nav.gotoPage.Devices();
+
+            }
+        }
 
         Base.log(4, "Method is finished");
-        return result;
     }
 
 
     public void chooseServer(String server) {
-        Base.log(4, "Method is started");
-
-        Base.log(4, "select server type: \"" + server + "\"");
+        Base.log(1, "select server type: \"" + server + "\"");
         base.nav.longTapButton(loginBtn, 2);
 
         switch (server) {
@@ -164,7 +167,6 @@ public class AuthorizationPage{
             default: serverProduction.click();
                 break;
         }
-        Base.log(4, "Method is finished");
     }
 
     public void logOut() {

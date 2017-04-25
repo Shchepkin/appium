@@ -12,20 +12,18 @@ import java.util.concurrent.TimeUnit;
 
 public class ValidationCodePage{
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/smsCodeField")
+    @AndroidFindBy(id = "com.ajaxsystems:id/smsCode")
     private WebElement smsCodeField;
-    public WebElement getSmsCodeField() {
-        return smsCodeField;
-    }
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/emailCodeField")
+    @AndroidFindBy(id = "com.ajaxsystems:id/emailCode")
     private WebElement emailCodeField;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/codeResend")
     private WebElement codeResend;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-    private WebElement cancelBtn;
+    public WebElement getSmsCodeField() {
+        return smsCodeField;
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
