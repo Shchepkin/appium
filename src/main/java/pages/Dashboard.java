@@ -93,10 +93,10 @@ public class Dashboard{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void fillFieldsWith(String hubName, String hubKey){
-        Base.log(1, "fill Name Field with \"" + hubName + "\"");
+        Base.log(1, "fill Name Field with \"" + hubName + "\"", true);
         nameField.sendKeys(hubName);
 
-        Base.log(1, "fill Hub Key Field with \"" + hubKey + "\"");
+        Base.log(1, "fill Hub Key Field with \"" + hubKey + "\"", true);
         hubKeyField.sendKeys(hubKey);
     }
 
