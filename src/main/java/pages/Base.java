@@ -359,7 +359,16 @@ public class Base {
 // LOG
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static void log(int type, String message) {
+    public static void log(int type, String message, boolean writeToReport) {
+
+        if(writeToReport){
+            System.out.println(log(type, message));
+        }else {
+            log(type, message);
+        }
+    }
+
+    public static String log(int type, String message) {
         Throwable t = new Throwable();
         StackTraceElement trace[] = t.getStackTrace();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
@@ -411,7 +420,7 @@ public class Base {
                 write(logFormattedString);
             }
         }
-
+        return message;
     }
 
 
