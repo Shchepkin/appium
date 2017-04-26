@@ -15,7 +15,7 @@ import utils.Imitator;
  * - at least three rooms in the Hub
  */
 
-    // TODO check whether we are on Devices Page before start new device
+    // TODO check whether we are on Devices Page before start new device add
     //
 
 public class C43875_Add_new_device {

@@ -11,6 +11,8 @@ import org.testng.Assert;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+//TODO remove all asserts
+
 public class User{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/active")
