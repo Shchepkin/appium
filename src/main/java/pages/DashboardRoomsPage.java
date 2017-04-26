@@ -129,6 +129,7 @@ public class DashboardRoomsPage{
     }
 
     public boolean isRoomPresens(String roomName) {
+<<<<<<< HEAD
         if(base.wait.menuIconOrPinPopUp(2, true)){
             Base.log(1, "PIN popUp is shown");
             base.nav.cancelIt();
@@ -136,6 +137,11 @@ public class DashboardRoomsPage{
         base.nav.scrollTop();
         if (base.nav.scrollToElementWith.name(roomName, false)) {
             Base.log(1, "room with name \"" + roomName + "\" successfully added!");
+=======
+        base.nav.scrollTop();
+        if (base.nav.scrollToElementWith.name(roomName, false)){
+            Base.log(1, "room with name \"" + roomName + "\" is displayed in rooms list ");
+>>>>>>> isRoomPresens
             return true;
         }else {
             return false;
@@ -147,12 +153,12 @@ public class DashboardRoomsPage{
     }
 
     public void goToRoomSettingsPage(){
-        Base.log(1, "click Settings Button");
+        Base.log(1, "tap Settings Button");
         base.nav.goToSettings();
     }
 
     public void deleteButtonClick(){
-        Base.log(1, "click delete button");
+        Base.log(1, "tap delete button");
         deleteButton.click();
     }
 

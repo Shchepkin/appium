@@ -212,9 +212,15 @@ public class Navigation{
 // Scroll
 //======================================================================================================================
 
-    public void scrollTop(){scrollScreenToTheEnd("down");}
+    public void scrollTop(){
+        Base.log(1, "scroll top of the page");
+        scrollScreenToTheEnd("down");
+    }
 
-    public void scrollBottom(){scrollScreenToTheEnd("up");}
+    public void scrollBottom(){
+        Base.log(1, "scroll top of the page");
+        scrollScreenToTheEnd("up");
+    }
 
     /**
      * This method just scrolls current screen to the end with needed direction ("up" or "down")
@@ -300,7 +306,7 @@ public class Navigation{
             etalon.clear();
             current.clear();
 
-            Base.log(1, "get all text objects from this screen");
+            Base.log(4, "get all text objects from this screen");
             for (WebElement i : allTextObjects) {
                 etalon.add(i.getText());
                 current.add(i.getText());
@@ -339,14 +345,14 @@ public class Navigation{
                     }catch (NoSuchElementException e){
                         Base.log(3, "NoSuchElementException, element is not found on this screen!");
                     }
-                }else Base.log(3, "element with text \"" + textOfSearchingElement + "\" is not found on this screen!");
+                }else Base.log(1, "element with text \"" + textOfSearchingElement + "\" is not found on this screen!");
 
                 if (direction.equals("down")) {
                     swipeDown(1000, 2);
                 }else swipeUp(1000, 2);
 
                 current.clear();
-                Base.log(1, "put new text objects to the current list after swipe");
+                Base.log(4, "put new text objects to the current list after swipe");
                 try {
                     for (WebElement i : allTextObjects) {
                         current.add(i.getText());
@@ -425,7 +431,7 @@ public class Navigation{
 
         if (etalon.containsAll(current) && counter < 1) {
             counter++;
-            Base.log(3, "nothing was changed, swipe try count = " + counter);
+            Base.log(4, "nothing was changed, swipe try count = " + counter);
         }else if (counter >= 1 ){
                 Base.log(3, "the end of the list is reached");
                 flag = true;
