@@ -13,8 +13,8 @@ import pages.Base;
 public class Check{
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base base;
-    private final AppiumDriver driver;
+    private Base base;
+    private AppiumDriver driver;
     private boolean result;
     private int numOfFoundElement;
     public LocalizedTextFor localizedTextFor;
@@ -238,7 +238,7 @@ public class Check{
     }
 
     public boolean isDeletedBy(String type, String value) {
-        if (base.nav.scrollToElementWith("name", "up", value, false)) {
+        if (base.nav.scrollToElementWith.name(value, false)) {
             Base.log(4, "element with value \"" + value + "\" is still displayed in the List");
             result = false;
         }else {
