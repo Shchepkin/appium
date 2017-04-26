@@ -127,6 +127,7 @@ public class Navigation{
     private ArrayList<String> etalon;
     private ArrayList<String> current;
     public GoToPage gotoPage = new GoToPage();
+    public ScrollToElementWith scrollToElementWith = new ScrollToElementWith();
 
     public Navigation(Base base) {
         this.base = base;
@@ -228,7 +229,7 @@ public class Navigation{
         etalon.clear();
         current.clear();
 
-        Base.log(1, "copy text objects from scrollList to etalon and current lists");
+        Base.log(4, "copy text objects from scrollList to etalon and current lists");
         for (WebElement i : scrollList) {
             etalon.add(i.getText());
             current.add(i.getText());
@@ -240,7 +241,7 @@ public class Navigation{
             }else swipeUp(200, 2);
 
             current.clear();
-            Base.log(1, "put new text objects to the current list after swipe");
+            Base.log(4, "put new text objects to the current list after swipe");
             try {
                 for (WebElement i : scrollList) {
                   current.add(i.getText());
@@ -262,92 +263,108 @@ public class Navigation{
     /**
      * This method scrolls current screen to the element with needed text and direction ("up" or "down") and gives you
      * the opportunity to click this element if you want
-     * @param typeOfElement text, email, name, id
-     *
-     * @param direction "up"    - for scrolling to the end of screen
-     *                  "down"  - for scrolling to the top of screen
-     *
-     * @param textOfSearchingElement - text which Searching Element contains
-     *
-     * @param click - true - if you want to click the element
-     *                false - if you don't need to click the element
      *
      * @return true if method found the element (and click them if it required)
      */
 
-    public boolean scrollToElementWith(String typeOfElement, String direction, String textOfSearchingElement, boolean click) {
-        start = System.nanoTime();
-        Base.log(4, "Method is started");
-        result = false;
-        WebElement searchingElement;
+    public class ScrollToElementWith{
 
-        counter = 0;
-        etalon.clear();
-        current.clear();
-
-        Base.log(1, "get all text objects from this screen");
-        for (WebElement i : allTextObjects) {
-            etalon.add(i.getText());
-            current.add(i.getText());
+        public boolean text(String textOfSearchingElement, boolean click){
+            return  scrollToElementWith("text", "up", textOfSearchingElement, click);
         }
 
-        while (true){
-            if (current.contains(textOfSearchingElement)){
-                try {
-                    switch (typeOfElement){
-                        case "id":
-                            searchingElement = driver.findElement(By.id("\"" + textOfSearchingElement + "\""));
-                            break;
-                        case "text":
-                            searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
-                            break;
-                        case "email":
-                            searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + textOfSearchingElement + "']"));
-                            break;
-                        case "name":
-                            searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + textOfSearchingElement + "']"));
-                            break;
-                        default:
-                            searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
-                            break;
-                    }
+        public boolean email(String textOfSearchingElement, boolean click){
+            return  scrollToElementWith("email", "up", textOfSearchingElement, click);
+        }
 
-                    if (click) {
-                        searchingElement.click();
-                        Base.log(1, "element with text \"" + textOfSearchingElement + "\" was found and clicked");
-                    } else {
-                        Base.log(1, "element with text \"" + textOfSearchingElement + "\" was found");
-                    }
-                    result = true;
-                    break;
+        public boolean id(String textOfSearchingElement, boolean click){
+            return  scrollToElementWith("id", "up", textOfSearchingElement, click);
+        }
 
-                }catch (NoSuchElementException e){
-                    Base.log(3, "NoSuchElementException, element is not found on this screen!");
-                }
-            }else Base.log(3, "element with text \"" + textOfSearchingElement + "\" is not found on this screen!");
+        public boolean name(String textOfSearchingElement, boolean click){
+            return  scrollToElementWith("name", "up", textOfSearchingElement, click);
+        }
 
-            if (direction.equals("down")) {
-                swipeDown(1000, 2);
-            }else swipeUp(1000, 2);
+        public boolean type(String typeOfElement, String textOfSearchingElement, boolean click){
+            return  scrollToElementWith(typeOfElement, "up", textOfSearchingElement, click);
+        }
 
+
+        private boolean scrollToElementWith(String typeOfElement, String direction, String textOfSearchingElement, boolean click) {
+            start = System.nanoTime();
+            Base.log(4, "Method is started");
+            result = false;
+            WebElement searchingElement;
+
+            counter = 0;
+            etalon.clear();
             current.clear();
-            Base.log(1, "put new text objects to the current list after swipe");
-            try {
-                for (WebElement i : allTextObjects) {
-                    current.add(i.getText());
-                }
-            }catch (NoSuchElementException e){
-                Base.log(3, "NoSuchElementException, something was wrong!\n" + e);
+
+            Base.log(1, "get all text objects from this screen");
+            for (WebElement i : allTextObjects) {
+                etalon.add(i.getText());
+                current.add(i.getText());
             }
 
-            compare(etalon, current);
-            if (flag) break;
+            while (true){
+                if (current.contains(textOfSearchingElement)){
+                    try {
+                        switch (typeOfElement){
+                            case "id":
+                                searchingElement = driver.findElement(By.id("\"" + textOfSearchingElement + "\""));
+                                break;
+                            case "text":
+                                searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
+                                break;
+                            case "email":
+                                searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + textOfSearchingElement + "']"));
+                                break;
+                            case "name":
+                                searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + textOfSearchingElement + "']"));
+                                break;
+                            default:
+                                searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
+                                break;
+                        }
+
+                        if (click) {
+                            searchingElement.click();
+                            Base.log(1, "element with text \"" + textOfSearchingElement + "\" was found and clicked");
+                        } else {
+                            Base.log(1, "element with text \"" + textOfSearchingElement + "\" was found");
+                        }
+                        result = true;
+                        break;
+
+                    }catch (NoSuchElementException e){
+                        Base.log(3, "NoSuchElementException, element is not found on this screen!");
+                    }
+                }else Base.log(3, "element with text \"" + textOfSearchingElement + "\" is not found on this screen!");
+
+                if (direction.equals("down")) {
+                    swipeDown(1000, 2);
+                }else swipeUp(1000, 2);
+
+                current.clear();
+                Base.log(1, "put new text objects to the current list after swipe");
+                try {
+                    for (WebElement i : allTextObjects) {
+                        current.add(i.getText());
+                    }
+                }catch (NoSuchElementException e){
+                    Base.log(3, "NoSuchElementException, something was wrong!\n" + e);
+                }
+
+                compare(etalon, current);
+                if (flag) break;
+            }
+            finish = System.nanoTime();
+            Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
+            Base.log(4, "Method is finished");
+            return result;
         }
-        finish = System.nanoTime();
-        Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-        Base.log(4, "Method is finished");
-        return result;
     }
+
 
 
     public boolean scrollToElement(WebElement elementForSearch, String direction) {
