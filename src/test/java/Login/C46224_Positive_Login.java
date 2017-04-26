@@ -33,16 +33,20 @@ public class C46224_Positive_Login {
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
+        String comment = param.get("comment").toString();
         String login = param.get("login").toString();
         String pass = param.get("pass").toString();
 
 
-        System.out.println(param.get("comment"));
-        System.out.println("login   : \"" + param.get("login") + "\"");
-        System.out.println("password: \"" + param.get("pass") + "\"");
+        Base.log(1, comment, true);
+        Base.log(1, "server: \"" + server + "\"", true);
+        Base.log(1, "login: \"" + login + "\"", true);
+        Base.log(1, "password: \"" + pass + "\"", true);
 
         Assert.assertTrue(base.loginPage.loginWithPinCancel(login, pass, server));
-        base.loginPage.logOut();
+
+        Base.log(1, "reset App");
+        base.getDriver().resetApp();
     }
 
     @AfterClass
