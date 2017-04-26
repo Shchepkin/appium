@@ -1,20 +1,15 @@
 package pages;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -134,22 +129,17 @@ public class DashboardRoomsPage{
     }
 
     public boolean isRoomPresens(String roomName) {
-        Base.log(4, "Method is started");
-        result = false;
-        for (WebElement roomNameElement : roomNameList) {
-            if (roomNameElement.getText().equals(roomName)) {
-                result = true;
-                Base.log(1, "room with name \"" + roomName + "\" successfully added!");
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                break;
-            }
+        if(base.wait.menuIconOrPinPopUp(2, true)){
+            Base.log(1, "PIN popUp is shown");
+            base.nav.cancelIt();
         }
-        Base.log(4, "Method is finished");
-        return result;
+        base.nav.scrollTop();
+        if (base.nav.scrollToElementWith.name(roomName, false)) {
+            Base.log(1, "room with name \"" + roomName + "\" successfully added!");
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public String getFirstRoomName(){
