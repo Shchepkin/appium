@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 import java.util.concurrent.TimeUnit;
-
+// TODO remove all asserts
 public class Hub{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/usersImage")
@@ -23,8 +23,6 @@ public class Hub{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/settings")
     private WebElement settingsButton;
-
-
 
     @AndroidFindBy(id = "com.ajaxsystems:id/status")
     private AndroidElement userStatus;

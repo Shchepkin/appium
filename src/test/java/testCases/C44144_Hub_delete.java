@@ -28,7 +28,7 @@ public class C44144_Hub_delete {
 
     @Test(priority = 1, enabled = true)
     public void While_Hub_Armed() {
-        Base.log(1, "Arm hub from Remote Page");
+        Base.log(1, "Arm hub from Remote Page", true);
         base.hub.security.arm();
         base.nav.gotoPage.hubSettings();
         base.wait.element(base.popUp.getSnackBarElement(), 5, true);

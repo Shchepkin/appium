@@ -11,6 +11,8 @@ import org.testng.Assert;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+// TODO remove all asserts
+
 public class RegistrationPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/photo")
@@ -181,21 +183,11 @@ public class RegistrationPage{
     public boolean registrationNewUser (){
 
             String userName, login, pass, phone, server;
-
-
-
-
-
-
                 login = base.getCredsWithKey("login");
                 pass = base.getCredsWithKey("password");
                 server = base.getCredsWithKey("server");
                 phone = base.getCredsWithKey("phone");
                 userName = base.getCredsWithKey("userName");
-
-
-
-
 
                 Base.log(1, "start from Intro Page and click Registration button");
                 base.introPage.setServer(server);
@@ -225,7 +217,6 @@ public class RegistrationPage{
                 Base.log(1, "Welcome Page is shown, so go to the dashboard");
                 base.regPage.dashboardLinkClick();
                 base.wait.invisibilityOfLoaderLogo(true);
-//        base.check.clickElementAndWaitingPopup(base.regPage.getDashboardLink(), 5, 3, false);
 
                 Assert.assertTrue( base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 100), "Login failed!\n");
 
