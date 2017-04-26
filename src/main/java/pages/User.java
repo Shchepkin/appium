@@ -64,6 +64,10 @@ public class User{
         adminStatusText = base.getLocalizeTextForKey("admin");
         userStatusText = base.getLocalizeTextForKey("user");
 
+        usersForContactList = base.getJsonStringArray("emails.json", "usersForContactList");
+        usersForEmailField = base.getJsonStringArray("emails.json", "usersForEmailField");
+        usersForMixedAdd = base.getJsonStringArray("emails.json", "usersForMixedAdd");
+
         PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -79,7 +83,7 @@ public class User{
         Base.log(4, "Method is started");
         result = false;
 
-        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "fill email field with \"" + userEmail + "\"");
         inviteUsersField.sendKeys(userEmail);
@@ -91,7 +95,7 @@ public class User{
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
         Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
-        base.wait.invisibilityOfWaiter(true);
+        base.wait.invisibilityOfWaiter();
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
         Base.log(4, "Method is finished");
@@ -104,19 +108,19 @@ public class User{
         result = false;
 
         Base.log(1, "searching and clicking the Send Invites Button");
-        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "click the Add From Contact List Button");
         addButtonFromContactList.click();
 
-        base.nav.scrollToElementWith("email", "up", userEmail, true);
+        base.nav.scrollToElementWith.text(userEmail, true);
         base.nav.nextButtonClick();
 
         Base.log(1, "click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
         Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
-        base.wait.invisibilityOfWaiter(true);
+        base.wait.invisibilityOfWaiter();
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
         Base.log(4, "Method is finished");
@@ -131,7 +135,7 @@ public class User{
         int counter = 0;
 
         Base.log(1, "click send Invites Button");
-        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "concat all emails from array to the one string");
         for (String userEmail : usersForEmailField) {
@@ -154,7 +158,7 @@ public class User{
 
             Base.log(1, "check whether new user is added");
             for (String userEmail : usersForEmailField) {
-                if (base.nav.scrollToElementWith("text", "up", userEmail, false)) {
+                if (base.nav.scrollToElementWith.text(userEmail, false)) {
                     counter++;
                 }
             }
@@ -181,7 +185,7 @@ public class User{
         String emailListString = "";
 
         Base.log(1, "click send Invites Button");
-        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "concat all emails from array to the one string");
         for (String userEmail : userListFromJson) {
@@ -196,7 +200,7 @@ public class User{
         base.nav.nextButtonClick();
 
         Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
-        base.wait.invisibilityOfWaiter(true);
+        base.wait.invisibilityOfWaiter();
         Assert.assertTrue(base.wait.element(userStatus, 15, true), "User page is not shown \n");
 
         Base.log(4, "Method is finished");
@@ -206,11 +210,11 @@ public class User{
 
     public void addFromContactList() {
         Base.log(4, "Method is started");
-        Base.log(3, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
+        Base.log(4, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
         result = false;
 
         Base.log(1, "searching and clicking the Send Invites Button");
-        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "click the Add From Contact List Button");
         addButtonFromContactList.click();
@@ -249,7 +253,7 @@ public class User{
         String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
 
         for (int i = 1; i < 3; i++) {
-            if (base.nav.scrollToElementWith(typeBy, "up", userEmail, true)) {
+            if (base.nav.scrollToElementWith.type(typeBy, userEmail, true)) {
                 base.check.isSnackBarPresent(2);
                 try {
                     base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
@@ -276,7 +280,7 @@ public class User{
         String unregisteredUser = usersForMixedAdd.get(1);
         String userForContactList = usersForMixedAdd.get(2);
 
-        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "fill email field with \"" + registeredUser + " " + unregisteredUser + "\"");
         inviteUsersField.sendKeys(registeredUser + " " + unregisteredUser);
@@ -294,7 +298,7 @@ public class User{
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
         Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
-        base.wait.invisibilityOfWaiter(true);
+        base.wait.invisibilityOfWaiter();
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
         Base.log(4, "Method is finished");
@@ -321,7 +325,7 @@ public class User{
             }
             firstTime++;
 
-            if (base.nav.scrollToElementWith(byType, "up", userEmail, false)) {
+            if (base.nav.scrollToElementWith.type(byType, userEmail, false)) {
                 Base.log(1, "new user with email \"" + userEmail + "\" is added successfully");
                 counter++;
             }
@@ -344,7 +348,7 @@ public class User{
         String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
         String deleteElementXpath = "/ancestor::android.widget.LinearLayout[1]//*[@resource-id = 'com.ajaxsystems:id/delete']";
 
-        if (base.nav.scrollToElementWith("name", "up", pendingUserName, false)) {
+        if (base.nav.scrollToElementWith.name(pendingUserName, false)) {
 
             try {
                 base.wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
@@ -397,7 +401,7 @@ public class User{
                 deleteButton.click();
                 base.nav.confirmIt();
 
-                base.wait.invisibilityOfWaiter(true);
+                base.wait.invisibilityOfWaiter();
 
                 Assert.assertTrue(base.wait.elementWithText(successText, 5, true), "SUCCESS text is not shown");
                 Base.log(1, "SUCCESS text is shown");
