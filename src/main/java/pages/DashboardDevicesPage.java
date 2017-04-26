@@ -52,7 +52,7 @@ public class DashboardDevicesPage{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addDeviceButtonClick(){
-        Base.log(1, "click Add Device button");
+        Base.log(1, "tap Add Device button");
         addDeviceButton.click();
     }
 
@@ -70,12 +70,13 @@ public class DashboardDevicesPage{
     }
 
     public void fillFieldsWith(String deviceName, String devID){
-        Base.log(1, "fill name field with \"" + deviceName + "\"");
+        Base.log(1, "fill name field with \"" + deviceName + "\"", true);
         nameField.sendKeys(deviceName);
 
+        Base.log(1, "hide keyboard");
         base.hideKeyboard();
 
-        Base.log(1, "fill ID field with \"" + devID + "\"");
+        Base.log(1, "fill ID field with \"" + devID + "\"", true);
         idField.sendKeys(devID);
     }
 
@@ -84,36 +85,20 @@ public class DashboardDevicesPage{
             Base.log(1, "click Set Room button");
             setRoomButtonElement.click();
 
+            Base.log(1, "wating for rooms popUp appear");
             base.wait.element(roomObject, 10, true);
 
-            Base.log(1, "set room number as \"" + numOfRoom + "\"");
+            Base.log(1, "set room number as \"" + numOfRoom + "\"", true);
             allRoomObjects.get(numOfRoom - 1).click();
         } else {
             Base.log(3, "invalid number of Room, number has to be > 0");
-            System.exit(0);
+            Base.log(3, "set number of Room to 1 as default");
+            setRoom(1);
         }
     }
 
-    public void addNew(int devId, int devNumber, int devType, String devName, int roomNumber) {
-        Base.log(1, "add devices to imitator");
-        base.imitator.addDevice(devId, devNumber, devType);
-
-        Base.log(1, "add devices \"" + devName + "\" to Hub");
-        base.nav.scrollBottom();
-        addDeviceButtonClick();
-        fillFieldsWith(devName, String.valueOf(devId));
-        base.hideKeyboard();
-        setRoom(roomNumber);
-
-        Base.log(1, "add devices button click");
-        base.nav.confirmIt();
-
-        Base.log(1, "device turn on");
-        base.imitator.registerDevice(devId);
-    }
-
     public boolean checkIsNewAdded(String roomName) {
-        if (base.nav.scrollToElementWith("name", "up", roomName, false)) {
+        if (base.nav.scrollToElementWith.name(roomName, false)) {
             Base.log(1, "new device with name \"" + roomName + "\" is added successfully");
             result = true;
         }else {
