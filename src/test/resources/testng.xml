@@ -10,15 +10,7 @@
     <!---->
     <!--<test name = "Prestigio">-->
         <!--<parameter name="deviceName_" value="Prestigio"/>-->
-        <!--<parameter name="UDID_" value="MTPB0252700596"/>-->
-        <!--<parameter name="platformVersion_" value="4.2.2"/>-->
-        <!--<parameter name="URL_" value="127.0.0.1:1234/wd/hub"/>-->
         <!--<classes>-->
-            <!--&lt;!&ndash;<class name="registration.positive"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<class name="Suits.Smoke"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<class name="testCases.C42098_Login_to_the_existing_account"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<class name="testCases.C42099_Add_new_Hub_manually"/>&ndash;&gt;-->
-            <!--<class name="testCases.C42100_Add_new_room"/>-->
         <!--</classes>-->
     <!--</test>-->
     <!---->
@@ -27,7 +19,7 @@
 
     <test name="LG - Registration and Hub adding">
         <classes>
-            <class name="testCases.C42097_New_user_registration"/>
+            <!--<class name="testCases.C42097_New_user_registration"/>-->
             <class name="testCases.C42099_Add_new_Hub_manually"/>
             <class name="Login.C46225_Negative_Login"/>
             <class name="Login.C46224_Positive_Login"/>
@@ -72,13 +64,13 @@
     <!---->
     <!--<test name="Xiaomi">-->
         <!--<parameter name="deviceName_" value="Xiaomi"/>-->
-        <!--<parameter name="UDID_" value="81c6da4a7d63"/>-->
-        <!--<parameter name="platformVersion_" value="6.0.1"/>-->
         <!--<classes>-->
             <!--<class name="tmp.popUp"/>-->
         <!--</classes>-->
     <!--</test>-->
     <!---->
+
+
     <!--<test name="JiaYu">-->
         <!--<parameter name="deviceName_" value="JiaYu"/>-->
         <!--<parameter name="UDID_" value="0123456789ABCDEF"/>-->

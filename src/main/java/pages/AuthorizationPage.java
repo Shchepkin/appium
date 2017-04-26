@@ -51,7 +51,6 @@ public class AuthorizationPage{
 //----------------------------------------------------------------------------------------------------------------------
 
     private Base base;
-    private boolean result;
 
     public AuthorizationPage(Base base) {
         this.base = base;
@@ -96,56 +95,35 @@ public class AuthorizationPage{
     public boolean loginWithPinCancel(String login, String password, String server) {
         Base.log(4, "Method is started");
 
-        Base.log(4, "start from IntroPage");
-        loginButtonOnIntro.click();
-
-        loginToTheServer(login, password, server);
-
-        Base.log(1, "wait until LoaderLogo become invisible");
-        base.wait.invisibilityOfLoaderLogo(true);
-
-        Base.log(4, "waiting for Pincode PopUp and cancel it");
-        if (base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 10)){
-           return true;
-        }else return false;
-     }
-
-
-    public void loginWithPinCancel() {
-        Base.log(4, "Method is started");
-
-        Base.log(1, "get credentials for login");
-        String login = base.getCredsWithKey("login");
-        String password = base.getCredsWithKey("password");
-        String server = base.getCredsWithKey("server");
-
         Base.log(1, "tap Login Button");
         loginButtonOnIntro.click();
 
         loginToTheServer(login, password, server);
 
+        Base.log(1, "wait menu Icon Or Pin PopUp");
         if (base.wait.menuIconOrPinPopUp(100, true)){
-            Base.log(1, "Login successfully!");
-        }
 
-        Base.log(1, "check is there popUp present");
-        for (int i = 0; i < 2; i++) {
-
-            if (base.wait.element(base.nav.getCancelButton(), 2, true)) {
-                Base.log(1, "Pincode PopUp is shown - cancel it!");
+            Base.log(1, "check is Pincode PopUp displayed");
+            if(base.wait.element(base.popUp.getContentTextElement(), 1, true)){
+                Base.log(1, "Pincode PopUp displayed");
                 base.nav.cancelIt();
-                break;
-            } else {
-                Base.log(1, "popUp is not present");
-                base.nav.gotoPage.Rooms();
-                base.nav.gotoPage.Devices();
-
             }
+            Base.log(1, "Login successfully!");
+            return true;
+        }else {
+            return false;
         }
+     }
 
-        Base.log(4, "Method is finished");
+
+    public void loginWithPinCancel() {
+        Base.log(1, "get credentials for login");
+        String login = base.getCredsWithKey("login");
+        String password = base.getCredsWithKey("password");
+        String server = base.getCredsWithKey("server");
+
+        loginWithPinCancel(login, password, server);
     }
-
 
     public void chooseServer(String server) {
         Base.log(1, "select server type: \"" + server + "\"");

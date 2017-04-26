@@ -29,11 +29,11 @@ public class C44143_Room_delete {
 
 
 
-    @Test(priority = 1, enabled = false)
-    public void While_Hub_Disarmed() {
+    @Test(priority = 1, enabled = true)
+    public void One_While_Hub_Disarmed() {
         String successText = base.getLocalizeTextForKey("Deleting_success1");
 
-        Base.log(4, "get name of first room from rooms list");
+        Base.log(1, "get name of first room from rooms list");
         String roomName = base.roomsPage.getFirstRoomName();
 
         base.roomsPage.goToRoomSettingsPage();
@@ -54,7 +54,7 @@ public class C44143_Room_delete {
         Base.log(1, "room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
     }
 
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 2, enabled = true)
     public void While_Hub_Armed() {
         base.hub.security.arm();
         base.dashboard.goToTheRoomPage();

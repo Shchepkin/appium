@@ -123,7 +123,7 @@ public class Hub{
         hubSettingsUsersImage.click();
 
         base.wait.element(userStatus, 10, true);
-        base.nav.scrollToElementWith("text", "up", sendInvitesButtonText, true);
+        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
         Base.log(4, "Method is finished");
     }
 
@@ -173,7 +173,7 @@ public class Hub{
         base.dashboard.fillFieldsWith(hubName, hubMasterKey);
         base.nav.confirmIt();
 
-        base.wait.invisibilityOfWaiter(true);
+        base.wait.invisibilityOfWaiter();
         Assert.assertFalse(base.check.isErrorPresent(2), "Hub adding failed!");
 
         Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 10, true));

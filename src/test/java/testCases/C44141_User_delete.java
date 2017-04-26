@@ -30,7 +30,7 @@ public class C44141_User_delete{
         base.nav.gotoPage.userList();
     }
 
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void all_pending_users() {
         base.user.deleteAllPending();
     }
@@ -40,7 +40,7 @@ public class C44141_User_delete{
         base.user.deleteAllGuests();
     }
 
-    @Test(priority = 3, enabled = false)
+    @Test(priority = 3, enabled = true)
     public void master_user() {
         base.user.deleteMasterUser();
         base.nav.cancelIt();

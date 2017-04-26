@@ -29,7 +29,7 @@ public class Base {
 
     public static int TIMEOUT = 5;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW = false;
+    private static final boolean LOG_VIEW = true;
 
     public Sql sql;
     public Hub hub;
@@ -39,7 +39,6 @@ public class Base {
     public Email email;
     public PopUp popUp;
     public PinPage pinPage;
-    public Imitator imitator;
     public IntroPage introPage;
     public Dashboard dashboard;
     public Navigation nav;
@@ -70,8 +69,8 @@ public class Base {
 
     public Base(String deviceName_) {
         log(4, "setup is started");
-        creds = getJsonCollection("deviceData.json", deviceName_);
-        appSet = getJsonCollection("deviceData.json", "appSet");
+        creds = getJsonMapCollection("deviceData.json", deviceName_);
+        appSet = getJsonMapCollection("deviceData.json", "appSet");
 
         log(4, "set creds for driver");
         deviceName = deviceName_;
@@ -119,9 +118,6 @@ public class Base {
 
         log(4, "init PopUp()");
         popUp = new PopUp(this);
-
-        log(4, "init Imitator()");
-        imitator = new Imitator();
 
         log(4, "init DashboardHeader()");
         header = new DashboardHeader(this);
@@ -260,7 +256,7 @@ public class Base {
 // JSON
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Map getJsonCollection(String filePath, String collection) {
+    public Map getJsonMapCollection(String filePath, String collection) {
         log(4, "Method is started");
         Map<String, String> jsonCollection = new HashMap<>();
         try {
@@ -476,13 +472,11 @@ public class Base {
     }
 
     public void openKeyboard() {
-        log(1, "Method is started");
         try {
             driver.hideKeyboard();
         } catch (Exception e) {
             log(4, "Exception: \n\n" + e + "\n");
         }
-        log(1, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -534,7 +528,6 @@ public class Base {
 //----------------------------------------------------------------------------------------------------------------------
 
     public void getScreenShot() {
-        log(4, "Method is started");
         try {
             Date currentDate = new Date();
 
@@ -557,7 +550,6 @@ public class Base {
         } catch (IOException e1) {
             log(2, "IOException:\n\n" + e1 + "\n");
         }
-        log(4, "Method is finished");
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -599,7 +591,7 @@ public class Base {
         int i = 0;
         while (true){
             log(4, "get collection from json");
-            map = getJsonCollection(pathToFileWithData, String.valueOf(i));
+            map = getJsonMapCollection(pathToFileWithData, String.valueOf(i));
             if(map.isEmpty()){
                 log(4, "Method is started");
                 break;

@@ -14,13 +14,15 @@ public class Wait{
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
     private final AppiumDriver driver;
-    private String waiterText;
+    private String waiterText, pinPopUpText;
     private boolean result;
 
     public Wait(Base base) {
         this.base = base;
         this.driver = base.getDriver();
         waiterText = base.getLocalizeTextForKey("request_send");
+        pinPopUpText = base.getLocalizeTextForKey("do_you_want_to_enable_passcode");
+
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -91,7 +93,7 @@ public class Wait{
         result = false;
 
         try {
-            Base.log(1, "waiting 100 seconds while Waiter become Invisible");
+            Base.log(1, "waiting 100 seconds while element with text \"" + text + "\" become Invisible");
             WebDriverWait iWait = new WebDriverWait(driver, 100);
             iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='" + text + "']")));
 
@@ -112,15 +114,6 @@ public class Wait{
         return result;
     }
 
-
-    public boolean invisibilityOfWaiter(boolean makeScreenShot) {
-        Base.log(4, "Method is started");
-        Base.log(3, "waiterText: \"" + waiterText + "\"");
-        invisibilityElementWithText(waiterText, makeScreenShot);
-        Base.log(4, "Method is finished");
-        return false;
-    }
-
     public boolean invisibilityOfWaiter() {
         Base.log(4, "Method is started");
         result = false;
@@ -129,6 +122,7 @@ public class Wait{
         iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ajaxsystems:id/progress")));
         result = true;
         Base.log(1, "Waiter become Invisible");
+        base.getScreenShot();
         Base.log(4, "Method is finished");
         return result;
     }
@@ -243,11 +237,7 @@ public class Wait{
             try {
                 Base.log(1, "element " + elementForWaiting + " is shown with text: \"" + elementForWaiting.getText() + "\"");
             }catch (Exception e){
-                Base.log(1, "PIN popUp is shown, cancel it!");
-                base.nav.cancelIt();
-
-                Base.log(1, "try wait element again");
-                element(elementForWaiting, timer, makeScreenShot);
+                Base.log(4, "element is shown successfully, but there is Exception while trying to get the text from the element:\n\n" + e + "\n");
             }
             return true;
 
@@ -262,4 +252,17 @@ public class Wait{
             return false;
         }
     }
+
+    public boolean pinPopUp (int timer, boolean confirm){
+        if(element(base.nav.getCancelButton(), timer, true)){
+            if(confirm){
+                base.nav.confirmIt();
+            }else {
+                base.nav.cancelIt();
+            }
+            return true;
+        }
+        return false;
+    }
+
 }

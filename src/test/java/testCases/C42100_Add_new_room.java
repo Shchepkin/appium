@@ -36,7 +36,7 @@ public class C42100_Add_new_room{
     }
 
     @Test(priority = 1, enabled = true)
-    public void First_room_without_image() {
+    public void Without_image() {
         Base.log(1, "add Room without image");
         base.roomsPage.addRoom("Without image", 0);
 
