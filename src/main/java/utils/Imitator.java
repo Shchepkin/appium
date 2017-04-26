@@ -1,18 +1,16 @@
 package utils;
 
-import jssc.SerialPort;
-import jssc.SerialPortEvent;
-import jssc.SerialPortEventListener;
-import jssc.SerialPortList;
+import jssc.*;
 import pages.Base;
 
 public class Imitator{
 
 //----------------------------------------------------------------------------------------------------------------------
-    private boolean result;
+    private Base base;
     private static SerialPort serialPort;
 
-    public Imitator() {
+    public Imitator(Base base) {
+        this.base = base;
         SerialPortSetup();
         Base.log(4, "clear imitator memory");
         clearMemory();
@@ -32,7 +30,8 @@ public class Imitator{
             }
 
             Base.log(4, "open port ");
-            serialPort.openPort();
+
+            if (!serialPort.isOpened())serialPort.openPort();
 
             Base.log(4, "set port params: BAUDRATE, DATABITS, STOPBITS,PARITY)");
             serialPort.setParams(SerialPort.BAUDRATE_57600,
@@ -62,14 +61,29 @@ public class Imitator{
         }
     }
 
-    public void addDevice(int dev_id, int dev_numb, int dev_type){
-        String command = String.format("add %d %d %d\n", dev_id, dev_numb, dev_type);
+    public void addDevice(int devId, int devNumber, int devType, String devName, int roomNumber){
+        Base.log(1, "add devices to imitator");
+        String command = String.format("add %d %d %d\n", devId, devNumber, devType);
         try {
             Thread.sleep(2000);
             serialPort.writeString(command);
         }catch (Exception e) {
             Base.log(3, "Exception: \n" + e + "\n");
         }
+
+        Base.log(1, "add devices \"" + devName + "\" to Hub", true);
+        Base.log(1, "scroll bottom");
+        base.nav.scrollBottom();
+        base.devicesPage.addDeviceButtonClick();
+        base.devicesPage.fillFieldsWith(devName, String.valueOf(devId));
+        base.hideKeyboard();
+        base.devicesPage.setRoom(roomNumber);
+
+        Base.log(1, "tap Add devices button");
+        base.nav.confirmIt();
+
+        Base.log(1, "device turn on");
+        registerDevice(devId);
     }
 
     public void getDeviceList(){
