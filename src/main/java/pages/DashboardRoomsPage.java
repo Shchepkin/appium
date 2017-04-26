@@ -134,22 +134,13 @@ public class DashboardRoomsPage{
     }
 
     public boolean isRoomPresens(String roomName) {
-        Base.log(4, "Method is started");
-        result = false;
-        for (WebElement roomNameElement : roomNameList) {
-            if (roomNameElement.getText().equals(roomName)) {
-                result = true;
-                Base.log(1, "room with name \"" + roomName + "\" successfully added!");
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                break;
-            }
+        base.nav.scrollTop();
+        if (base.nav.scrollToElementWith.name(roomName, false)){
+            Base.log(1, "room with name \"" + roomName + "\" is displayed in rooms list ");
+            return true;
+        }else {
+            return false;
         }
-        Base.log(4, "Method is finished");
-        return result;
     }
 
     public String getFirstRoomName(){
@@ -157,12 +148,12 @@ public class DashboardRoomsPage{
     }
 
     public void goToRoomSettingsPage(){
-        Base.log(1, "click Settings Button");
+        Base.log(1, "tap Settings Button");
         base.nav.goToSettings();
     }
 
     public void deleteButtonClick(){
-        Base.log(1, "click delete button");
+        Base.log(1, "tap delete button");
         deleteButton.click();
     }
 
