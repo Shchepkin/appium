@@ -50,27 +50,12 @@ public class Navigation{
     @AndroidFindBy(xpath = "//*[@resource-id='com.ajaxsystems:id/rrv_recycler_view']//android.widget.RelativeLayout/android.widget.TextView")
     private List<WebElement> userList;
 
-    @AndroidFindBy(xpath = "//*[@resource-id='com.ajaxsystems:id/recycler']//android.widget.LinearLayout/android.widget.TextView")
-    private List<WebElement> roomList;
-
-    @AndroidFindBy(xpath = "//*[@resource-id='com.ajaxsystems:id/recycler']//android.widget.LinearLayout/android.widget.TextView")
-    private List<WebElement> deviceList;
-
-    @AndroidFindBy(xpath = "//android.widget.LinearLayout//android.widget.TextView")
-    private ArrayList<WebElement> scrollList;
-
     @AndroidFindBy(xpath = "//android.widget.TextView")
     private ArrayList<WebElement> allTextObjects;
 
-    public ArrayList<WebElement> getScrollList() {
-        return scrollList;
-    }
-
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 // Header
-//======================================================================================================================
-
-
+//----------------------------------------------------------------------------------------------------------------------
 
     @AndroidFindBy(id = "com.ajaxsystems:id/back")
     private WebElement backButton;
@@ -94,9 +79,9 @@ public class Navigation{
         return settingsButton;
     }
 
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 // Footer
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 
     @AndroidFindBy(id = "com.ajaxsystems:id/devices")
     private WebElement footerDevices;
@@ -110,9 +95,9 @@ public class Navigation{
     @AndroidFindBy(id = "com.ajaxsystems:id/remote")
     private WebElement footerRemote;
 
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 // Anchors
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 
     @AndroidFindBy(id = "com.ajaxsystems:id/spaceControl")
     private WebElement spaceControlImage;
@@ -208,17 +193,17 @@ public class Navigation{
 
         Base.log(4, "Method is finished");
     }
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 // Scroll
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 
     public void scrollTop(){
-        Base.log(1, "scroll top of the page");
+        Base.log(1, "scroll to the top page");
         scrollScreenToTheEnd("down");
     }
 
     public void scrollBottom(){
-        Base.log(1, "scroll top of the page");
+        Base.log(1, "scroll to the bottom page");
         scrollScreenToTheEnd("up");
     }
 
@@ -236,7 +221,7 @@ public class Navigation{
         current.clear();
 
         Base.log(4, "copy text objects from scrollList to etalon and current lists");
-        for (WebElement i : scrollList) {
+        for (WebElement i : allTextObjects) {
             etalon.add(i.getText());
             current.add(i.getText());
         }
@@ -249,7 +234,7 @@ public class Navigation{
             current.clear();
             Base.log(4, "put new text objects to the current list after swipe");
             try {
-                for (WebElement i : scrollList) {
+                for (WebElement i : allTextObjects) {
                   current.add(i.getText());
                 }
             }catch (NoSuchElementException e){
@@ -264,7 +249,7 @@ public class Navigation{
         Base.log(4, "Method is finished");
     }
 
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 
     /**
      * This method scrolls current screen to the element with needed text and direction ("up" or "down") and gives you
@@ -276,22 +261,27 @@ public class Navigation{
     public class ScrollToElementWith{
 
         public boolean text(String textOfSearchingElement, boolean click){
+            scrollTop();
             return  scrollToElementWith("text", "up", textOfSearchingElement, click);
         }
 
         public boolean email(String textOfSearchingElement, boolean click){
+            scrollTop();
             return  scrollToElementWith("email", "up", textOfSearchingElement, click);
         }
 
         public boolean id(String textOfSearchingElement, boolean click){
+            scrollTop();
             return  scrollToElementWith("id", "up", textOfSearchingElement, click);
         }
 
         public boolean name(String textOfSearchingElement, boolean click){
+            scrollTop();
             return  scrollToElementWith("name", "up", textOfSearchingElement, click);
         }
 
         public boolean type(String typeOfElement, String textOfSearchingElement, boolean click){
+            scrollTop();
             return  scrollToElementWith(typeOfElement, "up", textOfSearchingElement, click);
         }
 
@@ -371,7 +361,7 @@ public class Navigation{
         }
     }
 
-
+//----------------------------------------------------------------------------------------------------------------------
 
     public boolean scrollToElement(WebElement elementForSearch, String direction) {
         start = System.nanoTime();
@@ -423,7 +413,7 @@ public class Navigation{
     }
 
 
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 
     private ArrayList <String> compare(ArrayList<String> etalon, ArrayList<String> current){
         Base.log(4, "Method is started");
@@ -446,23 +436,19 @@ public class Navigation{
     }
 
 
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 // Tap
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 
     public void longTapButton(WebElement element, int timer) {
-        Base.log(4, "Method is started");
-
-        Base.log(4, "long tap for " + timer + " seconds");
+        Base.log(1, "long tap for " + timer + " seconds");
         timer = timer * 1000;
         driver.tap(1, element, timer);
-
-        Base.log(4, "Method is finished");
     }
 
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 // GOTO
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
     public void nextButtonClick(){nextButton.click();}
 
     public WebElement getNextButton() {return nextButton;}
@@ -474,30 +460,14 @@ public class Navigation{
 
     public void goToSettings(){
         WebDriverWait iWait = new WebDriverWait(driver, 5);
+
+        Base.log(1, "wait for Settings Button");
         iWait.until(ExpectedConditions.visibilityOf(settingsButton));
+
+        Base.log(1, "tap Settings Button");
         settingsButton.click();
     }
 
-    public boolean goToTheRemotePage(){
-        Base.log(4, "Method is started");
-        result = false;
-
-        try {
-            while (backButton.isDisplayed()) {
-                goBack();
-            }
-        }catch (NoSuchElementException e){
-            Base.log(3, "BackButton is not shown");
-        }
-
-        footerRemote.click();
-
-        if (spaceControlImage.isDisplayed()) {
-            result = true;
-        }
-        Base.log(4, "Method is finished");
-        return result;
-    }
 
 //----------------------------------------------------------------------------------------------------------------------
 //  GoToPage
@@ -507,25 +477,28 @@ public class Navigation{
         // dashboard
         public void Devices() {
             backToDashboard();
+
             Base.log(1, "tap Devices Button");
             footerDevices.click();
         }
 
         public void Rooms() {
             backToDashboard();
+
             Base.log(1, "tap Rooms Button");
             footerRooms.click();
         }
 
         public void Notifications() {
             backToDashboard();
+
             Base.log(1, "tap Notifications Button");
             footerNotifications.click();
         }
 
         public void Remote() {
-            Base.log(1, "back to Dashboard");
             backToDashboard();
+
             Base.log(1, "tap Remote Button");
             footerRemote.click();
         }
@@ -537,7 +510,11 @@ public class Navigation{
 
         public void hubSettings() {
             gotoPage.Devices();
+
+            Base.log(1, "tap HubImage on Devices Page");
             base.hub.getHubImageOnDeviceList().click();
+
+            Base.log(1, "tap HubSettings Button");
             base.hub.getSettingsButton().click();
         }
 
@@ -545,22 +522,23 @@ public class Navigation{
             Base.log(1, "go to the Device List page");
             gotoPage.Devices();
 
-            Base.log(1, "click Hub image on Device List page");
+            Base.log(1, "tap Hub image on Device List page");
             base.hub.getHubImageOnDeviceList().click();
 
-            Base.log(1, "click Users tab");
+            Base.log(1, "tap Hub Settings button");
             base.hub.getSettingsButton().click();
 
-            Base.log(1, "click Users tab");
+            Base.log(1, "tap Users tab");
             base.hub.getHubSettingsUsersImage().click();
 
+            Base.log(1, "waiting User Status element");
             base.wait.element(base.hub.getUserStatus(), 10, true);
         }
 
 
         private void backToDashboard(){
+            Base.log(1, "back to dashboard");
             while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
-
                 if (base.wait.element(backButton, 1, true)) {
                     Base.log(1, "tap back button");
                     backButton.click();
@@ -576,9 +554,9 @@ public class Navigation{
         }
     }
 
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
 // CONFIRMATION
-//======================================================================================================================
+//----------------------------------------------------------------------------------------------------------------------
     public void confirmIt() {
 
         try {
@@ -627,10 +605,6 @@ public class Navigation{
                 Base.log(4, "second Cancel Button was not found\n\n" + e.getMessage() + "\n");
             }
         }
-    }
-
-    public void cancelPopUpIfPresent() {
-        cancelIt();
     }
 
 }
