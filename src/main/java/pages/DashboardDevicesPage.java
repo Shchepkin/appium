@@ -6,7 +6,6 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +30,10 @@ public class DashboardDevicesPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/type")
     private WebElement roomObject;
+
+    public WebElement getRoomOfDeviceLocator() {
+        return roomOfDeviceLocator;
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
@@ -61,11 +64,10 @@ public class DashboardDevicesPage{
         unpairButton.click();
     }
 
-    public void goToDeviceSettingsPage(){
+    public void goToFirstDeviceSettingsPage(){
         Base.log(1, "click on Device tab (room element)");
         roomOfDeviceLocator.click();
 
-        Base.log(1, "click Settings Button");
         base.nav.goToSettings();
     }
 
@@ -99,13 +101,12 @@ public class DashboardDevicesPage{
 
     public boolean checkIsNewAdded(String roomName) {
         if (base.nav.scrollToElementWith.name(roomName, false)) {
-            Base.log(1, "new device with name \"" + roomName + "\" is added successfully");
-            result = true;
+            Base.log(1, "new device with name \"" + roomName + "\" is added successfully", true);
+            return true;
         }else {
-            Base.log(3, "device with name \"" + roomName + "\" is not added");
-            result = false;
+            Base.log(3, "device with name \"" + roomName + "\" is not added", true);
+            return false;
         }
-        return result;
     }
 
     public String getFirstDeviceName(){
@@ -116,72 +117,41 @@ public class DashboardDevicesPage{
     }
 
     public boolean deleteAllDevices() {
-        String successText = base.getLocalizeTextForKey("Deleting_success1");
+        base.nav.gotoPage.Devices();
+        String devName = null;
         int counter = 0;
         try {
             while (true) {
-                if (base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true)){
-                    String devName = getFirstDeviceName();
-                    goToDeviceSettingsPage();
-                    base.nav.scrollBottom();
-                    unpairButtonClick();
-                    base.nav.confirmIt();
-
-                    if (base.wait.elementWithText(successText, 10, true)){
-                        base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
-                        base.check.isDeletedBy("name", devName);
-                        Base.log(1, "device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
-                        counter++;
+                if (base.wait.menuIconOrPinPopUp(10, true)){
+                    if (counter != 0) {
+                        Base.log(1, "device with name \"" + devName + "\" is deleted successfully", true);
+                    }
+                    base.nav.cancelIt();
+                    if (!base.check.isEmpty.devicesList()){
+                        devName = getFirstDeviceName();
+                        goToFirstDeviceSettingsPage();
+                    }else if (counter > 0){
+                        Base.log(1, "devices are not found, number of deleted devices: " + counter);
+                        return true;
                     }else {
-                        Base.log(3, "SUCCESS text is not shown");
+                        Base.log(2, "Test impossible, because precondition isn't valid - no one element found");
                         return false;
                     }
 
-                }else if (base.nav.getCancelButton().isDisplayed()){
-                    base.nav.cancelIt();
+                    base.nav.scrollBottom();
+                    unpairButtonClick();
+                    base.nav.confirmIt();
+                    counter++;
+
                 }else {
-                    break;
+                    Base.log(2, "Test impossible, I don't know where are we");
+                    return false;
                 }
             }
         }catch (NoSuchElementException e){
             Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
+            return false;
         }
-        if (counter > 0) {
-            Base.log(1, "element are not found, number of deleted elements: " + counter);
-            result = true;
-        }else {
-            Base.log(3, "Test impossible, because precondition isn't valid - no one element found");
-            result = false;
-        }
-        return result;
     }
-
-
-
-    public boolean dellBy(String by) {
-        boolean result = false;
-
-        switch (by){
-            case "room":
-                break;
-            case "name":
-                break;
-            case "all":
-                break;
-            default:
-        }
-
-//        if (nav.scrollToElementWith("name", "up", roomName, false)) {
-//            Base.log(1, "new device with name \"" + roomName + "\" is added successfully");
-//            result = true;
-//        }else {
-//            Base.log(3, "device with name \"" + roomName + "\" is not added");
-//            result = false;
-//        }
-        return result;
-    }
-
-
-
 
 }

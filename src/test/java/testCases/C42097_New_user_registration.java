@@ -21,6 +21,7 @@ public class C42097_New_user_registration{
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
+        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
@@ -30,6 +31,7 @@ public class C42097_New_user_registration{
         phone = base.getCredsWithKey("phone");
         userName = base.getCredsWithKey("userName");
 
+        Base.log(1, "delete user if phone already exist at the server");
         base.sql.getDelete("Phone", "%" + phone + "%");
     }
 

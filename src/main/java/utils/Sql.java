@@ -211,8 +211,6 @@ public class Sql{
      * @return Connection connection
      */
     private Connection getConnection (){
-        Base.log(4, "Method is started");
-
         url = base.getDbSettingsWithKey("url");
         user = base.getDbSettingsWithKey("user");
         password = base.getDbSettingsWithKey("password");
@@ -234,7 +232,6 @@ public class Sql{
                 }
             }
         }
-        Base.log(4, "Method is finished");
         return connection;
     }
 }

@@ -4,7 +4,6 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 import java.util.concurrent.TimeUnit;
 
@@ -80,7 +79,7 @@ public class AuthorizationPage{
         Base.log(1, "fill the login field with data: \"" + login + "\"", true);
         loginField.sendKeys(login);
 
-        Base.log(1, "fill the password field with data: \"" + password + "\"");
+        Base.log(1, "fill the password field with data: \"" + password + "\"", true);
         passwordField.sendKeys(password);
 
         chooseServer(server);

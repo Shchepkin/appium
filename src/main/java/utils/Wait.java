@@ -203,7 +203,7 @@ public class Wait{
                     )
             );
 
-            Base.log(1, "Main Menu icon or PIN popUp is shown", true);
+            Base.log(1, "Main Menu icon or PIN popUp is shown");
             return true;
 
         } catch (NoSuchElementException e) {
@@ -254,6 +254,7 @@ public class Wait{
     }
 
     public boolean pinPopUp (int timer, boolean confirm){
+        Base.log(1, "Wait PIN popUp");
         if(element(base.nav.getCancelButton(), timer, true)){
             if(confirm){
                 base.nav.confirmIt();

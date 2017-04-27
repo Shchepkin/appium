@@ -15,7 +15,7 @@ import utils.Imitator;
  * - at least three rooms in the Hub
  */
 
-    // TODO check whether we are on Devices Page before start new device
+    // TODO check whether we are on Devices Page before start new device add
     //
 
 public class C43875_Add_new_device {
@@ -25,11 +25,11 @@ public class C43875_Add_new_device {
     @Parameters({"deviceName_"})
     @BeforeClass
     public void init(String deviceName_) {
+        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
         imitator = new Imitator(base);
 
-        Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
     }
 

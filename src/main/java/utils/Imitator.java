@@ -84,6 +84,9 @@ public class Imitator{
 
         Base.log(1, "device turn on");
         registerDevice(devId);
+
+        Base.log(1, "check is PIN popUp displayed");
+        base.wait.pinPopUp(2, false);
     }
 
     public void getDeviceList(){

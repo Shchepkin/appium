@@ -111,6 +111,9 @@ public class DashboardRoomsPage{
         Base.log(1, "tap Save button");
         saveButton.click();
 
+        Base.log(1, "check is PIN popUp displayed");
+        base.wait.pinPopUp(2, false);
+
         Base.log(4, "Method is finished");
     }
 
@@ -129,21 +132,12 @@ public class DashboardRoomsPage{
     }
 
     public boolean isRoomPresens(String roomName) {
-<<<<<<< HEAD
-        if(base.wait.menuIconOrPinPopUp(2, true)){
-            Base.log(1, "PIN popUp is shown");
-            base.nav.cancelIt();
-        }
-        base.nav.scrollTop();
-        if (base.nav.scrollToElementWith.name(roomName, false)) {
-            Base.log(1, "room with name \"" + roomName + "\" successfully added!");
-=======
         base.nav.scrollTop();
         if (base.nav.scrollToElementWith.name(roomName, false)){
             Base.log(1, "room with name \"" + roomName + "\" is displayed in rooms list ");
->>>>>>> isRoomPresens
             return true;
         }else {
+            Base.log(1, "room with name \"" + roomName + "\" is not displayed in rooms list ");
             return false;
         }
     }

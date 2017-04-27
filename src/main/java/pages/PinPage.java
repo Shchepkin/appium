@@ -89,7 +89,7 @@ public class PinPage {
 
     public void closePinWindowIfDisplayed() {
         try {
-            // assert is the element displayed on the page
+            // check is the element displayed on the page
             WebDriverWait iWait = new WebDriverWait (driver, 30);
             iWait.until(ExpectedConditions.visibilityOf(cancelBtn));
             cancelBtn.click();
@@ -102,7 +102,7 @@ public class PinPage {
 
     public void openPinWindowIfDisplayed() {
         try {
-            // assert is the element displayed on the page
+            // check is the element displayed on the page
             WebDriverWait iWait = new WebDriverWait (driver, 30);
             iWait.until(ExpectedConditions.visibilityOf(confirmBtn));
             confirmBtn.click();

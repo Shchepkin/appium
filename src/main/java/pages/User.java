@@ -11,6 +11,8 @@ import org.testng.Assert;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+//TODO remove all asserts
+
 public class User{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/active")
@@ -154,10 +156,11 @@ public class User{
             base.nav.confirmIt();
             base.wait.invisibilityOfWaiter();
 
-            base.check.isElementDisplayed(userStatus, 15);
+            base.wait.element(userStatus, 15, true);
 
             Base.log(1, "check whether new user is added");
             for (String userEmail : usersForEmailField) {
+                base.nav.scrollTop();
                 if (base.nav.scrollToElementWith.text(userEmail, false)) {
                     counter++;
                 }
@@ -326,7 +329,7 @@ public class User{
             firstTime++;
 
             if (base.nav.scrollToElementWith.type(byType, userEmail, false)) {
-                Base.log(1, "new user with email \"" + userEmail + "\" is added successfully");
+                Base.log(1, "new user with email \"" + userEmail + "\" is added successfully", true);
                 counter++;
             }
         }
