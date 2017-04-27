@@ -18,6 +18,7 @@ public class C44142_Device_delete {
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
+        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
@@ -32,7 +33,7 @@ public class C44142_Device_delete {
         Base.log(4, "get name of first device from device list");
         String devName = base.devicesPage.getFirstDeviceName();
 
-        base.devicesPage.goToDeviceSettingsPage();
+        base.devicesPage.goToFirstDeviceSettingsPage();
 
         Base.log(1, "scroll bottom and tap Delete button");
         base.nav.scrollBottom();
@@ -54,7 +55,7 @@ public class C44142_Device_delete {
         String expectedSnackBarText = base.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
         base.hub.security.arm();
         base.dashboard.goToTheDevicesPage();
-        base.devicesPage.goToDeviceSettingsPage();
+        base.devicesPage.goToFirstDeviceSettingsPage();
         base.wait.element(base.popUp.getSnackBarElement(), 5, true);
         String actualSnackBarText = base.popUp.getSnackBarText();
         Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
@@ -70,7 +71,7 @@ public class C44142_Device_delete {
         String expectedSnackBarText = base.getLocalizeTextForKey("cannot_perform_action_while_hub_is_armed");
         base.hub.security.partialArm();
         base.dashboard.goToTheDevicesPage();
-        base.devicesPage.goToDeviceSettingsPage();
+        base.devicesPage.goToFirstDeviceSettingsPage();
         base.wait.element(base.popUp.getSnackBarElement(), 5, true);
         String actualSnackBarText = base.popUp.getSnackBarText();
         Assert.assertEquals(actualSnackBarText, expectedSnackBarText, "SnackBar with error text is not shown");
@@ -81,9 +82,11 @@ public class C44142_Device_delete {
         base.hub.security.disarm();
     }
 
-    @Test(priority = 4, enabled = false)
+    @Test(priority = 4, enabled = true)
     public void All_Device_Deleting() {
         base.devicesPage.deleteAllDevices();
+        Assert.assertTrue(base.check.isEmpty.devicesList(), "Device List is not Empty\n");
+        Base.log(1, "All devices is deleted successfully", true);
     }
 
     @AfterClass
