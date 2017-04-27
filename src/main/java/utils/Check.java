@@ -18,11 +18,13 @@ public class Check{
     private boolean result;
     private int numOfFoundElement;
     public LocalizedTextFor localizedTextFor;
+    public IsEmpty isEmpty;
 
     public Check(Base base) {
         this.base = base;
         this.driver = base.getDriver();
         localizedTextFor = new LocalizedTextFor();
+        isEmpty = new IsEmpty();
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -256,19 +258,61 @@ public class Check{
 
     public class LocalizedTextFor{
 
-        public void hubUnpair() {
+        public boolean hubUnpair() {
             Base.log(4, "get expected and actual localized text");
             String actualText = base.popUp.getContentText();
             String expectedText = base.getLocalizeTextForKey("Detach_success1");
 
             Base.log(4, "checking of localized text");
-            System.out.println("actual: " + actualText);
-            System.out.println("expected: " + expectedText);
+            Base.log(1, "actual: " + actualText, true);
+            Base.log(1, "expected: " + expectedText, true);
 
-            Assert.assertEquals(expectedText, actualText, "expected text is not equals actual");
+            if(expectedText.equalsIgnoreCase(actualText)){
 
-            Base.log(4, "checking of localized text is successfully passed");
+                Base.log(1, "checking of localized text is successfully passed", true);
+                return true;
+            }else {
+                Base.log(1,  "expected text is not equals actual", true);
+                return false;
+            }
         }
+
+        public boolean deletingDevice(){
+            String successText = base.getLocalizeTextForKey("Deleting_success1");
+            Base.log(1, "waiting for SUCCESS text");
+            if(base.wait.elementWithText(successText, 10, true)){
+                Base.log(1, "SUCCESS text is shown");
+                return true;
+            }else {
+                Base.log(3, "SUCCESS text is not shown");
+                return false;
+            }
+        }
+
+    }
+
+    public class IsEmpty{
+
+        public boolean devicesList() {
+            if(base.wait.element(base.devicesPage.getRoomOfDeviceLocator(), 1, true)){
+                return false;
+            }else {
+                return true;
+            }
+        }
+
+        public boolean roomsList() {
+                return true;
+        }
+
+        public boolean guestUsersList() {
+                return true;
+        }
+
+        public boolean pendingUsersList() {
+                return true;
+        }
+
 
     }
 }
