@@ -27,9 +27,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Base {
 
-    public static int TIMEOUT = 5;
+    public static int TIMEOUT = 3;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW = true;
+    private static final boolean LOG_VIEW = false;
 
     public Sql sql;
     public Hub hub;

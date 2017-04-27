@@ -21,10 +21,10 @@ public class C42102_Add_new_guest_user{
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
+        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
-        Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
 
         base.nav.gotoPage.userList();
@@ -34,28 +34,28 @@ public class C42102_Add_new_guest_user{
     public void From_Email_Field() {
 
         base.user.addFromEmailField();
-        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForEmailField()), "Add users from Email Field is failed");
+        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForEmailField()), "Add users from Email Field is failed\n");
     }
 
     @Test(priority = 2, enabled = true)
     public void From_Contact_List() {
 
         base.user.addFromContactList();
-        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("email", base.user.getUsersForContactList()), "Add users from Contact List is failed");
+        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("email", base.user.getUsersForContactList()), "Add users from Contact List is failed\n");
     }
 
     @Test(priority = 3, enabled = true)
     public void Add_Mixed_Users() {
 
         base.user.addMixedUsers();
-        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForMixedAdd()), "Add users with mixed style is failed");
+        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForMixedAdd()), "Add users with mixed style is failed\n");
     }
 
     @Test(priority = 4, enabled = true)
     public void Check_is_unreg_user_in_pending_list() {
 
         String unregisteredUserEmail = base.user.getUsersForMixedAdd().get(1);
-        Assert.assertTrue(base.user.checkIsDeleteIconPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon");
+        Assert.assertTrue(base.user.checkIsDeleteIconPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon\n");
     }
 
     @AfterClass
