@@ -80,7 +80,10 @@ public class Hub{
 
         public void disarm() {
             Base.log(4, "Method is started");
+
+            Base.log(1, "goto Remote Page");
             base.nav.gotoPage.Remote();
+
             base.remotePage.clickDisarmButton();
             Base.log(4, "Method is finished");
         }
@@ -90,7 +93,10 @@ public class Hub{
             base.nav.gotoPage.Remote();
 
             base.remotePage.clickPartialArmButton();
+
+            Base.log(1, "confirm if popUp appear");
             base.nav.confirmIt();
+
             Base.log(4, "Method is finished");
         }
 
@@ -181,6 +187,8 @@ public class Hub{
 
     public class DeleteFrom {
 
+        //TODO remove different versions of deleting into different methods and dell private boolean deleteFrom(...)
+
         public boolean hubSettings(boolean withCheckLocalizedText) {
             return deleteFrom("hub", withCheckLocalizedText);
         }
@@ -195,8 +203,12 @@ public class Hub{
 
             switch (pageName){
                 case "hub":
+                    Base.log(1, "go to the hubSettings");
                     base.nav.gotoPage.hubSettings();
+
                     base.nav.scrollBottom();
+
+                    Base.log(1, "tap Delete button");
                     unpairButton.click();
 
                     if (withCheckLocalizedText){
@@ -204,13 +216,13 @@ public class Hub{
                         actualText = base.popUp.getContentText().replaceAll("(\").*(\")", "");
                         expectedText = base.getLocalizeTextForKey("remove_hub_from_this_account").replaceAll("(\").*(\")", "");
 
-                        System.out.println("actual: " + actualText);
-                        System.out.println("expected: " + expectedText);
+                        Base.log(1, "actual: " + actualText, true);
+                        Base.log(1, "expected: " + expectedText, true);
 
                         Base.log(1, "checking of localized text");
                         Assert.assertEquals(expectedText, actualText, "expected text is not equals actual");
 
-                        Base.log(1, "checking of localized text is successfully passed");
+                        Base.log(1, "checking of localized text is successfully passed", true);
                     }
 
                     base.nav.confirmIt();
@@ -222,9 +234,15 @@ public class Hub{
                     break;
 
                 case "master":
+                    Base.log(1, "go to the userList", true);
                     base.nav.gotoPage.userList();
-                    base.hub.settingsButton.click();
+
+                    Base.log(1, "tap first settings button in the UserList", true);
+                    settingsButton.click();
+
                     base.nav.scrollBottom();
+
+                    Base.log(1, "tap Delete Button", true);
                     base.user.getDeleteButton().click();
 
                     if (withCheckLocalizedText){
@@ -232,19 +250,21 @@ public class Hub{
                         actualText = base.popUp.getContentText();
                         expectedText = base.getLocalizeTextForKey("you_are_about_to_revoke_hub_access_for_user_are_you_sure");
 
-                        System.out.println("actual: " + actualText);
-                        System.out.println("expected: " + expectedText);
+                        Base.log(1, "\nchecking of localized text for Confirm PopUp for Hub unpair", true);
+                        Base.log(1, "actual: " + actualText, true);
+                        Base.log(1, "expected: " + expectedText, true);
 
                         Base.log(1, "checking of localized text");
                         Assert.assertEquals(expectedText, actualText, "expected text is not equals actual");
 
-                        Base.log(1, "checking of localized text is successfully passed");
+                        Base.log(1, "checking of localized text is successfully passed", true);
                     }
 
                     base.nav.confirmIt();
                     base.wait.invisibilityOfWaiter();
 
                     if (withCheckLocalizedText){
+                        Base.log(1, "\nchecking of localized text for Hub unpair", true);
                         base.check.localizedTextFor.hubUnpair();
                     }
                     break;
