@@ -19,6 +19,7 @@ public class C42099_Add_new_Hub_manually{
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
+        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
@@ -45,6 +46,7 @@ public class C42099_Add_new_Hub_manually{
 
         base.wait.invisibilityOfWaiter();
 
+        Base.log(1, "check is Error message displayed");
         if(base.wait.element(base.popUp.errorPic, 2, false)){
             base.getScreenShot();
             Assert.fail("Error message is shown");

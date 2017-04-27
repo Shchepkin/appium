@@ -21,6 +21,7 @@ public class C46224_Positive_Login {
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
+        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
         server = base.getCredsWithKey("server");

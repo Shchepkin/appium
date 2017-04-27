@@ -25,11 +25,11 @@ public class C43875_Add_new_device {
     @Parameters({"deviceName_"})
     @BeforeClass
     public void init(String deviceName_) {
+        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
         imitator = new Imitator(base);
 
-        Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
     }
 

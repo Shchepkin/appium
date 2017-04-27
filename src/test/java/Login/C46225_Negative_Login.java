@@ -19,6 +19,7 @@ public class C46225_Negative_Login {
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
+        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
         String server = base.getCredsWithKey("server");
