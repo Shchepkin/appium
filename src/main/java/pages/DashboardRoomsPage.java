@@ -49,6 +49,9 @@ public class DashboardRoomsPage{
     private final AndroidDriver driver;
     private boolean result;
     private WebElement[] elements;
+    private String actualText, expectedText;
+
+    public Delete delete = new Delete();
 
     public DashboardRoomsPage(Base base) {
         this.base = base;
@@ -163,45 +166,94 @@ public class DashboardRoomsPage{
         deleteButton.click();
     }
 
-    public boolean deleteAllRooms() {
-        base.nav.gotoPage.Rooms();
-        String roomName = null;
-        int counter = 0;
-        try {
-            while (true) {
-                if (base.wait.menuIconOrPinPopUp(10, true)){
-                    if (counter != 0) {
-                        Base.log(1, "room with name \"" + roomName + "\" is deleted successfully", true);
+    public class Delete {
+
+        public boolean one(boolean withLocaleTextCheck) {
+            Base.log(1, "open Rooms page", true);
+            base.nav.gotoPage.Rooms();
+            String roomName;
+            if (base.wait.menuIconOrPinPopUp(10, true)) {
+                base.nav.cancelIt();
+                if (!base.check.isEmpty.roomsList()) {
+                    roomName = getFirstRoomName();
+
+                    Base.log(1, "open settings page of room with name \"" + roomName + "\"", true);
+                    goToFirstRoomSettingsPage();
+
+                    Base.log(1, "scroll bottom");
+                    base.nav.scrollBottom();
+
+                    Base.log(1, "tap Delete Button", true);
+                    deleteButton.click();
+
+                    if (withLocaleTextCheck){
+                        if (!base.check.localizedTextFor.loader.roomDelete()) return false;
                     }
-                    base.nav.cancelIt();
-                    if (!base.check.isEmpty.roomsList()){
-                        roomName = getFirstRoomName();
-                        goToFirstRoomSettingsPage();
-                    }else if (counter > 0){
-                        Base.log(1, "rooms are not found, number of deleted rooms: " + counter);
+                    Base.log(1, "confirm proposition", true);
+                    base.nav.confirmIt();
+
+                    String successText = base.getLocalizeTextForKey("Deleting_success1");
+                    if(base.wait.loaderWithText(true, successText, 10, true)){
+                        Base.log(1, "SUCCESS text \"" + successText + "\" is successfully shown", true);
                         return true;
                     }else {
-                        Base.log(2, "Test impossible, because precondition isn't valid - no one element found");
+                        Base.log(1, "SUCCESS text is not shown", true);
                         return false;
                     }
 
-                    base.nav.scrollBottom();
-
-                    Base.log(1, "tap Delete Button");
-                    deleteButton.click();
-
-                    Base.log(1, "confirm proposition");
-                    base.nav.confirmIt();
-                    counter++;
-
-                }else {
-                    Base.log(2, "Test impossible, I don't know where are we");
+                } else {
+                    Base.log(2, "Test impossible, because precondition isn't valid - no one room found", true);
                     return false;
                 }
+
+            } else {
+                Base.log(2, "Test impossible, I don't know where we are", true);
+                return false;
             }
-        }catch (NoSuchElementException e){
-            Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
-            return false;
+        }
+
+        public boolean all() {
+            base.nav.gotoPage.Rooms();
+            String roomName = null;
+            int counter = 0;
+            try {
+                while (true) {
+                    if (base.wait.menuIconOrPinPopUp(10, true)) {
+                        if (counter != 0) {
+                            Base.log(1, "room with name \"" + roomName + "\" is deleted successfully", true);
+                        }
+                        base.nav.cancelIt();
+                        if (!base.check.isEmpty.roomsList()) {
+                            roomName = getFirstRoomName();
+                            goToFirstRoomSettingsPage();
+                        } else if (counter > 0) {
+                            Base.log(1, "rooms are not found, number of deleted rooms: " + counter, true);
+                            Base.log(1, "process of deleting all existing rooms is successfully finished", true);
+                            return base.check.isElementDisplayed(base.roomsPage.getDescription(), 5);
+
+                        } else {
+                            Base.log(2, "Test impossible, because precondition isn't valid - no one room found", true);
+                            return false;
+                        }
+
+                        base.nav.scrollBottom();
+
+                        Base.log(1, "tap Delete Button");
+                        deleteButton.click();
+
+                        Base.log(1, "confirm proposition");
+                        base.nav.confirmIt();
+                        counter++;
+
+                    } else {
+                        Base.log(2, "Test impossible, I don't know where we are", true);
+                        return false;
+                    }
+                }
+            } catch (NoSuchElementException e) {
+                Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
+                return false;
+            }
         }
     }
 

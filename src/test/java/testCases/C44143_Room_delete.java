@@ -30,54 +30,39 @@ public class C44143_Room_delete {
 
 
     @Test(priority = 1, enabled = true)
-    public void One_While_Hub_Disarmed() {
-        String successText = base.getLocalizeTextForKey("Deleting_success1");
-
-        Base.log(1, "get name of first room from rooms list");
-        String roomName = base.roomsPage.getFirstRoomName();
-
-        base.roomsPage.goToRoomSettingsPage();
-
-        Base.log(1, "scroll bottom and tap Delete button");
-        base.nav.scrollBottom();
-        base.roomsPage.deleteButtonClick();
-
-        Base.log(1, "confirm proposition from popUp");
-        base.nav.confirmIt();
-
-        Assert.assertTrue(base.wait.elementWithText(successText, 10, true));
-
-        base.nav.cancelIt();
-        base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true);
-
-        Assert.assertTrue(base.check.isDeletedBy("name", roomName));
-        Base.log(1, "room with name \"" + roomName + "\" is deleted successfully and SUCCESS text is shown");
+    public void One_With_Check_Localise_Text() {
+        Base.log(1, "delete one room", true);
+        base.nav.gotoPage.Rooms();
+        Assert.assertTrue(base.roomsPage.delete.one(false));
     }
 
     @Test(priority = 2, enabled = true)
     public void While_Hub_Armed() {
+        Base.log(1, "try to delete existing room while Hub armed", true);
         base.hub.security.arm();
-        base.dashboard.goToTheRoomPage();
+        base.nav.gotoPage.Rooms();
         Assert.assertFalse(base.check.isElementDisplayed(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
-
-        Base.log(1, "disarm hub");
-        base.hub.security.disarm();
+        Base.log(1, "Settings button is not shown while Hub armed", true);
     }
 
     @Test(priority = 3, enabled = true)
     public void While_Hub_Partial_Armed() {
+        Base.log(1, "try to delete existing room while Hub partial armed", true);
         base.hub.security.partialArm();
-        base.dashboard.goToTheRoomPage();
+        base.nav.gotoPage.Rooms();
         Assert.assertFalse(base.check.isElementDisplayed(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
-
-        Base.log(1, "disarm hub");
-        base.hub.security.disarm();
+        Base.log(1, "Settings button is not shown while Hub armed", true);
     }
 
     @Test(priority = 4, enabled = true)
     public void All_Rooms_Deleting() {
-        base.dashboard.goToTheRoomPage();
-        Assert.assertTrue(base.roomsPage.deleteAllRooms());
+        Base.log(1, "disarm hub");
+        base.hub.security.disarm();
+
+        Base.log(1, "delete all existing rooms", true);
+        base.nav.gotoPage.Rooms();
+        Assert.assertTrue(base.roomsPage.delete.all(), "description is not shown after deleting all rooms\n");
+        Base.log(1, "description is successfully shown after deleting all rooms", true);
     }
 
 

@@ -32,6 +32,16 @@ public class C42100_Add_new_room{
     }
 
     @Test(priority = 1, enabled = true)
+    public void Name_Field_Is_Empty() {
+        Base.log(1, "add Room with empty Name field", true);
+    }
+
+    @Test(priority = 1, enabled = true)
+    public void Name_Field_Has_() {
+        Base.log(1, "add Room with ...", true);
+    }
+
+    @Test(priority = 1, enabled = true)
     public void Without_image() {
         Base.log(1, "add Room without image", true);
         base.roomsPage.addRoom("Without image", 0);
