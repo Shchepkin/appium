@@ -74,7 +74,15 @@ public class Hub{
             Base.log(4, "Method is started");
             base.nav.gotoPage.Remote();
             base.remotePage.clickArmButton();
+
+            Base.log(1, "confirm if popUp appear");
             base.nav.confirmIt();
+
+            if (base.wait.elementWithText(base.getLocalizeTextForKey("armed"), 5 , true)){
+                Base.log(1, "Hub is armed successfully", true);
+            }else {
+                Base.log(3, "Hub is not armed", true);
+            }
             Base.log(4, "Method is finished");
         }
 
@@ -85,6 +93,12 @@ public class Hub{
             base.nav.gotoPage.Remote();
 
             base.remotePage.clickDisarmButton();
+
+            if (base.wait.elementWithText(base.getLocalizeTextForKey("disarmed"), 5 , true)){
+                Base.log(1, "Hub is disarmed successfully", true);
+            }else {
+                Base.log(3, "Hub is not disarmed", true);
+            }
             Base.log(4, "Method is finished");
         }
 
@@ -97,56 +111,22 @@ public class Hub{
             Base.log(1, "confirm if popUp appear");
             base.nav.confirmIt();
 
+            if (base.wait.elementWithText(base.getLocalizeTextForKey("partially_armed"), 5 , true)){
+                Base.log(1, "Hub is partially armed successfully", true);
+            }else {
+                Base.log(3, "Hub is not partially armed", true);
+            }
             Base.log(4, "Method is finished");
         }
 
         public void alarm(){
             Base.log(4, "Method is started");
-
             Base.log(1, "go to Remote page");
             base.nav.gotoPage.Remote();
-
             base.remotePage.clickAlarmButton();
-
-            base.wait.element(base.remotePage.getSpaceControlImage(), 10, true);
             Base.log(4, "Method is finished");
         }
     }
-
-    public void goToTheUserInvitationPage() {
-        Base.log(4, "Method is started");
-        sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
-
-        Base.log(1, "click on hub");
-        hubImageOnDeviceList.click();
-
-        Base.log(1, "click Hub Settings button");
-        settingsButton.click();
-
-        Base.log(1, "click Users tab");
-        hubSettingsUsersImage.click();
-
-        base.wait.element(userStatus, 10, true);
-        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
-        Base.log(4, "Method is finished");
-    }
-
-    public void goToTheUserlistPage() {
-        Base.log(4, "Method is started");
-
-        Base.log(1, "click on Hub tab");
-        hubImageOnDeviceList.click();
-
-        Base.log(1, "click Hub Settings button");
-        settingsButton.click();
-
-        Base.log(1, "click Users tab");
-        hubSettingsUsersImage.click();
-
-        base.wait.element(userStatus, 10, true);
-        Base.log(4, "Method is finished");
-    }
-
 
     public void addNewManual() {
         Base.log(4, "Method is started");
