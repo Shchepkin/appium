@@ -535,7 +535,7 @@ public class Navigation{
             base.wait.element(base.hub.getUserStatus(), 10, true);
         }
 
-
+// TODO change isDisplayed and while condition
         private void backToDashboard(){
             Base.log(1, "back to dashboard");
             while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
