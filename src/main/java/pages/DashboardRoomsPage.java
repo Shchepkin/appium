@@ -156,11 +156,6 @@ public class DashboardRoomsPage{
         return roomNameField.getText();
     }
 
-    public void goToFirstRoomSettingsPage(){
-        Base.log(1, "tap Settings Button");
-        base.nav.goToSettings();
-    }
-
     public void deleteButtonClick(){
         Base.log(1, "tap delete button");
         deleteButton.click();
@@ -178,7 +173,7 @@ public class DashboardRoomsPage{
                     roomName = getFirstRoomName();
 
                     Base.log(1, "open settings page of room with name \"" + roomName + "\"", true);
-                    goToFirstRoomSettingsPage();
+                    base.nav.goToSettings();
 
                     Base.log(1, "scroll bottom");
                     base.nav.scrollBottom();
@@ -225,11 +220,14 @@ public class DashboardRoomsPage{
                         base.nav.cancelIt();
                         if (!base.check.isEmpty.roomsList()) {
                             roomName = getFirstRoomName();
-                            goToFirstRoomSettingsPage();
+
+                            Base.log(1, "open settings page of room with name \"" + roomName + "\"", true);
+                            base.nav.goToSettings();
+
                         } else if (counter > 0) {
                             Base.log(1, "rooms are not found, number of deleted rooms: " + counter, true);
                             Base.log(1, "process of deleting all existing rooms is successfully finished", true);
-                            return base.check.isElementDisplayed(base.roomsPage.getDescription(), 5);
+                            return true;
 
                         } else {
                             Base.log(2, "Test impossible, because precondition isn't valid - no one room found", true);

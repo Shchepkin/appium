@@ -17,7 +17,6 @@ public class dataProvider {
     @BeforeClass
     public void init(String deviceName_){
         base = new Base(deviceName_);
-
     }
 
     @DataProvider

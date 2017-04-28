@@ -61,7 +61,8 @@ public class C44143_Room_delete {
 
         Base.log(1, "delete all existing rooms", true);
         base.nav.gotoPage.Rooms();
-        Assert.assertTrue(base.roomsPage.delete.all(), "description is not shown after deleting all rooms\n");
+        Assert.assertTrue(base.roomsPage.delete.all(), "deleting process failed\n");
+        Assert.assertTrue(base.check.isEmpty.roomsList(), "description is not shown after deleting all rooms\n");
         Base.log(1, "description is successfully shown after deleting all rooms", true);
     }
 
