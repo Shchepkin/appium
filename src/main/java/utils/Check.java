@@ -6,7 +6,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import pages.Base;
 
 
@@ -294,15 +293,10 @@ public class Check{
     public class IsEmpty{
 
         public boolean devicesList() {
-            if(base.wait.element(base.devicesPage.getRoomOfDeviceLocator(), 1, true)){
-                return false;
-            }else {
-                return true;
-            }
+            return !base.wait.element(base.devicesPage.getRoomOfDeviceLocator(), 1, true);
         }
-
         public boolean roomsList() {
-                return true;
+            return !base.wait.element(base.roomsPage.getDescription(), 1, true);
         }
 
         public boolean guestUsersList() {
