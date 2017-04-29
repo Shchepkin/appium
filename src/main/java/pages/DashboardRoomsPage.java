@@ -182,19 +182,12 @@ public class DashboardRoomsPage{
                     deleteButton.click();
 
                     if (withLocaleTextCheck){
-                        if (!base.check.localizedTextFor.loader.roomDelete()) return false;
+                        if (!base.check.localizedTextFor.confirmLoader.roomDelete()) return false;
                     }
                     Base.log(1, "confirm proposition", true);
                     base.nav.confirmIt();
 
-                    String successText = base.getLocalizeTextForKey("Deleting_success1");
-                    if(base.wait.loaderWithText(true, successText, 10, true)){
-                        Base.log(1, "SUCCESS text \"" + successText + "\" is successfully shown", true);
-                        return true;
-                    }else {
-                        Base.log(1, "SUCCESS text is not shown", true);
-                        return false;
-                    }
+                    return base.check.localizedTextFor.successMessage.roomDelete();
 
                 } else {
                     Base.log(2, "Test impossible, because precondition isn't valid - no one room found", true);
