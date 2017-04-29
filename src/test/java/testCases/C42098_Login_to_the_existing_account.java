@@ -2,7 +2,7 @@ package testCases;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
-import pages.Base;
+import pageObjects.Base;
 
 /**
  * PRECONDITION

@@ -1,4 +1,4 @@
-package pages;
+package pageObjects;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -14,6 +14,14 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
+import pageObjects.pages.dashboard.*;
+import pageObjects.pages.intro.*;
+import pageObjects.object.Hub;
+import pageObjects.object.User;
+import pageObjects.pages.AccountMenuPage;
+import pageObjects.pages.AddImagePage;
+import pageObjects.pages.MainMenuPage;
+import pageObjects.pages.PinPage;
 import utils.*;
 
 import java.io.*;
@@ -30,6 +38,7 @@ public class Base {
     public static int TIMEOUT = 3;
     private static final int LOG_LEVEL = 5;
     private static final boolean LOG_VIEW = false;
+    private static final String logFile = logfileName();
 
     public Sql sql;
     public Hub hub;
@@ -45,27 +54,26 @@ public class Base {
     public MainMenuPage menuPage;
     public AddImagePage addImagePage;
     public AccountMenuPage accountPage;
-    public DashboardHeader header;
-    public DashboardHeader dashboardHeader;
+    public Header header;
+    public Header dashboardHeader;
     public RegistrationPage regPage;
     public AuthorizationPage loginPage;
-    public DashboardRoomsPage roomsPage;
+    public RoomsPage roomsPage;
     public ForgotPasswordPage forgotPasswordPage;
     public ValidationCodePage validationCodePage;
-    public DashboardRemotePage remotePage;
-    public DashboardDevicesPage devicesPage;
-    public DashboardNotificationsPage notificationsPage;
+    public RemotePage remotePage;
+    public DevicesPage devicesPage;
 
+    public NotificationsPage notificationsPage;
     private AndroidDriver driver = null;
     private Path path;
     private String jsonString, collection;
+
     private String locale;
 
     private Map localizeKeys, creds, dbSettings, appSet;
-
     private ArrayList<String> jsonStringArray;
     private String deviceName, UDID, platformVersion, URL, appPath, appPackage, appActivity;
-    public static final String logFile = logfileName();
 
     public Base(String deviceName_) {
         log(4, "setup is started");
@@ -120,7 +128,7 @@ public class Base {
         popUp = new PopUp(this);
 
         log(4, "init DashboardHeader()");
-        header = new DashboardHeader(this);
+        header = new Header(this);
 
         log(4, "init RegistrationPage()");
         regPage = new RegistrationPage(this);
@@ -141,13 +149,13 @@ public class Base {
         loginPage = new AuthorizationPage(this);
 
         log(4, "init DashboardRoomsPage()");
-        roomsPage = new DashboardRoomsPage(this);
+        roomsPage = new RoomsPage(this);
 
         log(4, "init DashboardRemotePage()");
-        remotePage = new DashboardRemotePage(this);
+        remotePage = new RemotePage(this);
 
         log(4, "init DashboardDevicesPage()");
-        devicesPage = new DashboardDevicesPage(this);
+        devicesPage = new DevicesPage(this);
 
         log(4, "init MenuAccountPage()");
         accountPage = new AccountMenuPage(this);
@@ -156,13 +164,13 @@ public class Base {
         addImagePage = new AddImagePage(this);
 
         log(4, "init DashboardHeader()");
-        dashboardHeader = new DashboardHeader(this);
+        dashboardHeader = new Header(this);
 
         log(4, "init ValidationCodePage()");
         validationCodePage = new ValidationCodePage(this);
 
         log(4, "init NotificationsPage()");
-        notificationsPage = new DashboardNotificationsPage(this);
+        notificationsPage = new NotificationsPage(this);
 
         log(4, "init ForgotPasswordPage()");
         forgotPasswordPage = new ForgotPasswordPage(this);
@@ -309,7 +317,7 @@ public class Base {
 
     private void printArray(ArrayList arrayList) {
         for (Object element : arrayList) {
-            System.out.println(element.toString());
+            log(4, element.toString());
         }
     }
 

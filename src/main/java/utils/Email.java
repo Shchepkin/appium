@@ -1,7 +1,7 @@
 package utils;
 
 import org.testng.Assert;
-import pages.Base;
+import pageObjects.Base;
 
 import javax.mail.*;
 import java.io.IOException;

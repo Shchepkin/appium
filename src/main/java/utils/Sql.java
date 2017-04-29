@@ -2,7 +2,7 @@ package utils;
 
 
 import org.testng.Assert;
-import pages.Base;
+import pageObjects.Base;
 
 import java.sql.*;
 import java.util.ArrayList;

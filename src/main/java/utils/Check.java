@@ -6,7 +6,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.Base;
+import pageObjects.Base;
 
 
 public class Check{
@@ -48,7 +48,7 @@ public class Check{
 
             for (WebElement el : elements) {
                 try {
-                    Base.log(4, "element " + el + " is shown with text: \"" + el.getText() + "\"");
+                    Base.log(4, "element is shown with text: \"" + el.getText() + "\", element: " + el);
                     result = true;
                     numOfFoundElement = counter;
                     break;
@@ -217,16 +217,18 @@ public class Check{
             }
         }
         public class SuccessMessage {
-            String actualText = base.popUp.getContentText();
             public boolean hubDelete(){
+                actualText = base.popUp.getContentText();
                 expectedText = base.getLocalizeTextForKey("Detach_success1");
                 return checkIt(actualText, expectedText);
             }
             public boolean roomDelete(){
+                actualText = base.popUp.getContentText();
                 expectedText = base.getLocalizeTextForKey("Deleting_success1");
                 return checkIt(actualText, expectedText);
             }
             public boolean deviceDelete(){
+                actualText = base.popUp.getContentText();
                 expectedText = base.getLocalizeTextForKey("Deleting_success1");
                 return checkIt(actualText, expectedText);
             }

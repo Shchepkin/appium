@@ -1,7 +1,7 @@
 package utils;
 
 import jssc.*;
-import pages.Base;
+import pageObjects.Base;
 
 public class Imitator{
 

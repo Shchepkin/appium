@@ -1,4 +1,4 @@
-package pages;
+package pageObjects.pages.dashboard;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
@@ -10,11 +10,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import pageObjects.Base;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class DashboardRoomsPage{
+public class RoomsPage {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
     private WebElement addRoomBtn;
@@ -43,6 +44,9 @@ public class DashboardRoomsPage{
     public AndroidElement getDescription() {
         return description;
     }
+    public String getDescriptionText() {
+        return description.getText();
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
@@ -53,7 +57,7 @@ public class DashboardRoomsPage{
 
     public Delete delete = new Delete();
 
-    public DashboardRoomsPage(Base base) {
+    public RoomsPage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);

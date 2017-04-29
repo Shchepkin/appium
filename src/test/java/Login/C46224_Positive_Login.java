@@ -2,7 +2,7 @@ package Login;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
-import pages.Base;
+import pageObjects.Base;
 
 import java.util.Iterator;
 import java.util.Map;

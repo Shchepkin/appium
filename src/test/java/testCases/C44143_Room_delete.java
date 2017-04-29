@@ -5,7 +5,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pages.Base;
+import pageObjects.Base;
 
 /**
  * PRECONDITION
@@ -63,7 +63,7 @@ public class C44143_Room_delete {
         base.nav.gotoPage.Rooms();
         Assert.assertTrue(base.roomsPage.delete.all(), "deleting process failed\n");
         Assert.assertTrue(base.check.isEmpty.roomsList(), "description is not shown after deleting all rooms\n");
-        Base.log(1, "description is successfully shown after deleting all rooms", true);
+        Base.log(1, "description with text \"" + base.roomsPage.getDescriptionText() + "\" is successfully shown after deleting all rooms", true);
     }
 
 

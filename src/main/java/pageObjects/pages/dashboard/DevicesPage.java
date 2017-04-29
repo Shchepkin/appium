@@ -1,4 +1,4 @@
-package pages;
+package pageObjects.pages.dashboard;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -6,11 +6,12 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import pageObjects.Base;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class DashboardDevicesPage{
+public class DevicesPage {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/footerTitle")
     private WebElement addDeviceButton;
@@ -47,7 +48,7 @@ public class DashboardDevicesPage{
     private AppiumDriver driver;
     private boolean result;
 
-    public DashboardDevicesPage(Base base) {
+    public DevicesPage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);

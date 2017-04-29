@@ -15,23 +15,24 @@
     <!--</test>-->
     <!---->
 
-    <!--<parameter name="deviceName_" value="LG"/>-->
-    <!--<test name="LG - Registration and adding artifacts">-->
-        <!--<classes>-->
+    <parameter name="deviceName_" value="LG"/>
+    <test name="LG - Registration and adding artifacts">
+        <classes>
             <!--<class name="testCases.C42097_New_user_registration"/>-->
-            <!--<class name="testCases.C42099_Add_new_Hub_manually"/>-->
-            <!--<class name="testCases.C42102_Add_new_guest_user"/>-->
-            <!--<class name="testCases.C42100_Add_new_room"/>-->
-            <!--<class name="testCases.C43875_Add_new_device"/>-->
+            <class name="testCases.C42099_Add_new_Hub_manually"/>
+            <class name="testCases.C42102_Add_new_guest_user"/>
+            <class name="testCases.C42100_Add_new_room"/>
+            <class name="testCases.C43875_Add_new_device"/>
             <!--<class name="testCases.C42176_Virtual_Space_Control"/>-->
-        <!--</classes>-->
-    <!--</test>-->
+        </classes>
+    </test>
 
     <parameter name="deviceName_" value="LG"/>
     <test name="LG - Users and devices deleting">
         <classes>
-            <!--<class name="testCases.C44142_Device_delete"/>-->
-            <!--<class name="testCases.C44141_User_delete"/>-->
+            <class name="testCases.C44142_Device_delete"/>
+            <class name="testCases.C44141_User_delete"/>
+            <class name="testCases.C44143_Room_delete"/>
         </classes>
     </test>
 
@@ -44,11 +45,11 @@
     <!--</test>-->
 
 
-    <test name="LG - Room_delete">
-        <classes>
-            <class name="testCases.C44143_Room_delete"/>
-        </classes>
-    </test>
+    <!--<test name="LG - Room_delete">-->
+        <!--<classes>-->
+            <!--<class name="testCases.C44143_Room_delete"/>-->
+        <!--</classes>-->
+    <!--</test>-->
 
     <!--<test name="LG - Hub_delete">-->
         <!--<classes>-->
