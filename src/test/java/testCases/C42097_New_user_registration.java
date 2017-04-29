@@ -51,6 +51,7 @@ public class C42097_New_user_registration{
 
         Base.log(1, "check is SnackBar with error message present on page", true);
         Assert.assertFalse(base.wait.visibilityOfSnackBar(5, true), "SnackBar is shown with error text");
+        Assert.assertFalse(base.check.isPresent.snackBar(5), "SnackBar is shown with error text");
 
         Base.log(1, "waiting for Validation Code Page");
         base.wait.element(base.validationCodePage.getSmsCodeField(), 60, true);

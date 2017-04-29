@@ -115,16 +115,19 @@ public class Wait{
     }
 
     public boolean invisibilityOfWaiter() {
-        Base.log(4, "Method is started");
-        result = false;
         Base.log(1, "waiting 100 seconds while Waiter become Invisible");
         WebDriverWait iWait = new WebDriverWait(driver, 100);
-        iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ajaxsystems:id/progress")));
-        result = true;
-        Base.log(1, "Waiter become Invisible");
-        base.getScreenShot();
-        Base.log(4, "Method is finished");
-        return result;
+        try {
+            iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ajaxsystems:id/progress")));
+            Base.log(1, "Waiter become Invisible");
+            base.getScreenShot();
+            return true;
+
+        } catch (TimeoutException e) {
+            Base.log(4, "Timeout Exception, waiter is not disappear:\n\n" + e + "\n");
+            base.getScreenShot();
+            return false;
+        }
     }
 
     public boolean visibilityOfSnackBarWithText(String expectedText, int timer) {

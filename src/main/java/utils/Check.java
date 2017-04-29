@@ -127,6 +127,7 @@ public class Check{
     }
 
     public class IsPresent {
+
         public boolean error(int timer) {
             boolean result = element(base.popUp.errorPic, timer);
             if (result) {
@@ -134,6 +135,7 @@ public class Check{
             }
             return result;
         }
+
         public boolean element(WebElement element, int timer) {
             try {
                 WebDriverWait iWait = new WebDriverWait(driver, timer);
@@ -147,9 +149,12 @@ public class Check{
                 return false;
             }
         }
+
         public boolean snackBar(int timer) {
+            Base.log(1, "waiting for snackBar");
             return element(base.popUp.getSnackBarElement(), timer);
         }
+
         public boolean popUpWithConfirmation(int timer) {
             try {
                 Base.log(1, "waiting " + timer + " seconds for Confirmation PopUp");

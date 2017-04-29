@@ -124,7 +124,7 @@ public class Navigation{
         Base.log(4, "Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
-        Base.log(1, "Screen dimension is " + screenSize);
+        Base.log(4, "Screen dimension is " + screenSize);
 
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / 3.00);
@@ -132,7 +132,7 @@ public class Navigation{
         int endY = (int)(screenSize.height / 100.00);
         int duration = 1500;
 
-        Base.log(1, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
+        Base.log(4, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
         Base.log(4, "Method is finished");
@@ -142,14 +142,14 @@ public class Navigation{
         Base.log(4, "Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
-        Base.log(1, "Screen dimension is " + screenSize);
+        Base.log(4, "Screen dimension is " + screenSize);
 
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / heightPart);
         int endX = startX;
         int endY = (int)(screenSize.height / 100.00);
 
-        Base.log(1, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
+        Base.log(4, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
         Base.log(4, "Method is finished");
@@ -177,14 +177,14 @@ public class Navigation{
         Base.log(4, "Method is started");
 
         Dimension screenSize = driver.manage().window().getSize();
-        Base.log(1, "Screen dimension is " + screenSize);
+        Base.log(4, "Screen dimension is " + screenSize);
 
         int startX = (int)(screenSize.width / 2.00);
         int startY = (int)(screenSize.height / heightPart);
         int endX = startX;
         int endY = (int)(screenSize.height / 1.05);
 
-        Base.log(1, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
+        Base.log(4, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
 
         Base.log(4, "Method is finished");
@@ -259,27 +259,22 @@ public class Navigation{
     public class ScrollToElementWith{
 
         public boolean text(String textOfSearchingElement, boolean click){
-            scrollTop();
             return  scrollToElementWith("text", "up", textOfSearchingElement, click);
         }
 
         public boolean email(String textOfSearchingElement, boolean click){
-            scrollTop();
             return  scrollToElementWith("email", "up", textOfSearchingElement, click);
         }
 
         public boolean id(String textOfSearchingElement, boolean click){
-            scrollTop();
             return  scrollToElementWith("id", "up", textOfSearchingElement, click);
         }
 
         public boolean name(String textOfSearchingElement, boolean click){
-            scrollTop();
             return  scrollToElementWith("name", "up", textOfSearchingElement, click);
         }
 
         public boolean type(String typeOfElement, String textOfSearchingElement, boolean click){
-            scrollTop();
             return  scrollToElementWith(typeOfElement, "up", textOfSearchingElement, click);
         }
 
@@ -289,6 +284,7 @@ public class Navigation{
             Base.log(4, "Method is started");
             result = false;
             WebElement searchingElement;
+            scrollTop();
 
             counter = 0;
             etalon.clear();
@@ -302,6 +298,7 @@ public class Navigation{
 
             while (true){
                 if (current.contains(textOfSearchingElement)){
+                    Base.log(4, "textOfSearchingElement is available on this screen");
                     try {
                         switch (typeOfElement){
                             case "id":
@@ -414,7 +411,6 @@ public class Navigation{
 //----------------------------------------------------------------------------------------------------------------------
 
     private ArrayList <String> compare(ArrayList<String> etalon, ArrayList<String> current){
-        Base.log(4, "Method is started");
         flag = false;
 
         if (etalon.containsAll(current) && counter < 1) {
@@ -429,7 +425,6 @@ public class Navigation{
             etalon.addAll(current);
             flag = false;
         }
-        Base.log(4, "Method is finished");
        return etalon;
     }
 

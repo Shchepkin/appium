@@ -37,7 +37,7 @@ public class Base {
 
     public static int TIMEOUT = 3;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW = false;
+    private static final boolean LOG_VIEW = true;
     private static final String logFile = logfileName();
 
     public Sql sql;
