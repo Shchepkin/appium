@@ -196,8 +196,7 @@ public class Wait{
         try {
             Base.log(1, "waiting " + timer + " seconds for menuIcon Or Pin PopUp");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions
-                    .or(
+            iWait.until(ExpectedConditions.or(
                             ExpectedConditions.visibilityOf(base.dashboardHeader.getMenuDrawer()),
                             ExpectedConditions.visibilityOf(base.nav.getCancelButton())
                     )

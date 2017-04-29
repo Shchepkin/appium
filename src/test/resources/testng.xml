@@ -30,7 +30,7 @@
     <parameter name="deviceName_" value="LG"/>
     <test name="LG - Users and devices deleting">
         <classes>
-            <class name="testCases.C44142_Device_delete"/>
+            <!--<class name="testCases.C44142_Device_delete"/>-->
             <!--<class name="testCases.C44141_User_delete"/>-->
         </classes>
     </test>
@@ -44,11 +44,11 @@
     <!--</test>-->
 
 
-    <!--<test name="LG - Room_delete">-->
-        <!--<classes>-->
-            <!--<class name="testCases.C44143_Room_delete"/>-->
-        <!--</classes>-->
-    <!--</test>-->
+    <test name="LG - Room_delete">
+        <classes>
+            <class name="testCases.C44143_Room_delete"/>
+        </classes>
+    </test>
 
     <!--<test name="LG - Hub_delete">-->
         <!--<classes>-->

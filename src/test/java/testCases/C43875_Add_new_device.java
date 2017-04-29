@@ -15,9 +15,6 @@ import utils.Imitator;
  * - at least three rooms in the Hub
  */
 
-    // TODO check whether we are on Devices Page before start new device add
-    //
-
 public class C43875_Add_new_device {
     private Base base;
     private Imitator imitator;
@@ -35,6 +32,7 @@ public class C43875_Add_new_device {
 
     @Test(priority = 1, enabled = true)
     public void add_Door_Protect() {
+        base.nav.gotoPage.Devices();
         Base.log(1, "add devices DoorProtect to Hub");
         imitator.addDevice(203061, 1, 1, "Door_Protect", 1);
 
@@ -44,6 +42,7 @@ public class C43875_Add_new_device {
 
     @Test(priority = 2, enabled = true)
     public void add_Motion_Protect() {
+        base.nav.gotoPage.Devices();
         Base.log(1, "add devices MotionProtect to Hub");
         imitator.addDevice(203062, 2, 2, "Motion_Protect", 2);
 
@@ -53,6 +52,7 @@ public class C43875_Add_new_device {
 
     @Test(priority = 3, enabled = true)
     public void add_Glass_Protect() {
+        base.nav.gotoPage.Devices();
         Base.log(1, "add devices GlassProtect to Hub");
         imitator.addDevice(203063, 3, 4, "Glass_Protect", 3);
 
