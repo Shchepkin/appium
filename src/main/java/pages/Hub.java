@@ -69,7 +69,6 @@ public class Hub{
     }
 
     public class Security {
-
         public void arm() {
             Base.log(4, "Method is started");
             base.nav.gotoPage.Remote();
@@ -85,7 +84,6 @@ public class Hub{
             }
             Base.log(4, "Method is finished");
         }
-
         public void disarm() {
             Base.log(4, "Method is started");
 
@@ -101,7 +99,6 @@ public class Hub{
             }
             Base.log(4, "Method is finished");
         }
-
         public void partialArm() {
             Base.log(4, "Method is started");
             base.nav.gotoPage.Remote();
@@ -118,7 +115,6 @@ public class Hub{
             }
             Base.log(4, "Method is finished");
         }
-
         public void alarm(){
             Base.log(4, "Method is started");
             Base.log(1, "go to Remote page");
@@ -166,90 +162,41 @@ public class Hub{
     }
 
     public class DeleteFrom {
-
-        //TODO remove different versions of deleting into different methods and dell private boolean deleteFrom(...)
-
         public boolean hubSettings(boolean withCheckLocalizedText) {
-            return deleteFrom("hub", withCheckLocalizedText);
-        }
+            Base.log(1, "go to the hubSettings", true);
+            base.nav.gotoPage.hubSettings();
+            base.nav.scrollBottom();
 
-        public boolean masterUserSettings(boolean withCheckLocalizedText) {
-            return deleteFrom("master", withCheckLocalizedText);
-        }
+            Base.log(1, "tap Delete button", true);
+            unpairButton.click();
 
-        private boolean deleteFrom(String pageName, boolean withCheckLocalizedText) {
-            String expectedText;
-            String actualText;
-
-            switch (pageName){
-                case "hub":
-                    Base.log(1, "go to the hubSettings");
-                    base.nav.gotoPage.hubSettings();
-
-                    base.nav.scrollBottom();
-
-                    Base.log(1, "tap Delete button");
-                    unpairButton.click();
-
-                    if (withCheckLocalizedText){
-                        Base.log(1, "get expected and actual localized text");
-                        actualText = base.popUp.getContentText().replaceAll("(\").*(\")", "");
-                        expectedText = base.getLocalizeTextForKey("remove_hub_from_this_account").replaceAll("(\").*(\")", "");
-
-                        Base.log(1, "actual: " + actualText, true);
-                        Base.log(1, "expected: " + expectedText, true);
-
-                        Base.log(1, "checking of localized text");
-                        Assert.assertEquals(expectedText, actualText, "expected text is not equals actual");
-
-                        Base.log(1, "checking of localized text is successfully passed", true);
-                    }
-
-                    base.nav.confirmIt();
-                    base.wait.invisibilityOfWaiter();
-
-                    if (withCheckLocalizedText){
-                        base.check.localizedTextFor.hubUnpair();
-                    }
-                    break;
-
-                case "master":
-                    Base.log(1, "go to the userList", true);
-                    base.nav.gotoPage.userList();
-
-                    Base.log(1, "tap first settings button in the UserList", true);
-                    settingsButton.click();
-
-                    base.nav.scrollBottom();
-
-                    Base.log(1, "tap Delete Button", true);
-                    base.user.getDeleteButton().click();
-
-                    if (withCheckLocalizedText){
-                        Base.log(1, "get expected and actual localized text");
-                        actualText = base.popUp.getContentText();
-                        expectedText = base.getLocalizeTextForKey("you_are_about_to_revoke_hub_access_for_user_are_you_sure");
-
-                        Base.log(1, "\nchecking of localized text for Confirm PopUp for Hub unpair", true);
-                        Base.log(1, "actual: " + actualText, true);
-                        Base.log(1, "expected: " + expectedText, true);
-
-                        Base.log(1, "checking of localized text");
-                        Assert.assertEquals(expectedText, actualText, "expected text is not equals actual");
-
-                        Base.log(1, "checking of localized text is successfully passed", true);
-                    }
-
-                    base.nav.confirmIt();
-                    base.wait.invisibilityOfWaiter();
-
-                    if (withCheckLocalizedText){
-                        Base.log(1, "\nchecking of localized text for Hub unpair", true);
-                        base.check.localizedTextFor.hubUnpair();
-                    }
-                    break;
+            if (withCheckLocalizedText){
+                if(!base.check.localizedTextFor.confirmLoader.hubDeleteFromHubSettings()) return false;
             }
-            return true;
+            base.nav.confirmIt();
+            base.wait.invisibilityOfWaiter();
+
+            return base.check.localizedTextFor.successMessage.hubDelete();
+        }
+        public boolean masterUserSettings(boolean withCheckLocalizedText) {
+            Base.log(1, "go to the userList", true);
+            base.nav.gotoPage.userList();
+
+            Base.log(1, "tap first settings button in the UserList", true);
+            settingsButton.click();
+
+            base.nav.scrollBottom();
+
+            Base.log(1, "tap Delete Button", true);
+            base.user.getDeleteButton().click();
+
+            if (withCheckLocalizedText){
+                if(!base.check.localizedTextFor.confirmLoader.hubDeleteFromMasterSettings()) return false;
+            }
+            base.nav.confirmIt();
+            base.wait.invisibilityOfWaiter();
+
+            return base.check.localizedTextFor.successMessage.hubDelete();
         }
     }
 }
