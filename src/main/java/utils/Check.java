@@ -18,6 +18,7 @@ public class Check{
     private int numOfFoundElement;
     public LocalizedTextFor localizedTextFor = new LocalizedTextFor();
     public IsEmpty isEmpty= new IsEmpty();
+    public IsPresent isPresent = new IsPresent();
 
     public Check(Base base) {
         this.base = base;
@@ -129,36 +130,20 @@ public class Check{
     }
 
 //======================================================================================================================
-
-    public boolean waitElementWithoutPin(WebElement element, int timer) {
-        Base.log(4, "Method is started");
-
-        try {
-            Base.log(4, "waiting " + timer + " seconds for the element ");
-
-            WebElement[] elements = new WebElement[]{element, base.nav.getCancelButton()};
-            if (waitElements(elements, 5) == 2) {
-                Base.log(4, "Pincode PopUp is shown - cancel it!");
-                base.nav.cancelIt();
-            }
-
-            Base.log(4, "element " + element + " is shown with text: \"" + element.getText() + "\"");
-            result = true;
-
-        } catch (NoSuchElementException e) {
-            Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
-            result = false;
-            base.getScreenShot();
-
-        } catch (TimeoutException e) {
-            Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
-            result = false;
-            base.getScreenShot();
+    public class IsPresent {
+        public boolean snackBar(int timer) {
+            return true;
         }
-        return result;
+        public boolean error(int timer) {
+            return true;
+        }
+        public boolean element(int timer) {
+            return true;
+        }
+        public boolean popUpWithConfirmation(int timer) {
+            return true;
+        }
     }
-
-//======================================================================================================================
 
     public boolean isSnackBarPresent(int timer) {
         Base.log(4, "Method is started");
@@ -178,7 +163,6 @@ public class Check{
         }
         return result;
     }
-
     public boolean isErrorPresent(int timer) {
         Base.log(4, "Method is started");
         try {
@@ -195,106 +179,94 @@ public class Check{
         }
         return result;
     }
+    public boolean isCancelButtonPresent() {
+        if (base.nav.getCancelButton().isDisplayed() || base.nav.getCancel().isDisplayed()) {
+            return true;
+        } else return false;
+    }
 
     public boolean isDeletedBy(String type, String value) {
         if (base.nav.scrollToElementWith.name(value, false)) {
             Base.log(4, "element with value \"" + value + "\" is still displayed in the List");
             result = false;
-        }else {
+        } else {
             Base.log(3, "element with value \"" + value + "\" is not displayed in the List");
             result = true;
         }
         return result;
     }
 
-    public boolean isCancelButtonPresent(){
-        if (base.nav.getCancelButton().isDisplayed() || base.nav.getCancel().isDisplayed()){
-            return true;
-        }else return false;
-    }
-
     public class LocalizedTextFor{
-        public Loader loader = new Loader();
+        public ConfirmLoader confirmLoader = new ConfirmLoader();
+        public SuccessMessage successMessage = new SuccessMessage();
+        String actualText, expectedText;
 
-        public class Loader{
-            String actualText, expectedText;
+        private boolean checkIt(String actualText, String expectedText){
+            Base.log(1, "\nchecking of localized text", true);
+            Base.log(1, "actual: \"" + actualText + "\"", true);
+            Base.log(1, "expected: \"" + expectedText + "\"", true);
 
-            public boolean hubDelete(){
+            if (expectedText.equalsIgnoreCase(actualText)){
+                Base.log(1, "checking of localized text is successfully passed\n", true);
                 return true;
+            }else {
+                Base.log(3, "expected text is not equals actual\n", true);
+                return false;
             }
+        }
 
+        public class ConfirmLoader {
+            public boolean hubDeleteFromHubSettings(){
+                actualText = base.popUp.getContentText().replaceAll("(\").*(\")", "[]");
+                expectedText = base.getLocalizeTextForKey("remove_hub_from_this_account").replaceAll("(\").*(\")", "[]");
+                return checkIt(actualText, expectedText);
+            }
+            public boolean hubDeleteFromMasterSettings(){
+                actualText = base.popUp.getContentText();
+                expectedText = base.getLocalizeTextForKey("you_are_about_to_revoke_hub_access_for_user_are_you_sure");
+                return checkIt(actualText, expectedText);
+            }
             public boolean roomDelete(){
-                Base.log(1, "\nchecking of localized text", true);
                 actualText = base.popUp.getContentText().replaceAll("(\").*(\")", "[]");
                 expectedText = base.getLocalizeTextForKey("you_are_about_to_delete_room_all_settings_will_be_erased_continue").replaceAll("(\").*(\")", "[]");
-                Base.log(1, "actual: \"" + actualText + "\"", true);
-                Base.log(1, "expected: \"" + expectedText + "\"", true);
-
-                if (expectedText.equalsIgnoreCase(actualText)){
-                    Base.log(1, "checking of localized text is successfully passed\n", true);
-                    return true;
-                }else {
-                    Base.log(3, "expected text is not equals actual", true);
-                    return false;
-                }
+                return checkIt(actualText, expectedText);
             }
-
             public boolean deviceDelete(){
-                return true;
+                actualText = "";
+                expectedText = "";
+                return checkIt(actualText, expectedText);
             }
         }
 
-        public boolean hubUnpair() {
-            Base.log(4, "get expected and actual localized text");
+        public class SuccessMessage {
             String actualText = base.popUp.getContentText();
-            String expectedText = base.getLocalizeTextForKey("Detach_success1");
-
-            Base.log(4, "checking of localized text");
-            Base.log(1, "actual: " + actualText, true);
-            Base.log(1, "expected: " + expectedText, true);
-
-            if(expectedText.equalsIgnoreCase(actualText)){
-
-                Base.log(1, "checking of localized text is successfully passed", true);
-                return true;
-            }else {
-                Base.log(1,  "expected text is not equals actual", true);
-                return false;
+            public boolean hubDelete(){
+                expectedText = base.getLocalizeTextForKey("Detach_success1");
+                return checkIt(actualText, expectedText);
+            }
+            public boolean roomDelete(){
+                expectedText = base.getLocalizeTextForKey("Deleting_success1");
+                return checkIt(actualText, expectedText);
+            }
+            public boolean deviceDelete(){
+                expectedText = base.getLocalizeTextForKey("Deleting_success1");
+                return checkIt(actualText, expectedText);
             }
         }
-
-        public boolean deletingDevice(){
-            String successText = base.getLocalizeTextForKey("Deleting_success1");
-            Base.log(1, "waiting for SUCCESS text");
-            if(base.wait.elementWithText(successText, 10, true)){
-                Base.log(1, "SUCCESS text is shown");
-                return true;
-            }else {
-                Base.log(3, "SUCCESS text is not shown");
-                return false;
-            }
-        }
-
     }
 
     public class IsEmpty{
-
         public boolean devicesList() {
-            return !base.wait.element(base.devicesPage.getRoomOfDeviceLocator(), 1, true);
+            return !base.wait.element(base.devicesPage.getRoomOfDeviceLocator(), 2, true);
         }
-
         public boolean roomsList() {
             return base.wait.element(base.roomsPage.getDescription(), 2, true);
         }
-
         public boolean guestUsersList() {
                 return true;
         }
-
         public boolean pendingUsersList() {
                 return true;
         }
-
-
     }
 }
