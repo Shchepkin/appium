@@ -11,8 +11,6 @@ import org.testng.Assert;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-//TODO remove all asserts
-
 public class User{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/active")
@@ -80,53 +78,10 @@ public class User{
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-
-    public void addFromEmailField(String userEmail) {
-        Base.log(4, "Method is started");
-        result = false;
-
-        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
-
-        Base.log(1, "fill email field with \"" + userEmail + "\"");
-        inviteUsersField.sendKeys(userEmail);
-
-        Base.log(1, "click add button and confirm proposition");
-        base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
-
-        Base.log(1, "click add button and confirm proposition");
-        base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
-
-        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
-        base.wait.invisibilityOfWaiter();
-        Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
-
-        Base.log(4, "Method is finished");
-    }
+// TODO create new class for add end delete users
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addFromContactList(String userEmail) {
-        Base.log(4, "Method is started");
-        result = false;
-
-        Base.log(1, "searching and clicking the Send Invites Button");
-        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
-
-        Base.log(1, "click the Add From Contact List Button");
-        addButtonFromContactList.click();
-
-        base.nav.scrollToElementWith.text(userEmail, true);
-        base.nav.nextButtonClick();
-
-        Base.log(1, "click add button and confirm proposition");
-        base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
-
-        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
-        base.wait.invisibilityOfWaiter();
-        Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
-
-        Base.log(4, "Method is finished");
-    }
 
 //----------------------------------------------------------------------------------------------------------------------
 
