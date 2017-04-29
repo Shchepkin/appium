@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 import java.util.concurrent.TimeUnit;
-// TODO remove all asserts
+
 public class Hub{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/usersImage")
@@ -124,6 +124,8 @@ public class Hub{
         }
     }
 
+    // TODO remove all asserts
+
     public void addNewManual() {
         Base.log(4, "Method is started");
 
@@ -154,7 +156,7 @@ public class Hub{
         base.nav.confirmIt();
 
         base.wait.invisibilityOfWaiter();
-        Assert.assertFalse(base.check.isErrorPresent(2), "Hub adding failed!");
+        Assert.assertFalse(base.check.isPresent.error(2), "Hub adding failed!");
 
         Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 10, true));
         Base.log(1, "hub successfully added!");

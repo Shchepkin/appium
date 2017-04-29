@@ -78,7 +78,8 @@ public class User{
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// TODO create new class for add end delete users
+    // TODO create new class for add end delete users
+    // TODO delete all asserts
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -105,7 +106,7 @@ public class User{
 
         Base.log(1, "click Add button");
         base.nav.nextButtonClick();
-        if(!base.check.isSnackBarPresent(3)) {
+        if(!base.check.isPresent.snackBar(3)) {
 
             Base.log(1, "confirm proposition");
             base.nav.confirmIt();
@@ -157,7 +158,7 @@ public class User{
         Base.log(1, "click Add button");
         base.nav.nextButtonClick();
 
-        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
+        Assert.assertFalse(base.check.isPresent.snackBar(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter();
         Assert.assertTrue(base.wait.element(userStatus, 15, true), "User page is not shown \n");
 
@@ -197,7 +198,7 @@ public class User{
         Base.log(1, "click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
+        Assert.assertFalse(base.check.isPresent.snackBar(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter();
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
@@ -212,7 +213,7 @@ public class User{
 
         for (int i = 1; i < 3; i++) {
             if (base.nav.scrollToElementWith.type(typeBy, userEmail, true)) {
-                base.check.isSnackBarPresent(2);
+                base.check.isPresent.snackBar(2);
                 try {
                     base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
                     Base.log(1, "element \"" + userEmail + "\" is activated successfully");
@@ -255,7 +256,7 @@ public class User{
         Base.log(1, "click add button and confirm proposition");
         base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
 
-        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown with error text \n");
+        Assert.assertFalse(base.check.isPresent.snackBar(3), "SnackBar is shown with error text \n");
         base.wait.invisibilityOfWaiter();
         Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 

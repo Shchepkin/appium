@@ -16,31 +16,15 @@ public class Check{
     private AppiumDriver driver;
     private boolean result;
     private int numOfFoundElement;
-    public LocalizedTextFor localizedTextFor = new LocalizedTextFor();
     public IsEmpty isEmpty= new IsEmpty();
     public IsPresent isPresent = new IsPresent();
+    public LocalizedTextFor localizedTextFor = new LocalizedTextFor();
 
     public Check(Base base) {
         this.base = base;
         this.driver = base.getDriver();
     }
 //----------------------------------------------------------------------------------------------------------------------
-
-    public boolean isElementDisplayed(WebElement element, int timer) {
-        try {
-            WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions.visibilityOf(element));
-            Base.log(1, "element is displayed: " + element);
-            return true;
-
-        } catch (NoSuchElementException e) {
-            base.getScreenShot();
-            result = false;
-            Base.log(3, "no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
-            return false;
-        }
-    }
-
 
     /*******************************************************************************************************************
      *
@@ -130,60 +114,6 @@ public class Check{
     }
 
 //======================================================================================================================
-    public class IsPresent {
-        public boolean snackBar(int timer) {
-            return true;
-        }
-        public boolean error(int timer) {
-            return true;
-        }
-        public boolean element(int timer) {
-            return true;
-        }
-        public boolean popUpWithConfirmation(int timer) {
-            return true;
-        }
-    }
-
-    public boolean isSnackBarPresent(int timer) {
-        Base.log(4, "Method is started");
-        result = false;
-
-        try {
-            Base.log(4, "waiting " + timer + " seconds for SnackBar");
-            WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions.visibilityOf(base.popUp.getSnackBarElement()));
-
-            Base.log(4, "SnackBar is shown with text: \"" + base.popUp.getSnackBarText() + "\"");
-            result = true;
-
-        } catch (NoSuchElementException e) {
-            Base.log(4, "SnackBar is not shown:\n\n" + e + "\n");
-            base.getScreenShot();
-        }
-        return result;
-    }
-    public boolean isErrorPresent(int timer) {
-        Base.log(4, "Method is started");
-        try {
-            WebDriverWait iWait = new WebDriverWait(driver, timer);
-            iWait.until(ExpectedConditions.visibilityOf(base.popUp.errorPic));
-
-            Base.log(3, "Error message is shown with text: \"" + base.popUp.getContentText() + "\"");
-            result = true;
-
-        } catch (NoSuchElementException e) {
-            Base.log(4, "Error message is not shown");
-            base.getScreenShot();
-            result = false;
-        }
-        return result;
-    }
-    public boolean isCancelButtonPresent() {
-        if (base.nav.getCancelButton().isDisplayed() || base.nav.getCancel().isDisplayed()) {
-            return true;
-        } else return false;
-    }
 
     public boolean isDeletedBy(String type, String value) {
         if (base.nav.scrollToElementWith.name(value, false)) {
@@ -196,11 +126,60 @@ public class Check{
         return result;
     }
 
+    public class IsPresent {
+        public boolean error(int timer) {
+            boolean result = element(base.popUp.errorPic, timer);
+            if (result) {
+                Base.log(3, "Error message is shown with text: \"" + base.popUp.getContentText() + "\"");
+            }
+            return result;
+        }
+        public boolean element(WebElement element, int timer) {
+            try {
+                WebDriverWait iWait = new WebDriverWait(driver, timer);
+                iWait.until(ExpectedConditions.visibilityOf(element));
+                Base.log(1, "element is shown with text: \"" + element.getText() + "\"");
+                return true;
+
+            } catch (NoSuchElementException e) {
+                base.getScreenShot();
+                Base.log(3, "no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
+                return false;
+            }
+        }
+        public boolean snackBar(int timer) {
+            return element(base.popUp.getSnackBarElement(), timer);
+        }
+        public boolean popUpWithConfirmation(int timer) {
+            try {
+                Base.log(1, "waiting " + timer + " seconds for Confirmation PopUp");
+                WebDriverWait iWait = new WebDriverWait(driver, timer);
+                iWait.until(ExpectedConditions.or(
+                        ExpectedConditions.visibilityOf(base.nav.getCancelButton()),
+                        ExpectedConditions.visibilityOf(base.nav.getCancel())
+                        )
+                );
+                Base.log(1, "Confirmation PopUp is shown");
+                return true;
+
+            } catch (NoSuchElementException e) {
+                Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
+                base.getScreenShot();
+                return false;
+
+            } catch (TimeoutException e) {
+                Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+                base.getScreenShot();
+                return false;
+            }
+        }
+
+    }
+
     public class LocalizedTextFor{
         public ConfirmLoader confirmLoader = new ConfirmLoader();
         public SuccessMessage successMessage = new SuccessMessage();
         String actualText, expectedText;
-
         private boolean checkIt(String actualText, String expectedText){
             Base.log(1, "\nchecking of localized text", true);
             Base.log(1, "actual: \"" + actualText + "\"", true);
@@ -237,7 +216,6 @@ public class Check{
                 return checkIt(actualText, expectedText);
             }
         }
-
         public class SuccessMessage {
             String actualText = base.popUp.getContentText();
             public boolean hubDelete(){

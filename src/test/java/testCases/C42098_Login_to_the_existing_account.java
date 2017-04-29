@@ -36,7 +36,7 @@ public class C42098_Login_to_the_existing_account{
         base.loginPage.loginToTheServer(login, pass, server);
 
         base.wait.invisibilityOfLoaderLogo(true);
-        Assert.assertFalse(base.check.isSnackBarPresent(3), "SnackBar is shown");
+        Assert.assertFalse(base.check.isPresent.snackBar(3), "SnackBar is shown");
 
         Base.log(1, "waiting for Pincode PopUp");
         if(base.wait.element(base.popUp.loadingWindow, 90, true)) {

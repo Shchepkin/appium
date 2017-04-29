@@ -13,24 +13,23 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.Base;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Navigation{
 
 
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
+    private WebElement cancelButton;    // PIN
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
+    private WebElement confirmButton;   // PIN
+
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
     private WebElement cancel;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
-    private WebElement cancelButton;
-
     @AndroidFindBy(id = "com.ajaxsystems:id/ok")
     private WebElement okBtn;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
-    private WebElement confirmButton;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
     private WebElement addButton;
@@ -46,9 +45,6 @@ public class Navigation{
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-
-    @AndroidFindBy(xpath = "//*[@resource-id='com.ajaxsystems:id/rrv_recycler_view']//android.widget.RelativeLayout/android.widget.TextView")
-    private List<WebElement> userList;
 
     @AndroidFindBy(xpath = "//android.widget.TextView")
     private ArrayList<WebElement> allTextObjects;
@@ -196,6 +192,8 @@ public class Navigation{
 //----------------------------------------------------------------------------------------------------------------------
 // Scroll
 //----------------------------------------------------------------------------------------------------------------------
+
+    // TODO create class structure for scroll
 
     public void scrollTop(){
         Base.log(1, "scroll to the top page");
@@ -481,33 +479,28 @@ public class Navigation{
             Base.log(1, "tap Devices Button");
             footerDevices.click();
         }
-
         public void Rooms() {
             backToDashboard();
 
             Base.log(1, "tap Rooms Button");
             footerRooms.click();
         }
-
         public void Notifications() {
             backToDashboard();
 
             Base.log(1, "tap Notifications Button");
             footerNotifications.click();
         }
-
         public void Remote() {
             backToDashboard();
 
             Base.log(1, "tap Remote Button");
             footerRemote.click();
         }
-
         public void Registration() {
             Base.log(1, "tap Registration Button");
             base.introPage.getRegistrationBtn().click();
         }
-
         public void hubSettings() {
             gotoPage.Devices();
 
@@ -517,7 +510,6 @@ public class Navigation{
             Base.log(1, "tap HubSettings Button");
             base.hub.getSettingsButton().click();
         }
-
         public void userList() {
             Base.log(1, "go to the Device List page");
             gotoPage.Devices();
@@ -535,7 +527,6 @@ public class Navigation{
             base.wait.element(base.hub.getUserStatus(), 10, true);
         }
 
-// TODO change isDisplayed and while condition
         private void backToDashboard(){
             Base.log(1, "back to dashboard");
             while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
@@ -543,11 +534,10 @@ public class Navigation{
                     Base.log(1, "tap back button");
                     backButton.click();
 
-                } else if (cancelButton.isDisplayed() || cancel.isDisplayed()) {
+                } else if (base.check.isPresent.popUpWithConfirmation(2)) {
                     cancelIt();
 
                 } else {
-                    cancelIt();
                     Base.log(3, "Dashboard is not reached");
                 }
             }
@@ -560,6 +550,7 @@ public class Navigation{
                 Base.log(1, "tap back button");
                 backButton.click();
             }
+            if (base.wait.menuIconOrPinPopUp(2, true))
             Base.log(1, "Dashboard is reached");
         }
     }
