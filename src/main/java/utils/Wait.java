@@ -7,7 +7,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.Base;
+import pageObjects.Base;
 
 public class Wait{
 
@@ -97,7 +97,7 @@ public class Wait{
             WebDriverWait iWait = new WebDriverWait(driver, 100);
             iWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='" + text + "']")));
 
-            Base.log(1, "element with text \"" + text + "\" is gone");
+            Base.log(1, "element with text is gone, text: \"" + text + "\" ");
             result = true;
         } catch (NoSuchElementException e) {
             Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
@@ -234,7 +234,7 @@ public class Wait{
             iWait.until(ExpectedConditions.visibilityOf(elementForWaiting));
 
             try {
-                Base.log(1, "element " + elementForWaiting + " is shown with text: \"" + elementForWaiting.getText() + "\"");
+                Base.log(1, "element is shown with text: \"" + elementForWaiting.getText() + "\", element: " + elementForWaiting);
             }catch (Exception e){
                 Base.log(4, "element is shown successfully, but there is Exception while trying to get the text from the element:\n\n" + e + "\n");
             }

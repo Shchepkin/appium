@@ -1,7 +1,7 @@
 package tmp;
 
 import org.testng.annotations.*;
-import pages.Base;
+import pageObjects.Base;
 
 import java.util.Iterator;
 import java.util.Map;

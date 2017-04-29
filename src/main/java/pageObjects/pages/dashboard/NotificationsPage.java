@@ -1,14 +1,15 @@
-package pages;
+package pageObjects.pages.dashboard;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import pageObjects.Base;
 
 import java.util.concurrent.TimeUnit;
 
-public class DashboardNotificationsPage{
+public class NotificationsPage {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/mail")
     public WebElement emailField;
@@ -24,7 +25,7 @@ public class DashboardNotificationsPage{
     private final Base base;
     private final AppiumDriver driver;
 
-    public DashboardNotificationsPage(Base base) {
+    public NotificationsPage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);

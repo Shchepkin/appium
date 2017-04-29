@@ -1,10 +1,11 @@
-package pages;
+package pageObjects.pages.intro;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import pageObjects.Base;
 
 import java.util.concurrent.TimeUnit;
 

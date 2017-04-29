@@ -5,7 +5,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pages.Base;
+import pageObjects.Base;
 
 /**
  * PRECONDITION
@@ -25,6 +25,8 @@ public class C44142_Device_delete {
         Base.log(1, "login without Pin");
         base.loginPage.loginWithPinCancel();
     }
+
+    // TODO make classes for device deleting like rooms deleting class
 
     @Test(priority = 1, enabled = false)
     public void While_Hub_Disarmed() {

@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.Base;
+import pageObjects.Base;
 
 
 public class PopUp{
@@ -95,25 +95,18 @@ public class PopUp{
     public String getContentText() {
     return contentTextElement.getText();
 }
-
     public WebElement getLoaderLogo() {
         return loaderLogo;
     }
-
     public WebElement getContentTextElement() {
         return contentTextElement;
     }
-
     public WebElement getSnackBarElement() {
         return snackBar;
     }
-
     public String  getSnackBarText() {
         return snackBar.getText();
     }
-
-
-
 
     public void waitLoadingPopUp(int flag){
         Base.log(4, "Method is started");

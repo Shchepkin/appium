@@ -1,4 +1,4 @@
-package pages;
+package pageObjects.object;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -8,6 +8,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import pageObjects.Base;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -168,7 +170,6 @@ public class User{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addFromContactList() {
-        Base.log(4, "Method is started");
         Base.log(4, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
         result = false;
 

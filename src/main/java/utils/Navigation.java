@@ -10,7 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.Base;
+import pageObjects.Base;
 
 import java.util.ArrayList;
 
@@ -323,9 +323,9 @@ public class Navigation{
 
                         if (click) {
                             searchingElement.click();
-                            Base.log(1, "element with text \"" + textOfSearchingElement + "\" was found and clicked");
+                            Base.log(1, "element was found and clicked, text: \"" + textOfSearchingElement + "\"");
                         } else {
-                            Base.log(1, "element with text \"" + textOfSearchingElement + "\" was found");
+                            Base.log(1, "element was found with text \"" + textOfSearchingElement + "\"");
                         }
                         result = true;
                         break;
@@ -333,7 +333,7 @@ public class Navigation{
                     }catch (NoSuchElementException e){
                         Base.log(3, "NoSuchElementException, element is not found on this screen!");
                     }
-                }else Base.log(1, "element with text \"" + textOfSearchingElement + "\" is not found on this screen!");
+                }else Base.log(1, "element is not found on this screen, text: \"" + textOfSearchingElement + "\"");
 
                 if (direction.equals("down")) {
                     swipeDown(1000, 2);
