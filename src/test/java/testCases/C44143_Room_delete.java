@@ -41,7 +41,7 @@ public class C44143_Room_delete {
         Base.log(1, "try to delete existing room while Hub armed", true);
         base.hub.security.arm();
         base.nav.gotoPage.Rooms();
-        Assert.assertFalse(base.check.isElementDisplayed(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
+        Assert.assertFalse(base.check.isPresent.element(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
         Base.log(1, "Settings button is not shown while Hub armed", true);
     }
 
@@ -50,7 +50,7 @@ public class C44143_Room_delete {
         Base.log(1, "try to delete existing room while Hub partial armed", true);
         base.hub.security.partialArm();
         base.nav.gotoPage.Rooms();
-        Assert.assertFalse(base.check.isElementDisplayed(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
+        Assert.assertFalse(base.check.isPresent.element(base.nav.getSettingsButton(), 5), "settings button present while hub is armed");
         Base.log(1, "Settings button is not shown while Hub armed", true);
     }
 
