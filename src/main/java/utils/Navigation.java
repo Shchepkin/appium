@@ -547,8 +547,18 @@ public class Navigation{
                     cancelIt();
 
                 } else {
+                    cancelIt();
                     Base.log(3, "Dashboard is not reached");
                 }
+            }
+            Base.log(1, "Dashboard is reached");
+        }
+
+        private void backToDashboard1(){
+            Base.log(1, "back to dashboard");
+            while (base.wait.element(backButton, 2, true)) {
+                Base.log(1, "tap back button");
+                backButton.click();
             }
             Base.log(1, "Dashboard is reached");
         }
