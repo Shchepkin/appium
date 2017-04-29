@@ -11,8 +11,6 @@ import org.testng.Assert;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-// TODO remove all asserts
-
 public class RegistrationPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/photo")
@@ -81,41 +79,6 @@ public class RegistrationPage{
 
 //====================================================================================
 
-    public void fakeRegistration(String email, String password, String phone, String server) {
-        Base.log(4, "Method is started");
-        base.introPage.goToAuthorization();
-        base.loginPage.chooseServer(server);
-        base.nav.goBack();
-        base.introPage.goToRegistration();
-        nameField.sendKeys("fakeRegistration");
-        emailField.sendKeys(email);
-        emailConfirmField.sendKeys(email);
-        phoneField.sendKeys(phone);
-        base.nav.swipeUp();
-        passwordField.sendKeys(password);
-        base.nav.swipeUp();
-        passwordConfirmField.sendKeys(password);
-        registrationButtonLink.click();
-    }
-
-
-
-    public void fillFields(String name, String email, String password, String phone, String server) {
-        Base.log(4, "Method is started");
-        base.introPage.goToAuthorization();
-        base.loginPage.chooseServer(server);
-        base.nav.goBack();
-        base.introPage.goToRegistration();
-        nameField.sendKeys(name);
-        emailField.sendKeys(email);
-        emailConfirmField.sendKeys(email);
-        phoneField.sendKeys(phone);
-        base.nav.swipeUp();
-        passwordField.sendKeys(password);
-        base.nav.swipeUp();
-        passwordConfirmField.sendKeys(password);
-    }
-
     public void fillFields(String name, String email, String password, String phone) {
         Base.log(4, "Method is started");
 
@@ -178,50 +141,6 @@ public class RegistrationPage{
 
     public void setPhoneCountryCode() {
         Base.log(4, "Method is started");
-    }
-
-    public boolean registrationNewUser (){
-
-            String userName, login, pass, phone, server;
-                login = base.getCredsWithKey("login");
-                pass = base.getCredsWithKey("password");
-                server = base.getCredsWithKey("server");
-                phone = base.getCredsWithKey("phone");
-                userName = base.getCredsWithKey("userName");
-
-                Base.log(1, "start from Intro Page and click Registration button");
-                base.introPage.setServer(server);
-                base.introPage.goToRegistration();
-
-                Base.log(1, "registration process");
-                base.regPage.setUserPic(1);
-                base.regPage.fillFields(userName, login, pass, phone);
-                base.regPage.confirmAgreementCheckBox();
-
-                base.regPage.registrationButtonClick();
-                base.wait.invisibilityOfWaiter();
-
-                Base.log(1, "check is SnackBar present on page");
-                Assert.assertFalse(base.wait.visibilityOfSnackBar(5, true), "SnackBar is shown with error text");
-
-                Base.log(1, "waiting for Validation Code Page");
-                base.wait.element(base.validationCodePage.getSmsCodeField(), 60, true);
-
-                Base.log(1, "get and fill Validation Codes");
-                base.validationCodePage.getAndFillValidationCodes("Phone", "%" + phone + "%");
-                base.nav.confirmIt();
-
-                Base.log(1, "waiting for Welcome Page with dashboard link");
-                Assert.assertTrue(base.wait.element(base.regPage.getDashboardLink(), 30, true));
-
-                Base.log(1, "Welcome Page is shown, so go to the dashboard");
-                base.regPage.dashboardLinkClick();
-                base.wait.invisibilityOfLoaderLogo(true);
-
-                Assert.assertTrue( base.check.waitElementWithoutPin(base.dashboardHeader.getMenuDrawer(), 100), "Login failed!\n");
-
-
-        return false;
     }
 
 }
