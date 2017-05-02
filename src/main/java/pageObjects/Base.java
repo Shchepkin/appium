@@ -38,8 +38,9 @@ public class Base {
 
     public static int TIMEOUT = 3;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW = false;
+    private static final boolean LOG_VIEW = true;
     private static final String logFile = logfileName();
+    private static final String dataBase = "Develop";
 
     public Sql sql;
     public Hub hub;
@@ -255,7 +256,7 @@ public class Base {
             Gson gson = new Gson();
 
             log(4, "create DB settings map ");
-            Map map = gson.fromJson(jo.get("DB").getAsJsonObject(), HashMap.class);
+            Map map = gson.fromJson(jo.get(dataBase).getAsJsonObject(), HashMap.class);
             dbSettings.putAll(map);
 
         } catch (Exception e) {

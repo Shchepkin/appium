@@ -24,6 +24,8 @@ public class User{
     @AndroidFindBy(id = "com.ajaxsystems:id/invites")
     private WebElement inviteUsersField;
 
+
+
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
     private WebElement addButtonFromContactList;
 
@@ -48,6 +50,9 @@ public class User{
     }
     public WebElement getDeleteButton() {
         return deleteButton;
+    }
+    public WebElement getAddButtonFromContactList() {
+        return addButtonFromContactList;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -240,6 +245,28 @@ public class User{
         }
         return result;
     }
+//    private boolean activateUserInContactListBy(String typeBy, String userEmail) {
+//        String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
+//        String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
+//
+//        for (int i = 1; i < 3; i++) {
+//            if (base.nav.scrollToElementWith.type(typeBy, userEmail, true)) {
+//                base.check.isPresent.snackBar(1);
+//                try {
+//                    base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
+//                    Base.log(1, "element \"" + userEmail + "\" is activated successfully");
+//                    result = true;
+//                    break;
+//
+//                } catch (NoSuchElementException e) {
+//                    Base.log(3, "activation element \"" + userEmail + "\" is failed, try count " + i);
+//                    Base.log(3, "stacktrace: \n" + e + "\n");
+//                    result = false;
+//                }
+//            }
+//        }
+//        return result;
+//    }
 
 //----------------------------------------------------------------------------------------------------------------------
 

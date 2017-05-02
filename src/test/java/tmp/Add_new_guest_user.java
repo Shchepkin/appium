@@ -1,5 +1,15 @@
-package testCases;
+package tmp;
 
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -7,56 +17,54 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.Base;
 
+import java.util.HashMap;
+
 /**
  * PRECONDITION
  * There are:
  * - at least one Hub
  */
 
-public class C42102_Add_new_guest_user{
+public class Add_new_guest_user {
 
-    private String login, pass, server, expected, actual;
     private Base base;
+    private AndroidDriver driver;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
         Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
-        base.initPageObjects(base.getDriver());
-
+        this.driver = base.getDriver();
+        base.initPageObjects(driver);
         base.loginPage.loginWithPinCancel();
-
-        base.nav.gotoPage.userList();
+        base.nav.gotoPage.inviteUser();
     }
 
-    @Test(priority = 1, enabled = false)
-    public void From_Email_Field() {
-        Base.log(1, "START TEST");
-        base.user.addFromEmailField();
-        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForEmailField()), "Add users from Email Field is failed\n");
-    }
 
     @Test(priority = 2, enabled = true)
     public void From_Contact_List() {
+        System.out.println("start");
+        String email = "test.email.ajax200@i.ua";
+        String id = "com.ajaxsystems:id/recycler";
 
-        Assert.assertTrue(base.user.addFromContactList(), "Process of adding users from Contact List is failed\n");
-        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForContactList()), "Add users from Contact List is failed\n");
+
+        RemoteWebElement radioGroup = (RemoteWebElement) driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().resourceId(\"" + id + "\")).scrollIntoView(new UiSelector().text(\"" + email + "\"));");
+        radioGroup.click();
+
+//        System.out.println("WebElement element");
+//        WebElement element = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + email + "']"));
+
+        System.out.println("touch");
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    @Test(priority = 3, enabled = false)
-    public void Add_Mixed_Users() {
 
-        base.user.addMixedUsers();
-        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForMixedAdd()), "Add users with mixed style is failed\n");
-    }
-
-    @Test(priority = 4, enabled = false)
-    public void Check_is_unreg_user_in_pending_list() {
-
-        String unregisteredUserEmail = base.user.getUsersForMixedAdd().get(1);
-        Assert.assertTrue(base.user.checkIsDeleteIconPresent(unregisteredUserEmail), "Unregistered user has no DELETE icon\n");
-    }
 
     @AfterClass
     public void endSuit() {

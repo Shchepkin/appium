@@ -8,34 +8,44 @@
 <suite name = "Suite" parallel= "false">
 
     <parameter name="deviceName_" value="LG"/>
+
+
+
+    <test name="tmp">
+        <classes>
+            <class name="tmp.Add_new_guest_user"/>
+        </classes>
+    </test>
+
+
     <test name="LG - Registration and adding artifacts">
         <classes>
             <!--<class name="testCases.C42097_New_user_registration"/>-->
-            <class name="testCases.C42099_Add_new_Hub_manually"/>
-            <class name="testCases.C42102_Add_new_guest_user"/>
-            <class name="testCases.C42100_Add_new_room"/>
-            <class name="testCases.C43875_Add_new_device"/>
+            <!--<class name="testCases.C42099_Add_new_Hub_manually"/>-->
+            <!--<class name="testCases.C42102_Add_new_guest_user"/>-->
+            <!--<class name="testCases.C42100_Add_new_room"/>-->
+            <!--<class name="testCases.C43875_Add_new_device"/>-->
         </classes>
     </test>
 
     <test name="LG - Login">
         <classes>
-            <class name="Login.C46225_Negative_Login"/>
+            <!--<class name="Login.C46225_Negative_Login"/>-->
             <!--<class name="Login.C46224_Positive_Login"/>-->
         </classes>
     </test>
 
     <test name="LG - Security">
         <classes>
-            <class name="testCases.C42176_Virtual_Space_Control"/>
+            <!--<class name="testCases.C42176_Virtual_Space_Control"/>-->
         </classes>
     </test>
 
     <test name="LG - Deleting all artifacts">
         <classes>
-            <class name="testCases.C44142_Device_delete"/>
-            <class name="testCases.C44141_User_delete"/>
-            <class name="testCases.C44143_Room_delete"/>
+            <!--<class name="testCases.C44142_Device_delete"/>-->
+            <!--<class name="testCases.C44141_User_delete"/>-->
+            <!--<class name="testCases.C44143_Room_delete"/>-->
             <!--<class name="testCases.C44144_Hub_delete"/>-->
         </classes>
     </test>

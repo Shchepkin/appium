@@ -1,7 +1,5 @@
 package testCases;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -83,12 +81,8 @@ public class C43875_Add_new_device {
         Base.log(1, "cannot add existing device", true);
     }
 
-
-
-
     @AfterClass
     public void endSuit() {
         base.getDriver().quit();
     }
-
 }
