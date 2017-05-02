@@ -85,7 +85,7 @@ public class AuthorizationPage{
 
         chooseServer(server);
 
-        Base.log(1, "click login button");
+        Base.log(1, "tap login button", true);
         loginBtn.click();
 
         Base.log(4, "Method is finished");
@@ -108,9 +108,10 @@ public class AuthorizationPage{
                 Base.log(1, "Pincode PopUp displayed");
                 base.nav.cancelIt();
             }
-            Base.log(1, "Login successfully!");
+            Base.log(1, "Login successfully!", true);
             return true;
         }else {
+            Base.log(3, "Login failed!", true);
             return false;
         }
      }
@@ -126,8 +127,8 @@ public class AuthorizationPage{
     }
 
     public void chooseServer(String server) {
-        Base.log(1, "select server type: \"" + server + "\"");
-        base.nav.longTapButton(loginBtn, 2);
+        Base.log(1, "select server type: \"" + server + "\"", true);
+        base.nav.touch.longPress(loginBtn, 2);
 
         switch (server) {
             case "Debug":  serverDebug.click();

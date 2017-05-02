@@ -32,22 +32,25 @@ public class C44141_User_delete{
 
     @Test(priority = 1, enabled = true)
     public void all_pending_users() {
+        Base.log(3, "START TEST");
         base.user.deleteAllPending();
     }
 
     @Test(priority = 2, enabled = true)
     public void all_guest_users() {
+        Base.log(3, "START TEST");
         base.user.deleteAllGuests();
     }
 
     @Test(priority = 3, enabled = true)
     public void master_user() {
+        Base.log(3, "START TEST");
         base.user.deleteMasterUser();
         base.nav.cancelIt();
 
         Assert.assertTrue(base.dashboard.getPlusButton().isDisplayed());
 
-        Base.log(1, "return hub for next tests");
+        Base.log(1, "return hub for next tests", true);
         base.hub.addNewManual();
     }
 

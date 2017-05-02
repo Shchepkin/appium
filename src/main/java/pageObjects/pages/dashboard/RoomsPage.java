@@ -9,9 +9,11 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import pageObjects.Base;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,8 +28,10 @@ public class RoomsPage {
     @AndroidFindBy(id = "com.ajaxsystems:id/name")
     private WebElement roomNameField;
 
+
+
     @FindAll({@FindBy(id = "com.ajaxsystems:id/name")})
-    private List<MobileElement> roomNameList;
+    private ArrayList<MobileElement> roomNameList;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/save")
     private WebElement saveButton;
@@ -47,7 +51,12 @@ public class RoomsPage {
     public String getDescriptionText() {
         return description.getText();
     }
-
+    public WebElement getRoomNameField() {
+        return roomNameField;
+    }
+    public ArrayList<MobileElement> getRoomNameList() {
+        return roomNameList;
+    }
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
     private final AndroidDriver driver;

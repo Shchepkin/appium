@@ -13,11 +13,27 @@ import java.util.concurrent.TimeUnit;
 
 public class DevicesPage {
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/add")
+    private WebElement addDeviceButtonOnEmptyRoomsPage;
+
     @AndroidFindBy(id = "com.ajaxsystems:id/footerTitle")
-    private WebElement addDeviceButton;
+    private WebElement addDeviceButtonOld;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/addDevice")
+    private WebElement addDeviceButtonNew;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/unpair")
     private WebElement unpairButton;
+
+    public WebElement getAddDeviceButtonOnEmptyRoomsPage() {
+        return addDeviceButtonOnEmptyRoomsPage;
+    }
+    public WebElement getAddDeviceButtonOld() {
+        return addDeviceButtonOld;
+    }
+    public WebElement getAddDeviceButtonNew() {
+        return addDeviceButtonNew;
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
     @AndroidFindBy(id = "com.ajaxsystems:id/rooms")
@@ -56,17 +72,17 @@ public class DevicesPage {
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addDeviceButtonClick(){
-        Base.log(1, "tap Add Device button");
-        addDeviceButton.click();
+        Base.log(1, "tap Add Device button", true);
+        addDeviceButtonOld.click();
     }
 
     public void unpairButtonClick(){
-        Base.log(1, "click delete button");
+        Base.log(1, "tap Unpair button", true);
         unpairButton.click();
     }
 
     public void goToFirstDeviceSettingsPage(){
-        Base.log(1, "click on Device tab (room element)");
+        Base.log(1, "click on Device tab (room element)", true);
         roomOfDeviceLocator.click();
 
         base.nav.goToSettings();
@@ -75,8 +91,6 @@ public class DevicesPage {
     public void fillFieldsWith(String deviceName, String devID){
         Base.log(1, "fill name field with \"" + deviceName + "\"", true);
         nameField.sendKeys(deviceName);
-
-        Base.log(1, "hide keyboard");
         base.hideKeyboard();
 
         Base.log(1, "fill ID field with \"" + devID + "\"", true);
@@ -85,28 +99,19 @@ public class DevicesPage {
 
     public void setRoom(int numOfRoom) {
         if (numOfRoom > 0) {
-            Base.log(1, "click Set Room button");
+            Base.log(1, "tap Set Room button", true);
             setRoomButtonElement.click();
 
             Base.log(1, "wating for rooms popUp appear");
             base.wait.element(roomObject, 10, true);
 
-            Base.log(1, "set room number as \"" + numOfRoom + "\"", true);
+            Base.log(1, "set room number to \"" + numOfRoom + "\"", true);
             allRoomObjects.get(numOfRoom - 1).click();
         } else {
-            Base.log(3, "invalid number of Room, number has to be > 0");
-            Base.log(3, "set number of Room to 1 as default");
-            setRoom(1);
-        }
-    }
-
-    public boolean checkIsNewAdded(String roomName) {
-        if (base.nav.scrollToElementWith.name(roomName, false)) {
-            Base.log(1, "new device with name \"" + roomName + "\" is added successfully", true);
-            return true;
-        }else {
-            Base.log(3, "device with name \"" + roomName + "\" is not added", true);
-            return false;
+//            Base.log(3, "invalid number of Room, number has to be > 0");
+//            Base.log(3, "set number of Room to \"1\" as default");
+//            setRoom(1);
+            Base.log(3, "ignor room");
         }
     }
 
@@ -117,7 +122,7 @@ public class DevicesPage {
         return driver.findElementByXPath(xPath).getText();
     }
 
-    public boolean deleteAllDevices() {
+    public boolean deleteAll() {
         base.nav.gotoPage.Devices();
         String devName = null;
         int counter = 0;
@@ -125,7 +130,7 @@ public class DevicesPage {
             while (true) {
                 if (base.wait.menuIconOrPinPopUp(10, true)){
                     if (counter != 0) {
-                        Base.log(1, "device with name \"" + devName + "\" is deleted successfully", true);
+                        Base.log(1, "device with name \"" + devName + "\" is deleted successfully\n", true);
                     }
                     base.nav.cancelIt();
                     if (!base.check.isEmpty.devicesList()){
@@ -141,6 +146,7 @@ public class DevicesPage {
 
                     base.nav.scrollBottom();
                     unpairButtonClick();
+                    Base.log(1, "Confirm proposition", true);
                     base.nav.confirmIt();
                     counter++;
 

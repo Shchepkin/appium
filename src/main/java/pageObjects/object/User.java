@@ -362,9 +362,10 @@ public class User{
                 deleteButton.click();
                 base.nav.confirmIt();
 
-                base.wait.invisibilityOfWaiter();
+//                base.wait.invisibilityOfWaiter();
 
-                Assert.assertTrue(base.wait.elementWithText(successText, 5, true), "SUCCESS text is not shown");
+                Assert.assertTrue(base.wait.elementWithText(successText, 20, true), "SUCCESS text is not shown");
+                base.getScreenShot();
                 Base.log(1, "SUCCESS text is shown");
                 counter++;
             } else {

@@ -1,6 +1,8 @@
 package utils;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
@@ -42,6 +44,9 @@ public class Navigation{
     }
     public WebElement getCancel() {
         return cancel;
+    }
+    public WebElement getAddButton() {
+        return addButton;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -99,15 +104,18 @@ public class Navigation{
     private WebElement spaceControlImage;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base base;
-    private final AppiumDriver driver;
+    private Base base;
+    private AppiumDriver driver;
     private boolean result;
     private long start, finish;
     private boolean flag;
     private int counter;
     private ArrayList<String> etalon;
     private ArrayList<String> current;
+
+    public Touch touch = new Touch();
     public GoToPage gotoPage = new GoToPage();
+    public MoveToElementWith moveToElementWith = new MoveToElementWith();
     public ScrollToElementWith scrollToElementWith = new ScrollToElementWith();
 
     public Navigation(Base base) {
@@ -216,35 +224,36 @@ public class Navigation{
         flag = false;
         counter = 0;
         etalon.clear();
-        current.clear();
 
         Base.log(4, "copy text objects from scrollList to etalon and current lists");
-        for (WebElement i : allTextObjects) {
-            etalon.add(i.getText());
-            current.add(i.getText());
-        }
+        Base.log(4, "number of all text objects from this screen: " + allTextObjects.size());
+
+        etalon.addAll(putNewObjectsInCurrentList());
 
         while (true){
             if (direction.equals("down")) {
                 swipeDown(200, 2);
             }else swipeUp(200, 2);
 
-            current.clear();
-            Base.log(4, "put new text objects to the current list after swipe");
-            try {
-                for (WebElement i : allTextObjects) {
-                  current.add(i.getText());
-                }
-            }catch (NoSuchElementException e){
-                Base.log(3, "NoSuchElementException, something was wrong!\n" + e);
-            }
-
-            compare(etalon, current);
+            compare(etalon, putNewObjectsInCurrentList());
             if (flag) break;
         }
         finish = System.nanoTime();
         Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
         Base.log(4, "Method is finished");
+    }
+
+    private ArrayList<String> putNewObjectsInCurrentList(){
+        Base.log(4, "put new text objects to the current list after swipe");
+        current.clear();
+        try {
+            for (WebElement i : allTextObjects) {
+                current.add(i.getText());
+            }
+        }catch (NoSuchElementException e){
+            Base.log(3, "NoSuchElementException, something was wrong!\n" + e);
+        }
+        return current;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -291,14 +300,18 @@ public class Navigation{
             current.clear();
 
             Base.log(4, "get all text objects from this screen");
-            for (WebElement i : allTextObjects) {
-                etalon.add(i.getText());
-                current.add(i.getText());
+            Base.log(4, "number of all text objects from this screen: " + allTextObjects.size());
+            try {
+                for (WebElement i : allTextObjects) {
+                    etalon.add(i.getText());
+                    current.add(i.getText());
+                }
+            } catch (NoSuchElementException e) {
+                Base.log(3, "NoSuchElementException: \n\n" + e + "\n");
             }
-
             while (true){
                 if (current.contains(textOfSearchingElement)){
-                    Base.log(4, "textOfSearchingElement is available on this screen");
+                    Base.log(4, "text \"" + textOfSearchingElement + "\" is shown on this screen");
                     try {
                         switch (typeOfElement){
                             case "id":
@@ -343,7 +356,7 @@ public class Navigation{
                         current.add(i.getText());
                     }
                 }catch (NoSuchElementException e){
-                    Base.log(3, "NoSuchElementException, something was wrong!\n" + e);
+                    Base.log(3, "NoSuchElementException, text elements is not found on the screen\n" + e);
                 }
 
                 compare(etalon, current);
@@ -430,14 +443,45 @@ public class Navigation{
 
 
 //----------------------------------------------------------------------------------------------------------------------
-// Tap
+// Touch
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void longTapButton(WebElement element, int timer) {
-        Base.log(1, "long tap for " + timer + " seconds");
-        timer = timer * 1000;
-        driver.tap(1, element, timer);
+    public class Touch {
+        public void tap(WebElement element) {
+            driver.performTouchAction(new TouchAction(driver).tap(element));
+        }
+        public void longPress(WebElement element, int timer) {
+            driver.performTouchAction(new TouchAction(driver).longPress(element, timer));
+        }
     }
+
+    public class MoveToElementWith {
+        WebElement searchingElement;
+
+        public WebElement name(String name, boolean tap) {
+            searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + name + "']"));
+            driver.performTouchAction(new TouchAction(driver).moveTo(searchingElement));
+            if(tap)searchingElement.click();
+            return searchingElement;
+        }
+
+        public void text(String text) {
+            searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + text + "']"));
+            driver.performTouchAction(new TouchAction(driver).moveTo(searchingElement));
+        }
+
+        public void email(String email) {
+            searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + email + "']"));
+            driver.performTouchAction(new TouchAction(driver).moveTo(searchingElement));
+        }
+
+        public void id(String id) {
+            searchingElement = driver.findElement(By.id("\"" + id + "\""));
+            driver.performTouchAction(new TouchAction(driver).moveTo(searchingElement));
+        }
+
+    }
+
 
 //----------------------------------------------------------------------------------------------------------------------
 // GOTO
@@ -457,7 +501,7 @@ public class Navigation{
         Base.log(1, "wait for Settings Button");
         iWait.until(ExpectedConditions.visibilityOf(settingsButton));
 
-        Base.log(1, "tap Settings Button");
+        Base.log(1, "tap Settings Button", true);
         settingsButton.click();
     }
 
@@ -466,7 +510,6 @@ public class Navigation{
 //  GoToPage
 //----------------------------------------------------------------------------------------------------------------------
     public class GoToPage {
-
         // dashboard
         public void Devices() {
             backToDashboard();
@@ -554,34 +597,22 @@ public class Navigation{
 // CONFIRMATION
 //----------------------------------------------------------------------------------------------------------------------
     public void confirmIt() {
-
+        Base.log(1, "Confirm proposition");
         try {
-            start = System.nanoTime();
             okBtn.click();
             Base.log(1, "OK button is pressed");
         }catch (Exception e){
-            Base.log(4, "OK Button was not found\n\n" + e.getMessage() + "\n");
-
-            finish = System.nanoTime();
-            Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
 
             try {
-                start = System.nanoTime();
                 confirmButton.click();
                 Base.log(1, "Confirm button is pressed");
             }catch (Exception e1){
-                finish = System.nanoTime();
-                Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-                Base.log(4, "Confirm button was not found\n\n" + e1.getMessage() + "\n");
 
                 try {
-                    start = System.nanoTime();
                     addButton.click();
-                    Base.log(1, "Confirm button is pressed");
+                    Base.log(1, "Add button is pressed");
                 }catch (Exception e2){
-                    finish = System.nanoTime();
-                    Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-                    Base.log(4, "Add button was not found\n\n" + e2.getMessage() + "\n");
+                    Base.log(1, "confirm button is not found");
                 }
             }
         }
@@ -590,15 +621,14 @@ public class Navigation{
     public void cancelIt() {
         try {
             cancel.click();
-            Base.log(1, "Cancel button is pressed");
+            Base.log(1, "Cancel button is pressed (cancel)");
         }catch (Exception e){
-            Base.log(4, "first Cancel Button was not found\n\n" + e.getMessage() + "\n");
 
             try {
                 cancelButton.click();
-                Base.log(1, "Cancel button is pressed");
+                Base.log(1, "Cancel button is pressed (cancelButton)");
             }catch (Exception e1){
-                Base.log(4, "second Cancel Button was not found\n\n" + e.getMessage() + "\n");
+                Base.log(4, "Cancel Button was not found");
             }
         }
     }

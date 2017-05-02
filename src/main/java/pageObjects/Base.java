@@ -14,6 +14,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
+import pageObjects.object.Device;
 import pageObjects.pages.dashboard.*;
 import pageObjects.pages.intro.*;
 import pageObjects.object.Hub;
@@ -37,7 +38,7 @@ public class Base {
 
     public static int TIMEOUT = 3;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW = true;
+    private static final boolean LOG_VIEW = false;
     private static final String logFile = logfileName();
 
     public Sql sql;
@@ -47,6 +48,7 @@ public class Base {
     public Check check;
     public Email email;
     public PopUp popUp;
+    public Device device;
     public PinPage pinPage;
     public IntroPage introPage;
     public Dashboard dashboard;
@@ -126,6 +128,9 @@ public class Base {
 
         log(4, "init PopUp()");
         popUp = new PopUp(this);
+
+        log(4, "init Device()");
+        device = new Device(this);
 
         log(4, "init DashboardHeader()");
         header = new Header(this);
@@ -407,21 +412,18 @@ public class Base {
                     if (LOG_VIEW){
                         System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
                     }
-                    String logFormattedString = String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-                    write(logFormattedString);
+                    write(String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message));
                 } else {
                     if (LOG_VIEW) {
                         System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
                     }
-                    String logFormattedString = String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
-                    write(logFormattedString);
+                    write(String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message));
                 }
             } else {
                 if (LOG_VIEW) {
                     System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
                 }
-                String logFormattedString = String.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
-                write(logFormattedString);
+                write(String.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message));
             }
         }
         return message;
@@ -472,18 +474,11 @@ public class Base {
 //----------------------------------------------------------------------------------------------------------------------
 
     public void hideKeyboard() {
+        log(1, "hide Keyboard");
         try {
             driver.hideKeyboard();
         } catch (Exception e) {
-            log(4, "Exeption: \n\n" + e + "\n");
-        }
-    }
-
-    public void openKeyboard() {
-        try {
-            driver.hideKeyboard();
-        } catch (Exception e) {
-            log(4, "Exception: \n\n" + e + "\n");
+            log(4, "Exeption: \n\n" + e.getMessage() + "\n");
         }
     }
 
@@ -554,7 +549,7 @@ public class Base {
             // Move screenshot to the target folder
             FileUtils.copyFile(srcFile, targetFile);
 
-            log(3, "Path to screenshot: " + targetFile.getAbsolutePath());
+            log(3, "Screenshot file: " + targetFile);
         } catch (IOException e1) {
             log(2, "IOException:\n\n" + e1 + "\n");
         }

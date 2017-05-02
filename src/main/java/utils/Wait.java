@@ -37,6 +37,7 @@ public class Wait{
 
             Base.log(1, "element is shown with text: \"" + searchingText + "\"");
             result = true;
+
         } catch (NoSuchElementException e) {
             Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
             result = false;
@@ -197,14 +198,18 @@ public class Wait{
     public boolean menuIconOrPinPopUp(int timer, boolean makeScreenShot) {
         Base.log(4, "Method is started");
         try {
+            if (base.check.isPresent.snackBar(15)){
+                Base.log(3, "SnackBar is shown!");
+                return false;
+            }
             Base.log(1, "waiting " + timer + " seconds for menuIcon Or Pin PopUp");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.or(
-                            ExpectedConditions.visibilityOf(base.dashboardHeader.getMenuDrawer()),
-                            ExpectedConditions.visibilityOf(base.nav.getCancelButton())
+                    ExpectedConditions.visibilityOf(base.dashboardHeader.getMenuDrawer()),
+                    ExpectedConditions.visibilityOf(base.nav.getCancelButton())
                     )
             );
-
+            base.getScreenShot();
             Base.log(1, "Main Menu icon or PIN popUp is shown");
             return true;
 
@@ -266,6 +271,23 @@ public class Wait{
             return true;
         }
         return false;
+    }
+
+
+    public boolean invisibilityOfElement(By by, int timer) {
+        Base.log(1, "waiting " + timer + " seconds while element become Invisible");
+        WebDriverWait iWait = new WebDriverWait(driver, timer);
+        try {
+            iWait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+            Base.log(1, "element become Invisible");
+            base.getScreenShot();
+            return true;
+
+        } catch (TimeoutException e) {
+            Base.log(4, "Timeout Exception, element is still displayed:\n\n" + e + "\n");
+            base.getScreenShot();
+            return false;
+        }
     }
 
 }

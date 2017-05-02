@@ -1,6 +1,7 @@
 package utils;
 
 import jssc.*;
+import org.openqa.selenium.By;
 import pageObjects.Base;
 
 public class Imitator{
@@ -8,6 +9,12 @@ public class Imitator{
 //----------------------------------------------------------------------------------------------------------------------
     private Base base;
     private static SerialPort serialPort;
+
+    public String getDeviceNameNew() {
+        return deviceNameNew;
+    }
+
+    private String deviceNameNew = "";
 
     public Imitator(Base base) {
         this.base = base;
@@ -61,29 +68,82 @@ public class Imitator{
         }
     }
 
-    public void addDevice(int devId, int devNumber, int devType, String devName, int roomNumber){
+    public boolean addDevice(int devId, int devNumber, int devType, String devName, int roomNumber){
         Base.log(1, "add devices to imitator");
         String command = String.format("add %d %d %d\n", devId, devNumber, devType);
         try {
-            Thread.sleep(2000);
             serialPort.writeString(command);
+            Thread.sleep(2000);
         }catch (Exception e) {
             Base.log(3, "Exception: \n" + e + "\n");
         }
 
-        Base.log(1, "add devices \"" + devName + "\" to Hub", true);
-        Base.log(1, "scroll bottom");
+        Base.log(1, "add device \"" + devName + "\" to Hub");
         base.nav.scrollBottom();
         base.devicesPage.addDeviceButtonClick();
         base.devicesPage.fillFieldsWith(devName, String.valueOf(devId));
         base.hideKeyboard();
         base.devicesPage.setRoom(roomNumber);
 
-        Base.log(1, "tap Add devices button");
+        Base.log(1, "tap Add devices button", true);
         base.nav.confirmIt();
 
-        Base.log(1, "device turn on");
+        if (base.check.isPresent.snackBar(5)){
+            return  false;
+        }
+
+        Base.log(1, "device turn on", true);
         registerDevice(devId);
+        registerDevice(devId);
+
+        base.wait.invisibilityOfElement(By.id("com.ajaxsystems:id/timerText"), 30);
+
+        Base.log(1, "check is PIN popUp displayed");
+        base.wait.pinPopUp(2, false);
+        return true;
+    }
+
+    public void addDevice(int devId, int devNumber, int devType, String devName){
+        String command;
+        Base.log(1, "add device \"" + devName + "\" to Hub");
+
+        Base.log(1, "tap first room in the list");
+        base.roomsPage.getRoomNameField().click();
+
+        Base.log(1, "tap Add New Device button");
+        try {
+            base.nav.getAddButton().click();
+            Base.log(1, "add device \"" + devName + "\" from Empty Rooms Page", true);
+            deviceNameNew = devName;
+
+        }catch (Exception e){
+            base.devicesPage.addDeviceButtonClick();
+            devId++;
+            devNumber++;
+            deviceNameNew = devName + "_1";
+            Base.log(1, "add device \"" + deviceNameNew + "\" from not Empty Rooms Page", true);
+        }
+
+        Base.log(1, "add devices to imitator");
+        command = String.format("add %d %d %d\n", devId, devNumber, devType);
+        try {
+            serialPort.writeString(command);
+            Thread.sleep(2000);
+        }catch (Exception e) {
+            Base.log(3, "Exception: \n" + e + "\n");
+        }
+
+        base.devicesPage.fillFieldsWith(deviceNameNew, String.valueOf(devId));
+        base.hideKeyboard();
+
+        Base.log(1, "tap Add devices button", true);
+        base.nav.confirmIt();
+
+        Base.log(1, "device turn on", true);
+        registerDevice(devId);
+        registerDevice(devId);
+
+        base.wait.invisibilityOfElement(By.id("com.ajaxsystems:id/timerText"), 30);
 
         Base.log(1, "check is PIN popUp displayed");
         base.wait.pinPopUp(2, false);
@@ -91,8 +151,8 @@ public class Imitator{
 
     public void getDeviceList(){
         try {
-            Thread.sleep(2000);
             serialPort.writeString("lst\n");
+            Thread.sleep(2000);
         }catch (Exception e) {
             Base.log(3, "Exception: \n" + e + "\n");
         }
@@ -100,8 +160,8 @@ public class Imitator{
 
     public void clearMemory(){
         try {
-            Thread.sleep(2000);
             serialPort.writeString("cln\n");
+            Thread.sleep(2000);
         }catch (Exception e) {
             Base.log(3, "Exception: \n" + e + "\n");
         }
@@ -109,8 +169,8 @@ public class Imitator{
 
     public void registerDevice(int dev_id){
         try {
-            Thread.sleep(3000);
             serialPort.writeString("reg " + dev_id + "\n");
+            Thread.sleep(3000);
         }catch (Exception e) {
             Base.log(3, "Exception: \n" + e + "\n");
         }
