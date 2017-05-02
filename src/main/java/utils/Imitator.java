@@ -81,6 +81,10 @@ public class Imitator{
         Base.log(1, "add device \"" + devName + "\" to Hub");
         base.nav.scrollBottom();
         base.devicesPage.addDeviceButtonClick();
+
+        Base.log(1, "wait for popUp for adding new device", true);
+        if (!base.wait.element(base.popUp.getAddNewDevicePopUp(), 5, true)) {return false;}
+
         base.devicesPage.fillFieldsWith(devName, String.valueOf(devId));
         base.hideKeyboard();
         base.devicesPage.setRoom(roomNumber);
@@ -88,9 +92,7 @@ public class Imitator{
         Base.log(1, "tap Add devices button", true);
         base.nav.confirmIt();
 
-        if (base.check.isPresent.snackBar(5)){
-            return  false;
-        }
+        if (base.check.isPresent.snackBar(5)){return  false;}
 
         Base.log(1, "device turn on", true);
         registerDevice(devId);
@@ -103,7 +105,7 @@ public class Imitator{
         return true;
     }
 
-    public void addDevice(int devId, int devNumber, int devType, String devName){
+    public boolean addDevice(int devId, int devNumber, int devType, String devName){
         String command;
         Base.log(1, "add device \"" + devName + "\" to Hub");
 
@@ -124,7 +126,10 @@ public class Imitator{
             Base.log(1, "add device \"" + deviceNameNew + "\" from not Empty Rooms Page", true);
         }
 
-        Base.log(1, "add devices to imitator");
+        Base.log(1, "wait for popUp for adding new device", true);
+        if (!base.wait.element(base.popUp.getAddNewDevicePopUp(), 5, true)) {return false;}
+
+        Base.log(1, "add devices to imitator", true);
         command = String.format("add %d %d %d\n", devId, devNumber, devType);
         try {
             serialPort.writeString(command);
@@ -139,6 +144,8 @@ public class Imitator{
         Base.log(1, "tap Add devices button", true);
         base.nav.confirmIt();
 
+        if (base.check.isPresent.snackBar(5)){return  false;}
+
         Base.log(1, "device turn on", true);
         registerDevice(devId);
         registerDevice(devId);
@@ -147,6 +154,7 @@ public class Imitator{
 
         Base.log(1, "check is PIN popUp displayed");
         base.wait.pinPopUp(2, false);
+        return true;
     }
 
     public void getDeviceList(){
