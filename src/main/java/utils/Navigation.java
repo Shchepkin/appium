@@ -105,7 +105,7 @@ public class Navigation{
 
 //----------------------------------------------------------------------------------------------------------------------
     private Base base;
-    private AppiumDriver driver;
+    private AndroidDriver driver;
     private boolean result;
     private long start, finish;
     private boolean flag;
@@ -114,6 +114,7 @@ public class Navigation{
     private ArrayList<String> current;
 
     public Touch touch = new Touch();
+    public Scroll scroll = new Scroll();
     public GoToPage gotoPage = new GoToPage();
     public MoveToElementWith moveToElementWith = new MoveToElementWith();
     public ScrollToElementWith scrollToElementWith = new ScrollToElementWith();
@@ -202,6 +203,23 @@ public class Navigation{
 //----------------------------------------------------------------------------------------------------------------------
 
     // TODO create class structure for scroll
+
+    public class Scroll{
+        ToElementWith toElementWith = new ToElementWith();
+
+        public void top(){}
+        public void bottom(){}
+        public void toElement(WebElement element){}
+        public void toElement(By by){}
+
+        public class ToElementWith{
+            public void text(String textOfSearchingElement, boolean click){}
+            public void email(String emailOfSearchingElement, boolean click){}
+            public void id(String idOfSearchingElement, boolean click){}
+            public void name(String nameOfSearchingElement, boolean click){}
+        }
+
+    }
 
     public void scrollTop(){
         Base.log(1, "scroll to the top page");
@@ -563,6 +581,19 @@ public class Navigation{
 
             Base.log(1, "waiting User Status element");
             base.wait.element(base.hub.getUserStatus(), 10, true);
+        }
+        public void inviteUser() {
+            Base.log(1, "go to the User List page");
+            userList();
+
+            String sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
+            Base.log(4, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
+
+            Base.log(1, "searching and clicking the Send Invites Button");
+            base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
+
+            Base.log(1, "click the Add From Contact List Button");
+            base.user.getAddButtonFromContactList().click();
         }
 
         private void backToDashboard(){
