@@ -73,7 +73,15 @@ public class DevicesPage {
 
     public void addDeviceButtonClick(){
         Base.log(1, "tap Add Device button", true);
-        addDeviceButtonOld.click();
+        try {
+            addDeviceButtonOld.click();
+        }catch (Exception e){
+            try {
+                addDeviceButtonNew.click();
+            }catch (Exception e1){
+                base.nav.getAddButton().click();
+            }
+        }
     }
 
     public void unpairButtonClick(){
@@ -108,9 +116,6 @@ public class DevicesPage {
             Base.log(1, "set room number to \"" + numOfRoom + "\"", true);
             allRoomObjects.get(numOfRoom - 1).click();
         } else {
-//            Base.log(3, "invalid number of Room, number has to be > 0");
-//            Base.log(3, "set number of Room to \"1\" as default");
-//            setRoom(1);
             Base.log(3, "ignor room");
         }
     }
