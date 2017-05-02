@@ -47,8 +47,8 @@ public class Hub{
         return userStatus;
     }
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base base;
-    private final AndroidDriver driver;
+    private Base base;
+    private AndroidDriver driver;
     private String sendInvitesButtonText,armedText, disarmedText, patrialArmedText;
     public DeleteFrom deleteFrom = new DeleteFrom();
     public AddNew addNew = new AddNew();
@@ -176,10 +176,10 @@ public class Hub{
             if (withCheckLocalizedText){
                 if(!base.check.localizedTextFor.confirmLoader.hubDeleteFromHubSettings()) return false;
             }
+            Base.log(1, "Confirm proposition", true);
             base.nav.confirmIt();
-            base.wait.invisibilityOfWaiter();
-
-            return base.check.localizedTextFor.successMessage.hubDelete();
+            String successMessage = base.getLocalizeTextForKey("Detach_success1");
+            return base.wait.elementWithText(successMessage, 15, true);
         }
         public boolean masterUserSettings(boolean withCheckLocalizedText) {
             Base.log(1, "go to the userList", true);

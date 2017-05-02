@@ -40,6 +40,16 @@ public class PopUp{
     @AndroidFindBy(id = "com.ajaxsystems:id/shadow")
     private WebElement shadow;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/gravity")
+    private WebElement addNewDevicePopUp;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/action_bar_root")
+    private WebElement actionBarRoot;
+
+    public WebElement getAddNewDevicePopUp() {
+        return addNewDevicePopUp;
+    }
+
 //================================ dialogMessage =====================================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")

@@ -24,6 +24,8 @@ public class User{
     @AndroidFindBy(id = "com.ajaxsystems:id/invites")
     private WebElement inviteUsersField;
 
+
+
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
     private WebElement addButtonFromContactList;
 
@@ -48,6 +50,9 @@ public class User{
     }
     public WebElement getDeleteButton() {
         return deleteButton;
+    }
+    public WebElement getAddButtonFromContactList() {
+        return addButtonFromContactList;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -94,7 +99,7 @@ public class User{
         String emailListString = "";
         int counter = 0;
 
-        Base.log(1, "click send Invites Button");
+        Base.log(1, "click Send Invites Button");
         base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "concat all emails from array to the one string");
@@ -108,17 +113,18 @@ public class User{
 
         Base.log(1, "click Add button");
         base.nav.nextButtonClick();
+
         if(!base.check.isPresent.snackBar(3)) {
 
             Base.log(1, "confirm proposition");
             base.nav.confirmIt();
+
             base.wait.invisibilityOfWaiter();
 
             base.wait.element(userStatus, 15, true);
 
             Base.log(1, "check whether new user is added");
             for (String userEmail : usersForEmailField) {
-                base.nav.scrollTop();
                 if (base.nav.scrollToElementWith.text(userEmail, false)) {
                     counter++;
                 }
@@ -169,9 +175,10 @@ public class User{
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addFromContactList() {
+    public boolean addFromContactList() {
         Base.log(4, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
         result = false;
+        boolean firstTime = true;
 
         Base.log(1, "searching and clicking the Send Invites Button");
         base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
@@ -180,30 +187,38 @@ public class User{
         addButtonFromContactList.click();
 
         Base.log(1, "start Add user process");
-        int firstTime = 0;
+
         for (String userEmail : usersForContactList) {
 
-            if(firstTime > 0){
+            if(!firstTime){
                 Base.log(1, "scrolling to the start of list");
                 base.nav.scrollTop();
-            }
-            firstTime++;
+            }else firstTime = false;
 
             Base.log(1, "activate user with email \"" + userEmail + "\" in the Contacts List");
             activateUserInContactListBy("email", userEmail);
         }
 
-        Base.log(1, "click Save button");
+        Base.log(1, "tap Save button");
         base.nav.nextButtonClick();
 
-        Base.log(1, "click add button and confirm proposition");
-        base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
+        Base.log(1, "tap Send Invitation button");
+        base.nav.nextButtonClick();
 
-        Assert.assertFalse(base.check.isPresent.snackBar(3), "SnackBar is shown with error text \n");
+        Base.log(1, "check is error snackBar present");
+        if (base.check.isPresent.snackBar(2)) return false;
+
+        Base.log(1, "confirm proposition");
+        base.nav.confirmIt();
+
+        Base.log(1, "check is error snackBar present");
+        if (base.check.isPresent.snackBar(2)) return false;
+
         base.wait.invisibilityOfWaiter();
-        Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
 
-        Base.log(4, "Method is finished");
+        Base.log(1, "check is UserList opened");
+        if (base.wait.element(userStatus, 10, true)) return true;
+        else return false;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -214,7 +229,7 @@ public class User{
 
         for (int i = 1; i < 3; i++) {
             if (base.nav.scrollToElementWith.type(typeBy, userEmail, true)) {
-                base.check.isPresent.snackBar(2);
+                base.check.isPresent.snackBar(1);
                 try {
                     base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
                     Base.log(1, "element \"" + userEmail + "\" is activated successfully");
@@ -230,6 +245,28 @@ public class User{
         }
         return result;
     }
+//    private boolean activateUserInContactListBy(String typeBy, String userEmail) {
+//        String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
+//        String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
+//
+//        for (int i = 1; i < 3; i++) {
+//            if (base.nav.scrollToElementWith.type(typeBy, userEmail, true)) {
+//                base.check.isPresent.snackBar(1);
+//                try {
+//                    base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
+//                    Base.log(1, "element \"" + userEmail + "\" is activated successfully");
+//                    result = true;
+//                    break;
+//
+//                } catch (NoSuchElementException e) {
+//                    Base.log(3, "activation element \"" + userEmail + "\" is failed, try count " + i);
+//                    Base.log(3, "stacktrace: \n" + e + "\n");
+//                    result = false;
+//                }
+//            }
+//        }
+//        return result;
+//    }
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -273,17 +310,9 @@ public class User{
      */
 
     public boolean checkIsNewUsersAddedBy(String byType, ArrayList<String> userList) {
-        result = false;
         int counter = 0;
-        int firstTime = 0;
 
         for (String userEmail : userList) {
-
-            if(firstTime > 0){
-                Base.log(1, "scrolling to the start of list");
-                base.nav.scrollTop();
-            }
-            firstTime++;
 
             if (base.nav.scrollToElementWith.type(byType, userEmail, false)) {
                 Base.log(1, "new user with email \"" + userEmail + "\" is added successfully", true);
@@ -294,12 +323,11 @@ public class User{
         Base.log(3, "added " + counter + " new users from " + userList.size());
         if (counter == userList.size()) {
             Base.log(1, "all users are added");
-            result = true;
+            return true;
         } else {
             Base.log(3, "not all users are added");
-            result = false;
+            return false;
         }
-        return result;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -361,9 +389,10 @@ public class User{
                 deleteButton.click();
                 base.nav.confirmIt();
 
-                base.wait.invisibilityOfWaiter();
+//                base.wait.invisibilityOfWaiter();
 
-                Assert.assertTrue(base.wait.elementWithText(successText, 5, true), "SUCCESS text is not shown");
+                Assert.assertTrue(base.wait.elementWithText(successText, 20, true), "SUCCESS text is not shown");
+                base.getScreenShot();
                 Base.log(1, "SUCCESS text is shown");
                 counter++;
             } else {

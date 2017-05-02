@@ -18,11 +18,11 @@ import utils.Imitator;
 public class C43875_Add_new_device {
     private Base base;
     private Imitator imitator;
+    private String deviceName;
 
     @Parameters({"deviceName_"})
     @BeforeClass
     public void init(String deviceName_) {
-        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
         imitator = new Imitator(base);
@@ -31,38 +31,58 @@ public class C43875_Add_new_device {
     }
 
     @Test(priority = 1, enabled = true)
-    public void add_Door_Protect() {
+    public void add_Device_While_Hub_Armed() {
+        Base.log(3, "START TEST");
+        base.hub.security.arm();
         base.nav.gotoPage.Devices();
-        Base.log(1, "add devices DoorProtect to Hub");
-        imitator.addDevice(203061, 1, 1, "Door_Protect", 1);
 
-        Base.log(1, "check is device DoorProtect added to Hub");
-        Assert.assertTrue(base.devicesPage.checkIsNewAdded("Door_Protect"));
+        Base.log(1, "check is Add New Device button is shown", true);
+        Assert.assertFalse(base.check.isPresent.button.addNewDevice(), "Add New Device button is shown\n");
+        Base.log(1, "Add New Device button is not shown", true);
+        base.hub.security.disarm();
     }
 
-    @Test(priority = 2, enabled = true)
-    public void add_Motion_Protect() {
-        base.nav.gotoPage.Devices();
-        Base.log(1, "add devices MotionProtect to Hub");
-        imitator.addDevice(203062, 2, 2, "Motion_Protect", 2);
+    @Test(priority = 2, enabled = true, invocationCount = 2)
+    public void add_Device_From_Rooms_Page() {
+        Base.log(3, "START TEST");
+        deviceName = "Motion_Protect";
+        base.nav.gotoPage.Rooms();
 
-        Base.log(1, "check is device MotionProtect added to Hub");
-        Assert.assertTrue(base.devicesPage.checkIsNewAdded("Motion_Protect"));
+        imitator.addDevice(203062, 2, 2, deviceName);
+
+        Base.log(1, "check is device added to Hub", true);
+
+        deviceName = imitator.getDeviceNameNew();
+        Assert.assertTrue(base.check.isPresent.elementWith.name(deviceName), "device with name \"" + deviceName + "\" is not added\n");
+        Base.log(1, "new device with name \"" + deviceName + "\" is added successfully", true);
     }
 
     @Test(priority = 3, enabled = true)
-    public void add_Glass_Protect() {
+    public void add_Device_From_Devices_Page() {
+        Base.log(3, "START TEST");
+        deviceName = "Door_Protect";
         base.nav.gotoPage.Devices();
-        Base.log(1, "add devices GlassProtect to Hub");
-        imitator.addDevice(203063, 3, 4, "Glass_Protect", 3);
 
-        Base.log(1, "check is device GlassProtect added to Hub");
-        Assert.assertTrue(base.devicesPage.checkIsNewAdded("Glass_Protect"));
+        Base.log(1, "add device \"" + deviceName + "\" from Devices Page", true);
+        imitator.addDevice(203061, 1, 1, deviceName, 2);
+
+        Base.log(1, "check is device added to Hub", true);
+        Assert.assertTrue(base.check.isPresent.elementWith.name(deviceName));
+    }
+
+    @Test(priority = 4, enabled = true)
+    public void add_Existing_Device() {
+        Base.log(3, "START TEST");
+        deviceName = "Existing_Device";
+        base.nav.gotoPage.Devices();
+
+        Base.log(1, "add existing device from Devices Page", true);
+        Assert.assertFalse(imitator.addDevice(203061, 1, 1, deviceName, 2), "");
+        Base.log(1, "cannot add existing device", true);
     }
 
     @AfterClass
     public void endSuit() {
         base.getDriver().quit();
     }
-
 }

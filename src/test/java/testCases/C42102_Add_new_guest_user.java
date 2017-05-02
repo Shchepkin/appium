@@ -32,7 +32,7 @@ public class C42102_Add_new_guest_user{
 
     @Test(priority = 1, enabled = true)
     public void From_Email_Field() {
-
+        Base.log(1, "START TEST");
         base.user.addFromEmailField();
         Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForEmailField()), "Add users from Email Field is failed\n");
     }
@@ -40,8 +40,8 @@ public class C42102_Add_new_guest_user{
     @Test(priority = 2, enabled = true)
     public void From_Contact_List() {
 
-        base.user.addFromContactList();
-        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("email", base.user.getUsersForContactList()), "Add users from Contact List is failed\n");
+        Assert.assertTrue(base.user.addFromContactList(), "Process of adding users from Contact List is failed\n");
+        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForContactList()), "Add users from Contact List is failed\n");
     }
 
     @Test(priority = 3, enabled = true)

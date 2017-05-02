@@ -39,7 +39,6 @@ public class Check{
         waitElements(elements, 5));
      */
     public int waitElements (WebElement[] elements, int period) {
-        Base.log(4, "Method is started");
         numOfFoundElement = 0;
         result = false;
         for (int i = 1; i <= period; i++) {
@@ -61,14 +60,12 @@ public class Check{
             }
             if (result) {break;}
         }
-        Base.log(4, "Method is finished");
         return numOfFoundElement;
     }
 
 //======================================================================================================================
 
     public boolean clickElementAndWaitingPopup(WebElement elementForClick, boolean confirmPopupProposition){
-        Base.log(4, "Method is started");
         result = false;
         WebElement[] elements = new WebElement[]{base.popUp.getSnackBarElement(), base.popUp.loadingWindow};
 
@@ -80,7 +77,6 @@ public class Check{
 
         checkNum(numOfFoundElement, confirmPopupProposition);
 
-        Base.log(4, "Method is finished");
         return result;
     }
 
@@ -118,27 +114,31 @@ public class Check{
     public boolean isDeletedBy(String type, String value) {
         if (base.nav.scrollToElementWith.name(value, false)) {
             Base.log(4, "element with value \"" + value + "\" is still displayed in the List");
-            result = false;
+            return false;
         } else {
             Base.log(3, "element with value \"" + value + "\" is not displayed in the List");
-            result = true;
+            return true;
         }
-        return result;
     }
 
     public class IsPresent {
-        public boolean error(int timer) {
-            boolean result = element(base.popUp.errorPic, timer);
-            if (result) {
-                Base.log(3, "Error message is shown with text: \"" + base.popUp.getContentText() + "\"");
-            }
-            return result;
-        }
-        public boolean element(WebElement element, int timer) {
+        public Button button = new Button();
+        public ElementWith elementWith = new ElementWith();
+
+        public boolean errorMessageOrSnackBar(int timer) {
+            WebDriverWait iWait = new WebDriverWait(driver, timer);
             try {
-                WebDriverWait iWait = new WebDriverWait(driver, timer);
-                iWait.until(ExpectedConditions.visibilityOf(element));
-                Base.log(1, "element is shown with text: \"" + element.getText() + "\"");
+                iWait.until(ExpectedConditions.or(
+                        ExpectedConditions.visibilityOf(base.popUp.errorPic),
+                        ExpectedConditions.visibilityOf(base.popUp.getSnackBarElement())
+                ));
+
+                try {
+                    Base.log(1, "ERROR is shown with text: \"" + base.popUp.getSnackBarText() + "\"");
+                }catch (NoSuchElementException e) {
+                    Base.log(1, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\"");
+                }
+                base.getScreenShot();
                 return true;
 
             } catch (NoSuchElementException e) {
@@ -147,9 +147,40 @@ public class Check{
                 return false;
             }
         }
+
+        public boolean error(int timer) {
+            boolean result = element(base.popUp.errorPic, timer);
+            if (result) {
+                Base.log(3, "Error message is shown with text: \"" + base.popUp.getContentText() + "\"");
+            }
+            return result;
+        }
+
+        public boolean element(WebElement element, int timer) {
+            try {
+                WebDriverWait iWait = new WebDriverWait(driver, timer);
+                iWait.until(ExpectedConditions.visibilityOf(element));
+                try {
+                    Base.log(1, "element is shown with text: \"" + element.getText() + "\"", true);
+                    base.getScreenShot();
+
+                }catch (NoSuchElementException e) {
+                    Base.log(3, "cannot catch the text, it's gone so fast");
+                }
+                return true;
+
+            } catch (NoSuchElementException e) {
+                base.getScreenShot();
+                Base.log(3, "no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
+                return false;
+            }
+        }
+
         public boolean snackBar(int timer) {
+            Base.log(1, "waiting for snackBar");
             return element(base.popUp.getSnackBarElement(), timer);
         }
+
         public boolean popUpWithConfirmation(int timer) {
             try {
                 Base.log(1, "waiting " + timer + " seconds for Confirmation PopUp");
@@ -174,6 +205,42 @@ public class Check{
             }
         }
 
+        public class Button{
+            public boolean addNewDevice(){
+                try {
+                    WebDriverWait iWait = new WebDriverWait(driver, 2);
+                    iWait.until(ExpectedConditions.or(
+                            ExpectedConditions.visibilityOf(base.devicesPage.getAddDeviceButtonNew()),
+                            ExpectedConditions.visibilityOf(base.devicesPage.getAddDeviceButtonOld()),
+                            ExpectedConditions.visibilityOf(base.devicesPage.getAddDeviceButtonOnEmptyRoomsPage())
+                    ));
+
+                    Base.log(1, "Add New Device button is shown", true);
+                    base.getScreenShot();
+                    return true;
+
+                } catch (NoSuchElementException e) {
+                    Base.log(1, "Add New Device button is not shown", true);
+                    base.getScreenShot();
+                    return false;
+                }
+            }
+        }
+
+        public class ElementWith{
+            public boolean id(String id){
+                return base.nav.scrollToElementWith.id(id, false);
+            }
+            public boolean name(String name){
+                return base.nav.scrollToElementWith.name(name, false);
+            }
+            public boolean text(String text){
+                return base.nav.scrollToElementWith.text(text, false);
+            }
+            public boolean email(String email){
+                return base.nav.scrollToElementWith.email(email, false);
+            }
+        }
     }
 
     public class LocalizedTextFor{
@@ -249,4 +316,5 @@ public class Check{
                 return true;
         }
     }
+
 }
