@@ -33,7 +33,7 @@ public class Device {
 
 //----------------------------------------------------------------------------------------------------------------------
     public boolean checkIsNewAdded(String deviceName) {
-        if (base.nav.scrollToElementWith.name(deviceName, false)) {
+        if (base.nav.scroll.toElementWith.name(deviceName, false)) {
             Base.log(1, "new device with name \"" + deviceName + "\" is added successfully", true);
             return true;
         } else {

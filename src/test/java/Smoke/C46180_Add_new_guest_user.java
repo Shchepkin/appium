@@ -1,4 +1,4 @@
-package testCases;
+package Smoke;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -13,7 +13,7 @@ import pageObjects.Base;
  * - at least one Hub
  */
 
-public class C42102_Add_new_guest_user{
+public class C46180_Add_new_guest_user {
 
     private String login, pass, server, expected, actual;
     private Base base;
@@ -34,7 +34,8 @@ public class C42102_Add_new_guest_user{
     public void From_Email_Field() {
         Base.log(1, "START TEST");
         base.user.addFromEmailField();
-        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForEmailField()), "Add users from Email Field is failed\n");
+//        Assert.assertTrue(base.user.checkIsNewUsersAddedBy("text", base.user.getUsersForEmailField()), "Add users from Email Field is failed\n");
+        Assert.assertTrue(base.check.isPresent.elementsWith.texts(base.user.getUsersForEmailField()), "Add users from Email Field is failed\n");
     }
 
     @Test(priority = 2, enabled = true)

@@ -45,17 +45,12 @@ public class IntroPage{
         loginBtn.click();
     }
 
-    public void goToRegistration() {
-        Base.log(4, "tap Registration button");
-        registrationBtn.click();
-    }
+
 
     public void setServer(String server) {
         Base.log(1, "tap Login button");
         loginBtn.click();
-
         base.loginPage.chooseServer(server);
-
         base.nav.goBack();
     }
 }

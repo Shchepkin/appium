@@ -80,8 +80,6 @@ public class RegistrationPage{
 //====================================================================================
 
     public void fillFields(String name, String email, String password, String phone) {
-        Base.log(4, "Method is started");
-
         Base.log(1, "fill name with: \"" + name + "\"");
         nameField.sendKeys(name);
 
@@ -99,8 +97,6 @@ public class RegistrationPage{
         passwordField.sendKeys(password);
         base.nav.swipeUp();
         passwordConfirmField.sendKeys(password);
-
-        Base.log(4, "Method is finished");
     }
 
 
@@ -112,13 +108,9 @@ public class RegistrationPage{
     }
 
     public void setUserPic(int imageNumber) {
-        Base.log(4, "Method is started");
-
         Base.log(1, "tap User Pic icon");
         userPic.click();
-
         base.addImagePage.setImageFromGallery(imageNumber);
-        Base.log(4, "Method is finished");
     }
 
     public void setUserPic(int type, int imageNumber) {
@@ -143,4 +135,45 @@ public class RegistrationPage{
         Base.log(4, "Method is started");
     }
 
+    public boolean reg(String login, String pass, String server, String phone, String userName) {
+//        String login = base.getCredsWithKey("login");
+//        String pass = base.getCredsWithKey("password");
+//        String server = base.getCredsWithKey("server");
+//        String phone = base.getCredsWithKey("phone");
+//        String userName = base.getCredsWithKey("userName");
+        Base.log(1, "delete user if phone already exist at the server");
+        base.sql.getDelete("Phone", "%" + phone + "%");
+
+        Base.log(1, "start from Intro Page and click Registration button", true);
+        base.introPage.setServer(server);
+        base.nav.gotoPage.Registration();
+
+        Base.log(1, "registration process", true);
+        setUserPic(1);
+        fillFields(userName, login, pass, phone);
+        confirmAgreementCheckBox();
+        registrationButtonClick();
+
+        Base.log(1, "check is error message present on page", true);
+        if (base.check.isPresent.errorMessageOrSnackBar(10)) return false;
+
+        Base.log(1, "waiting for Validation Code Page");
+        return base.wait.element(base.validationCodePage.getSmsCodeField(), 60, true);
+
+//        Base.log(1, "get and fill Validation Codes", true);
+        base.validationCodePage.getAndFillValidationCodes("Phone", "%" + phone + "%");
+//        base.nav.confirmIt();
+//
+//        Base.log(1, "waiting for Welcome Page with dashboard link");
+//        if (!base.wait.element(dashboardLink, 30, true)) return false;
+//
+//        Base.log(1, "Welcome Page is shown, so go to the dashboard", true);
+//        dashboardLinkClick();
+//        if (base.wait.menuIconOrPinPopUp(100, true)){
+//            Base.log(1, "Registration successfully", true);
+//            return true;
+//        }else return false;
+    }
+
+    public boolean validate
 }

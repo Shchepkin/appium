@@ -1,4 +1,4 @@
-package testCases;
+package Smoke;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -14,7 +14,7 @@ import pageObjects.Base;
  * - at least one room
  * - hub disarmed
  */
-public class C42176_Virtual_Space_Control{
+public class C46179_Virtual_Space_Control {
 
     private String armedText, disarmedText, patrialArmedText, actual, expected;
     private Base base;

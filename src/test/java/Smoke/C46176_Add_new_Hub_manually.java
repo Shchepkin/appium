@@ -1,4 +1,4 @@
-package testCases;
+package Smoke;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -11,7 +11,7 @@ import pageObjects.Base;
  * PRECONDITION
  * Account has no hub
  */
-public class C42099_Add_new_Hub_manually{
+public class C46176_Add_new_Hub_manually {
 
     private String hubName, hubMasterKey;
     private Base base;

@@ -1,4 +1,4 @@
-package testCases;
+package Smoke;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -15,7 +15,7 @@ import utils.Imitator;
  * - at least three rooms in the Hub
  */
 
-public class C43875_Add_new_device {
+public class C46178_Add_new_device {
     private Base base;
     private Imitator imitator;
     private String deviceName;

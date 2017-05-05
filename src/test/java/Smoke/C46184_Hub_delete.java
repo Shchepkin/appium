@@ -1,4 +1,4 @@
-package testCases;
+package Smoke;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -11,7 +11,7 @@ import pageObjects.Base;
  * PRECONDITION
  * - one hub
  */
-public class C44144_Hub_delete {
+public class C46184_Hub_delete {
     private Base base;
     private String expectedSnackBarText;
 

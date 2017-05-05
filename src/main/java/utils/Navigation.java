@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -204,8 +205,15 @@ public class Navigation{
 
     // TODO create class structure for scroll
 
+    /**
+     * This class scrolls current screen to the element with needed parameter and gives you the opportunity to click this element if you want
+     *
+     * @return true if method found the element (and click them if it required)
+     */
+
     public class Scroll{
-        ToElementWith toElementWith = new ToElementWith();
+        public ToElementWith toElementWith = new ToElementWith();
+        private String recycler = "new UiSelector().resourceId(\"com.ajaxsystems:id/recycler\")";
 
         public void top(){}
         public void bottom(){}
@@ -213,11 +221,48 @@ public class Navigation{
         public void toElement(By by){}
 
         public class ToElementWith{
-            public void text(String textOfSearchingElement, boolean click){}
-            public void email(String emailOfSearchingElement, boolean click){}
-            public void id(String idOfSearchingElement, boolean click){}
-            public void name(String nameOfSearchingElement, boolean click){}
+            public boolean text(String textOfSearchingElement, boolean click){
+                String searchingElement = "new UiSelector().text(\"" + textOfSearchingElement + "\")";
+                return search(searchingElement, click);
+            }
+
+            public boolean email(String emailOfSearchingElement, boolean click){
+                String searchingElement = "new UiSelector().resourceId(\"com.ajaxsystems:id/email\").text(\"" + emailOfSearchingElement + "\")";
+                return search(searchingElement, click);
+            }
+
+            public boolean room(String roomOfSearchingElement, boolean click){
+                String searchingElement = "new UiSelector().resourceId(\"com.ajaxsystems:id/room\").text(\"" + roomOfSearchingElement + "\")";
+                return search(searchingElement, click);
+            }
+
+            public boolean id(String idOfSearchingElement, boolean click){
+                String searchingElement = "new UiSelector().resourceId(\"" + idOfSearchingElement + "\")";
+                return search(searchingElement, click);
+            }
+
+            public boolean name(String nameOfSearchingElement, boolean click){
+                String searchingElement = "new UiSelector().resourceId(\"com.ajaxsystems:id/name\").text(\"" + nameOfSearchingElement + "\")";
+                return search(searchingElement, click);
+            }
+
+            private boolean search(String searchingElement, boolean click){
+                try {
+                    RemoteWebElement elementInScrollList = (RemoteWebElement) driver
+                            .findElementByAndroidUIAutomator("new UiScrollable(" + recycler + ").scrollIntoView(" + searchingElement + "));");
+                    if (click){
+                        Base.log(3, "tap found element");
+                        elementInScrollList.click();
+                    }
+                    return true;
+                }catch (Exception e){
+                    Base.log(3, "element not found: \n\n" + e.getMessage() + "\n");
+                    return false;
+                }
+            }
         }
+
+
 
     }
 
@@ -277,7 +322,7 @@ public class Navigation{
 //----------------------------------------------------------------------------------------------------------------------
 
     /**
-     * This method scrolls current screen to the element with needed text and direction ("up" or "down") and gives you
+     * This class scrolls current screen to the element with needed parameter and direction ("up" or "down") and gives you
      * the opportunity to click this element if you want
      *
      * @return true if method found the element (and click them if it required)
@@ -535,28 +580,67 @@ public class Navigation{
             Base.log(1, "tap Devices Button");
             footerDevices.click();
         }
+
         public void Rooms() {
             backToDashboard();
 
             Base.log(1, "tap Rooms Button");
             footerRooms.click();
         }
+
         public void Notifications() {
             backToDashboard();
 
             Base.log(1, "tap Notifications Button");
             footerNotifications.click();
         }
+
         public void Remote() {
             backToDashboard();
 
             Base.log(1, "tap Remote Button");
             footerRemote.click();
         }
+
+        private void backToDashboard(){
+        Base.log(1, "back to dashboard");
+        while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
+            if (base.wait.element(backButton, 1, true)) {
+                Base.log(1, "tap back button");
+                backButton.click();
+
+            } else if (base.check.isPresent.popUpWithConfirmation(2)) {
+                cancelIt();
+
+            } else {
+                Base.log(3, "Dashboard is not reached");
+            }
+        }
+        Base.log(1, "Dashboard is reached");
+    }
+
+        private void backToDashboard1(){
+        Base.log(1, "back to dashboard");
+        while (base.wait.element(backButton, 2, true)) {
+            Base.log(1, "tap back button");
+            backButton.click();
+        }
+        if (base.wait.menuIconOrPinPopUp(2, true))
+            Base.log(1, "Dashboard is reached");
+    }
+
+        //logout
         public void Registration() {
             Base.log(1, "tap Registration Button");
             base.introPage.getRegistrationBtn().click();
         }
+
+        public void Authorization() {
+            Base.log(1, "tap Authorization Button");
+            base.introPage.getLoginBtn().click();
+        }
+
+        //login
         public void hubSettings() {
             gotoPage.Devices();
 
@@ -566,6 +650,7 @@ public class Navigation{
             Base.log(1, "tap HubSettings Button");
             base.hub.getSettingsButton().click();
         }
+
         public void userList() {
             Base.log(1, "go to the Device List page");
             gotoPage.Devices();
@@ -582,6 +667,7 @@ public class Navigation{
             Base.log(1, "waiting User Status element");
             base.wait.element(base.hub.getUserStatus(), 10, true);
         }
+
         public void inviteUser() {
             Base.log(1, "go to the User List page");
             userList();
@@ -590,37 +676,10 @@ public class Navigation{
             Base.log(4, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
 
             Base.log(1, "searching and clicking the Send Invites Button");
-            base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
+            base.nav.scroll.toElementWith.text(sendInvitesButtonText, true);
 
             Base.log(1, "click the Add From Contact List Button");
             base.user.getAddButtonFromContactList().click();
-        }
-
-        private void backToDashboard(){
-            Base.log(1, "back to dashboard");
-            while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
-                if (base.wait.element(backButton, 1, true)) {
-                    Base.log(1, "tap back button");
-                    backButton.click();
-
-                } else if (base.check.isPresent.popUpWithConfirmation(2)) {
-                    cancelIt();
-
-                } else {
-                    Base.log(3, "Dashboard is not reached");
-                }
-            }
-            Base.log(1, "Dashboard is reached");
-        }
-
-        private void backToDashboard1(){
-            Base.log(1, "back to dashboard");
-            while (base.wait.element(backButton, 2, true)) {
-                Base.log(1, "tap back button");
-                backButton.click();
-            }
-            if (base.wait.menuIconOrPinPopUp(2, true))
-            Base.log(1, "Dashboard is reached");
         }
     }
 

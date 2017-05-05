@@ -1,7 +1,9 @@
 package pageObjects.pages.intro;
 
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import pageObjects.Base;
@@ -28,33 +30,16 @@ public class AuthorizationPage{
     @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
     private WebElement dialogMessage;
 
-//---------------------------------------------------------------------------------------------------------------------
-
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Debug\")")
-    private WebElement serverDebug;
-
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Develop\")")
-    private WebElement serverDevelop;
-
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Production\")")
-    private WebElement serverProduction;
-
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Amazon\")")
-    private WebElement serverAmazon;
-
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Eden\")")
-    private WebElement serverEden;
-
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.ajaxsystems:id/textView\").text(\"Glimmering_dev\")")
-    private WebElement serverGlim;
 
 //----------------------------------------------------------------------------------------------------------------------
 
     private Base base;
+    private AndroidDriver driver;
 
     public AuthorizationPage(Base base) {
         this.base = base;
-        PageFactory.initElements(new AppiumFieldDecorator(base.getDriver(), Base.TIMEOUT, TimeUnit.SECONDS), this);
+        this.driver = base.getDriver();
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -75,8 +60,6 @@ public class AuthorizationPage{
     }
 
     public void loginToTheServer(String login, String password, String server) {
-        Base.log(4, "Method is started");
-
         Base.log(1, "fill the login field with data: \"" + login + "\"", true);
         loginField.sendKeys(login);
 
@@ -87,14 +70,10 @@ public class AuthorizationPage{
 
         Base.log(1, "tap login button", true);
         loginBtn.click();
-
-        Base.log(4, "Method is finished");
     }
 
 
     public boolean loginWithPinCancel(String login, String password, String server) {
-        Base.log(4, "Method is started");
-
         Base.log(1, "tap Login Button");
         loginButtonOnIntro.click();
 
@@ -116,7 +95,6 @@ public class AuthorizationPage{
         }
      }
 
-
     public void loginWithPinCancel() {
         Base.log(1, "get credentials for login");
         String login = base.getCredsWithKey("login");
@@ -129,23 +107,7 @@ public class AuthorizationPage{
     public void chooseServer(String server) {
         Base.log(1, "select server type: \"" + server + "\"", true);
         base.nav.touch.longPress(loginBtn, 2);
-
-        switch (server) {
-            case "Debug":  serverDebug.click();
-                break;
-            case "Develop":  serverDevelop.click();
-                break;
-            case "Production": serverProduction.click();
-                break;
-            case "Amazon":  serverAmazon.click();
-                break;
-            case "Eden":  serverEden.click();
-                break;
-            case "Glim":  serverGlim.click();
-                break;
-            default: serverProduction.click();
-                break;
-        }
+        driver.findElement(By.xpath("//android.widget.TextView[@text='" + server + "']")).click();
     }
 
     public void logOut() {

@@ -71,7 +71,6 @@ public class Base {
     private AndroidDriver driver = null;
     private Path path;
     private String jsonString, collection;
-
     private String locale;
 
     private Map localizeKeys, creds, dbSettings, appSet;
@@ -266,10 +265,8 @@ public class Base {
         return dbSettings;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
 // JSON
 //----------------------------------------------------------------------------------------------------------------------
-
     public Map getJsonMapCollection(String filePath, String collection) {
         log(4, "Method is started");
         Map<String, String> jsonCollection = new HashMap<>();
@@ -327,8 +324,6 @@ public class Base {
         }
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-
     private Path getApplicationStartUp() throws UnsupportedEncodingException, MalformedURLException {
         log(4, "Method is started");
         URL startupUrl = getClass().getProtectionDomain().getCodeSource()
@@ -352,8 +347,6 @@ public class Base {
         return path;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-
     private String loadJSON(String path) throws IOException {
         log(4, "Method is started");
         byte[] buf;
@@ -365,10 +358,8 @@ public class Base {
         return new String(buf);
     }
 
-//----------------------------------------------------------------------------------------------------------------------
 // LOG
 //----------------------------------------------------------------------------------------------------------------------
-
     public static void log(int type, String message, boolean writeToReport) {
 
         if(writeToReport){
@@ -430,8 +421,6 @@ public class Base {
         return message;
     }
 
-
-
     private static final String logfileName(){
         String fullPathToFile, filename;
 
@@ -459,7 +448,6 @@ public class Base {
         return fullPathToFile;
     }
 
-
     private static void write(String text) {
         try(FileWriter writer = new FileWriter(logFile, true)) {
             writer.write(text);
@@ -470,10 +458,8 @@ public class Base {
         }
     }
 
-//----------------------------------------------------------------------------------------------------------------------
 // Keyboard
 //----------------------------------------------------------------------------------------------------------------------
-
     public void hideKeyboard() {
         log(1, "hide Keyboard");
         try {
@@ -483,10 +469,8 @@ public class Base {
         }
     }
 
-//----------------------------------------------------------------------------------------------------------------------
 // AndroidDriver
 //----------------------------------------------------------------------------------------------------------------------
-
     public AndroidDriver getDriver() {
         if (driver == null) {
             driver = initDriver();
@@ -527,10 +511,8 @@ public class Base {
         return driver;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
 // ScreenShot
 //----------------------------------------------------------------------------------------------------------------------
-
     public void getScreenShot() {
         try {
             Date currentDate = new Date();
@@ -556,10 +538,8 @@ public class Base {
         }
     }
 
-//----------------------------------------------------------------------------------------------------------------------
 // DataProvider
 //----------------------------------------------------------------------------------------------------------------------
-
     public Object[][] getDataProviderObjects(String pathToFileWithData) {
         log(4, "Method is started");
         ArrayList<Map> listOfMaps = listOfMapsForDataProvider(pathToFileWithData);

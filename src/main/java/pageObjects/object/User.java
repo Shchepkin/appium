@@ -24,8 +24,6 @@ public class User{
     @AndroidFindBy(id = "com.ajaxsystems:id/invites")
     private WebElement inviteUsersField;
 
-
-
     @AndroidFindBy(id = "com.ajaxsystems:id/add")
     private WebElement addButtonFromContactList;
 
@@ -57,11 +55,12 @@ public class User{
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Base base;
-    private final AppiumDriver driver;
+    private Base base;
+    private AppiumDriver driver;
     private boolean result;
-
     private String sendInvitesButtonText, inviteFailText, adminStatusText, userStatusText;
+
+    public Registration registration = new Registration();
 
     public User(Base base) {
         this.base = base;
@@ -84,14 +83,9 @@ public class User{
         base.nav.nextButtonClick();
     }
 
-//----------------------------------------------------------------------------------------------------------------------
     // TODO create new class for add end delete users
     // TODO delete all asserts
 
-//----------------------------------------------------------------------------------------------------------------------
-
-
-//----------------------------------------------------------------------------------------------------------------------
 
     public boolean addFromEmailField() {
         Base.log(4, "Method is started");
@@ -100,7 +94,7 @@ public class User{
         int counter = 0;
 
         Base.log(1, "click Send Invites Button");
-        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
+        base.nav.scroll.toElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "concat all emails from array to the one string");
         for (String userEmail : usersForEmailField) {
@@ -125,7 +119,7 @@ public class User{
 
             Base.log(1, "check whether new user is added");
             for (String userEmail : usersForEmailField) {
-                if (base.nav.scrollToElementWith.text(userEmail, false)) {
+                if (base.nav.scroll.toElementWith.text(userEmail, false)) {
                     counter++;
                 }
             }
@@ -143,8 +137,6 @@ public class User{
         return result;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-
     public void addUserListFromEmailField(String nameOfJsonCollection) {
         Base.log(4, "Method is started");
         Base.log(3, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
@@ -152,7 +144,7 @@ public class User{
         String emailListString = "";
 
         Base.log(1, "click send Invites Button");
-        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
+        base.nav.scroll.toElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "concat all emails from array to the one string");
         for (String userEmail : userListFromJson) {
@@ -173,15 +165,13 @@ public class User{
         Base.log(4, "Method is finished");
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-
     public boolean addFromContactList() {
         Base.log(4, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
         result = false;
         boolean firstTime = true;
 
         Base.log(1, "searching and clicking the Send Invites Button");
-        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
+        base.nav.scroll.toElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "click the Add From Contact List Button");
         addButtonFromContactList.click();
@@ -196,7 +186,7 @@ public class User{
             }else firstTime = false;
 
             Base.log(1, "activate user with email \"" + userEmail + "\" in the Contacts List");
-            activateUserInContactListBy("email", userEmail);
+            base.nav.scroll.toElementWith.email(userEmail, true);
         }
 
         Base.log(1, "tap Save button");
@@ -221,30 +211,29 @@ public class User{
         else return false;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
 
-    private boolean activateUserInContactListBy(String typeBy, String userEmail) {
-        String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
-        String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
-
-        for (int i = 1; i < 3; i++) {
-            if (base.nav.scrollToElementWith.type(typeBy, userEmail, true)) {
-                base.check.isPresent.snackBar(1);
-                try {
-                    base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
-                    Base.log(1, "element \"" + userEmail + "\" is activated successfully");
-                    result = true;
-                    break;
-
-                } catch (NoSuchElementException e) {
-                    Base.log(3, "activation element \"" + userEmail + "\" is failed, try count " + i);
-                    Base.log(3, "stacktrace: \n" + e + "\n");
-                    result = false;
-                }
-            }
-        }
-        return result;
-    }
+//    private boolean activateUserInContactListBy(String typeBy, String userEmail) {
+//        String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
+//        String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
+//
+//        for (int i = 1; i < 3; i++) {
+//            if (base.nav.scrollToElementWith.type(typeBy, userEmail, true)) {
+//                base.check.isPresent.snackBar(1);
+//                try {
+//                    base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
+//                    Base.log(1, "element \"" + userEmail + "\" is activated successfully");
+//                    result = true;
+//                    break;
+//
+//                } catch (NoSuchElementException e) {
+//                    Base.log(3, "activation element \"" + userEmail + "\" is failed, try count " + i);
+//                    Base.log(3, "stacktrace: \n" + e + "\n");
+//                    result = false;
+//                }
+//            }
+//        }
+//        return result;
+//    }
 //    private boolean activateUserInContactListBy(String typeBy, String userEmail) {
 //        String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
 //        String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
@@ -268,7 +257,6 @@ public class User{
 //        return result;
 //    }
 
-//----------------------------------------------------------------------------------------------------------------------
 
     public void addMixedUsers() {
         Base.log(4, "Method is started");
@@ -277,7 +265,7 @@ public class User{
         String unregisteredUser = usersForMixedAdd.get(1);
         String userForContactList = usersForMixedAdd.get(2);
 
-        base.nav.scrollToElementWith.text(sendInvitesButtonText, true);
+        base.nav.scroll.toElementWith.text(sendInvitesButtonText, true);
 
         Base.log(1, "fill email field with \"" + registeredUser + " " + unregisteredUser + "\"");
         inviteUsersField.sendKeys(registeredUser + " " + unregisteredUser);
@@ -286,7 +274,7 @@ public class User{
         addButtonFromContactList.click();
 
         Base.log(1, "activate user with email \"" + userForContactList + "\" in the Contacts List");
-        activateUserInContactListBy("email", userForContactList);
+        base.nav.scroll.toElementWith.email(userForContactList, true);
 
         Base.log(1, "click Save button");
         base.nav.nextButtonClick();
@@ -300,14 +288,6 @@ public class User{
 
         Base.log(4, "Method is finished");
     }
-
-//----------------------------------------------------------------------------------------------------------------------
-
-    /**
-     * @param byType    - name, email, text
-     * @param userList
-     * @return
-     */
 
     public boolean checkIsNewUsersAddedBy(String byType, ArrayList<String> userList) {
         int counter = 0;
@@ -330,13 +310,11 @@ public class User{
         }
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-
     public boolean checkIsDeleteIconPresent(String pendingUserName) {
         String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
         String deleteElementXpath = "/ancestor::android.widget.LinearLayout[1]//*[@resource-id = 'com.ajaxsystems:id/delete']";
 
-        if (base.nav.scrollToElementWith.name(pendingUserName, false)) {
+        if (base.nav.scroll.toElementWith.name(pendingUserName, false)) {
 
             try {
                 base.wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
@@ -350,8 +328,6 @@ public class User{
         }
         return result;
     }
-
-//----------------------------------------------------------------------------------------------------------------------
 
     public boolean isDeleteIconPresent(String pendingUserName) {
         WebElement pendingUserForCheck = findPendingFrom("name", pendingUserName);
@@ -367,15 +343,11 @@ public class User{
         return result;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-
     public void deletePendingByName(String pendingUserName) {
         WebElement pendingUserForDelete = findPendingFrom("name", pendingUserName);
         base.nav.scrollToElement(pendingUserForDelete, "up");
         pendingUserForDelete.click();
     }
-
-//----------------------------------------------------------------------------------------------------------------------
 
     public boolean deleteAllPending() {
         result = false;
@@ -405,14 +377,34 @@ public class User{
         return result;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-
     public void deleteMasterUser(){
         deleteAllActive(adminStatusText);
     }
 
     public void deleteAllGuests(){
         deleteAllActive(userStatusText);
+    }
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
+
+    public class Registration{
+        String login = base.getCredsWithKey("login");
+        String pass = base.getCredsWithKey("password");
+        String server = base.getCredsWithKey("server");
+        String phone = base.getCredsWithKey("phone");
+        String userName = base.getCredsWithKey("userName");
+        public boolean fullProcess(){
+            if (!base.regPage.reg(login, pass, server, phone, userName)) return false;
+
+            return base.regPage.reg(login, pass, server, phone, userName);
+        }
+        public boolean withMistakeInEmail(){return true;}
+        public boolean withMistakeInPhone(){return true;}
+        public boolean withMistakeInPhoneAndEmail(){return true;}
+        public boolean withEmailOrPhoneFromExistingUser(){return true;}
+
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -460,8 +452,6 @@ public class User{
         Base.log(1, "active users with status \"" + status + "\" are not found, number of deleted users: " + counter);
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-
     private WebElement findPendingFrom(String from, String pendingUserName){
         String nameElementXpath = "*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
         String deleteElementXpath = "*[@resource-id = 'com.ajaxsystems:id/delete']";
@@ -480,5 +470,4 @@ public class User{
         return pendingUserElement;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
 }

@@ -1,4 +1,4 @@
-package testCases;
+package Smoke;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -13,7 +13,7 @@ import pageObjects.Base;
  * - at least one Hub
  * - no rooms in the Hub
  */
-public class C42100_Add_new_room{
+public class C46177_Add_new_room {
 
     private String login, pass, server, name, actual;
     private Base base;

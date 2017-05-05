@@ -155,7 +155,7 @@ public class RoomsPage {
     }
 
     public boolean isRoomPresens(String roomName) {
-        if (base.nav.scrollToElementWith.name(roomName, false)){
+        if (base.nav.scroll.toElementWith.name(roomName, false)){
             Base.log(1, "room with name \"" + roomName + "\" is displayed in rooms list ");
             return true;
         }else {

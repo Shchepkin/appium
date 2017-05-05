@@ -1,4 +1,4 @@
-package testCases;
+package Smoke;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -14,7 +14,7 @@ import pageObjects.Base;
  * - at least one active user
  * - at least one pending user
  */
-public class C44141_User_delete{
+public class C46181_User_delete {
 
     private Base base;
 

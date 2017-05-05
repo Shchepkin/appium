@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Sql{
+public class Sql {
 
     private Formatter f = new Formatter();
     private ArrayList validationToken;
@@ -41,58 +41,66 @@ public class Sql{
 
 
     /**
-     *  REQUIRED getConnection()
-        @param row  - name of row for searching element in database (Login, Phone)
-        @param value - value of row for searching
-
-        example:
-            sql.getDelete("Phone", "%1216815329%");
+     * REQUIRED getConnection()
+     *
+     * @param row   - name of row for searching element in database (Login, Phone)
+     * @param value - value of row for searching
+     *              <p>
+     *              example:
+     *              sql.getDelete("Phone", "%1216815329%");
      */
     public void getDelete(String row, String value) {
-        Base.log(4, "Method is started");
         selectList = new ArrayList();
 
         String query = "DELETE FROM csa_accounts WHERE " + row + " LIKE '" + value + "'";
 
         selectList = getSelect(row, value);
+        if (!selectList.get(0).toString().isEmpty()) {
+            try {
+                connection = getConnection();
 
-        try {
-            connection = getConnection();
+                Base.log(4, "getting Statement object to execute query");
+                stmt = connection.createStatement();
 
-            Base.log(4, "getting Statement object to execute query");
-            stmt = connection.createStatement();
+                for (Object sqlResult : selectList) {
+                    Base.log(3, "this objects will be deleted: \"\033[31;49m" + sqlResult + "\"\033[39;49m");
+                }
 
-            for (Object sqlResult : selectList) {
-                Base.log(3, "this objects will be deleted: \"\033[31;49m" + sqlResult + "\"\033[39;49m");
+                Base.log(4, "delete objects");
+                stmt.executeUpdate(query);
+
+            } catch (SQLException sqlEx) {
+                sqlEx.printStackTrace();
+            } finally {
+                Base.log(1, "close all connections");
+                try {
+                    connection.close();
+                } catch (SQLException se) { /*can't do anything */ }
+                try {
+                    stmt.close();
+                } catch (SQLException se) { /*can't do anything */ }
+                try {
+                    rs.close();
+                } catch (SQLException se) { /*can't do anything */ }
             }
-
-            Base.log(4, "delete objects");
-            stmt.executeUpdate(query);
-
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
-        } finally {
-            Base.log(1, "close all connections");
-            try {connection.close();} catch (SQLException se) { /*can't do anything */ }
-            try {stmt.close();}catch (SQLException se) { /*can't do anything */ }
-            try {rs.close();} catch (SQLException se) { /*can't do anything */ }
+        }else {
+            Base.log(1, "this entry is not found in database");
         }
-        Base.log(4, "Method is finished");
     }
 
 
     /**
-     *  REQUIRED getConnection()
-        @param row      - name of row for searching element in database (Login, Phone)
-        @param value    - value of row for searching
-        @return  ArrayList selectList - arrayList with all values from the SQL query
-
-        example:
-            sql.getSelect("Login", "test302@test.com");
-            System.out.println(selectList);
+     * REQUIRED getConnection()
+     *
+     * @param row   - name of row for searching element in database (Login, Phone)
+     * @param value - value of row for searching
+     * @return ArrayList selectList - arrayList with all values from the SQL query
+     * <p>
+     * example:
+     * sql.getSelect("Login", "test302@test.com");
+     * System.out.println(selectList);
      */
     public ArrayList getSelect(String row, String value) {
-        Base.log(4, "Method is started");
         validationToken = new ArrayList();
         selectList = new ArrayList();
 
@@ -128,33 +136,37 @@ public class Sql{
             sqlEx.printStackTrace();
         } finally {
             Base.log(1, "close all connections");
-            try {connection.close();} catch (SQLException se) { /*can't do anything */ }
-            try {stmt.close();}catch (SQLException se) { /*can't do anything */ }
-            try {rs.close();} catch (SQLException se) { /*can't do anything */ }
+            try {
+                connection.close();
+            } catch (SQLException se) { /*can't do anything */ }
+            try {
+                stmt.close();
+            } catch (SQLException se) { /*can't do anything */ }
+            try {
+                rs.close();
+            } catch (SQLException se) { /*can't do anything */ }
         }
-
-        Base.log(4, "Method is finished");
         return selectList;
     }
 
 
     /**
-     *  REQUIRED getConnection()
-        @param row   - name of row for searching element in database (Login, Phone)
-        @param value - value of row for searching
-        @return  Map tokenMap - map with "smsToken" key and "emailToken" key
-
-        example:
-            tokenMap = sql.getTokenMap("Phone", "%+380681513888%");
-            tokenMap.get("smsToken");
-            tokenMap.get("emailToken");
-        or
-            tokenMap = sql.getTokenMap("Login", "vladislav@iondigi.com");
-            tokenMap.get("smsToken");
-            tokenMap.get("emailToken");
+     * REQUIRED getConnection()
+     *
+     * @param row   - name of row for searching element in database (Login, Phone)
+     * @param value - value of row for searching
+     * @return Map tokenMap - map with "smsToken" key and "emailToken" key
+     * <p>
+     * example:
+     * tokenMap = sql.getTokenMap("Phone", "%+380681513888%");
+     * tokenMap.get("smsToken");
+     * tokenMap.get("emailToken");
+     * or
+     * tokenMap = sql.getTokenMap("Login", "vladislav@iondigi.com");
+     * tokenMap.get("smsToken");
+     * tokenMap.get("emailToken");
      */
     public Map getTokenMap(String row, String value) {
-        Base.log(4, "Method is started");
         tokenMap = new HashMap();
         validationToken = new ArrayList();
 
@@ -167,18 +179,18 @@ public class Sql{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (counter == 5){
+            if (counter == 5) {
                 break;
-            }else {counter++;}
+            } else {
+                counter++;
+            }
         }
 
         if (validationToken.size() != 1) {
             Assert.fail("Check whether your credentials are correct! Wrong number of found elements: " + validationToken.size());
-        }
-        else if (validationToken.get(0) == null) {
+        } else if (validationToken.get(0) == null) {
             Assert.fail("Check whether your credentials are correct! Confirmation Token of found element: null");
-        }
-        else {
+        } else {
             String input = validationToken.get(0).toString();
 
             Base.log(1, "Validation Token Array is not empty, so we get string and clear Array");
@@ -189,18 +201,16 @@ public class Sql{
             Matcher matcher = pattern.matcher(input);
 
             Base.log(1, "add matcher value to the Validation Token Array");
-                while(matcher.find()){
-                    validationToken.add(matcher.group());
-                }
+            while (matcher.find()) {
+                validationToken.add(matcher.group());
+            }
             if (validationToken.size() < 2) {
                 Assert.fail("Validation Token Array is not correct! Tokens number is less then 2");
-            }
-            else {
+            } else {
                 tokenMap.put("smsToken", validationToken.get(0));
                 tokenMap.put("emailToken", validationToken.get(1));
             }
         }
-        Base.log(4, "Method is finished");
         return tokenMap;
     }
 
@@ -208,9 +218,10 @@ public class Sql{
     /**
      * This method for getting Connection to the SQL server with 10 attempts
      * Must be used with other methods.
+     *
      * @return Connection connection
      */
-    private Connection getConnection (){
+    private Connection getConnection() {
         url = base.getDbSettingsWithKey("url");
         user = base.getDbSettingsWithKey("user");
         password = base.getDbSettingsWithKey("password");
@@ -222,9 +233,9 @@ public class Sql{
                 Base.log(1, "connection to MySQL server is successfully opened");
                 break;
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 Base.log(3, "opening database connection fail: " + e.getClass());
-                Base.log(3, "cause of problem: "+ e.getCause().toString());
+                Base.log(3, "cause of problem: " + e.getCause().toString());
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e1) {

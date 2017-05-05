@@ -29,6 +29,7 @@ public class ValidationCodePage{
     private final Base base;
     private final AndroidDriver driver;
     private boolean result;
+    private Map tokenMap;
 
     public ValidationCodePage(Base base) {
         this.base = base;
@@ -38,16 +39,20 @@ public class ValidationCodePage{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void getAndFillValidationCodes(String row, String value){
-        Base.log(4, "Method is started");
-
-        Map tokenMap = base.sql.getTokenMap(row, value);
+        tokenMap = base.sql.getTokenMap(row, value);
         Base.log(1, "SMS token: " + tokenMap.get("smsToken"), true);
         Base.log(1, "Email token: " + tokenMap.get("emailToken"), true);
 
         Base.log(1, "fill tokens to the fields");
         smsCodeField.sendKeys(tokenMap.get("smsToken").toString());
         emailCodeField.sendKeys(tokenMap.get("emailToken").toString());
-        Base.log(4, "Method is finished");
-
     }
+
+    public void fillTokensValue (String smsToken, String emailToken){
+        Base.log(1, "fill tokens to the fields");
+        smsCodeField.sendKeys(tokenMap.get("smsToken").toString());
+        emailCodeField.sendKeys(tokenMap.get("emailToken").toString());
+    }
+
+
 }
