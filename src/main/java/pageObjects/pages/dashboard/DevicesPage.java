@@ -25,6 +25,9 @@ public class DevicesPage {
     @AndroidFindBy(id = "com.ajaxsystems:id/unpair")
     private WebElement unpairButton;
 
+    @AndroidFindBy(id = "com.ajaxsystems:id/addCamera")
+    private WebElement addCameraButton;
+
     public WebElement getAddDeviceButtonOnEmptyRoomsPage() {
         return addDeviceButtonOnEmptyRoomsPage;
     }
@@ -133,7 +136,7 @@ public class DevicesPage {
         int counter = 0;
         try {
             while (true) {
-                if (base.wait.menuIconOrPinPopUp(10, true)){
+                if (base.wait.menuIconOrPinPopUp(10)){
                     if (counter != 0) {
                         Base.log(1, "device with name \"" + devName + "\" is deleted successfully\n", true);
                     }

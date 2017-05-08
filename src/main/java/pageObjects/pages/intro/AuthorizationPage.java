@@ -80,11 +80,11 @@ public class AuthorizationPage{
         loginToTheServer(login, password, server);
 
         Base.log(1, "wait menu Icon Or Pin PopUp");
-        if (base.wait.menuIconOrPinPopUp(100, true)){
+        if (base.wait.menuIconOrPinPopUp(60)){
 
             Base.log(1, "check is Pincode PopUp displayed");
             if(base.wait.element(base.popUp.getContentTextElement(), 1, true)){
-                Base.log(1, "Pincode PopUp displayed");
+                Base.log(1, "Pincode PopUp displayed", true);
                 base.nav.cancelIt();
             }
             Base.log(1, "Login successfully!", true);

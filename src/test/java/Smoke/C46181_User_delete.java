@@ -24,34 +24,35 @@ public class C46181_User_delete {
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
 
-        Base.log(1, "login without Pin");
+        Base.log(1, "login without Pin", true);
         base.loginPage.loginWithPinCancel();
 
+        Base.log(1, "goto the User List", true);
         base.nav.gotoPage.userList();
     }
 
     @Test(priority = 1, enabled = true)
     public void all_pending_users() {
         Base.log(3, "START TEST");
-        base.user.deleteAllPending();
+        base.user.delete.allPending();
     }
 
     @Test(priority = 2, enabled = true)
     public void all_guest_users() {
         Base.log(3, "START TEST");
-        base.user.deleteAllGuests();
+        base.user.delete.allGuests();
     }
 
     @Test(priority = 3, enabled = true)
     public void master_user() {
         Base.log(3, "START TEST");
-        base.user.deleteMasterUser();
+        base.user.delete.masterUser();
         base.nav.cancelIt();
 
         Assert.assertTrue(base.dashboard.getPlusButton().isDisplayed());
 
         Base.log(1, "return hub for next tests", true);
-        base.hub.addNewManual();
+        base.hub.add.manual.fromAnyWay();
     }
 
     @AfterClass

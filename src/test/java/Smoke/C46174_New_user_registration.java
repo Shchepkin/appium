@@ -21,13 +21,13 @@ public class C46174_New_user_registration {
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
-        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
     }
 
     @Test(priority = 1, enabled = true)
-    public void With_Validation() {
+    public void Positive() {
+        Base.log(1, "START TEST");
         Assert.assertTrue(base.user.registration.fullProcess());
     }
 

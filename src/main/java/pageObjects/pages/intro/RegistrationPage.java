@@ -50,6 +50,15 @@ public class RegistrationPage{
     private WebElement dashboardLink;
 
 //----------------------------------------------------------------------------------------------------------------------
+    public WebElement getDashboardLink() {
+        return dashboardLink;
+    }
+    public WebElement getRegistrationButtonLink() {
+        return registrationButtonLink;
+    }
+
+
+//----------------------------------------------------------------------------------------------------------------------
     private final Base base;
     private final AppiumDriver driver;
 
@@ -59,13 +68,6 @@ public class RegistrationPage{
         PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
-
-    public WebElement getDashboardLink() {
-        return dashboardLink;
-    }
-    public WebElement getRegistrationButtonLink() {
-        return registrationButtonLink;
-    }
 
     public void registrationButtonClick() {
         Base.log(1, "tap Registration Button");
@@ -101,10 +103,8 @@ public class RegistrationPage{
 
 
     public void confirmAgreementCheckBox() {
-        Base.log(4, "Method is started");
         base.nav.swipeUp();
         userAgreementCheckbox.click();
-        Base.log(4, "Method is finished");
     }
 
     public void setUserPic(int imageNumber) {
@@ -114,8 +114,6 @@ public class RegistrationPage{
     }
 
     public void setUserPic(int type, int imageNumber) {
-        Base.log(4, "Method is started");
-
         switch (type){
             case 1: Base.log(1, "add image from camera");
                 userPic.click();
@@ -128,19 +126,13 @@ public class RegistrationPage{
             default: Base.log(1, "without image");
                 break;
         }
-        Base.log(4, "Method is finished");
     }
 
     public void setPhoneCountryCode() {
         Base.log(4, "Method is started");
     }
 
-    public boolean reg(String login, String pass, String server, String phone, String userName) {
-//        String login = base.getCredsWithKey("login");
-//        String pass = base.getCredsWithKey("password");
-//        String server = base.getCredsWithKey("server");
-//        String phone = base.getCredsWithKey("phone");
-//        String userName = base.getCredsWithKey("userName");
+    public boolean registrationProcess(String login, String pass, String server, String phone, String userName) {
         Base.log(1, "delete user if phone already exist at the server");
         base.sql.getDelete("Phone", "%" + phone + "%");
 
@@ -154,26 +146,11 @@ public class RegistrationPage{
         confirmAgreementCheckBox();
         registrationButtonClick();
 
-        Base.log(1, "check is error message present on page", true);
+        Base.log(1, "check is error message present on page");
         if (base.check.isPresent.errorMessageOrSnackBar(10)) return false;
 
         Base.log(1, "waiting for Validation Code Page");
         return base.wait.element(base.validationCodePage.getSmsCodeField(), 60, true);
-
-//        Base.log(1, "get and fill Validation Codes", true);
-        base.validationCodePage.getAndFillValidationCodes("Phone", "%" + phone + "%");
-//        base.nav.confirmIt();
-//
-//        Base.log(1, "waiting for Welcome Page with dashboard link");
-//        if (!base.wait.element(dashboardLink, 30, true)) return false;
-//
-//        Base.log(1, "Welcome Page is shown, so go to the dashboard", true);
-//        dashboardLinkClick();
-//        if (base.wait.menuIconOrPinPopUp(100, true)){
-//            Base.log(1, "Registration successfully", true);
-//            return true;
-//        }else return false;
     }
 
-    public boolean validate
 }

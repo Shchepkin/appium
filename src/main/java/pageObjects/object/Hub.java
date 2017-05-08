@@ -6,7 +6,6 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import pageObjects.Base;
 
 import java.util.concurrent.TimeUnit;
@@ -49,10 +48,10 @@ public class Hub{
 //----------------------------------------------------------------------------------------------------------------------
     private Base base;
     private AndroidDriver driver;
-    private String sendInvitesButtonText,armedText, disarmedText, patrialArmedText;
-    public DeleteFrom deleteFrom = new DeleteFrom();
-    public AddNew addNew = new AddNew();
+    private String sendInvitesButtonText,armedText, disarmedText, patrialArmedText, hubName, hubMasterKey;
+    public Add add = new Add();
     public Security security = new Security();
+    public DeleteFrom deleteFrom = new DeleteFrom();
 
     public Hub(Base base) {
         this.base = base;
@@ -60,13 +59,98 @@ public class Hub{
         armedText = base.getLocalizeTextForKey("armed");
         disarmedText = base.getLocalizeTextForKey("disarmed");
         patrialArmedText = base.getLocalizeTextForKey("partially_armed");
+        hubName = base.getCredsWithKey("hubName");
+        hubMasterKey = base.getCredsWithKey("hubMasterKey");
         PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 
-    public class AddNew {
-        public void fromMenu(){}
-        public void fromPlusButton(){}
+    public class Add {
+        public Manual manual = new Manual();
+
+        public class Manual {
+            public boolean fromMenu(){
+                startAddingWithMenu();
+                return manualType(hubName, hubMasterKey);
+            }
+            public boolean fromPlusButton(){
+                startAddingWithPlus();
+                return manualType(hubName, hubMasterKey);
+            }
+            public boolean fromAnyWay(){
+                startAddingWithAnyWay();
+                return manualType(hubName, hubMasterKey);
+            }
+            public boolean withNewCreds(String newHubName, String newHubMasterKey){
+                addFrom("any", "manual", true, newHubName, newHubMasterKey);
+                return true;
+            }
+        }
+
+        private void startAddingWithAnyWay(){
+            if (base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)){
+                if (base.wait.element(base.dashboard.getPlusButton(), 2, true)){
+                    startAddingWithPlus();
+                }else {
+                    startAddingWithMenu();
+                }
+            }
+        }
+
+        private void startAddingWithPlus(){
+            Base.log(1, "add Hub by Plus Button", true);
+            base.dashboard.plusButtonClick();
+        }
+
+        private void startAddingWithMenu(){
+            Base.log(1, "add Hub from Main Menu", true);
+
+            Base.log(1, "tap Main Menu icon");
+            base.dashboardHeader.getMenuDrawer().click();
+
+            Base.log(1, "tap Add Hub button");
+            base.menuPage.addHubButtonClick();
+        }
+
+        private boolean manualType(String hubName, String hubMasterKey){
+            Base.log(1, "choose manual Hub adding", true);
+            base.nav.nextButtonClick();
+
+            base.dashboard.fillFieldsWith(hubName, hubMasterKey);
+            base.nav.confirmIt();
+
+            Base.log(1, "check whether error message is shown");
+            if (base.check.isPresent.error(40)){return false;}
+            base.wait.pinPopUp(2, false);
+
+            if (base.wait.element(base.dashboardHeader.getGprsImage(), 10, true)){
+                Base.log(1, "hub successfully added!");
+                return true;
+            }else return false;
+        }
+
+        private boolean wizardType(String hubName, String hubMasterKey){return true;}
+
+        private boolean addFrom(String from, String type, boolean newCreds, String newHubName, String newHubMasterKey) {
+            Base.log(1, "get creds for hubName and hubMasterKey");
+            if (newCreds){
+                hubName = newHubName;
+                hubMasterKey = newHubMasterKey;
+            }
+
+            switch (from){
+                case "menu" : startAddingWithMenu(); break;
+                case "plus" : startAddingWithPlus(); break;
+                case "any" : startAddingWithAnyWay(); break;
+                default: startAddingWithAnyWay(); break;
+            }
+
+            switch (type){
+                case "manual" : return manualType(hubName, hubMasterKey);
+                case "wizard" : return wizardType(hubName, hubMasterKey);
+                default: return manualType(hubName, hubMasterKey);
+            }
+        }
     }
 
     public class Security {
@@ -123,45 +207,6 @@ public class Hub{
             base.remotePage.clickAlarmButton();
             Base.log(4, "Method is finished");
         }
-    }
-
-    // TODO remove all asserts
-
-    public void addNewManual() {
-        Base.log(4, "Method is started");
-
-        Base.log(1, "get creds for hubName and hubMasterKey");
-        String hubName = base.getCredsWithKey("hubName");
-        String hubMasterKey = base.getCredsWithKey("hubMasterKey");
-
-
-        if (base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)){
-            if (base.wait.element(base.dashboard.getPlusButton(), 2, true)){
-                Base.log(1, "add Hub by Plus Button");
-                base.dashboard.plusButtonClick();
-            }else {
-                Base.log(1, "add Hub from Main Menu");
-
-                Base.log(1, "tap Main Menu icon");
-                base.dashboardHeader.getMenuDrawer().click();
-
-                Base.log(1, "tap Add Hub button");
-                base.menuPage.addHubButtonClick();
-            }
-        }
-
-        Base.log(1, "choose manual Hub adding ");
-        base.nav.nextButtonClick();
-
-        base.dashboard.fillFieldsWith(hubName, hubMasterKey);
-        base.nav.confirmIt();
-
-        base.wait.invisibilityOfWaiter();
-        Assert.assertFalse(base.check.isPresent.error(2), "Hub adding failed!");
-
-        Assert.assertTrue(base.wait.element(base.dashboardHeader.getGprsImage(), 10, true));
-        Base.log(1, "hub successfully added!");
-        Base.log(4, "Method is finished");
     }
 
     public class DeleteFrom {

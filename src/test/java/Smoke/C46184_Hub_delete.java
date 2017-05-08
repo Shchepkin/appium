@@ -81,7 +81,7 @@ public class C46184_Hub_delete {
     @Test(priority = 4, enabled = true)
     public void From_Hub_Settings() {
         Base.log(1, "return hub for next tests");
-        base.hub.addNewManual();
+        base.hub.add.manual.fromAnyWay();
         base.hub.deleteFrom.hubSettings(true);
         Assert.assertTrue(base.wait.element(base.dashboard.getPlusButton(),10, true), "dashboard with Plus Button does not shown\n");
     }

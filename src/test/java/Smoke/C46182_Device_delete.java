@@ -46,7 +46,7 @@ public class C46182_Device_delete {
 
         Assert.assertTrue(base.wait.elementWithText(successText, 10, true));
 
-        base.wait.menuIconOrPinPopUp(1, true);
+        base.wait.menuIconOrPinPopUp(1);
 
         Assert.assertTrue(base.check.isDeletedBy("name", devName));
         Base.log(1, "device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");

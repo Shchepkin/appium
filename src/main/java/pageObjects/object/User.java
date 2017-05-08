@@ -3,7 +3,6 @@ package pageObjects.object;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -13,7 +12,7 @@ import pageObjects.Base;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class User{
+public class User {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/active")
     private WebElement active;
@@ -40,15 +39,19 @@ public class User{
     public ArrayList<String> getUsersForEmailField() {
         return usersForEmailField;
     }
+
     public ArrayList<String> getUsersForContactList() {
         return usersForContactList;
     }
+
     public ArrayList<String> getUsersForMixedAdd() {
         return usersForMixedAdd;
     }
+
     public WebElement getDeleteButton() {
         return deleteButton;
     }
+
     public WebElement getAddButtonFromContactList() {
         return addButtonFromContactList;
     }
@@ -60,11 +63,14 @@ public class User{
     private boolean result;
     private String sendInvitesButtonText, inviteFailText, adminStatusText, userStatusText;
 
-    public Registration registration = new Registration();
+    public Registration registration;
+    public Add add = new Add();
+    public Delete delete =new Delete();
 
     public User(Base base) {
         this.base = base;
         this.driver = base.getDriver();
+        registration = new Registration();
         sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
         inviteFailText = base.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
         adminStatusText = base.getLocalizeTextForKey("admin");
@@ -81,60 +87,6 @@ public class User{
     public void fillUserEmailsField(String inviteEmail) {
         inviteUsersField.sendKeys(inviteEmail);
         base.nav.nextButtonClick();
-    }
-
-    // TODO create new class for add end delete users
-    // TODO delete all asserts
-
-
-    public boolean addFromEmailField() {
-        Base.log(4, "Method is started");
-        result = false;
-        String emailListString = "";
-        int counter = 0;
-
-        Base.log(1, "click Send Invites Button");
-        base.nav.scroll.toElementWith.text(sendInvitesButtonText, true);
-
-        Base.log(1, "concat all emails from array to the one string");
-        for (String userEmail : usersForEmailField) {
-            Base.log(1, "concat email \"" + userEmail + "\" to the string");
-            emailListString = emailListString.concat(userEmail + " ");
-        }
-
-        Base.log(1, "send emailList String to the Users Field");
-        inviteUsersField.sendKeys(emailListString);
-
-        Base.log(1, "click Add button");
-        base.nav.nextButtonClick();
-
-        if(!base.check.isPresent.snackBar(3)) {
-
-            Base.log(1, "confirm proposition");
-            base.nav.confirmIt();
-
-            base.wait.invisibilityOfWaiter();
-
-            base.wait.element(userStatus, 15, true);
-
-            Base.log(1, "check whether new user is added");
-            for (String userEmail : usersForEmailField) {
-                if (base.nav.scroll.toElementWith.text(userEmail, false)) {
-                    counter++;
-                }
-            }
-
-            if (counter == usersForEmailField.size()) {
-                Base.log(1, "all new user is shown in the userList");
-                result = true;
-            }else {
-                result = false;
-            }
-        }else {
-            result = false;
-        }
-        Base.log(4, "Method is finished");
-        return result;
     }
 
     public void addUserListFromEmailField(String nameOfJsonCollection) {
@@ -165,150 +117,207 @@ public class User{
         Base.log(4, "Method is finished");
     }
 
-    public boolean addFromContactList() {
-        Base.log(4, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
-        result = false;
-        boolean firstTime = true;
+    // TODO create new class for add end delete users
+    // TODO delete all asserts
 
-        Base.log(1, "searching and clicking the Send Invites Button");
-        base.nav.scroll.toElementWith.text(sendInvitesButtonText, true);
+    public class Add {
+        public boolean fromEmailField() {
+            String emailListString = "";
 
-        Base.log(1, "click the Add From Contact List Button");
-        addButtonFromContactList.click();
+            Base.log(1, "tap Send Invites Button", true);
+            if (!base.nav.scroll.toElementWith.text(sendInvitesButtonText, true)) return false;
 
-        Base.log(1, "start Add user process");
-
-        for (String userEmail : usersForContactList) {
-
-            if(!firstTime){
-                Base.log(1, "scrolling to the start of list");
-                base.nav.scrollTop();
-            }else firstTime = false;
-
-            Base.log(1, "activate user with email \"" + userEmail + "\" in the Contacts List");
-            base.nav.scroll.toElementWith.email(userEmail, true);
-        }
-
-        Base.log(1, "tap Save button");
-        base.nav.nextButtonClick();
-
-        Base.log(1, "tap Send Invitation button");
-        base.nav.nextButtonClick();
-
-        Base.log(1, "check is error snackBar present");
-        if (base.check.isPresent.snackBar(2)) return false;
-
-        Base.log(1, "confirm proposition");
-        base.nav.confirmIt();
-
-        Base.log(1, "check is error snackBar present");
-        if (base.check.isPresent.snackBar(2)) return false;
-
-        base.wait.invisibilityOfWaiter();
-
-        Base.log(1, "check is UserList opened");
-        if (base.wait.element(userStatus, 10, true)) return true;
-        else return false;
-    }
-
-
-//    private boolean activateUserInContactListBy(String typeBy, String userEmail) {
-//        String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
-//        String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
-//
-//        for (int i = 1; i < 3; i++) {
-//            if (base.nav.scrollToElementWith.type(typeBy, userEmail, true)) {
-//                base.check.isPresent.snackBar(1);
-//                try {
-//                    base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
-//                    Base.log(1, "element \"" + userEmail + "\" is activated successfully");
-//                    result = true;
-//                    break;
-//
-//                } catch (NoSuchElementException e) {
-//                    Base.log(3, "activation element \"" + userEmail + "\" is failed, try count " + i);
-//                    Base.log(3, "stacktrace: \n" + e + "\n");
-//                    result = false;
-//                }
-//            }
-//        }
-//        return result;
-//    }
-//    private boolean activateUserInContactListBy(String typeBy, String userEmail) {
-//        String emailElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + userEmail + "']";
-//        String activeElementXpath = "/ancestor::android.widget.FrameLayout[1]//*[@resource-id = 'com.ajaxsystems:id/active']";
-//
-//        for (int i = 1; i < 3; i++) {
-//            if (base.nav.scrollToElementWith.type(typeBy, userEmail, true)) {
-//                base.check.isPresent.snackBar(1);
-//                try {
-//                    base.wait.element(driver.findElement(By.xpath(emailElementXpath + activeElementXpath)), 5, true);
-//                    Base.log(1, "element \"" + userEmail + "\" is activated successfully");
-//                    result = true;
-//                    break;
-//
-//                } catch (NoSuchElementException e) {
-//                    Base.log(3, "activation element \"" + userEmail + "\" is failed, try count " + i);
-//                    Base.log(3, "stacktrace: \n" + e + "\n");
-//                    result = false;
-//                }
-//            }
-//        }
-//        return result;
-//    }
-
-
-    public void addMixedUsers() {
-        Base.log(4, "Method is started");
-
-        String registeredUser = usersForMixedAdd.get(0);
-        String unregisteredUser = usersForMixedAdd.get(1);
-        String userForContactList = usersForMixedAdd.get(2);
-
-        base.nav.scroll.toElementWith.text(sendInvitesButtonText, true);
-
-        Base.log(1, "fill email field with \"" + registeredUser + " " + unregisteredUser + "\"");
-        inviteUsersField.sendKeys(registeredUser + " " + unregisteredUser);
-
-        Base.log(1, "click the Add From Contact List Button");
-        addButtonFromContactList.click();
-
-        Base.log(1, "activate user with email \"" + userForContactList + "\" in the Contacts List");
-        base.nav.scroll.toElementWith.email(userForContactList, true);
-
-        Base.log(1, "click Save button");
-        base.nav.nextButtonClick();
-
-        Base.log(1, "click add button and confirm proposition");
-        base.check.clickElementAndWaitingPopup(base.nav.getNextButton(), true);
-
-        Assert.assertFalse(base.check.isPresent.snackBar(3), "SnackBar is shown with error text \n");
-        base.wait.invisibilityOfWaiter();
-        Assert.assertTrue(base.wait.element(userStatus, 10, true), "User page is not shown \n");
-
-        Base.log(4, "Method is finished");
-    }
-
-    public boolean checkIsNewUsersAddedBy(String byType, ArrayList<String> userList) {
-        int counter = 0;
-
-        for (String userEmail : userList) {
-
-            if (base.nav.scrollToElementWith.type(byType, userEmail, false)) {
-                Base.log(1, "new user with email \"" + userEmail + "\" is added successfully", true);
-                counter++;
+            Base.log(1, "concat all emails from array to the one string");
+            for (String userEmail : usersForEmailField) {
+                Base.log(1, "concat email \"" + userEmail + "\" to the string");
+                emailListString = emailListString.concat(userEmail + " ");
             }
+
+            Base.log(1, "send emails to the Users field", true);
+            inviteUsersField.sendKeys(emailListString);
+
+            Base.log(1, "tap Add button", true);
+            base.nav.nextButtonClick();
+
+            if (base.check.isPresent.snackBar(3)) return false;
+
+            Base.log(1, "confirm proposition");
+            base.nav.confirmIt();
+
+            Base.log(1, "check is error snackBar present");
+            if (base.check.isPresent.snackBar(2)) return false;
+
+            base.wait.invisibilityOfWaiter();
+
+            Base.log(1, "check is UserList opened");
+            return base.wait.element(userStatus, 5, true);
         }
 
-        Base.log(3, "added " + counter + " new users from " + userList.size());
-        if (counter == userList.size()) {
-            Base.log(1, "all users are added");
-            return true;
-        } else {
-            Base.log(3, "not all users are added");
-            return false;
+        public boolean fromContactList() {
+            Base.log(1, "tap Send Invites button", true);
+            if (!base.nav.scroll.toElementWith.text(sendInvitesButtonText, true)) return false;
+
+            Base.log(1, "tap Add From Contact List button", true);
+            addButtonFromContactList.click();
+
+            for (String userEmail : usersForContactList) {
+                if(base.nav.scroll.toElementWith.email(userEmail, true)){
+                    Base.log(1, "user with email \"" + userEmail + "\" is activated in the Contacts List", true);
+                }else {
+                    Base.log(3, "user with email \"" + userEmail + "\" is not activated in the Contacts List", true);
+                    return false;
+                }
+            }
+
+            Base.log(1, "tap Save button", true);
+            base.nav.nextButtonClick();
+
+            Base.log(1, "tap Send Invitation button" , true);
+            base.nav.nextButtonClick();
+
+            Base.log(1, "check is error snackBar present");
+            if (base.check.isPresent.snackBar(2)) return false;
+
+            Base.log(1, "confirm proposition");
+            base.nav.confirmIt();
+
+            Base.log(1, "check is error snackBar present");
+            if (base.check.isPresent.snackBar(2)) return false;
+
+            base.wait.invisibilityOfWaiter();
+
+            Base.log(1, "check is UserList opened");
+            if (base.wait.element(userStatus, 5, true)) return true;
+            else return false;
+        }
+
+        public boolean fromDifferentWays() {
+            String registeredUser = usersForMixedAdd.get(0);
+            String unregisteredUser = usersForMixedAdd.get(1);
+            String userForContactList = usersForMixedAdd.get(2);
+            Base.log(1, "registered user: " + registeredUser, true);
+            Base.log(1, "unregistered user: " + unregisteredUser, true);
+            Base.log(1, "user from Contact list: " + registeredUser, true);
+
+            Base.log(1, "tap Send Invites button", true);
+            if (!base.nav.scroll.toElementWith.text(sendInvitesButtonText, true)) return false;
+
+            Base.log(1, "fill email field with \"" + registeredUser + " " + unregisteredUser + "\"", true);
+            inviteUsersField.sendKeys(registeredUser + " " + unregisteredUser);
+
+            Base.log(1, "tap Add From Contact List button");
+            addButtonFromContactList.click();
+
+            if(base.nav.scroll.toElementWith.email(userForContactList, true)){
+                Base.log(1, "user with email \"" + userForContactList + "\" is activated in the Contacts List", true);
+            }else {
+                Base.log(3, "user with email \"" + userForContactList + "\" is not activated in the Contacts List", true);
+                return false;
+            }
+
+            Base.log(1, "tap Save button", true);
+            base.nav.nextButtonClick();
+
+            Base.log(1, "tap Send Invitation button" , true);
+            base.nav.nextButtonClick();
+
+            Base.log(1, "check is error snackBar present");
+            if (base.check.isPresent.snackBar(2)) return false;
+
+            Base.log(1, "confirm proposition");
+            base.nav.confirmIt();
+
+            Base.log(1, "check is error snackBar present");
+            if (base.check.isPresent.snackBar(2)) return false;
+
+            base.wait.invisibilityOfWaiter();
+
+            Base.log(1, "check is UserList opened");
+            if (base.wait.element(userStatus, 5, true)) return true;
+            else return false;
         }
     }
+
+
+    public class Delete {
+        public void masterUser(){
+            deleteAllActive(adminStatusText);
+        }
+
+        public void allGuests(){
+            deleteAllActive(userStatusText);
+        }
+
+        public boolean allPending() {
+            result = false;
+            int counter = 0;
+            String successText = base.getLocalizeTextForKey("Com_executed1");
+            while (true) {
+
+                if(base.nav.scrollToElement(deleteButton, "up")){
+
+                    Base.log(1, "tap User Delete button and confirm popUp proposition");
+                    deleteButton.click();
+                    base.nav.confirmIt();
+
+                    Assert.assertTrue(base.wait.elementWithText(successText, 20, true), "SUCCESS text is not shown");
+                    base.getScreenShot();
+                    Base.log(1, "SUCCESS text is shown");
+                    counter++;
+                } else {
+                    break;
+                }
+            }
+            Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one pending user was found\n");
+            Base.log(1, "pending users are not found, number of deleted users: " + counter);
+            result = true;
+            return result;
+        }
+
+        private void deleteAllActive(String status) {
+            String successText = null;
+            int counter = 0;
+            Assert.assertNotNull(status,"expected object: \"User Status localized text\", ");
+
+            if (status.equalsIgnoreCase(userStatusText)){
+                successText = base.getLocalizeTextForKey("user_guest_detach");
+            }else if (status.equalsIgnoreCase(adminStatusText)){
+                successText = base.getLocalizeTextForKey("Detach_success1");
+            }else {
+                Assert.fail("localized text for User Status was not found");
+            }
+
+            String statusXpath = "*[contains(@resource-id,'com.ajaxsystems:id/status') and @text='" + status + "']";
+            String settingsButtonXpath = "*[@resource-id = 'com.ajaxsystems:id/settings']";
+            String firstLinearLayout = "android.widget.LinearLayout[1]";
+            String xPath = "//" + statusXpath + "/ancestor::" + firstLinearLayout + "//" + settingsButtonXpath;
+            String emailXpath = "/ancestor::" + firstLinearLayout + "//*[@resource-id = 'com.ajaxsystems:id/mail']";
+
+            try {
+                WebElement settingsButton = driver.findElementByXPath(xPath);
+                while (true) {
+                    if(base.wait.element(settingsButton, 5, true)){
+                        String email = driver.findElementByXPath(xPath + emailXpath).getText();
+                        Base.log(1, "delete user with email \"" + email + "\"");
+                        settingsButton.click();
+//                    base.nav.scrollToElement(deleteButton, "up");
+                        base.nav.scrollBottom();
+                        Base.log(1, "tap delete button");
+                        deleteButton.click();
+                        base.nav.confirmIt();
+                        Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
+                        Base.log(1, "user with email \"" + email + "\" is deleted successfully and SUCCESS text is shown");
+                        counter++;
+                    } else {break;}
+                }
+            }catch (NoSuchElementException e){
+                Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
+            }
+            Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one user with status \"" + status + "\" are not found\n");
+            Base.log(1, "active users with status \"" + status + "\" are not found, number of deleted users: " + counter);
+        }
+    }
+
 
     public boolean checkIsDeleteIconPresent(String pendingUserName) {
         String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
@@ -349,109 +358,6 @@ public class User{
         pendingUserForDelete.click();
     }
 
-    public boolean deleteAllPending() {
-        result = false;
-        int counter = 0;
-        String successText = base.getLocalizeTextForKey("Com_executed1");
-        while (true) {
-
-            if(base.nav.scrollToElement(deleteButton, "up")){
-
-                Base.log(1, "tap User Delete button and confirm popUp proposition");
-                deleteButton.click();
-                base.nav.confirmIt();
-
-//                base.wait.invisibilityOfWaiter();
-
-                Assert.assertTrue(base.wait.elementWithText(successText, 20, true), "SUCCESS text is not shown");
-                base.getScreenShot();
-                Base.log(1, "SUCCESS text is shown");
-                counter++;
-            } else {
-                break;
-            }
-        }
-        Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one pending user was found\n");
-        Base.log(1, "pending users are not found, number of deleted users: " + counter);
-        result = true;
-        return result;
-    }
-
-    public void deleteMasterUser(){
-        deleteAllActive(adminStatusText);
-    }
-
-    public void deleteAllGuests(){
-        deleteAllActive(userStatusText);
-    }
-
-
-
-//----------------------------------------------------------------------------------------------------------------------
-
-    public class Registration{
-        String login = base.getCredsWithKey("login");
-        String pass = base.getCredsWithKey("password");
-        String server = base.getCredsWithKey("server");
-        String phone = base.getCredsWithKey("phone");
-        String userName = base.getCredsWithKey("userName");
-        public boolean fullProcess(){
-            if (!base.regPage.reg(login, pass, server, phone, userName)) return false;
-
-            return base.regPage.reg(login, pass, server, phone, userName);
-        }
-        public boolean withMistakeInEmail(){return true;}
-        public boolean withMistakeInPhone(){return true;}
-        public boolean withMistakeInPhoneAndEmail(){return true;}
-        public boolean withEmailOrPhoneFromExistingUser(){return true;}
-
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-
-    private void deleteAllActive(String status) {
-        String successText = null;
-        int counter = 0;
-        Assert.assertNotNull(status,"expected object: \"User Status localized text\", ");
-
-        if (status.equalsIgnoreCase(userStatusText)){
-            successText = base.getLocalizeTextForKey("user_guest_detach");
-        }else if (status.equalsIgnoreCase(adminStatusText)){
-            successText = base.getLocalizeTextForKey("Detach_success1");
-        }else {
-            Assert.fail("localized text for User Status was not found");
-        }
-
-        String statusXpath = "*[contains(@resource-id,'com.ajaxsystems:id/status') and @text='" + status + "']";
-        String settingsButtonXpath = "*[@resource-id = 'com.ajaxsystems:id/settings']";
-        String firstLinearLayout = "android.widget.LinearLayout[1]";
-        String xPath = "//" + statusXpath + "/ancestor::" + firstLinearLayout + "//" + settingsButtonXpath;
-        String emailXpath = "/ancestor::" + firstLinearLayout + "//*[@resource-id = 'com.ajaxsystems:id/mail']";
-
-        try {
-            WebElement settingsButton = driver.findElementByXPath(xPath);
-            while (true) {
-                if(base.wait.element(settingsButton, 5, true)){
-                    String email = driver.findElementByXPath(xPath + emailXpath).getText();
-                    Base.log(1, "delete user with email \"" + email + "\"");
-                    settingsButton.click();
-//                    base.nav.scrollToElement(deleteButton, "up");
-                    base.nav.scrollBottom();
-                    Base.log(1, "tap delete button");
-                    deleteButton.click();
-                    base.nav.confirmIt();
-                    Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
-                    Base.log(1, "user with email \"" + email + "\" is deleted successfully and SUCCESS text is shown");
-                    counter++;
-                } else {break;}
-            }
-        }catch (NoSuchElementException e){
-            Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
-        }
-        Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one user with status \"" + status + "\" are not found\n");
-        Base.log(1, "active users with status \"" + status + "\" are not found, number of deleted users: " + counter);
-    }
-
     private WebElement findPendingFrom(String from, String pendingUserName){
         String nameElementXpath = "*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
         String deleteElementXpath = "*[@resource-id = 'com.ajaxsystems:id/delete']";
@@ -470,4 +376,44 @@ public class User{
         return pendingUserElement;
     }
 
+//----------------------------------------------------------------------------------------------------------------------
+
+    public class Registration{
+        String login = base.getCredsWithKey("login");
+        String pass = base.getCredsWithKey("password");
+        String server = base.getCredsWithKey("server");
+        String phone = base.getCredsWithKey("phone");
+        String userName = base.getCredsWithKey("userName");
+        String smsToken, emailToken;
+
+        public boolean fullProcess() {
+            if (!base.regPage.registrationProcess(login, pass, server, phone, userName)) return false;
+            Base.log(1, "error message is not shown");
+            base.validationCodePage.getValidationCodes("Phone", "%" + phone + "%");
+
+            smsToken = base.validationCodePage.getTokenMap().get("smsToken").toString();
+            emailToken = base.validationCodePage.getTokenMap().get("emailToken").toString();
+
+            base.validationCodePage.fillTokensValue(smsToken, emailToken);
+            base.nav.confirmIt();
+
+            Base.log(1, "waiting for Welcome Page with dashboard link");
+            if (!base.wait.element(base.regPage.getDashboardLink(), 30, true)) return false;
+
+            Base.log(1, "Welcome Page is shown, so go to the dashboard", true);
+            base.regPage.dashboardLinkClick();
+            return base.wait.menuIconOrPinPopUp(60);
+        }
+
+        public boolean withMistakeInEmail(){return true;}
+
+        public boolean withMistakeInPhone(){return true;}
+
+        public boolean withMistakeInPhoneAndEmail(){return true;}
+
+        public boolean withCredsFromExistingUser(){return true;}
+
+        public boolean withResendValidationKeys(){return true;}
+
+    }
 }

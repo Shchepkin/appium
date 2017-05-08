@@ -256,7 +256,7 @@ public class Navigation{
                     }
                     return true;
                 }catch (Exception e){
-                    Base.log(3, "element not found: \n\n" + e.getMessage() + "\n");
+                    Base.log(3, "element not found: \n\n" + e.getMessage() + "\n", true);
                     return false;
                 }
             }
@@ -625,7 +625,7 @@ public class Navigation{
             Base.log(1, "tap back button");
             backButton.click();
         }
-        if (base.wait.menuIconOrPinPopUp(2, true))
+        if (base.wait.menuIconOrPinPopUp(2))
             Base.log(1, "Dashboard is reached");
     }
 
@@ -687,20 +687,20 @@ public class Navigation{
 // CONFIRMATION
 //----------------------------------------------------------------------------------------------------------------------
     public void confirmIt() {
-        Base.log(1, "Confirm proposition");
+        Base.log(1, "Confirm", true);
         try {
             okBtn.click();
-            Base.log(1, "OK button is pressed");
+            Base.log(1, "tap OK button");
         }catch (Exception e){
 
             try {
                 confirmButton.click();
-                Base.log(1, "Confirm button is pressed");
+                Base.log(1, "tap Confirm button");
             }catch (Exception e1){
 
                 try {
                     addButton.click();
-                    Base.log(1, "Add button is pressed");
+                    Base.log(1, "tap Add button");
                 }catch (Exception e2){
                     Base.log(1, "confirm button is not found");
                 }
@@ -709,6 +709,7 @@ public class Navigation{
     }
 
     public void cancelIt() {
+        Base.log(1, "Cancel", true);
         try {
             cancel.click();
             Base.log(1, "Cancel button is pressed (cancel)");

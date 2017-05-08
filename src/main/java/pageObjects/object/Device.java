@@ -32,15 +32,15 @@ public class Device {
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-    public boolean checkIsNewAdded(String deviceName) {
-        if (base.nav.scroll.toElementWith.name(deviceName, false)) {
-            Base.log(1, "new device with name \"" + deviceName + "\" is added successfully", true);
-            return true;
-        } else {
-            Base.log(3, "device with name \"" + deviceName + "\" is not added", true);
-            return false;
-        }
-    }
+//    public boolean checkIsNewAdded(String deviceName) {
+//        if (base.nav.scroll.toElementWith.name(deviceName, false)) {
+//            Base.log(1, "new device with name \"" + deviceName + "\" is added successfully", true);
+//            return true;
+//        } else {
+//            Base.log(3, "device with name \"" + deviceName + "\" is not added", true);
+//            return false;
+//        }
+//    }
 
     public class addNew{
         public void fromDevicesPage(){}

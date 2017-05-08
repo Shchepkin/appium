@@ -137,51 +137,60 @@ public class Check{
                 ));
 
                 try {
-                    Base.log(1, "ERROR is shown with text: \"" + base.popUp.getSnackBarText() + "\"");
+                    Base.log(1, "ERROR is shown with text: \"" + base.popUp.getSnackBarText() + "\"", true);
                 }catch (NoSuchElementException e) {
-                    Base.log(1, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\"");
+                    try {
+                        Base.log(1, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\"", true);
+                    }catch (NoSuchElementException e1){
+                        Base.log(1, "Error is shown, but can't catch the text, it's gone so fast", true);
+                    }
                 }
                 base.getScreenShot();
                 return true;
 
             } catch (NoSuchElementException e) {
                 base.getScreenShot();
-                Base.log(3, "no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
-                return false;
-            }
-        }
-
-        public boolean error(int timer) {
-            boolean result = element(base.popUp.errorPic, timer);
-            if (result) {
-                Base.log(3, "Error message is shown with text: \"" + base.popUp.getContentText() + "\"");
-            }
-            return result;
-        }
-
-        public boolean element(WebElement element, int timer) {
-            try {
-                WebDriverWait iWait = new WebDriverWait(driver, timer);
-                iWait.until(ExpectedConditions.visibilityOf(element));
-                try {
-                    Base.log(1, "element is shown with text: \"" + element.getText() + "\"", true);
-                    base.getScreenShot();
-
-                }catch (NoSuchElementException e) {
-                    Base.log(3, "cannot catch the text, it's gone so fast");
-                }
-                return true;
-
-            } catch (NoSuchElementException e) {
-                base.getScreenShot();
-                Base.log(3, "no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
+                Base.log(3, "error message is not shown\n\n" + e + "\n");
                 return false;
             }
         }
 
         public boolean snackBar(int timer) {
             Base.log(1, "waiting for snackBar");
-            return element(base.popUp.getSnackBarElement(), timer);
+            if (isPresent.element(base.popUp.getSnackBarElement(), timer)){
+                try {
+                    Base.log(1, "SnackBar is shown with text: \"" + base.popUp.getSnackBarText() + "\"", true);
+                    base.getScreenShot();
+                }catch (NoSuchElementException e) {
+                    Base.log(3, "SnackBar is shown, but can't catch the text, it's gone so fast", true);
+                }
+                return true;
+            }else return false;
+        }
+
+        public boolean error(int timer) {
+            if (isPresent.element(base.popUp.errorPic, timer)){
+                try {
+                    Base.log(1, "Error is shown with text: \"" + base.popUp.getContentText() + "\"", true);
+                    base.getScreenShot();
+                }catch (NoSuchElementException e) {
+                    Base.log(3, "Error is shown, but can't catch the text, it's gone so fast", true);
+                }
+                return true;
+            }else return false;
+        }
+
+        public boolean element(WebElement element, int timer) {
+            try {
+                WebDriverWait iWait = new WebDriverWait(driver, timer);
+                iWait.until(ExpectedConditions.visibilityOf(element));
+                return true;
+
+            } catch (NoSuchElementException e) {
+                base.getScreenShot();
+                Base.log(3, "element is not shown\n\n" + e + "\n");
+                return false;
+            }
         }
 
         public boolean popUpWithConfirmation(int timer) {
@@ -229,14 +238,31 @@ public class Check{
                     return false;
                 }
             }
+
+            public boolean deletePendingUser(String pendingUserEmail) {
+                String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserEmail + "']";
+                String deleteElementXpath = "/ancestor::android.widget.LinearLayout[1]//*[@resource-id = 'com.ajaxsystems:id/delete']";
+
+                if (base.nav.scroll.toElementWith.name(pendingUserEmail, false)) {
+                    try {
+                        base.wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
+                        Base.log(1, "Pending user with email \"" + pendingUserEmail + "\" has the DELETE button", true);
+                        return true;
+
+                    }catch (Exception e){
+                        Base.log(3, "Pending user with email \"" + pendingUserEmail + "\" has no the DELETE button", true);
+                        return false;
+                    }
+                } else return false;
+            }
         }
 
         public class ElementsWith{
-            public boolean ids(ArrayList<String> listOfIds){
+            public boolean id(ArrayList<String> listOfIds){
                 return checker(listOfIds, "id");
             }
 
-            public boolean names(ArrayList<String> listOfNames){
+            public boolean name(ArrayList<String> listOfNames){
                 return checker(listOfNames, "name");
             }
 
@@ -299,7 +325,6 @@ public class Check{
                     Base.log(3, "not all objects are present");
                     return false;
                 }
-
             }
         }
 

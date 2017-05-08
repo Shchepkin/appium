@@ -51,7 +51,6 @@ public class Sql {
      */
     public void getDelete(String row, String value) {
         selectList = new ArrayList();
-
         String query = "DELETE FROM csa_accounts WHERE " + row + " LIKE '" + value + "'";
 
         selectList = getSelect(row, value);
@@ -63,14 +62,13 @@ public class Sql {
                 stmt = connection.createStatement();
 
                 for (Object sqlResult : selectList) {
-                    Base.log(3, "this objects will be deleted: \"\033[31;49m" + sqlResult + "\"\033[39;49m");
+                    Base.log(1, "this objects will be deleted: \"\033[31;49m" + sqlResult + "\"\033[39;49m");
                 }
-
                 Base.log(4, "delete objects");
                 stmt.executeUpdate(query);
 
             } catch (SQLException sqlEx) {
-                sqlEx.printStackTrace();
+                Base.log(2, "SQLException: \n\n" + sqlEx + "\n");
             } finally {
                 Base.log(1, "close all connections");
                 try {
