@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageObjects.Base;
 
+import java.util.ArrayList;
+
 
 public class Check{
 
@@ -112,7 +114,7 @@ public class Check{
 //======================================================================================================================
 
     public boolean isDeletedBy(String type, String value) {
-        if (base.nav.scrollToElementWith.name(value, false)) {
+        if (base.nav.scroll.toElementWith.name(value, false)) {
             Base.log(4, "element with value \"" + value + "\" is still displayed in the List");
             return false;
         } else {
@@ -124,6 +126,7 @@ public class Check{
     public class IsPresent {
         public Button button = new Button();
         public ElementWith elementWith = new ElementWith();
+        public ElementsWith elementsWith = new ElementsWith();
 
         public boolean errorMessageOrSnackBar(int timer) {
             WebDriverWait iWait = new WebDriverWait(driver, timer);
@@ -134,51 +137,60 @@ public class Check{
                 ));
 
                 try {
-                    Base.log(1, "ERROR is shown with text: \"" + base.popUp.getSnackBarText() + "\"");
+                    Base.log(1, "ERROR is shown with text: \"" + base.popUp.getSnackBarText() + "\"", true);
                 }catch (NoSuchElementException e) {
-                    Base.log(1, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\"");
+                    try {
+                        Base.log(1, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\"", true);
+                    }catch (NoSuchElementException e1){
+                        Base.log(1, "Error is shown, but can't catch the text, it's gone so fast", true);
+                    }
                 }
                 base.getScreenShot();
                 return true;
 
             } catch (NoSuchElementException e) {
                 base.getScreenShot();
-                Base.log(3, "no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
-                return false;
-            }
-        }
-
-        public boolean error(int timer) {
-            boolean result = element(base.popUp.errorPic, timer);
-            if (result) {
-                Base.log(3, "Error message is shown with text: \"" + base.popUp.getContentText() + "\"");
-            }
-            return result;
-        }
-
-        public boolean element(WebElement element, int timer) {
-            try {
-                WebDriverWait iWait = new WebDriverWait(driver, timer);
-                iWait.until(ExpectedConditions.visibilityOf(element));
-                try {
-                    Base.log(1, "element is shown with text: \"" + element.getText() + "\"", true);
-                    base.getScreenShot();
-
-                }catch (NoSuchElementException e) {
-                    Base.log(3, "cannot catch the text, it's gone so fast");
-                }
-                return true;
-
-            } catch (NoSuchElementException e) {
-                base.getScreenShot();
-                Base.log(3, "no such element was appeared during " + timer + " seconds\n\n" + e + "\n");
+                Base.log(3, "error message is not shown\n\n" + e + "\n");
                 return false;
             }
         }
 
         public boolean snackBar(int timer) {
             Base.log(1, "waiting for snackBar");
-            return element(base.popUp.getSnackBarElement(), timer);
+            if (isPresent.element(base.popUp.getSnackBarElement(), timer)){
+                try {
+                    Base.log(1, "SnackBar is shown with text: \"" + base.popUp.getSnackBarText() + "\"", true);
+                    base.getScreenShot();
+                }catch (NoSuchElementException e) {
+                    Base.log(3, "SnackBar is shown, but can't catch the text, it's gone so fast", true);
+                }
+                return true;
+            }else return false;
+        }
+
+        public boolean error(int timer) {
+            if (isPresent.element(base.popUp.errorPic, timer)){
+                try {
+                    Base.log(1, "Error is shown with text: \"" + base.popUp.getContentText() + "\"", true);
+                    base.getScreenShot();
+                }catch (NoSuchElementException e) {
+                    Base.log(3, "Error is shown, but can't catch the text, it's gone so fast", true);
+                }
+                return true;
+            }else return false;
+        }
+
+        public boolean element(WebElement element, int timer) {
+            try {
+                WebDriverWait iWait = new WebDriverWait(driver, timer);
+                iWait.until(ExpectedConditions.visibilityOf(element));
+                return true;
+
+            } catch (NoSuchElementException e) {
+                base.getScreenShot();
+                Base.log(3, "element is not shown\n\n" + e + "\n");
+                return false;
+            }
         }
 
         public boolean popUpWithConfirmation(int timer) {
@@ -205,6 +217,7 @@ public class Check{
             }
         }
 
+
         public class Button{
             public boolean addNewDevice(){
                 try {
@@ -225,20 +238,115 @@ public class Check{
                     return false;
                 }
             }
+
+            public boolean deletePendingUser(String pendingUserEmail) {
+                String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserEmail + "']";
+                String deleteElementXpath = "/ancestor::android.widget.LinearLayout[1]//*[@resource-id = 'com.ajaxsystems:id/delete']";
+
+                if (base.nav.scroll.toElementWith.name(pendingUserEmail, false)) {
+                    try {
+                        base.wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
+                        Base.log(1, "Pending user with email \"" + pendingUserEmail + "\" has the DELETE button", true);
+                        return true;
+
+                    }catch (Exception e){
+                        Base.log(3, "Pending user with email \"" + pendingUserEmail + "\" has no the DELETE button", true);
+                        return false;
+                    }
+                } else return false;
+            }
+        }
+
+        public class ElementsWith{
+            public boolean id(ArrayList<String> listOfIds){
+                return checker(listOfIds, "id");
+            }
+
+            public boolean name(ArrayList<String> listOfNames){
+                return checker(listOfNames, "name");
+            }
+
+            public boolean texts(ArrayList<String> listOfTexts){
+                return checker(listOfTexts, "text");
+            }
+
+            public boolean rooms(ArrayList<String> listOfRooms){
+                return checker(listOfRooms, "room");
+            }
+
+            public boolean emails(ArrayList<String> listOfEmails){
+                return checker(listOfEmails, "email");
+            }
+
+            private boolean checker (ArrayList<String> list, String byType){
+                int counter = 0;
+                for (String elementOfList : list) {
+                    switch (byType){
+                        case "email":
+                            if (base.nav.scroll.toElementWith.email(elementOfList, false)) {
+                                Base.log(1, "object with email \"" + elementOfList + "\" is displayed in the list", true);
+                                counter++;
+                            }
+                            break;
+                        case "room":
+                            if (base.nav.scroll.toElementWith.room(elementOfList, false)) {
+                                Base.log(1, "object with room \"" + elementOfList + "\" is displayed in the list", true);
+                                counter++;
+                            }
+                            break;
+                        case "text":
+                            if (base.nav.scroll.toElementWith.text(elementOfList, false)) {
+                                Base.log(1, "object with text \"" + elementOfList + "\" is displayed in the list", true);
+                                counter++;
+                            }
+                            break;
+                        case "name":
+                            if (base.nav.scroll.toElementWith.name(elementOfList, false)) {
+                                Base.log(1, "object with name \"" + elementOfList + "\" is displayed in the list", true);
+                                counter++;
+                            }
+                            break;
+                        case "id":
+                            if (base.nav.scroll.toElementWith.room(elementOfList, false)) {
+                                Base.log(1, "object with id \"" + elementOfList + "\" is displayed in the list", true);
+                                counter++;
+                            }
+                            break;
+                        default:
+                            Base.log(2, "unknown type \"" + byType + "\"");
+                            return false;
+                    }
+                }
+                Base.log(1, "there are displayed " + counter + " objects from " + list.size());
+                if (counter == list.size()) {
+                    Base.log(1, "all objects are present");
+                    return true;
+                } else {
+                    Base.log(3, "not all objects are present");
+                    return false;
+                }
+            }
         }
 
         public class ElementWith{
             public boolean id(String id){
-                return base.nav.scrollToElementWith.id(id, false);
+                return base.nav.scroll.toElementWith.id(id, false);
             }
+
             public boolean name(String name){
-                return base.nav.scrollToElementWith.name(name, false);
+                return base.nav.scroll.toElementWith.name(name, false);
             }
+
             public boolean text(String text){
-                return base.nav.scrollToElementWith.text(text, false);
+                return base.nav.scroll.toElementWith.text(text, false);
             }
+
+            public boolean room(String room){
+                return base.nav.scroll.toElementWith.room(room, false);
+            }
+
             public boolean email(String email){
-                return base.nav.scrollToElementWith.email(email, false);
+                return base.nav.scroll.toElementWith.email(email, false);
             }
         }
     }
@@ -247,6 +355,7 @@ public class Check{
         public ConfirmLoader confirmLoader = new ConfirmLoader();
         public SuccessMessage successMessage = new SuccessMessage();
         String actualText, expectedText;
+
         private boolean checkIt(String actualText, String expectedText){
             Base.log(1, "\nchecking of localized text", true);
             Base.log(1, "actual: \"" + actualText + "\"", true);
@@ -267,33 +376,40 @@ public class Check{
                 expectedText = base.getLocalizeTextForKey("remove_hub_from_this_account").replaceAll("(\").*(\")", "[]");
                 return checkIt(actualText, expectedText);
             }
+
             public boolean hubDeleteFromMasterSettings(){
                 actualText = base.popUp.getContentText();
                 expectedText = base.getLocalizeTextForKey("you_are_about_to_revoke_hub_access_for_user_are_you_sure");
                 return checkIt(actualText, expectedText);
             }
+
             public boolean roomDelete(){
                 actualText = base.popUp.getContentText().replaceAll("(\").*(\")", "[]");
                 expectedText = base.getLocalizeTextForKey("you_are_about_to_delete_room_all_settings_will_be_erased_continue").replaceAll("(\").*(\")", "[]");
                 return checkIt(actualText, expectedText);
             }
+
             public boolean deviceDelete(){
                 actualText = "";
                 expectedText = "";
                 return checkIt(actualText, expectedText);
             }
+
         }
+
         public class SuccessMessage {
             public boolean hubDelete(){
                 actualText = base.popUp.getContentText();
                 expectedText = base.getLocalizeTextForKey("Detach_success1");
                 return checkIt(actualText, expectedText);
             }
+
             public boolean roomDelete(){
                 actualText = base.popUp.getContentText();
                 expectedText = base.getLocalizeTextForKey("Deleting_success1");
                 return checkIt(actualText, expectedText);
             }
+
             public boolean deviceDelete(){
                 actualText = base.popUp.getContentText();
                 expectedText = base.getLocalizeTextForKey("Deleting_success1");
@@ -306,12 +422,15 @@ public class Check{
         public boolean devicesList() {
             return !base.wait.element(base.devicesPage.getRoomOfDeviceLocator(), 2, true);
         }
+
         public boolean roomsList() {
             return base.wait.element(base.roomsPage.getDescription(), 2, true);
         }
+
         public boolean guestUsersList() {
                 return true;
         }
+
         public boolean pendingUsersList() {
                 return true;
         }

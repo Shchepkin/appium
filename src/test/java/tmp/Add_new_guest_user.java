@@ -48,9 +48,11 @@ public class Add_new_guest_user {
         String email = "test.email.ajax200@i.ua";
         String id = "com.ajaxsystems:id/recycler";
 
+        Assert.assertTrue(base.nav.scroll.toElementWith.email(email, true));
 
-        RemoteWebElement radioGroup = (RemoteWebElement) driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().resourceId(\"" + id + "\")).scrollIntoView(new UiSelector().text(\"" + email + "\"));");
-        radioGroup.click();
+
+//        RemoteWebElement radioGroup = (RemoteWebElement) driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().resourceId(\"" + id + "\")).scrollIntoView(new UiSelector().text(\"" + email + "\"));");
+//        radioGroup.click();
 
 //        System.out.println("WebElement element");
 //        WebElement element = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + email + "']"));

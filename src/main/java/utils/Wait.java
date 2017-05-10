@@ -195,13 +195,9 @@ public class Wait{
         return result;
     }
 
-    public boolean menuIconOrPinPopUp(int timer, boolean makeScreenShot) {
-        Base.log(4, "Method is started");
+    public boolean menuIconOrPinPopUp(int timer) {
         try {
-            if (base.check.isPresent.snackBar(15)){
-                Base.log(3, "SnackBar is shown!");
-                return false;
-            }
+
             Base.log(1, "waiting " + timer + " seconds for menuIcon Or Pin PopUp");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.or(
@@ -215,16 +211,13 @@ public class Wait{
 
         } catch (NoSuchElementException e) {
             Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
-            if (makeScreenShot){base.getScreenShot();}
 
         } catch (TimeoutException e) {
             Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
-            if (makeScreenShot){base.getScreenShot();}
         }
-        Base.log(4, "Method is finished");
+        base.getScreenShot();
         return false;
     }
-
 
     /*******************************************************************************************************************
      * @param elementForWaiting - element which we want to wait
@@ -263,6 +256,7 @@ public class Wait{
     public boolean pinPopUp (int timer, boolean confirm){
         Base.log(1, "Wait PIN popUp");
         if(element(base.nav.getCancelButton(), timer, true)){
+            Base.log(1, "PIN popUp is displayed", true);
             if(confirm){
                 base.nav.confirmIt();
             }else {

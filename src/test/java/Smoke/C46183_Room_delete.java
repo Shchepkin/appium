@@ -1,4 +1,4 @@
-package testCases;
+package Smoke;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -12,7 +12,7 @@ import pageObjects.Base;
  * - one hub
  * - at least three rooms with different names
  */
-public class C44143_Room_delete {
+public class C46183_Room_delete {
     private Base base;
 
     @Parameters({ "deviceName_" })

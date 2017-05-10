@@ -1,4 +1,4 @@
-package testCases;
+package Smoke;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -12,7 +12,7 @@ import pageObjects.Base;
  * - one hub
  * - at least three devices with different names
  */
-public class C44142_Device_delete {
+public class C46182_Device_delete {
     private Base base;
 
     @Parameters({ "deviceName_" })
@@ -46,7 +46,7 @@ public class C44142_Device_delete {
 
         Assert.assertTrue(base.wait.elementWithText(successText, 10, true));
 
-        base.wait.menuIconOrPinPopUp(1, true);
+        base.wait.menuIconOrPinPopUp(1);
 
         Assert.assertTrue(base.check.isDeletedBy("name", devName));
         Base.log(1, "device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");

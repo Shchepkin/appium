@@ -155,7 +155,7 @@ public class RoomsPage {
     }
 
     public boolean isRoomPresens(String roomName) {
-        if (base.nav.scrollToElementWith.name(roomName, false)){
+        if (base.nav.scroll.toElementWith.name(roomName, false)){
             Base.log(1, "room with name \"" + roomName + "\" is displayed in rooms list ");
             return true;
         }else {
@@ -179,7 +179,7 @@ public class RoomsPage {
             Base.log(1, "open Rooms page", true);
             base.nav.gotoPage.Rooms();
             String roomName;
-            if (base.wait.menuIconOrPinPopUp(10, true)) {
+            if (base.wait.menuIconOrPinPopUp(10)) {
                 base.nav.cancelIt();
                 if (!base.check.isEmpty.roomsList()) {
                     roomName = getFirstRoomName();
@@ -218,7 +218,7 @@ public class RoomsPage {
             int counter = 0;
             try {
                 while (true) {
-                    if (base.wait.menuIconOrPinPopUp(10, true)) {
+                    if (base.wait.menuIconOrPinPopUp(10)) {
                         if (counter != 0) {
                             Base.log(1, "room with name \"" + roomName + "\" is deleted successfully", true);
                         }
