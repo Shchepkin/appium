@@ -1,6 +1,5 @@
 package utils;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -54,6 +53,13 @@ public class Navigation{
 
     @AndroidFindBy(xpath = "//android.widget.TextView")
     private ArrayList<WebElement> allTextObjects;
+
+    public ArrayList<WebElement> getScrollableElementList() {
+        return scrollableElementList;
+    }
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().scrollable(true)")
+    private ArrayList<WebElement> scrollableElementList;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Header
@@ -213,9 +219,14 @@ public class Navigation{
 
     public class Scroll{
         public ToElementWith toElementWith = new ToElementWith();
-        private String recycler = "new UiSelector().resourceId(\"com.ajaxsystems:id/recycler\")";
 
-        public void top(){}
+        public void top(){
+            try {
+                RemoteWebElement elementInScrollList = (RemoteWebElement) driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(100);");
+            } catch (Exception e) {
+                Base.log(3, "element is not found: \n\n" + e.getMessage() + "\n", true);
+            }
+        }
         public void bottom(){}
         public void toElement(WebElement element){}
         public void toElement(By by){}
@@ -227,7 +238,7 @@ public class Navigation{
             }
 
             public boolean email(String emailOfSearchingElement, boolean click){
-                String searchingElement = "new UiSelector().resourceId(\"com.ajaxsystems:id/email\").text(\"" + emailOfSearchingElement + "\")";
+                String searchingElement = "new UiSelector().resourceId(\"com.ajaxsystems:id/mail\").text(\"" + emailOfSearchingElement + "\")";
                 return search(searchingElement, click);
             }
 
@@ -247,24 +258,40 @@ public class Navigation{
             }
 
             private boolean search(String searchingElement, boolean click){
+                RemoteWebElement elementInScrollList;
                 try {
-                    RemoteWebElement elementInScrollList = (RemoteWebElement) driver
-                            .findElementByAndroidUIAutomator("new UiScrollable(" + recycler + ").scrollIntoView(" + searchingElement + "));");
-                    if (click){
-                        Base.log(3, "tap found element");
-                        elementInScrollList.click();
+                    Base.log(1, "wait for scrollable view");
+                    if (driver.findElementByAndroidUIAutomator("new UiSelector().scrollable(true)").isDisplayed()){Base.log(1, "scrollable view is found");}
+
+                    try {
+                        elementInScrollList = (RemoteWebElement) driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(" + searchingElement + ");");
+                    } catch (Exception e) {
+                        Base.log(3, "element is not found: \n\n" + e.getMessage() + "\n", true);
+                        return false;
                     }
-                    return true;
-                }catch (Exception e){
-                    Base.log(3, "element not found: \n\n" + e.getMessage() + "\n", true);
-                    return false;
+
+                }catch (NoSuchElementException e) {
+                    try {
+                        Base.log(1, "scrollable view is not found");
+                        elementInScrollList = (RemoteWebElement) driver.findElementByAndroidUIAutomator(searchingElement);
+
+                    } catch (NoSuchElementException e1) {
+                        Base.log(3, "element not found: \n\n" + e1.getMessage() + "\n", true);
+                        return false;
+                    }
                 }
+
+                Base.log(1, "element found: id = \"" + elementInScrollList.getAttribute("resourceId") + "\", text = \"" + elementInScrollList.getText() + "\"", true);
+                if (click){
+                    Base.log(1, "tap found element");
+                    elementInScrollList.click();
+                }
+                return true;
             }
         }
-
-
-
     }
+
+//----------------------------------------------------------------------------------------------------------------------
 
     public void scrollTop(){
         Base.log(1, "scroll to the top page");
@@ -319,7 +346,6 @@ public class Navigation{
         return current;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
 
     /**
      * This class scrolls current screen to the element with needed parameter and direction ("up" or "down") and gives you

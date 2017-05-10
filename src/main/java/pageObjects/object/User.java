@@ -32,26 +32,20 @@ public class User {
     @AndroidFindBy(xpath = "//android.widget.TextView")
     private ArrayList<WebElement> allTextObjects;
 
-    private ArrayList<String> usersForContactList;
-    private ArrayList<String> usersForEmailField;
-    private ArrayList<String> usersForMixedAdd;
+    private ArrayList<String> usersForContactList, usersForEmailField, usersForMixedAdd;
 
     public ArrayList<String> getUsersForEmailField() {
         return usersForEmailField;
     }
-
     public ArrayList<String> getUsersForContactList() {
         return usersForContactList;
     }
-
     public ArrayList<String> getUsersForMixedAdd() {
         return usersForMixedAdd;
     }
-
     public WebElement getDeleteButton() {
         return deleteButton;
     }
-
     public WebElement getAddButtonFromContactList() {
         return addButtonFromContactList;
     }
@@ -71,14 +65,13 @@ public class User {
         this.base = base;
         this.driver = base.getDriver();
         registration = new Registration();
-        sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
         inviteFailText = base.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
-        adminStatusText = base.getLocalizeTextForKey("admin");
         userStatusText = base.getLocalizeTextForKey("user");
-
-        usersForContactList = base.getJsonStringArray("emails.json", "usersForContactList");
-        usersForEmailField = base.getJsonStringArray("emails.json", "usersForEmailField");
+        adminStatusText = base.getLocalizeTextForKey("admin");
         usersForMixedAdd = base.getJsonStringArray("emails.json", "usersForMixedAdd");
+        usersForEmailField = base.getJsonStringArray("emails.json", "usersForEmailField");
+        usersForContactList = base.getJsonStringArray("emails.json", "usersForContactList");
+        sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
 
         PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
@@ -136,21 +129,7 @@ public class User {
             Base.log(1, "send emails to the Users field", true);
             inviteUsersField.sendKeys(emailListString);
 
-            Base.log(1, "tap Add button", true);
-            base.nav.nextButtonClick();
-
-            if (base.check.isPresent.snackBar(3)) return false;
-
-            Base.log(1, "confirm proposition");
-            base.nav.confirmIt();
-
-            Base.log(1, "check is error snackBar present");
-            if (base.check.isPresent.snackBar(2)) return false;
-
-            base.wait.invisibilityOfWaiter();
-
-            Base.log(1, "check is UserList opened");
-            return base.wait.element(userStatus, 5, true);
+            return sendInvitation();
         }
 
         public boolean fromContactList() {
@@ -172,23 +151,7 @@ public class User {
             Base.log(1, "tap Save button", true);
             base.nav.nextButtonClick();
 
-            Base.log(1, "tap Send Invitation button" , true);
-            base.nav.nextButtonClick();
-
-            Base.log(1, "check is error snackBar present");
-            if (base.check.isPresent.snackBar(2)) return false;
-
-            Base.log(1, "confirm proposition");
-            base.nav.confirmIt();
-
-            Base.log(1, "check is error snackBar present");
-            if (base.check.isPresent.snackBar(2)) return false;
-
-            base.wait.invisibilityOfWaiter();
-
-            Base.log(1, "check is UserList opened");
-            if (base.wait.element(userStatus, 5, true)) return true;
-            else return false;
+            return sendInvitation();
         }
 
         public boolean fromDifferentWays() {
@@ -218,10 +181,13 @@ public class User {
             Base.log(1, "tap Save button", true);
             base.nav.nextButtonClick();
 
-            Base.log(1, "tap Send Invitation button" , true);
+           return sendInvitation();
+        }
+
+        private boolean sendInvitation(){
+            Base.log(1, "tap Send Invitation button", true);
             base.nav.nextButtonClick();
 
-            Base.log(1, "check is error snackBar present");
             if (base.check.isPresent.snackBar(2)) return false;
 
             Base.log(1, "confirm proposition");
@@ -233,8 +199,7 @@ public class User {
             base.wait.invisibilityOfWaiter();
 
             Base.log(1, "check is UserList opened");
-            if (base.wait.element(userStatus, 5, true)) return true;
-            else return false;
+            return base.wait.element(userStatus, 5, true);
         }
     }
 
@@ -253,7 +218,6 @@ public class User {
             int counter = 0;
             String successText = base.getLocalizeTextForKey("Com_executed1");
             while (true) {
-
                 if(base.nav.scrollToElement(deleteButton, "up")){
 
                     Base.log(1, "tap User Delete button and confirm popUp proposition");

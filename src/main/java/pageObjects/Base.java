@@ -38,7 +38,7 @@ public class Base {
 
     public static int TIMEOUT = 3;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW = false;
+    private static final boolean LOG_VIEW = true;
     private static final String logFile = logfileName();
     private static final String dataBase = "Develop";
 
@@ -541,7 +541,6 @@ public class Base {
 // DataProvider
 //----------------------------------------------------------------------------------------------------------------------
     public Object[][] getDataProviderObjects(String pathToFileWithData) {
-        log(4, "Method is started");
         ArrayList<Map> listOfMaps = listOfMapsForDataProvider(pathToFileWithData);
 
         log(4, "put maps from listOfMaps to the array");
@@ -550,12 +549,10 @@ public class Base {
             objects[i][0] = listOfMaps.get(i);
         }
 
-        log(4, "Method is finished");
         return objects;
     }
 
     public Iterator<Object[]> getDataProviderIterator(String pathToFileWithData) {
-        log(4, "Method is started");
         ArrayList<Map> listOfMaps = listOfMapsForDataProvider(pathToFileWithData);
 
         log(4, "put maps from listOfMaps to the Collection of objects");
@@ -564,7 +561,6 @@ public class Base {
             objects.add(new Object[] {listOfMaps.get(i)});
         }
 
-        log(4, "Method is finished");
         return objects.iterator();
     }
 

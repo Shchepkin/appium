@@ -1,11 +1,16 @@
 package Smoke;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.Base;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * PRECONDITION
@@ -23,7 +28,12 @@ public class C46180_Add_new_guest_user {
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
         base.loginPage.loginWithPinCancel();
+
         base.nav.gotoPage.userList();
+        base.nav.scroll.toElementWith.text(base.getLocalizeTextForKey("send_invites"), true);
+        base.user.getAddButtonFromContactList().click();
+        base.nav.scroll.toElementWith.email("test.email.ajax3@i.ua", true);
+        System.exit(0);
     }
 
     @Test(priority = 1, enabled = true)
