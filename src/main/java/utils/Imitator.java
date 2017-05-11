@@ -26,8 +26,6 @@ public class Imitator{
 //----------------------------------------------------------------------------------------------------------------------
 
     private void SerialPortSetup() {
-        Base.log(4, "Method is started");
-
         try {
             serialPort = new SerialPort("/dev/ttyUSB3");
 
@@ -56,7 +54,6 @@ public class Imitator{
         } catch (Exception ex) {
             Base.log(3, "Exception: \n" + ex + "\n");
         }
-        Base.log(4, "Method is finished");
     }
 
     public void sendCommand(String command){
@@ -79,8 +76,9 @@ public class Imitator{
         }
 
         Base.log(1, "add device \"" + devName + "\" to Hub");
-        base.nav.scrollBottom();
-        base.devicesPage.addDeviceButtonClick();
+//        base.nav.scrollBottom();
+//        base.devicesPage.addDeviceButtonClick();
+        base.nav.scroll.toElementWith.id(base.devicesPage.getAddDeviceButtonId(), true);
 
         Base.log(1, "wait for popUp for adding new device", true);
         if (!base.wait.element(base.popUp.getAddNewDevicePopUp(), 5, true)) {return false;}
