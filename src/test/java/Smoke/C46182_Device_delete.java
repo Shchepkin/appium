@@ -38,7 +38,7 @@ public class C46182_Device_delete {
         base.devicesPage.goToFirstDeviceSettingsPage();
 
         Base.log(1, "scroll bottom and tap Delete button", true);
-        base.nav.scrollBottom();
+//        base.nav.scrollBottom();
         base.devicesPage.unpairButtonClick();
 
         Base.log(1, "confirm proposition from popUp", true);

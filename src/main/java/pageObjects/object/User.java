@@ -1,18 +1,14 @@
 package pageObjects.object;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import pageObjects.Base;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class User {
@@ -80,42 +76,6 @@ public class User {
         PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
-
-    public void fillUserEmailsField(String inviteEmail) {
-        inviteUsersField.sendKeys(inviteEmail);
-        base.nav.nextButtonClick();
-    }
-
-    public void addUserListFromEmailField(String nameOfJsonCollection) {
-        Base.log(4, "Method is started");
-        Base.log(3, "sendInvitesButtonText: \"" + sendInvitesButtonText + "\"");
-        ArrayList<String> userListFromJson = base.getJsonStringArray("emails.json", nameOfJsonCollection);
-        String emailListString = "";
-
-        Base.log(1, "click send Invites Button");
-        base.nav.scroll.toElementWith.text(sendInvitesButtonText, true);
-
-        Base.log(1, "concat all emails from array to the one string");
-        for (String userEmail : userListFromJson) {
-            Base.log(1, "concat email \"" + userEmail + "\" to the string");
-            emailListString = emailListString.concat(userEmail + " ");
-        }
-
-        Base.log(1, "send emailList String to the Users Field");
-        inviteUsersField.sendKeys(emailListString);
-
-        Base.log(1, "click Add button");
-        base.nav.nextButtonClick();
-
-        Assert.assertFalse(base.check.isPresent.snackBar(3), "SnackBar is shown with error text \n");
-        base.wait.invisibilityOfWaiter();
-        Assert.assertTrue(base.wait.element(userStatus, 15, true), "User page is not shown \n");
-
-        Base.log(4, "Method is finished");
-    }
-
-    // TODO create new class for add end delete users
-    // TODO delete all asserts
 
     public class Add {
         public boolean fromEmailField() {
@@ -289,65 +249,13 @@ public class User {
         }
     }
 
-
-    public boolean checkIsDeleteIconPresent(String pendingUserName) {
-        String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
-        String deleteElementXpath = "/ancestor::android.widget.LinearLayout[1]//*[@resource-id = 'com.ajaxsystems:id/delete']";
-
-        if (base.nav.scroll.toElementWith.name(pendingUserName, false)) {
-
-            try {
-                base.wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
-                Base.log(1, "new user with email \"" + pendingUserName + "\" has the DELETE button");
-                result = true;
-
-            }catch (Exception e){
-                Base.log(3, "new user with email \"" + pendingUserName + "\" has no the DELETE button");
-                result = false;
-            }
-        }
-        return result;
-    }
-
-//    public boolean isDeleteIconPresent(String pendingUserName) {
-//        WebElement pendingUserForCheck = findPendingFrom("name", pendingUserName);
-//
-//        if (base.nav.scrollToElement(pendingUserForCheck, "up")) {
-//            Base.log(1, "new user with email \"" + pendingUserName + "\" has the DELETE button");
-//            result = true;
-//
-//        } else {
-//            Base.log(3, "new user with email \"" + pendingUserName + "\" has no the DELETE button");
-//            result = false;
-//        }
-//        return result;
-//    }
-
-    public void deletePendingByName(String pendingUserName) {
-        WebElement pendingUserForDelete = findPendingFrom("name", pendingUserName);
-//        base.nav.scrollToElement(pendingUserForDelete, "up");
-        pendingUserForDelete.click();
-    }
-
-    private WebElement findPendingFrom(String from, String pendingUserName){
-        String nameElementXpath = "*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
-        String deleteElementXpath = "*[@resource-id = 'com.ajaxsystems:id/delete']";
-        String firstLinearLayout = "android.widget.LinearLayout[1]";
-        String xPath = null;
-        switch (from){
-            case "delete": xPath = "//" + deleteElementXpath + "/ancestor::" + firstLinearLayout + "//" + nameElementXpath;
-                break;
-            case "name": xPath = "//" + nameElementXpath + "/ancestor::" + firstLinearLayout + "//" + deleteElementXpath;
-                break;
-            default: Base.log(3, "invalid parameter");
-                break;
-        }
-        WebElement pendingUserElement = driver.findElementByXPath(xPath);
-//        base.nav.scrollToElement(pendingUserElement, "up");
-        return pendingUserElement;
-    }
-
 //----------------------------------------------------------------------------------------------------------------------
+
+    //  TODO registration withMistakeInEmail
+    //  TODO registration withMistakeInPhone
+    //  TODO registration withMistakeInPhoneAndEmail
+    //  TODO registration withCredsFromExistingUser
+    //  TODO registration withResendValidationKeys
 
     public class Registration{
         String login = base.getCredsWithKey("login");
@@ -387,4 +295,58 @@ public class User {
         public boolean withResendValidationKeys(){return true;}
 
     }
+
+//----------------------------------------------------------------------------------------------------------------------
+//
+//    public boolean checkIsDeleteIconPresent(String pendingUserName) {
+//        String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
+//        String deleteElementXpath = "/ancestor::android.widget.LinearLayout[1]//*[@resource-id = 'com.ajaxsystems:id/delete']";
+//
+//        if (base.nav.scroll.toElementWith.name(pendingUserName, false)) {
+//
+//            try {
+//                base.wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
+//                Base.log(1, "new user with email \"" + pendingUserName + "\" has the DELETE button");
+//                result = true;
+//
+//            }catch (Exception e){
+//                Base.log(3, "new user with email \"" + pendingUserName + "\" has no the DELETE button");
+//                result = false;
+//            }
+//        }
+//        return result;
+//    }
+
+//    public boolean isDeleteIconPresent(String pendingUserName) {
+//        WebElement pendingUserForCheck = findPendingFrom("name", pendingUserName);
+//
+//        if (base.nav.scrollToElement(pendingUserForCheck, "up")) {
+//            Base.log(1, "new user with email \"" + pendingUserName + "\" has the DELETE button");
+//            result = true;
+//
+//        } else {
+//            Base.log(3, "new user with email \"" + pendingUserName + "\" has no the DELETE button");
+//            result = false;
+//        }
+//        return result;
+//    }
+
+//    private WebElement findPendingFrom(String from, String pendingUserName){
+//        String nameElementXpath = "*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
+//        String deleteElementXpath = "*[@resource-id = 'com.ajaxsystems:id/delete']";
+//        String firstLinearLayout = "android.widget.LinearLayout[1]";
+//        String xPath = null;
+//        switch (from){
+//            case "delete": xPath = "//" + deleteElementXpath + "/ancestor::" + firstLinearLayout + "//" + nameElementXpath;
+//                break;
+//            case "name": xPath = "//" + nameElementXpath + "/ancestor::" + firstLinearLayout + "//" + deleteElementXpath;
+//                break;
+//            default: Base.log(3, "invalid parameter");
+//                break;
+//        }
+//        WebElement pendingUserElement = driver.findElementByXPath(xPath);
+////        base.nav.scrollToElement(pendingUserElement, "up");
+//        return pendingUserElement;
+//    }
+
 }

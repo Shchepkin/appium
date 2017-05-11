@@ -17,6 +17,12 @@ public class Device {
     @AndroidFindBy(id = "com.ajaxsystems:id/timerText")
     private WebElement timerText;
 
+    public String getTimerTextId() {
+        return timerTextId;
+    }
+
+    private String timerTextId =  "com.ajaxsystems:id/timerText";
+
     public WebElement getTimerText() {
         return timerText;
     }

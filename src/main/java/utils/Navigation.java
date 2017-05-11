@@ -17,8 +17,7 @@ import pageObjects.Base;
 import java.util.ArrayList;
 
 
-public class Navigation{
-
+public class Navigation {
 
 
     @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
@@ -39,12 +38,15 @@ public class Navigation{
     public WebElement getConfirmButton() {
         return confirmButton;
     }
+
     public WebElement getCancelButton() {
         return cancelButton;
     }
+
     public WebElement getCancel() {
         return cancel;
     }
+
     public WebElement getAddButton() {
         return addButton;
     }
@@ -83,6 +85,7 @@ public class Navigation{
     public WebElement getBackButton() {
         return backButton;
     }
+
     public WebElement getSettingsButton() {
         return settingsButton;
     }
@@ -110,7 +113,7 @@ public class Navigation{
     @AndroidFindBy(id = "com.ajaxsystems:id/spaceControl")
     private WebElement spaceControlImage;
 
-//----------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------
     private Base base;
     private AndroidDriver driver;
     private boolean result;
@@ -124,7 +127,7 @@ public class Navigation{
     public Scroll scroll = new Scroll();
     public GoToPage gotoPage = new GoToPage();
     public MoveToElementWith moveToElementWith = new MoveToElementWith();
-    public ScrollToElementWith scrollToElementWith = new ScrollToElementWith();
+//    public ScrollToElementWith scrollToElementWith = new ScrollToElementWith();
 
     public Navigation(Base base) {
         this.base = base;
@@ -133,6 +136,7 @@ public class Navigation{
         current = new ArrayList<>();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
+
 //----------------------------------------------------------------------------------------------------------------------
 // Swipe
 //----------------------------------------------------------------------------------------------------------------------
@@ -142,10 +146,10 @@ public class Navigation{
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(4, "Screen dimension is " + screenSize);
 
-        int startX = (int)(screenSize.width / 2.00);
-        int startY = (int)(screenSize.height / 3.00);
+        int startX = (int) (screenSize.width / 2.00);
+        int startY = (int) (screenSize.height / 3.00);
         int endX = startX;
-        int endY = (int)(screenSize.height / 100.00);
+        int endY = (int) (screenSize.height / 100.00);
         int duration = 1500;
 
         Base.log(4, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
@@ -160,10 +164,10 @@ public class Navigation{
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(4, "Screen dimension is " + screenSize);
 
-        int startX = (int)(screenSize.width / 2.00);
-        int startY = (int)(screenSize.height / heightPart);
+        int startX = (int) (screenSize.width / 2.00);
+        int startY = (int) (screenSize.height / heightPart);
         int endX = startX;
-        int endY = (int)(screenSize.height / 100.00);
+        int endY = (int) (screenSize.height / 100.00);
 
         Base.log(4, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
@@ -177,10 +181,10 @@ public class Navigation{
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(1, "Screen dimension is " + screenSize);
 
-        int startX = (int)(screenSize.width / 2.00);
-        int startY = (int)(screenSize.height / 3.00);
+        int startX = (int) (screenSize.width / 2.00);
+        int startY = (int) (screenSize.height / 3.00);
         int endX = startX;
-        int endY = (int)(screenSize.height / 1.05);
+        int endY = (int) (screenSize.height / 1.05);
         int duration = 1500;
 
         Base.log(1, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
@@ -195,10 +199,10 @@ public class Navigation{
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(4, "Screen dimension is " + screenSize);
 
-        int startX = (int)(screenSize.width / 2.00);
-        int startY = (int)(screenSize.height / heightPart);
+        int startX = (int) (screenSize.width / 2.00);
+        int startY = (int) (screenSize.height / heightPart);
         int endX = startX;
-        int endY = (int)(screenSize.height / 1.05);
+        int endY = (int) (screenSize.height / 1.05);
 
         Base.log(4, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
@@ -217,51 +221,40 @@ public class Navigation{
      * @return true if method found the element (and click them if it required)
      */
 
-    public class Scroll{
+    public class Scroll {
         public ToElementWith toElementWith = new ToElementWith();
 
-        public void top(){
-            try {
-                RemoteWebElement elementInScrollList = (RemoteWebElement) driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(100);");
-            } catch (Exception e) {
-                Base.log(3, "element is not found: \n\n" + e.getMessage() + "\n", true);
-            }
-        }
-        public void bottom(){}
-        public void toElement(WebElement element){}
-        public void toElement(By by){}
-
-        public class ToElementWith{
-            public boolean text(String textOfSearchingElement, boolean click){
+        public class ToElementWith {
+            public boolean text(String textOfSearchingElement, boolean click) {
                 String searchingElement = "new UiSelector().text(\"" + textOfSearchingElement + "\")";
                 return search(searchingElement, click);
             }
 
-            public boolean email(String emailOfSearchingElement, boolean click){
+            public boolean email(String emailOfSearchingElement, boolean click) {
                 String searchingElement = "new UiSelector().resourceId(\"com.ajaxsystems:id/mail\").text(\"" + emailOfSearchingElement + "\")";
                 return search(searchingElement, click);
             }
 
-            public boolean room(String roomOfSearchingElement, boolean click){
+            public boolean room(String roomOfSearchingElement, boolean click) {
                 String searchingElement = "new UiSelector().resourceId(\"com.ajaxsystems:id/room\").text(\"" + roomOfSearchingElement + "\")";
                 return search(searchingElement, click);
             }
 
-            public boolean id(String idOfSearchingElement, boolean click){
+            public boolean id(String idOfSearchingElement, boolean click) {
                 String searchingElement = "new UiSelector().resourceId(\"" + idOfSearchingElement + "\")";
                 return search(searchingElement, click);
             }
 
-            public boolean name(String nameOfSearchingElement, boolean click){
+            public boolean name(String nameOfSearchingElement, boolean click) {
                 String searchingElement = "new UiSelector().resourceId(\"com.ajaxsystems:id/name\").text(\"" + nameOfSearchingElement + "\")";
                 return search(searchingElement, click);
             }
 
-            private boolean search(String searchingElement, boolean click){
+            private boolean search(String searchingElement, boolean click) {
                 RemoteWebElement elementInScrollList;
                 try {
                     Base.log(1, "wait for scrollable view");
-                    if (driver.findElementByAndroidUIAutomator("new UiSelector().scrollable(true)").isDisplayed()){Base.log(1, "scrollable view is found");}
+                    Base.log(1, "scrollable view is found: id = \"" + driver.findElementByAndroidUIAutomator("new UiSelector().scrollable(true)").getAttribute("resourceId") + "\"");
 
                     try {
                         elementInScrollList = (RemoteWebElement) driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(" + searchingElement + ");");
@@ -270,7 +263,7 @@ public class Navigation{
                         return false;
                     }
 
-                }catch (NoSuchElementException e) {
+                } catch (NoSuchElementException e) {
                     try {
                         Base.log(1, "scrollable view is not found");
                         elementInScrollList = (RemoteWebElement) driver.findElementByAndroidUIAutomator(searchingElement);
@@ -282,7 +275,7 @@ public class Navigation{
                 }
 
                 Base.log(1, "element found: id = \"" + elementInScrollList.getAttribute("resourceId") + "\", text = \"" + elementInScrollList.getText() + "\"", true);
-                if (click){
+                if (click) {
                     Base.log(1, "tap found element");
                     elementInScrollList.click();
                 }
@@ -293,241 +286,241 @@ public class Navigation{
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void scrollTop(){
-        Base.log(1, "scroll to the top page");
-        scrollScreenToTheEnd("down");
-    }
+//    public void scrollTop(){
+//        Base.log(1, "scroll to the top page");
+//        scrollScreenToTheEnd("down");
+//    }
+//
+//    public void scrollBottom(){
+//        Base.log(1, "scroll to the bottom page");
+//        scrollScreenToTheEnd("up");
+//    }
+//
+//    /**
+//     * This method just scrolls current screen to the end with needed direction ("up" or "down")
+//     * @param direction "up"    - for scrolling to the end of screen
+//     *                  "down"  - for scrolling to the top of screen
+//     */
+//    private void scrollScreenToTheEnd(String direction){
+//        Base.log(4, "Method is started");
+//        start = System.nanoTime();
+//        flag = false;
+//        counter = 0;
+//        etalon.clear();
+//
+//        Base.log(4, "copy text objects from scrollList to etalon and current lists");
+//        Base.log(4, "number of all text objects from this screen: " + allTextObjects.size());
+//
+//        etalon.addAll(putNewObjectsInCurrentList());
+//
+//        while (true){
+//            if (direction.equals("down")) {
+//                swipeDown(200, 2);
+//            }else swipeUp(200, 2);
+//
+//            compare(etalon, putNewObjectsInCurrentList());
+//            if (flag) break;
+//        }
+//        finish = System.nanoTime();
+//        Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
+//        Base.log(4, "Method is finished");
+//    }
+//
+//    private ArrayList<String> putNewObjectsInCurrentList(){
+//        Base.log(4, "put new text objects to the current list after swipe");
+//        current.clear();
+//        try {
+//            for (WebElement i : allTextObjects) {
+//                current.add(i.getText());
+//            }
+//        }catch (NoSuchElementException e){
+//            Base.log(3, "NoSuchElementException, something was wrong!\n" + e);
+//        }
+//        return current;
+//    }
 
-    public void scrollBottom(){
-        Base.log(1, "scroll to the bottom page");
-        scrollScreenToTheEnd("up");
-    }
+//
+//    /**
+//     * This class scrolls current screen to the element with needed parameter and direction ("up" or "down") and gives you
+//     * the opportunity to click this element if you want
+//     *
+//     * @return true if method found the element (and click them if it required)
+//     */
+//
+//    public class ScrollToElementWith{
+//
+//        public boolean text(String textOfSearchingElement, boolean click){
+//            return  scrollToElementWith("text", "up", textOfSearchingElement, click);
+//        }
+//
+//        public boolean email(String textOfSearchingElement, boolean click){
+//            return  scrollToElementWith("email", "up", textOfSearchingElement, click);
+//        }
+//
+//        public boolean id(String textOfSearchingElement, boolean click){
+//            return  scrollToElementWith("id", "up", textOfSearchingElement, click);
+//        }
+//
+//        public boolean name(String textOfSearchingElement, boolean click){
+//            return  scrollToElementWith("name", "up", textOfSearchingElement, click);
+//        }
+//
+//        public boolean type(String typeOfElement, String textOfSearchingElement, boolean click){
+//            return  scrollToElementWith(typeOfElement, "up", textOfSearchingElement, click);
+//        }
+//
+//
+//        private boolean scrollToElementWith(String typeOfElement, String direction, String textOfSearchingElement, boolean click) {
+//            start = System.nanoTime();
+//            Base.log(4, "Method is started");
+//            result = false;
+//            WebElement searchingElement;
+//            scrollTop();
+//
+//            counter = 0;
+//            etalon.clear();
+//            current.clear();
+//
+//            Base.log(4, "get all text objects from this screen");
+//            Base.log(4, "number of all text objects from this screen: " + allTextObjects.size());
+//            try {
+//                for (WebElement i : allTextObjects) {
+//                    etalon.add(i.getText());
+//                    current.add(i.getText());
+//                }
+//            } catch (NoSuchElementException e) {
+//                Base.log(3, "NoSuchElementException: \n\n" + e + "\n");
+//            }
+//            while (true){
+//                if (current.contains(textOfSearchingElement)){
+//                    Base.log(4, "text \"" + textOfSearchingElement + "\" is shown on this screen");
+//                    try {
+//                        switch (typeOfElement){
+//                            case "id":
+//                                searchingElement = driver.findElement(By.id("\"" + textOfSearchingElement + "\""));
+//                                break;
+//                            case "text":
+//                                searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
+//                                break;
+//                            case "email":
+//                                searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + textOfSearchingElement + "']"));
+//                                break;
+//                            case "name":
+//                                searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + textOfSearchingElement + "']"));
+//                                break;
+//                            default:
+//                                searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
+//                                break;
+//                        }
+//
+//                        if (click) {
+//                            searchingElement.click();
+//                            Base.log(1, "element was found and clicked, text: \"" + textOfSearchingElement + "\"");
+//                        } else {
+//                            Base.log(1, "element was found with text \"" + textOfSearchingElement + "\"");
+//                        }
+//                        result = true;
+//                        break;
+//
+//                    }catch (NoSuchElementException e){
+//                        Base.log(3, "NoSuchElementException, element is not found on this screen!");
+//                    }
+//                }else Base.log(1, "element is not found on this screen, text: \"" + textOfSearchingElement + "\"");
+//
+//                if (direction.equals("down")) {
+//                    swipeDown(1000, 2);
+//                }else swipeUp(1000, 2);
+//
+//                current.clear();
+//                Base.log(4, "put new text objects to the current list after swipe");
+//                try {
+//                    for (WebElement i : allTextObjects) {
+//                        current.add(i.getText());
+//                    }
+//                }catch (NoSuchElementException e){
+//                    Base.log(3, "NoSuchElementException, text elements is not found on the screen\n" + e);
+//                }
+//
+//                compare(etalon, current);
+//                if (flag) break;
+//            }
+//            finish = System.nanoTime();
+//            Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
+//            Base.log(4, "Method is finished");
+//            return result;
+//        }
+//    }
 
-    /**
-     * This method just scrolls current screen to the end with needed direction ("up" or "down")
-     * @param direction "up"    - for scrolling to the end of screen
-     *                  "down"  - for scrolling to the top of screen
-     */
-    private void scrollScreenToTheEnd(String direction){
-        Base.log(4, "Method is started");
-        start = System.nanoTime();
-        flag = false;
-        counter = 0;
-        etalon.clear();
+//----------------------------------------------------------------------------------------------------------------------
+//
+//    public boolean scrollToElement(WebElement elementForSearch, String direction) {
+//        start = System.nanoTime();
+//        Base.log(4, "Method is started");
+//        result = false;
+//
+//        counter = 0;
+//        etalon.clear();
+//        current.clear();
+//
+//        Base.log(1, "get all text objects from this screen");
+//        for (WebElement i : allTextObjects) {
+//            etalon.add(i.getText());
+//            current.add(i.getText());
+//        }
+//
+//        while (true){
+//
+//            if (base.wait.element(elementForSearch, 2, true)){
+//                result = true;
+//                break;
+//
+//            }else {
+//                Base.log(3, "element is not found on this screen!");
+//                result = false;
+//            }
+//
+//            if (direction.equals("down")) {
+//                swipeDown(1000, 2);
+//            }else swipeUp(1000, 2);
+//
+//            current.clear();
+//            Base.log(1, "put new text objects to the current list after swipe");
+//            try {
+//                for (WebElement i : allTextObjects) {
+//                    current.add(i.getText());
+//                }
+//            }catch (NoSuchElementException e){
+//                Base.log(3, "NoSuchElementException, something was wrong!\n" + e);
+//            }
+//
+//            compare(etalon, current);
+//            if (flag) break;
+//        }
+//        finish = System.nanoTime();
+//        Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
+//        Base.log(4, "Method is finished");
+//        return result;
+//    }
 
-        Base.log(4, "copy text objects from scrollList to etalon and current lists");
-        Base.log(4, "number of all text objects from this screen: " + allTextObjects.size());
-
-        etalon.addAll(putNewObjectsInCurrentList());
-
-        while (true){
-            if (direction.equals("down")) {
-                swipeDown(200, 2);
-            }else swipeUp(200, 2);
-
-            compare(etalon, putNewObjectsInCurrentList());
-            if (flag) break;
-        }
-        finish = System.nanoTime();
-        Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-        Base.log(4, "Method is finished");
-    }
-
-    private ArrayList<String> putNewObjectsInCurrentList(){
-        Base.log(4, "put new text objects to the current list after swipe");
-        current.clear();
-        try {
-            for (WebElement i : allTextObjects) {
-                current.add(i.getText());
-            }
-        }catch (NoSuchElementException e){
-            Base.log(3, "NoSuchElementException, something was wrong!\n" + e);
-        }
-        return current;
-    }
-
-
-    /**
-     * This class scrolls current screen to the element with needed parameter and direction ("up" or "down") and gives you
-     * the opportunity to click this element if you want
-     *
-     * @return true if method found the element (and click them if it required)
-     */
-
-    public class ScrollToElementWith{
-
-        public boolean text(String textOfSearchingElement, boolean click){
-            return  scrollToElementWith("text", "up", textOfSearchingElement, click);
-        }
-
-        public boolean email(String textOfSearchingElement, boolean click){
-            return  scrollToElementWith("email", "up", textOfSearchingElement, click);
-        }
-
-        public boolean id(String textOfSearchingElement, boolean click){
-            return  scrollToElementWith("id", "up", textOfSearchingElement, click);
-        }
-
-        public boolean name(String textOfSearchingElement, boolean click){
-            return  scrollToElementWith("name", "up", textOfSearchingElement, click);
-        }
-
-        public boolean type(String typeOfElement, String textOfSearchingElement, boolean click){
-            return  scrollToElementWith(typeOfElement, "up", textOfSearchingElement, click);
-        }
-
-
-        private boolean scrollToElementWith(String typeOfElement, String direction, String textOfSearchingElement, boolean click) {
-            start = System.nanoTime();
-            Base.log(4, "Method is started");
-            result = false;
-            WebElement searchingElement;
-            scrollTop();
-
-            counter = 0;
-            etalon.clear();
-            current.clear();
-
-            Base.log(4, "get all text objects from this screen");
-            Base.log(4, "number of all text objects from this screen: " + allTextObjects.size());
-            try {
-                for (WebElement i : allTextObjects) {
-                    etalon.add(i.getText());
-                    current.add(i.getText());
-                }
-            } catch (NoSuchElementException e) {
-                Base.log(3, "NoSuchElementException: \n\n" + e + "\n");
-            }
-            while (true){
-                if (current.contains(textOfSearchingElement)){
-                    Base.log(4, "text \"" + textOfSearchingElement + "\" is shown on this screen");
-                    try {
-                        switch (typeOfElement){
-                            case "id":
-                                searchingElement = driver.findElement(By.id("\"" + textOfSearchingElement + "\""));
-                                break;
-                            case "text":
-                                searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
-                                break;
-                            case "email":
-                                searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + textOfSearchingElement + "']"));
-                                break;
-                            case "name":
-                                searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + textOfSearchingElement + "']"));
-                                break;
-                            default:
-                                searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + textOfSearchingElement + "']"));
-                                break;
-                        }
-
-                        if (click) {
-                            searchingElement.click();
-                            Base.log(1, "element was found and clicked, text: \"" + textOfSearchingElement + "\"");
-                        } else {
-                            Base.log(1, "element was found with text \"" + textOfSearchingElement + "\"");
-                        }
-                        result = true;
-                        break;
-
-                    }catch (NoSuchElementException e){
-                        Base.log(3, "NoSuchElementException, element is not found on this screen!");
-                    }
-                }else Base.log(1, "element is not found on this screen, text: \"" + textOfSearchingElement + "\"");
-
-                if (direction.equals("down")) {
-                    swipeDown(1000, 2);
-                }else swipeUp(1000, 2);
-
-                current.clear();
-                Base.log(4, "put new text objects to the current list after swipe");
-                try {
-                    for (WebElement i : allTextObjects) {
-                        current.add(i.getText());
-                    }
-                }catch (NoSuchElementException e){
-                    Base.log(3, "NoSuchElementException, text elements is not found on the screen\n" + e);
-                }
-
-                compare(etalon, current);
-                if (flag) break;
-            }
-            finish = System.nanoTime();
-            Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-            Base.log(4, "Method is finished");
-            return result;
-        }
-    }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    public boolean scrollToElement(WebElement elementForSearch, String direction) {
-        start = System.nanoTime();
-        Base.log(4, "Method is started");
-        result = false;
-
-        counter = 0;
-        etalon.clear();
-        current.clear();
-
-        Base.log(1, "get all text objects from this screen");
-        for (WebElement i : allTextObjects) {
-            etalon.add(i.getText());
-            current.add(i.getText());
-        }
-
-        while (true){
-
-            if (base.wait.element(elementForSearch, 2, true)){
-                result = true;
-                break;
-
-            }else {
-                Base.log(3, "element is not found on this screen!");
-                result = false;
-            }
-
-            if (direction.equals("down")) {
-                swipeDown(1000, 2);
-            }else swipeUp(1000, 2);
-
-            current.clear();
-            Base.log(1, "put new text objects to the current list after swipe");
-            try {
-                for (WebElement i : allTextObjects) {
-                    current.add(i.getText());
-                }
-            }catch (NoSuchElementException e){
-                Base.log(3, "NoSuchElementException, something was wrong!\n" + e);
-            }
-
-            compare(etalon, current);
-            if (flag) break;
-        }
-        finish = System.nanoTime();
-        Base.log(4, "time " + String.format("%4.2f",(float)(finish - start)/1000000000) + " sec");
-        Base.log(4, "Method is finished");
-        return result;
-    }
-
-
-//----------------------------------------------------------------------------------------------------------------------
-
-    private ArrayList <String> compare(ArrayList<String> etalon, ArrayList<String> current){
+    private ArrayList<String> compare(ArrayList<String> etalon, ArrayList<String> current) {
         flag = false;
 
         if (etalon.containsAll(current) && counter < 1) {
             counter++;
             Base.log(4, "nothing was changed, swipe try count = " + counter);
-        }else if (counter >= 1 ){
-                Base.log(3, "the end of the list is reached");
-                flag = true;
+        } else if (counter >= 1) {
+            Base.log(3, "the end of the list is reached");
+            flag = true;
         } else {
             counter = 0;
             etalon.clear();
             etalon.addAll(current);
             flag = false;
         }
-       return etalon;
+        return etalon;
     }
 
 
@@ -539,6 +532,7 @@ public class Navigation{
         public void tap(WebElement element) {
             driver.performTouchAction(new TouchAction(driver).tap(element));
         }
+
         public void longPress(WebElement element, int timer) {
             driver.performTouchAction(new TouchAction(driver).longPress(element, timer));
         }
@@ -550,7 +544,7 @@ public class Navigation{
         public WebElement name(String name, boolean tap) {
             searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + name + "']"));
             driver.performTouchAction(new TouchAction(driver).moveTo(searchingElement));
-            if(tap)searchingElement.click();
+            if (tap) searchingElement.click();
             return searchingElement;
         }
 
@@ -575,16 +569,20 @@ public class Navigation{
 //----------------------------------------------------------------------------------------------------------------------
 // GOTO
 //----------------------------------------------------------------------------------------------------------------------
-    public void nextButtonClick(){nextButton.click();}
+    public void nextButtonClick() {
+        nextButton.click();
+    }
 
-    public WebElement getNextButton() {return nextButton;}
+    public WebElement getNextButton() {
+        return nextButton;
+    }
 
     public void goBack() {
         Base.log(4, "tap Back button");
         backButton.click();
     }
 
-    public void goToSettings(){
+    public void goToSettings() {
         WebDriverWait iWait = new WebDriverWait(driver, 5);
 
         Base.log(1, "wait for Settings Button");
@@ -602,58 +600,54 @@ public class Navigation{
         // dashboard
         public void Devices() {
             backToDashboard();
-
             Base.log(1, "tap Devices Button");
             footerDevices.click();
         }
 
         public void Rooms() {
             backToDashboard();
-
             Base.log(1, "tap Rooms Button");
             footerRooms.click();
         }
 
-        public void Notifications() {
-            backToDashboard();
-
-            Base.log(1, "tap Notifications Button");
-            footerNotifications.click();
-        }
-
         public void Remote() {
             backToDashboard();
-
             Base.log(1, "tap Remote Button");
             footerRemote.click();
         }
 
-        private void backToDashboard(){
-        Base.log(1, "back to dashboard");
-        while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
-            if (base.wait.element(backButton, 1, true)) {
+        public void Notifications() {
+            backToDashboard();
+            Base.log(1, "tap Notifications Button");
+            footerNotifications.click();
+        }
+
+        private void backToDashboard() {
+            Base.log(1, "back to dashboard");
+            while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
+                if (base.wait.element(backButton, 1, true)) {
+                    Base.log(1, "tap back button");
+                    backButton.click();
+
+                } else if (base.check.isPresent.popUpWithConfirmation(2)) {
+                    cancelIt();
+
+                } else {
+                    Base.log(3, "Dashboard is not reached");
+                }
+            }
+            Base.log(1, "Dashboard is reached");
+        }
+
+        private void backToDashboard1() {
+            Base.log(1, "back to dashboard");
+            while (base.wait.element(backButton, 2, true)) {
                 Base.log(1, "tap back button");
                 backButton.click();
-
-            } else if (base.check.isPresent.popUpWithConfirmation(2)) {
-                cancelIt();
-
-            } else {
-                Base.log(3, "Dashboard is not reached");
             }
+            if (base.wait.menuIconOrPinPopUp(2))
+                Base.log(1, "Dashboard is reached");
         }
-        Base.log(1, "Dashboard is reached");
-    }
-
-        private void backToDashboard1(){
-        Base.log(1, "back to dashboard");
-        while (base.wait.element(backButton, 2, true)) {
-            Base.log(1, "tap back button");
-            backButton.click();
-        }
-        if (base.wait.menuIconOrPinPopUp(2))
-            Base.log(1, "Dashboard is reached");
-    }
 
         //logout
         public void Registration() {
@@ -709,7 +703,7 @@ public class Navigation{
         }
     }
 
-//----------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------
 // CONFIRMATION
 //----------------------------------------------------------------------------------------------------------------------
     public void confirmIt() {
@@ -717,17 +711,17 @@ public class Navigation{
         try {
             okBtn.click();
             Base.log(1, "tap OK button");
-        }catch (Exception e){
+        } catch (Exception e) {
 
             try {
                 confirmButton.click();
                 Base.log(1, "tap Confirm button");
-            }catch (Exception e1){
+            } catch (Exception e1) {
 
                 try {
                     addButton.click();
                     Base.log(1, "tap Add button");
-                }catch (Exception e2){
+                } catch (Exception e2) {
                     Base.log(1, "confirm button is not found");
                 }
             }
@@ -739,12 +733,12 @@ public class Navigation{
         try {
             cancel.click();
             Base.log(1, "Cancel button is pressed (cancel)");
-        }catch (Exception e){
+        } catch (Exception e) {
 
             try {
                 cancelButton.click();
                 Base.log(1, "Cancel button is pressed (cancelButton)");
-            }catch (Exception e1){
+            } catch (Exception e1) {
                 Base.log(4, "Cancel Button was not found");
             }
         }

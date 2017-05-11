@@ -65,8 +65,7 @@ public class Imitator{
         }
     }
 
-    public boolean addDevice(int devId, int devNumber, int devType, String devName, int roomNumber){
-        Base.log(1, "add devices to imitator");
+    private void addDeviceToImitator (int devId, int devNumber, int devType){
         String command = String.format("add %d %d %d\n", devId, devNumber, devType);
         try {
             serialPort.writeString(command);
@@ -74,19 +73,15 @@ public class Imitator{
         }catch (Exception e) {
             Base.log(3, "Exception: \n" + e + "\n");
         }
+    }
 
-        Base.log(1, "add device \"" + devName + "\" to Hub");
-//        base.nav.scrollBottom();
-//        base.devicesPage.addDeviceButtonClick();
-        base.nav.scroll.toElementWith.id(base.devicesPage.getAddDeviceButtonId(), true);
-
-        Base.log(1, "wait for popUp for adding new device", true);
-        if (!base.wait.element(base.popUp.getAddNewDevicePopUp(), 5, true)) {return false;}
-
+    private boolean registerDeviceProcess (String devName, int devId, int roomNumber){
         base.devicesPage.fillFieldsWith(devName, String.valueOf(devId));
         base.hideKeyboard();
-        base.devicesPage.setRoom(roomNumber);
 
+        if (roomNumber > 0) {
+            base.devicesPage.setRoom(roomNumber);
+        }
         Base.log(1, "tap Add devices button", true);
         base.nav.confirmIt();
 
@@ -96,11 +91,24 @@ public class Imitator{
         registerDevice(devId);
         registerDevice(devId);
 
-        base.wait.invisibilityOfElement(By.id("com.ajaxsystems:id/timerText"), 30);
+        base.wait.invisibilityOfElement(By.id(base.device.getTimerTextId()), 30);
 
         Base.log(1, "check is PIN popUp displayed");
         base.wait.pinPopUp(2, false);
         return true;
+    }
+
+    public boolean addDevice(int devId, int devNumber, int devType, String devName, int roomNumber){
+        Base.log(1, "add devices to imitator");
+        addDeviceToImitator (devId, devNumber, devType);
+
+        Base.log(1, "add device \"" + devName + "\" to Hub");
+        base.nav.scroll.toElementWith.id(base.devicesPage.getAddDeviceButtonId(), true);
+
+        Base.log(1, "wait for popUp for adding new device", true);
+        if (!base.wait.element(base.popUp.getAddNewDevicePopUp(), 5, true)) {return false;}
+
+        return registerDeviceProcess(devName, devId, roomNumber);
     }
 
     public boolean addDevice(int devId, int devNumber, int devType, String devName){
@@ -127,32 +135,10 @@ public class Imitator{
         Base.log(1, "wait for popUp for adding new device", true);
         if (!base.wait.element(base.popUp.getAddNewDevicePopUp(), 5, true)) {return false;}
 
-        Base.log(1, "add devices to imitator", true);
-        command = String.format("add %d %d %d\n", devId, devNumber, devType);
-        try {
-            serialPort.writeString(command);
-            Thread.sleep(2000);
-        }catch (Exception e) {
-            Base.log(3, "Exception: \n" + e + "\n");
-        }
+        Base.log(1, "add devices to imitator");
+        addDeviceToImitator (devId, devNumber, devType);
 
-        base.devicesPage.fillFieldsWith(deviceNameNew, String.valueOf(devId));
-        base.hideKeyboard();
-
-        Base.log(1, "tap Add devices button", true);
-        base.nav.confirmIt();
-
-        if (base.check.isPresent.snackBar(5)){return  false;}
-
-        Base.log(1, "device turn on", true);
-        registerDevice(devId);
-        registerDevice(devId);
-
-        base.wait.invisibilityOfElement(By.id("com.ajaxsystems:id/timerText"), 30);
-
-        Base.log(1, "check is PIN popUp displayed");
-        base.wait.pinPopUp(2, false);
-        return true;
+        return registerDeviceProcess(deviceNameNew, devId, 0);
     }
 
     public void getDeviceList(){

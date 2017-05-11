@@ -38,7 +38,7 @@ public class Base {
 
     public static int TIMEOUT = 3;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW = true;
+    private static final boolean LOG_VIEW_IN_CONSOLE = true;
     private static final String logFile = logfileName();
     private static final String dataBase = "Develop";
 
@@ -361,7 +361,6 @@ public class Base {
 // LOG
 //----------------------------------------------------------------------------------------------------------------------
     public static void log(int type, String message, boolean writeToReport) {
-
         if(writeToReport){
             System.out.println(log(type, message));
         }else {
@@ -401,18 +400,18 @@ public class Base {
             if (trace.length > 1) {
                 StackTraceElement element = trace[1];
                 if (type == 2 || type == 3) {
-                    if (LOG_VIEW){
+                    if (LOG_VIEW_IN_CONSOLE){
                         System.out.format("\033[31;49m[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n\033[39;49m", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
                     }
                     write(String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message));
                 } else {
-                    if (LOG_VIEW) {
+                    if (LOG_VIEW_IN_CONSOLE) {
                         System.out.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message);
                     }
                     write(String.format("[%s] [%s] where:{ %s.%s }[%d], what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, element.getClassName(), element.getMethodName(), element.getLineNumber(), message));
                 }
             } else {
-                if (LOG_VIEW) {
+                if (LOG_VIEW_IN_CONSOLE) {
                     System.out.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message);
                 }
                 write(String.format("[%s] [%s] where:{ no info }, what:{ %s }\n", sdf.format(timeStamp), typeOfMessage, message));

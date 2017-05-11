@@ -22,6 +22,12 @@ public class DevicesPage {
     @AndroidFindBy(id = "com.ajaxsystems:id/addDevice")
     private WebElement addDeviceButtonNew;
 
+    public String getAddDeviceButtonId() {
+        return addDeviceButtonId;
+    }
+
+    private String addDeviceButtonId = "com.ajaxsystems:id/addDevice";
+
     @AndroidFindBy(id = "com.ajaxsystems:id/unpair")
     private WebElement unpairButton;
 
@@ -95,7 +101,6 @@ public class DevicesPage {
     public void goToFirstDeviceSettingsPage(){
         Base.log(1, "click on Device tab (room element)", true);
         roomOfDeviceLocator.click();
-
         base.nav.goToSettings();
     }
 
@@ -152,7 +157,7 @@ public class DevicesPage {
                         return false;
                     }
 
-                    base.nav.scrollBottom();
+//                    base.nav.scrollBottom();
                     unpairButtonClick();
                     Base.log(1, "Confirm proposition", true);
                     base.nav.confirmIt();
