@@ -1,15 +1,18 @@
 package pageObjects.object;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import pageObjects.Base;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class User {
@@ -28,6 +31,7 @@ public class User {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/delete")
     private WebElement deleteButton;
+    private String deleteButtonId = "com.ajaxsystems:id/delete";
 
     @AndroidFindBy(xpath = "//android.widget.TextView")
     private ArrayList<WebElement> allTextObjects;
@@ -53,7 +57,7 @@ public class User {
 //----------------------------------------------------------------------------------------------------------------------
 
     private Base base;
-    private AppiumDriver driver;
+    private AndroidDriver driver;
     private boolean result;
     private String sendInvitesButtonText, inviteFailText, adminStatusText, userStatusText;
 
@@ -116,19 +120,15 @@ public class User {
     public class Add {
         public boolean fromEmailField() {
             String emailListString = "";
-
             Base.log(1, "tap Send Invites Button", true);
             if (!base.nav.scroll.toElementWith.text(sendInvitesButtonText, true)) return false;
-
             Base.log(1, "concat all emails from array to the one string");
             for (String userEmail : usersForEmailField) {
                 Base.log(1, "concat email \"" + userEmail + "\" to the string");
                 emailListString = emailListString.concat(userEmail + " ");
             }
-
             Base.log(1, "send emails to the Users field", true);
             inviteUsersField.sendKeys(emailListString);
-
             return sendInvitation();
         }
 
@@ -180,7 +180,6 @@ public class User {
 
             Base.log(1, "tap Save button", true);
             base.nav.nextButtonClick();
-
            return sendInvitation();
         }
 
@@ -214,28 +213,29 @@ public class User {
         }
 
         public boolean allPending() {
-            result = false;
             int counter = 0;
             String successText = base.getLocalizeTextForKey("Com_executed1");
+
             while (true) {
-                if(base.nav.scrollToElement(deleteButton, "up")){
-
-                    Base.log(1, "tap User Delete button and confirm popUp proposition");
-                    deleteButton.click();
+                Base.log(1, "tap User Delete button", true);
+                if(base.nav.scroll.toElementWith.id(deleteButtonId, true)){
                     base.nav.confirmIt();
-
-                    Assert.assertTrue(base.wait.elementWithText(successText, 20, true), "SUCCESS text is not shown");
-                    base.getScreenShot();
-                    Base.log(1, "SUCCESS text is shown");
+                    if (base.wait.elementWithText(successText, 40, true)){
+                        Base.log(1, "SUCCESS text \"" + successText + "\" is shown", true);
+                    } else {
+                        Base.log(1, "SUCCESS text \"" + successText + "\" is not shown");
+                    }
                     counter++;
                 } else {
                     break;
                 }
             }
-            Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one pending user was found\n");
+            if (counter < 1){
+                Base.log(3, "Test impossible, because precondition isn't valid - no one pending user was found", true);
+                return false;
+            }
             Base.log(1, "pending users are not found, number of deleted users: " + counter);
-            result = true;
-            return result;
+            return true;
         }
 
         private void deleteAllActive(String status) {
@@ -265,7 +265,7 @@ public class User {
                         Base.log(1, "delete user with email \"" + email + "\"");
                         settingsButton.click();
 //                    base.nav.scrollToElement(deleteButton, "up");
-                        base.nav.scrollBottom();
+//                        base.nav.scrollBottom();
                         Base.log(1, "tap delete button");
                         deleteButton.click();
                         base.nav.confirmIt();
@@ -302,23 +302,23 @@ public class User {
         return result;
     }
 
-    public boolean isDeleteIconPresent(String pendingUserName) {
-        WebElement pendingUserForCheck = findPendingFrom("name", pendingUserName);
-
-        if (base.nav.scrollToElement(pendingUserForCheck, "up")) {
-            Base.log(1, "new user with email \"" + pendingUserName + "\" has the DELETE button");
-            result = true;
-
-        } else {
-            Base.log(3, "new user with email \"" + pendingUserName + "\" has no the DELETE button");
-            result = false;
-        }
-        return result;
-    }
+//    public boolean isDeleteIconPresent(String pendingUserName) {
+//        WebElement pendingUserForCheck = findPendingFrom("name", pendingUserName);
+//
+//        if (base.nav.scrollToElement(pendingUserForCheck, "up")) {
+//            Base.log(1, "new user with email \"" + pendingUserName + "\" has the DELETE button");
+//            result = true;
+//
+//        } else {
+//            Base.log(3, "new user with email \"" + pendingUserName + "\" has no the DELETE button");
+//            result = false;
+//        }
+//        return result;
+//    }
 
     public void deletePendingByName(String pendingUserName) {
         WebElement pendingUserForDelete = findPendingFrom("name", pendingUserName);
-        base.nav.scrollToElement(pendingUserForDelete, "up");
+//        base.nav.scrollToElement(pendingUserForDelete, "up");
         pendingUserForDelete.click();
     }
 
@@ -336,7 +336,7 @@ public class User {
                 break;
         }
         WebElement pendingUserElement = driver.findElementByXPath(xPath);
-        base.nav.scrollToElement(pendingUserElement, "up");
+//        base.nav.scrollToElement(pendingUserElement, "up");
         return pendingUserElement;
     }
 
