@@ -145,7 +145,7 @@ public class RoomsPage {
         elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
 
         Base.log(1, "choice the Add Room button");
-        base.nav.scrollBottom();
+//        base.nav.scrollBottom();
         switch (base.check.waitElements(elements, 2)){
             case 1: addRoomBtn.click(); break;
             case 2: addRoomPlusBtn.click(); break;
@@ -188,7 +188,7 @@ public class RoomsPage {
                     base.nav.goToSettings();
 
                     Base.log(1, "scroll bottom");
-                    base.nav.scrollBottom();
+//                    base.nav.scrollBottom();
 
                     Base.log(1, "tap Delete Button", true);
                     deleteButton.click();
@@ -239,7 +239,7 @@ public class RoomsPage {
                             return false;
                         }
 
-                        base.nav.scrollBottom();
+//                        base.nav.scrollBottom();
 
                         Base.log(1, "tap Delete Button");
                         deleteButton.click();

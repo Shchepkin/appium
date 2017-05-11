@@ -12,8 +12,8 @@ import pageObjects.Base;
 public class Wait{
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base base;
-    private final AppiumDriver driver;
+    private Base base;
+    private AppiumDriver driver;
     private String waiterText, pinPopUpText;
     private boolean result;
 

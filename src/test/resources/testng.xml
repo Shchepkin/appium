@@ -14,30 +14,30 @@
             <!--<class name="Smoke.C46174_New_user_registration"/>-->
             <!--<class name="Smoke.C46176_Add_new_Hub_manually"/>-->
             <class name="Smoke.C46180_Add_new_guest_user"/>
-            <class name="Smoke.C46177_Add_new_room"/>
-            <class name="Smoke.C46178_Add_new_device"/>
+            <!--<class name="Smoke.C46177_Add_new_room"/>-->
+            <!--<class name="Smoke.C46178_Add_new_device"/>-->
         </classes>
     </test>
 
     <test name="LG - Login">
         <classes>
-            <class name="Login.C46225_Negative_Login"/>
-            <class name="Login.C46224_Positive_Login"/>
+            <!--<class name="Login.C46225_Negative_Login"/>-->
+            <!--<class name="Login.C46224_Positive_Login"/>-->
         </classes>
     </test>
 
     <test name="LG - Security">
         <classes>
-            <class name="Smoke.C46179_Virtual_Space_Control"/>
+            <!--<class name="Smoke.C46179_Virtual_Space_Control"/>-->
         </classes>
     </test>
 
     <test name="LG - Deleting all artifacts">
         <classes>
-            <class name="Smoke.C46182_Device_delete"/>
-            <class name="Smoke.C46181_User_delete"/>
-            <class name="Smoke.C46183_Room_delete"/>
-            <class name="Smoke.C46184_Hub_delete"/>
+            <!--<class name="Smoke.C46182_Device_delete"/>-->
+            <!--<class name="Smoke.C46181_User_delete"/>-->
+            <!--<class name="Smoke.C46183_Room_delete"/>-->
+            <!--<class name="Smoke.C46184_Hub_delete"/>-->
         </classes>
     </test>
 

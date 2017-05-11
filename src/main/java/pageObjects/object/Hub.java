@@ -213,7 +213,7 @@ public class Hub{
         public boolean hubSettings(boolean withCheckLocalizedText) {
             Base.log(1, "go to the hubSettings", true);
             base.nav.gotoPage.hubSettings();
-            base.nav.scrollBottom();
+//            base.nav.scrollBottom();
 
             Base.log(1, "tap Delete button", true);
             unpairButton.click();
@@ -233,7 +233,7 @@ public class Hub{
             Base.log(1, "tap first settings button in the UserList", true);
             settingsButton.click();
 
-            base.nav.scrollBottom();
+//            base.nav.scrollBottom();
 
             Base.log(1, "tap Delete Button", true);
             base.user.getDeleteButton().click();

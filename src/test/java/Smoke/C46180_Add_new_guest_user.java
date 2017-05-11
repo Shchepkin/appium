@@ -30,9 +30,10 @@ public class C46180_Add_new_guest_user {
         base.loginPage.loginWithPinCancel();
 
         base.nav.gotoPage.userList();
+        base.user.delete.allPending();
+        System.exit(0);
         base.nav.scroll.toElementWith.text(base.getLocalizeTextForKey("send_invites"), true);
         base.user.getAddButtonFromContactList().click();
-        base.nav.scroll.toElementWith.email("test.email.ajax3@i.ua", true);
         System.exit(0);
     }
 
