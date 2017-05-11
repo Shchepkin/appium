@@ -204,12 +204,12 @@ public class User {
 
 
     public class Delete {
-        public void masterUser(){
-            deleteAllActive(adminStatusText);
+        public boolean masterUser(){
+           return deleteAllActive(adminStatusText);
         }
 
-        public void allGuests(){
-            deleteAllActive(userStatusText);
+        public boolean allGuests(){
+           return deleteAllActive(userStatusText);
         }
 
         public boolean allPending() {
@@ -238,17 +238,17 @@ public class User {
             return true;
         }
 
-        private void deleteAllActive(String status) {
+        private boolean deleteAllActive(String status) {
             String successText = null;
             int counter = 0;
-            Assert.assertNotNull(status,"expected object: \"User Status localized text\", ");
 
             if (status.equalsIgnoreCase(userStatusText)){
                 successText = base.getLocalizeTextForKey("user_guest_detach");
             }else if (status.equalsIgnoreCase(adminStatusText)){
                 successText = base.getLocalizeTextForKey("Detach_success1");
             }else {
-                Assert.fail("localized text for User Status was not found");
+                Base.log(3,"localized text for User Status was not found", true);
+                return false;
             }
 
             String statusXpath = "*[contains(@resource-id,'com.ajaxsystems:id/status') and @text='" + status + "']";
@@ -262,23 +262,30 @@ public class User {
                 while (true) {
                     if(base.wait.element(settingsButton, 5, true)){
                         String email = driver.findElementByXPath(xPath + emailXpath).getText();
-                        Base.log(1, "delete user with email \"" + email + "\"");
+
+                        Base.log(1, "delete user with email \"" + email + "\"", true);
                         settingsButton.click();
-//                    base.nav.scrollToElement(deleteButton, "up");
-//                        base.nav.scrollBottom();
+
                         Base.log(1, "tap delete button");
-                        deleteButton.click();
+                        base.nav.scroll.toElementWith.id(deleteButtonId, true);
                         base.nav.confirmIt();
-                        Assert.assertTrue(base.wait.elementWithText(successText, 10, true), "SUCCESS text is not shown");
-                        Base.log(1, "user with email \"" + email + "\" is deleted successfully and SUCCESS text is shown");
+                        if (base.wait.elementWithText(successText, 40, true)){
+                            Base.log(1, "SUCCESS text \"" + successText + "\" is shown", true);
+                        } else {
+                            Base.log(1, "SUCCESS text \"" + successText + "\" is not shown");
+                        }
                         counter++;
                     } else {break;}
                 }
             }catch (NoSuchElementException e){
                 Base.log(1, "NoSuchElementException: \n\n" + e + "\n");
             }
-            Assert.assertTrue(counter > 0, "Test impossible, because precondition isn't valid - no one user with status \"" + status + "\" are not found\n");
+            if (counter < 1){
+                Base.log(3, "Test impossible, because precondition isn't valid - no one user with status \"" + status + "\" are not found", true);
+                return false;
+            }
             Base.log(1, "active users with status \"" + status + "\" are not found, number of deleted users: " + counter);
+            return true;
         }
     }
 
