@@ -16,24 +16,17 @@ public class Sql {
 
     private Formatter f = new Formatter();
     private ArrayList validationToken;
-
-    // JDBC URL, username and password of MySQL server
-    private String url;
-    private String user;
-    private String password;
+    private ArrayList selectList;
+    private String table;
 
     // JDBC variables for opening and managing connection
     private static Connection connection;
     private static Statement stmt;
+
     private static ResultSet rs;
 
-    public ArrayList selectList;
-    public Map tokenMap;
-
     //----------------------------------------------------------------------------------------------------------------------
-    private final Base base;
-    private boolean result;
-
+    private Base base;
     public Sql(Base base) {
         this.base = base;
     }
@@ -51,7 +44,7 @@ public class Sql {
      */
     public void getDelete(String row, String value) {
         selectList = new ArrayList();
-        String query = "DELETE FROM csa_accounts WHERE " + row + " LIKE '" + value + "'";
+        String query = "DELETE FROM " + table + " WHERE " + row + " LIKE '" + value + "'";
 
         selectList = getSelect(row, value);
         if (!selectList.get(0).toString().isEmpty()) {
@@ -76,9 +69,6 @@ public class Sql {
                 } catch (SQLException se) { /*can't do anything */ }
                 try {
                     stmt.close();
-                } catch (SQLException se) { /*can't do anything */ }
-                try {
-                    rs.close();
                 } catch (SQLException se) { /*can't do anything */ }
             }
         }else {
@@ -105,7 +95,7 @@ public class Sql {
         validationToken.clear();
         selectList.clear();
 
-        String query = "SELECT id,InnerID,Role,Phone,ConfirmationToken,Login FROM csa_accounts WHERE " + row + " LIKE '" + value + "' ORDER BY id ASC";
+        String query = "SELECT id,InnerID,Role,Phone,ConfirmationToken,Login FROM " + table + " WHERE " + row + " LIKE '" + value + "' ORDER BY id ASC";
 
         try {
             connection = getConnection();
@@ -165,7 +155,7 @@ public class Sql {
      * tokenMap.get("emailToken");
      */
     public Map getTokenMap(String row, String value) {
-        tokenMap = new HashMap();
+        Map tokenMap = new HashMap();
         validationToken = new ArrayList();
 
         int counter = 1;
@@ -220,27 +210,34 @@ public class Sql {
      * @return Connection connection
      */
     private Connection getConnection() {
-        url = base.getDbSettingsWithKey("url");
-        user = base.getDbSettingsWithKey("user");
-        password = base.getDbSettingsWithKey("password");
+        String url = base.getDbSettingsWithKey("url");
+        String user = base.getDbSettingsWithKey("user");
+        String password = base.getDbSettingsWithKey("password");
+        table = base.getDbSettingsWithKey("accountsTable");
+        try {
+            if (connection.isClosed()) {
+                for (int i = 1; i <= 10; i++) {
+                    try {
+                        Base.log(1, "opening database connection to MySQL server, attempt #" + i);
+                        connection = DriverManager.getConnection(url, user, password);
+                        Base.log(1, "connection to MySQL server is successfully opened");
+                        break;
 
-        for (int i = 1; i <= 10; i++) {
-            try {
-                Base.log(1, "opening database connection to MySQL server, attempt #" + i);
-                connection = DriverManager.getConnection(url, user, password);
-                Base.log(1, "connection to MySQL server is successfully opened");
-                break;
-
-            } catch (Exception e) {
-                Base.log(3, "opening database connection fail: " + e.getClass());
-                Base.log(3, "cause of problem: " + e.getCause().toString());
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
+                    } catch (Exception e) {
+                        Base.log(3, "opening database connection fail: " + e.getClass());
+                        Base.log(3, "cause of problem: " + e.getCause().toString());
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         return connection;
     }
 }
