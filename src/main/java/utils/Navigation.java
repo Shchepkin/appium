@@ -624,7 +624,7 @@ public class Navigation {
 
         private void backToDashboard() {
             Base.log(1, "back to dashboard");
-            while (!base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)) {
+            while (!base.wait.element(base.header.getMenuDrawer(), 2, true)) {
                 if (base.wait.element(backButton, 1, true)) {
                     Base.log(1, "tap back button");
                     backButton.click();

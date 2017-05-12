@@ -114,7 +114,7 @@ public class AuthorizationPage{
         Base.log(4, "Method is started");
 
         Base.log(4, "tap menu icon");
-        base.dashboardHeader.getMenuDrawer().click();
+        base.header.getMenuDrawer().click();
 
         Base.log(4, "tap Account Button");
         base.menuPage.getAccountButton().click();
