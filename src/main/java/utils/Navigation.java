@@ -113,27 +113,25 @@ public class Navigation {
     @AndroidFindBy(id = "com.ajaxsystems:id/spaceControl")
     private WebElement spaceControlImage;
 
-    //----------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
     private Base base;
     private AndroidDriver driver;
-    private boolean result;
-    private long start, finish;
-    private boolean flag;
-    private int counter;
-    private ArrayList<String> etalon;
-    private ArrayList<String> current;
+//    private long start, finish;
+//    private boolean flag;
+//    private int counter;
+//    private ArrayList<String> etalon;
+//    private ArrayList<String> current;
 
     public Touch touch = new Touch();
     public Scroll scroll = new Scroll();
     public GoToPage gotoPage = new GoToPage();
-    public MoveToElementWith moveToElementWith = new MoveToElementWith();
 //    public ScrollToElementWith scrollToElementWith = new ScrollToElementWith();
 
     public Navigation(Base base) {
         this.base = base;
         this.driver = base.getDriver();
-        etalon = new ArrayList<>();
-        current = new ArrayList<>();
+//        etalon = new ArrayList<>();
+//        current = new ArrayList<>();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -141,8 +139,6 @@ public class Navigation {
 // Swipe
 //----------------------------------------------------------------------------------------------------------------------
     public void swipeUp() {
-        Base.log(4, "Method is started");
-
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(4, "Screen dimension is " + screenSize);
 
@@ -154,13 +150,9 @@ public class Navigation {
 
         Base.log(4, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
-
-        Base.log(4, "Method is finished");
     }
 
     public void swipeUp(int duration, double heightPart) {
-        Base.log(4, "Method is started");
-
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(4, "Screen dimension is " + screenSize);
 
@@ -171,13 +163,9 @@ public class Navigation {
 
         Base.log(4, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
-
-        Base.log(4, "Method is finished");
     }
 
     public void swipeDown() {
-        Base.log(4, "Method is started");
-
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(1, "Screen dimension is " + screenSize);
 
@@ -189,13 +177,9 @@ public class Navigation {
 
         Base.log(1, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
-
-        Base.log(4, "Method is finished");
     }
 
     public void swipeDown(int duration, double heightPart) {
-        Base.log(4, "Method is started");
-
         Dimension screenSize = driver.manage().window().getSize();
         Base.log(4, "Screen dimension is " + screenSize);
 
@@ -206,18 +190,13 @@ public class Navigation {
 
         Base.log(4, "swipe(startX, startY, endX, endY, duration) [" + startX + ", " + startY + ", " + endX + ", " + endY + ", " + duration + "]");
         driver.swipe(startX, startY, endX, endY, duration);
-
-        Base.log(4, "Method is finished");
     }
 //----------------------------------------------------------------------------------------------------------------------
 // Scroll
 //----------------------------------------------------------------------------------------------------------------------
 
-    // TODO create class structure for scroll
-
     /**
      * This class scrolls current screen to the element with needed parameter and gives you the opportunity to click this element if you want
-     *
      * @return true if method found the element (and click them if it required)
      */
 
@@ -247,6 +226,11 @@ public class Navigation {
 
             public boolean name(String nameOfSearchingElement, boolean click) {
                 String searchingElement = "new UiSelector().resourceId(\"com.ajaxsystems:id/name\").text(\"" + nameOfSearchingElement + "\")";
+                return search(searchingElement, click);
+            }
+
+            public boolean status(String statusOfSearchingElement, boolean click) {
+                String searchingElement = "new UiSelector().resourceId(\"com.ajaxsystems:id/status\").text(\"" + statusOfSearchingElement + "\")";
                 return search(searchingElement, click);
             }
 
@@ -505,23 +489,22 @@ public class Navigation {
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    private ArrayList<String> compare(ArrayList<String> etalon, ArrayList<String> current) {
-        flag = false;
-
-        if (etalon.containsAll(current) && counter < 1) {
-            counter++;
-            Base.log(4, "nothing was changed, swipe try count = " + counter);
-        } else if (counter >= 1) {
-            Base.log(3, "the end of the list is reached");
-            flag = true;
-        } else {
-            counter = 0;
-            etalon.clear();
-            etalon.addAll(current);
-            flag = false;
-        }
-        return etalon;
-    }
+//    private ArrayList<String> compare(ArrayList<String> etalon, ArrayList<String> current) {
+//        flag = false;
+//        if (etalon.containsAll(current) && counter < 1) {
+//            counter++;
+//            Base.log(4, "nothing was changed, swipe try count = " + counter);
+//        } else if (counter >= 1) {
+//            Base.log(3, "the end of the list is reached");
+//            flag = true;
+//        } else {
+//            counter = 0;
+//            etalon.clear();
+//            etalon.addAll(current);
+//            flag = false;
+//        }
+//        return etalon;
+//    }
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -537,34 +520,6 @@ public class Navigation {
             driver.performTouchAction(new TouchAction(driver).longPress(element, timer));
         }
     }
-
-    public class MoveToElementWith {
-        WebElement searchingElement;
-
-        public WebElement name(String name, boolean tap) {
-            searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + name + "']"));
-            driver.performTouchAction(new TouchAction(driver).moveTo(searchingElement));
-            if (tap) searchingElement.click();
-            return searchingElement;
-        }
-
-        public void text(String text) {
-            searchingElement = driver.findElement(By.xpath("//android.widget.TextView[@text='" + text + "']"));
-            driver.performTouchAction(new TouchAction(driver).moveTo(searchingElement));
-        }
-
-        public void email(String email) {
-            searchingElement = driver.findElement(By.xpath("//*[contains(@resource-id,'com.ajaxsystems:id/mail') and @text='" + email + "']"));
-            driver.performTouchAction(new TouchAction(driver).moveTo(searchingElement));
-        }
-
-        public void id(String id) {
-            searchingElement = driver.findElement(By.id("\"" + id + "\""));
-            driver.performTouchAction(new TouchAction(driver).moveTo(searchingElement));
-        }
-
-    }
-
 
 //----------------------------------------------------------------------------------------------------------------------
 // GOTO
@@ -703,7 +658,7 @@ public class Navigation {
         }
     }
 
-    //----------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
 // CONFIRMATION
 //----------------------------------------------------------------------------------------------------------------------
     public void confirmIt() {
