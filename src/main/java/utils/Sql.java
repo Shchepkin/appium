@@ -15,20 +15,19 @@ import java.util.regex.Pattern;
 public class Sql {
 
     private Formatter f = new Formatter();
-    private ArrayList validationToken;
-    private ArrayList selectList;
+    private ArrayList validationToken, selectList;
     private String table;
 
     // JDBC variables for opening and managing connection
     private static Connection connection;
     private static Statement stmt;
-
     private static ResultSet rs;
 
     //----------------------------------------------------------------------------------------------------------------------
     private Base base;
     public Sql(Base base) {
         this.base = base;
+        table = base.getDbSettingsWithKey("accountsTable");
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -213,31 +212,23 @@ public class Sql {
         String url = base.getDbSettingsWithKey("url");
         String user = base.getDbSettingsWithKey("user");
         String password = base.getDbSettingsWithKey("password");
-        table = base.getDbSettingsWithKey("accountsTable");
-        try {
-            if (connection.isClosed()) {
-                for (int i = 1; i <= 10; i++) {
-                    try {
-                        Base.log(1, "opening database connection to MySQL server, attempt #" + i);
-                        connection = DriverManager.getConnection(url, user, password);
-                        Base.log(1, "connection to MySQL server is successfully opened");
-                        break;
+        for (int i = 1; i <= 10; i++) {
+            try {
+                Base.log(1, "opening database connection to MySQL server, attempt #" + i);
+                connection = DriverManager.getConnection(url, user, password);
+                Base.log(1, "connection to MySQL server is successfully opened");
+                break;
 
-                    } catch (Exception e) {
-                        Base.log(3, "opening database connection fail: " + e.getClass());
-                        Base.log(3, "cause of problem: " + e.getCause().toString());
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
+            } catch (Exception e) {
+                Base.log(3, "opening database connection fail: " + e.getClass());
+                Base.log(3, "cause of problem: " + e.getCause().toString());
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
         return connection;
     }
 }
