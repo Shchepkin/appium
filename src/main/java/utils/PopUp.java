@@ -1,6 +1,7 @@
 package utils;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.NoSuchElementException;
@@ -29,16 +30,13 @@ public class PopUp{
     private WebElement message;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/loading")
-    public WebElement loadingWindow;
+    private WebElement loadingWindow;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/loaderLogo")
     private WebElement loaderLogo;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/progress")
     private WebElement progressImage;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/shadow")
-    private WebElement shadow;
 
     @AndroidFindBy(id = "com.ajaxsystems:id/gravity")
     private WebElement addNewDevicePopUp;
@@ -50,17 +48,20 @@ public class PopUp{
         return addNewDevicePopUp;
     }
 
+    public WebElement getLoadingWindow() {
+        return loadingWindow;
+    }
+
 //================================ dialogMessage =====================================
 
     @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
     private WebElement dialogMessage;
 
-//================================ QR ================================================
-    @AndroidFindBy(id = "com.ajaxsystems:id/zxing_viewfinder_view")
-    private WebElement qrFinderView;
+    @AndroidFindBy(id = "com.ajaxsystems:id/codeLayout")
+    private WebElement countryCodeLayout;
 
-    @AndroidFindBy(id = "com.ajaxsystems:id/zxing_status_view")
-    private WebElement qrStatusView;
+    @AndroidFindBy(id = "com.ajaxsystems:id/code")
+    private WebElement countryCode;
 
 //================================= Toast & Snack ====================================
 
@@ -90,9 +91,8 @@ public class PopUp{
     private WebElement userAgreementCheckbox;
 
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base base;
-    private final AppiumDriver driver;
-    private boolean result;
+    private Base base;
+    private AndroidDriver driver;
     private long start, finish;
 
 
@@ -145,29 +145,31 @@ public class PopUp{
         Base.log(4, "Method is finished");
     }
 
-
     public boolean waitLoaderPopUpWithText(String searchingText, int timer, boolean makeScreenShot) {
-        Base.log(4, "Method is started");
-
         try {
             Base.log(4, "waiting " + timer + " seconds for the element ");
             WebDriverWait iWait = new WebDriverWait(driver, timer);
             iWait.until(ExpectedConditions.textToBePresentInElement(contentTextElement, searchingText));
 
             Base.log(4, "element is shown with text: \"" + contentTextElement.getText() + "\"");
-            result = true;
+            return true;
+
         } catch (NoSuchElementException e) {
             Base.log(2, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
-            result = false;
             if (makeScreenShot){base.getScreenShot();}
+            return false;
+
         } catch (TimeoutException e) {
             Base.log(2, "Timeout Exception, element is not shown:\n\n" + e + "\n");
-            result = false;
             if (makeScreenShot){base.getScreenShot();}
+            return false;
         }
-        Base.log(4, "Method is finished");
-        return result;
     }
 
+    public void setPhoneCountryCode(String country) {
+        countryCodeLayout.click();
+        base.nav.scroll.toElementWith.text(country, true);
+        Base.log(1, "set country \"" + country + "\", code value is \"" + countryCode.getText() + "\"", true);
+    }
 
 }
