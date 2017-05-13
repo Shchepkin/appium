@@ -58,7 +58,6 @@ public class Base {
     public AddImagePage addImagePage;
     public AccountMenuPage accountPage;
     public Header header;
-    public Header dashboardHeader;
     public RegistrationPage regPage;
     public AuthorizationPage loginPage;
     public RoomsPage roomsPage;
@@ -132,13 +131,13 @@ public class Base {
         log(4, "init Device()");
         device = new Device(this);
 
-        log(4, "init DashboardHeader()");
+        log(4, "init Header()");
         header = new Header(this);
 
         log(4, "init RegistrationPage()");
         regPage = new RegistrationPage(this);
 
-        log(4, "init DashboardActivePINPage()");
+        log(4, "init PINPage()");
         pinPage = new PinPage(this);
 
         log(4, "init MenuMainPage()");
@@ -153,13 +152,13 @@ public class Base {
         log(4, "init AuthorizationPage()");
         loginPage = new AuthorizationPage(this);
 
-        log(4, "init DashboardRoomsPage()");
+        log(4, "init RoomsPage()");
         roomsPage = new RoomsPage(this);
 
-        log(4, "init DashboardRemotePage()");
+        log(4, "init RemotePage()");
         remotePage = new RemotePage(this);
 
-        log(4, "init DashboardDevicesPage()");
+        log(4, "init DevicesPage()");
         devicesPage = new DevicesPage(this);
 
         log(4, "init MenuAccountPage()");
@@ -167,9 +166,6 @@ public class Base {
 
         log(4, "init AddImagePage()");
         addImagePage = new AddImagePage(this);
-
-        log(4, "init DashboardHeader()");
-        dashboardHeader = new Header(this);
 
         log(4, "init ValidationCodePage()");
         validationCodePage = new ValidationCodePage(this);
@@ -183,16 +179,16 @@ public class Base {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
+    private String getAppSetWithKey(String key){
+        return appSet.get(key).toString();
+    }
+
     public String getLocalizeTextForKey(String key) {
         return localizeKeys.get(key).toString();
     }
 
     public String getCredsWithKey(String key){
         return creds.get(key).toString();
-    }
-
-    public String getAppSetWithKey(String key){
-        return appSet.get(key).toString();
     }
 
     public String getDbSettingsWithKey(String key){

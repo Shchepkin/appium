@@ -67,52 +67,6 @@ public class Check{
 
 //======================================================================================================================
 
-    public boolean clickElementAndWaitingPopup(WebElement elementForClick, boolean confirmPopupProposition){
-        result = false;
-        WebElement[] elements = new WebElement[]{base.popUp.getSnackBarElement(), base.popUp.loadingWindow};
-
-        Base.log(3, "click the element link");
-        elementForClick.click();
-
-        Base.log(4, "waiting for: 1.snackBar  2.loadingWindow");
-        numOfFoundElement = waitElements(elements, 4);
-
-        checkNum(numOfFoundElement, confirmPopupProposition);
-
-        return result;
-    }
-
-//======================================================================================================================
-
-    private void checkNum (int numOfFoundElement, boolean confirmPopupProposition) {
-
-        switch (numOfFoundElement){
-            case 0: Base.log(3, "no PopUp is shown or this moment is missed"); break;
-            case 1: Base.log(3, "snackBar is shown, the text was previously displayed"); break;
-            case 2: Base.log(3, "PopUp is shown with text: \"" + base.popUp.getContentText() + "\"");
-                WebElement[] elements = new WebElement[]{base.nav.getCancelButton(), base.popUp.errorPic};
-                numOfFoundElement = waitElements(elements, 5);
-                switch (numOfFoundElement){
-                    case 0: Base.log(3, "PopUp is shown, but without errors and any propositions"); break;
-                    case 1:
-                        if (confirmPopupProposition){
-                            Base.log(4, "confirm Popup Proposition");
-                            base.nav.getConfirmButton().click();
-                        }
-                        else {
-                            Base.log(4, "cancel Popup Proposition");
-                            base.nav.getCancelButton().click();
-                        }
-                        break;
-                    case 2: Base.log(2, "ERROR is shown with text: \"" + base.popUp.getContentText() + "\""); break;
-                    default: break;
-                }
-            default: break;
-        }
-    }
-
-//======================================================================================================================
-
     public boolean isDeletedBy(String type, String value) {
         if (base.nav.scroll.toElementWith.name(value, false)) {
             Base.log(4, "element with value \"" + value + "\" is still displayed in the List");
@@ -255,6 +209,7 @@ public class Check{
                     }
                 } else return false;
             }
+
         }
 
         public class ElementsWith{
@@ -348,6 +303,10 @@ public class Check{
             public boolean email(String email){
                 return base.nav.scroll.toElementWith.email(email, false);
             }
+
+            public boolean status(String status){
+                return base.nav.scroll.toElementWith.status(status, false);
+            }
         }
     }
 
@@ -428,11 +387,11 @@ public class Check{
         }
 
         public boolean guestUsersList() {
-                return true;
+            return !isPresent.elementWith.status(base.getLocalizeTextForKey("user"));
         }
 
         public boolean pendingUsersList() {
-                return true;
+            return !base.nav.scroll.toElementWith.id("com.ajaxsystems:id/delete", false);
         }
     }
 

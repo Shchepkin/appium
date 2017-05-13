@@ -52,7 +52,7 @@ public class C42098_Login_to_the_existing_account{
             base.nav.cancelIt();
         }
 
-        Assert.assertTrue(base.wait.element(base.dashboardHeader.getMenuDrawer(), 5, true), "Menu Icon is not shown");
+        Assert.assertTrue(base.wait.element(base.header.getMenuDrawer(), 5, true), "Menu Icon is not shown");
 
         Base.log(1, "TEST IS FINISHED");
     }

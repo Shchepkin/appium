@@ -88,7 +88,7 @@ public class Hub{
         }
 
         private void startAddingWithAnyWay(){
-            if (base.wait.element(base.dashboardHeader.getMenuDrawer(), 2, true)){
+            if (base.wait.element(base.header.getMenuDrawer(), 2, true)){
                 if (base.wait.element(base.dashboard.getPlusButton(), 2, true)){
                     startAddingWithPlus();
                 }else {
@@ -106,7 +106,7 @@ public class Hub{
             Base.log(1, "add Hub from Main Menu", true);
 
             Base.log(1, "tap Main Menu icon");
-            base.dashboardHeader.getMenuDrawer().click();
+            base.header.getMenuDrawer().click();
 
             Base.log(1, "tap Add Hub button");
             base.menuPage.addHubButtonClick();
@@ -123,7 +123,7 @@ public class Hub{
             if (base.check.isPresent.error(40)){return false;}
             base.wait.pinPopUp(2, false);
 
-            if (base.wait.element(base.dashboardHeader.getGprsImage(), 10, true)){
+            if (base.wait.element(base.header.getGprsImage(), 10, true)){
                 Base.log(1, "hub successfully added!");
                 return true;
             }else return false;
