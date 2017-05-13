@@ -49,24 +49,24 @@ public class Base {
     public Check check;
     public Email email;
     public PopUp popUp;
+    public Header header;
     public Device device;
     public PinPage pinPage;
     public IntroPage introPage;
+    public RoomsPage roomsPage;
     public Dashboard dashboard;
+    public RemotePage remotePage;
     public Navigation nav;
+    public DevicesPage devicesPage;
     public MainMenuPage menuPage;
     public AddImagePage addImagePage;
     public AccountMenuPage accountPage;
-    public Header header;
     public RegistrationPage regPage;
     public AuthorizationPage loginPage;
-    public RoomsPage roomsPage;
-    public ForgotPasswordPage forgotPasswordPage;
-    public ValidationCodePage validationCodePage;
-    public RemotePage remotePage;
-    public DevicesPage devicesPage;
-
     public NotificationsPage notificationsPage;
+    public ForgotPasswordPage forgotPasswordPage;
+    public ValidationCodePage validationPage;
+
     private AndroidDriver driver = null;
     private Path path;
     private String jsonString, collection;
@@ -168,7 +168,7 @@ public class Base {
         addImagePage = new AddImagePage(this);
 
         log(4, "init ValidationCodePage()");
-        validationCodePage = new ValidationCodePage(this);
+        validationPage = new ValidationCodePage(this);
 
         log(4, "init NotificationsPage()");
         notificationsPage = new NotificationsPage(this);

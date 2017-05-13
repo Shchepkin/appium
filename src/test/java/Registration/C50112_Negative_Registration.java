@@ -40,7 +40,6 @@ public class C50112_Negative_Registration {
     public Iterator<Object[]> dataProviderIterator() {
         return base.getDataProviderIterator("negativeRegistrationData.json");
     }
-
     @Test(dataProvider = "dataProviderIterator", enabled = false)
     public void parameters (Map param) {
 
