@@ -42,6 +42,7 @@ public class RegistrationPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/agreement")
     private WebElement userAgreementCheckbox;
+    private String userAgreementCheckboxId = "com.ajaxsystems:id/agreement";
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
     private WebElement registrationButtonLink;
@@ -87,23 +88,22 @@ public class RegistrationPage{
         Base.log(1, "fill name with: \"" + name + "\"", true);
         nameField.sendKeys(name);
 
-        Base.log(1, "fill and confirm email with: \"" + email + "\"", true);
+        Base.log(1, "fill email with: \"" + email + "\"", true);
         emailField.sendKeys(email);
         base.hideKeyboard();
+        Base.log(1, "fill confirm email with: \"" + email + "\"", true);
         emailConfirmField.sendKeys(email);
         base.hideKeyboard();
 
         Base.log(1, "fill phone with: \"" + phone + "\"", true);
-//        base.nav.swipeUp();
         phoneField.sendKeys(phone);
         if (!country.isEmpty()){base.popUp.setPhoneCountryCode(country);}
         base.hideKeyboard();
 
-        Base.log(1, "fill and confirm password with: \"" + password + "\"", true);
-//        base.nav.swipeUp();
+        Base.log(1, "fill password with: \"" + password + "\"", true);
         passwordField.sendKeys(password);
-//        base.nav.swipeUp();
         base.hideKeyboard();
+        Base.log(1, "fill confirm password with: \"" + password + "\"", true);
         passwordConfirmField.sendKeys(password);
         base.hideKeyboard();
     }
@@ -137,7 +137,6 @@ public class RegistrationPage{
     }
 
     public boolean registrationProcess(String login, String pass, String server, String phone, String country, String userName, boolean setUserPic) {
-        Base.log(1, "start from Intro Page and click Registration button", true);
         base.introPage.setServer(server);
         base.nav.gotoPage.Registration();
 

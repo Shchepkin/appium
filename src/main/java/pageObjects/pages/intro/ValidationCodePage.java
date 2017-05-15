@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import pageObjects.Base;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -46,7 +47,7 @@ public class ValidationCodePage{
 //----------------------------------------------------------------------------------------------------------------------
     private Base base;
     private AndroidDriver driver;
-    private Map tokenMap;
+    private Map tokenMap = new HashMap();
     private String smsToken, emailToken;
     public ValidateBy validateBy = new ValidateBy();
 

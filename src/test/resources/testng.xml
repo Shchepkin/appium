@@ -11,9 +11,9 @@
 
     <test name="LG - Registration and adding artifacts">
         <classes>
-            <!--<class name="Smoke.C46174_New_user_registration"/>-->
+            <class name="Smoke.C46174_New_user_registration"/>
             <!--<class name="Smoke.C46176_Add_new_Hub_manually"/>-->
-            <class name="Smoke.C46180_Add_new_guest_user"/>
+            <!--<class name="Smoke.C46180_Add_new_guest_user"/>-->
             <!--<class name="Smoke.C46177_Add_new_room"/>-->
             <!--<class name="Smoke.C46178_Add_new_device"/>-->
         </classes>
