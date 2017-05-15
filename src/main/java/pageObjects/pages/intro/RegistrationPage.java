@@ -57,8 +57,6 @@ public class RegistrationPage{
     public WebElement getRegistrationButtonLink() {
         return registrationButtonLink;
     }
-
-
 //----------------------------------------------------------------------------------------------------------------------
     private Base base;
     private AndroidDriver driver;
@@ -80,9 +78,27 @@ public class RegistrationPage{
         dashboardLink.click();
     }
 
-//====================================================================================
+    public boolean registrationProcess(String login, String pass, String server, String phone, String country, String userName, boolean setUserPic) {
+        base.introPage.setServer(server);
+        base.nav.gotoPage.Registration();
 
-    // TODO check whether it works nice without swipes
+        if (setUserPic){
+            Base.log(1, "set UserPic", true);
+            setUserPic(1);
+        }
+
+        fillFields(userName, login, pass, phone, country);
+        confirmAgreementCheckBox();
+        registrationButtonClick();
+
+        Base.log(1, "check is error message present on page");
+        if (base.check.isPresent.errorMessageOrSnackBar(10)) return false;
+
+        Base.log(1, "waiting for Validation Code Page");
+        return base.wait.element(base.validationPage.getSmsCodeField(), 60, true);
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
 
     private void fillFields(String name, String email, String password, String phone, String country) {
         Base.log(1, "fill name with: \"" + name + "\"", true);
@@ -108,7 +124,6 @@ public class RegistrationPage{
         base.hideKeyboard();
     }
 
-
     private void confirmAgreementCheckBox() {
         Base.log(1, "confirm agreement check box", true);
         base.nav.scroll.toElementWith.id(userAgreementCheckboxId, true);
@@ -133,26 +148,6 @@ public class RegistrationPage{
             default: Base.log(1, "without image");
                 break;
         }
-    }
-
-    public boolean registrationProcess(String login, String pass, String server, String phone, String country, String userName, boolean setUserPic) {
-        base.introPage.setServer(server);
-        base.nav.gotoPage.Registration();
-
-        if (setUserPic){
-            Base.log(1, "set UserPic", true);
-            setUserPic(1);
-        }
-
-        fillFields(userName, login, pass, phone, country);
-        confirmAgreementCheckBox();
-        registrationButtonClick();
-
-        Base.log(1, "check is error message present on page");
-        if (base.check.isPresent.errorMessageOrSnackBar(10)) return false;
-
-        Base.log(1, "waiting for Validation Code Page");
-        return base.wait.element(base.validationPage.getSmsCodeField(), 60, true);
     }
 
 }
