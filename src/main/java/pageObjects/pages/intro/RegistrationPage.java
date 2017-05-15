@@ -110,9 +110,8 @@ public class RegistrationPage{
 
 
     private void confirmAgreementCheckBox() {
-        base.nav.swipeUp();
         Base.log(1, "confirm agreement check box", true);
-        userAgreementCheckbox.click();
+        base.nav.scroll.toElementWith.id(userAgreementCheckboxId, true);
     }
 
     private void setUserPic(int imageNumber) {
