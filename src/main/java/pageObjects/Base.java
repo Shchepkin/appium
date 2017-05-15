@@ -183,6 +183,10 @@ public class Base {
         return appSet.get(key).toString();
     }
 
+    public static String getLogFile() {
+        return logFile;
+    }
+
     public String getLocalizeTextForKey(String key) {
         return localizeKeys.get(key).toString();
     }
@@ -416,7 +420,7 @@ public class Base {
         return message;
     }
 
-    private static final String logfileName(){
+    private static String logfileName(){
         String fullPathToFile, filename;
 
         try {

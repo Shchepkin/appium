@@ -24,28 +24,25 @@ public class C50111_Positive_Registration {
         base.initPageObjects(base.getDriver());
     }
 
-    @Test()
+    @Test(enabled = false)
     public void Full_registration_with_validation () {
         Base.log(1, "START TEST");
-        Assert.assertTrue(base.user.registration.fullProcess());
+        Assert.assertTrue(base.user.registration.fullProcess(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Base.log(1, "test finished successfully, dashboard is shown", true);
     }
 
-    @Test()
+    @Test(enabled = false)
     public void With_Mistake_In_Email () {
         Base.log(1, "START TEST");
-        Assert.assertTrue(base.user.registration.withMistakeInEmail());
+        Assert.assertTrue(base.user.registration.withMistakeInEmail(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Base.log(1, "test finished successfully, dashboard is shown", true);
     }
 
-    @Test()
+    @Test(enabled = true)
     public void With_Mistake_In_Phone () {
         Base.log(1, "START TEST");
-        Assert.assertTrue(base.user.registration.withMistakeInPhone());
-    }
-
-    @Test()
-    public void With_Resend_Validation_Keys () {
-        Base.log(1, "START TEST");
-        Assert.assertTrue(base.user.registration.withResendValidationKeys());
+        Assert.assertTrue(base.user.registration.withMistakeInPhone(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Base.log(1, "test finished successfully, dashboard is shown", true);
     }
 
     @AfterClass
