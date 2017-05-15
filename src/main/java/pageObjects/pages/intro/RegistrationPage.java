@@ -1,6 +1,6 @@
 package pageObjects.pages.intro;
 
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
@@ -42,6 +42,7 @@ public class RegistrationPage{
 
     @AndroidFindBy(id = "com.ajaxsystems:id/agreement")
     private WebElement userAgreementCheckbox;
+    private String userAgreementCheckboxId = "com.ajaxsystems:id/agreement";
 
     @AndroidFindBy(id = "com.ajaxsystems:id/next")
     private WebElement registrationButtonLink;
@@ -56,11 +57,9 @@ public class RegistrationPage{
     public WebElement getRegistrationButtonLink() {
         return registrationButtonLink;
     }
-
-
 //----------------------------------------------------------------------------------------------------------------------
-    private final Base base;
-    private final AppiumDriver driver;
+    private Base base;
+    private AndroidDriver driver;
 
     public RegistrationPage(Base base) {
         this.base = base;
@@ -70,7 +69,7 @@ public class RegistrationPage{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void registrationButtonClick() {
-        Base.log(1, "tap Registration Button");
+        Base.log(1, "tap Registration Button", true);
         registrationButtonLink.click();
     }
 
@@ -79,41 +78,64 @@ public class RegistrationPage{
         dashboardLink.click();
     }
 
-//====================================================================================
+    public boolean registrationProcess(String login, String pass, String server, String phone, String country, String userName, boolean setUserPic) {
+        base.introPage.setServer(server);
+        base.nav.gotoPage.Registration();
 
-    public void fillFields(String name, String email, String password, String phone) {
-        Base.log(1, "fill name with: \"" + name + "\"");
+        if (setUserPic){
+            Base.log(1, "set UserPic", true);
+            setUserPic(1);
+        }
+
+        fillFields(userName, login, pass, phone, country);
+        confirmAgreementCheckBox();
+        registrationButtonClick();
+
+        Base.log(1, "check is error message present on page");
+        if (base.check.isPresent.errorMessageOrSnackBar(10)) return false;
+
+        Base.log(1, "waiting for Validation Code Page");
+        return base.wait.element(base.validationPage.getSmsCodeField(), 60, true);
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+
+    private void fillFields(String name, String email, String password, String phone, String country) {
+        Base.log(1, "fill name with: \"" + name + "\"", true);
         nameField.sendKeys(name);
 
-        Base.log(1, "fill and confirm email with: \"" + email + "\"");
+        Base.log(1, "fill email with: \"" + email + "\"", true);
         emailField.sendKeys(email);
-        base.nav.swipeUp();
+        base.hideKeyboard();
+        Base.log(1, "fill confirm email with: \"" + email + "\"", true);
         emailConfirmField.sendKeys(email);
+        base.hideKeyboard();
 
-        Base.log(1, "fill phone with: \"" + phone + "\"");
-        base.nav.swipeUp();
+        Base.log(1, "fill phone with: \"" + phone + "\"", true);
         phoneField.sendKeys(phone);
+        if (!country.isEmpty()){base.popUp.setPhoneCountryCode(country);}
+        base.hideKeyboard();
 
-        Base.log(1, "fill and confirm password with: \"" + password + "\"");
-        base.nav.swipeUp();
+        Base.log(1, "fill password with: \"" + password + "\"", true);
         passwordField.sendKeys(password);
-        base.nav.swipeUp();
+        base.hideKeyboard();
+        Base.log(1, "fill confirm password with: \"" + password + "\"", true);
         passwordConfirmField.sendKeys(password);
+        base.hideKeyboard();
     }
 
-
-    public void confirmAgreementCheckBox() {
-        base.nav.swipeUp();
-        userAgreementCheckbox.click();
+    private void confirmAgreementCheckBox() {
+        Base.log(1, "confirm agreement check box", true);
+        base.nav.scroll.toElementWith.id(userAgreementCheckboxId, true);
     }
 
-    public void setUserPic(int imageNumber) {
+    private void setUserPic(int imageNumber) {
         Base.log(1, "tap User Pic icon");
         userPic.click();
         base.addImagePage.setImageFromGallery(imageNumber);
     }
 
-    public void setUserPic(int type, int imageNumber) {
+    private void setUserPic(int type, int imageNumber) {
         switch (type){
             case 1: Base.log(1, "add image from camera");
                 userPic.click();
@@ -126,31 +148,6 @@ public class RegistrationPage{
             default: Base.log(1, "without image");
                 break;
         }
-    }
-
-    public void setPhoneCountryCode() {
-        Base.log(4, "Method is started");
-    }
-
-    public boolean registrationProcess(String login, String pass, String server, String phone, String userName) {
-        Base.log(1, "delete user if phone already exist at the server");
-        base.sql.getDelete("Phone", "%" + phone + "%");
-
-        Base.log(1, "start from Intro Page and click Registration button", true);
-        base.introPage.setServer(server);
-        base.nav.gotoPage.Registration();
-
-        Base.log(1, "registration process", true);
-        setUserPic(1);
-        fillFields(userName, login, pass, phone);
-        confirmAgreementCheckBox();
-        registrationButtonClick();
-
-        Base.log(1, "check is error message present on page");
-        if (base.check.isPresent.errorMessageOrSnackBar(10)) return false;
-
-        Base.log(1, "waiting for Validation Code Page");
-        return base.wait.element(base.validationCodePage.getSmsCodeField(), 60, true);
     }
 
 }

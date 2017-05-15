@@ -39,7 +39,7 @@ public class C42098_Login_to_the_existing_account{
         Assert.assertFalse(base.check.isPresent.snackBar(3), "SnackBar is shown");
 
         Base.log(1, "waiting for Pincode PopUp");
-        if(base.wait.element(base.popUp.loadingWindow, 90, true)) {
+        if(base.wait.element(base.popUp.getLoadingWindow(), 90, true)) {
             Base.log(1, "Check localized text");
             expectedText = base.getLocalizeTextForKey("do_you_want_to_enable_passcode");
             actual = base.popUp.getContentText();

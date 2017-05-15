@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import pageObjects.Base;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class User {
@@ -32,7 +33,7 @@ public class User {
     @AndroidFindBy(xpath = "//android.widget.TextView")
     private ArrayList<WebElement> allTextObjects;
 
-    private ArrayList<String> usersForContactList, usersForEmailField, usersForMixedAdd;
+//----------------------------------------------------------------------------------------------------------------------
 
     public ArrayList<String> getUsersForEmailField() {
         return usersForEmailField;
@@ -43,19 +44,21 @@ public class User {
     public ArrayList<String> getUsersForMixedAdd() {
         return usersForMixedAdd;
     }
-    public WebElement getDeleteButton() {
-        return deleteButton;
-    }
     public WebElement getAddButtonFromContactList() {
         return addButtonFromContactList;
+    }
+    public WebElement getDeleteButton() {
+        return deleteButton;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     private Base base;
     private AndroidDriver driver;
-    private boolean result;
+
     private String sendInvitesButtonText, inviteFailText, adminStatusText, userStatusText;
+    private ArrayList<String> usersForContactList, usersForEmailField, usersForMixedAdd;
+    private Map dataWithMistake, countryMap;
 
     public Registration registration;
     public Add add = new Add();
@@ -65,14 +68,15 @@ public class User {
         this.base = base;
         this.driver = base.getDriver();
         registration = new Registration();
+        countryMap = base.getJsonMapCollection("positiveRegistrationData.json", "country");
         inviteFailText = base.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
         userStatusText = base.getLocalizeTextForKey("user");
         adminStatusText = base.getLocalizeTextForKey("admin");
+        dataWithMistake = base.getJsonMapCollection("positiveRegistrationData.json", "dataWithMistake");
         usersForMixedAdd = base.getJsonStringArray("emails.json", "usersForMixedAdd");
         usersForEmailField = base.getJsonStringArray("emails.json", "usersForEmailField");
         usersForContactList = base.getJsonStringArray("emails.json", "usersForContactList");
         sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
-
         PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -251,31 +255,88 @@ public class User {
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    //  TODO registration withMistakeInEmail
-    //  TODO registration withMistakeInPhone
-    //  TODO registration withMistakeInPhoneAndEmail
-    //  TODO registration withCredsFromExistingUser
-    //  TODO registration withResendValidationKeys
-
     public class Registration{
         String login = base.getCredsWithKey("login");
         String pass = base.getCredsWithKey("password");
         String server = base.getCredsWithKey("server");
         String phone = base.getCredsWithKey("phone");
         String userName = base.getCredsWithKey("userName");
-        String smsToken, emailToken;
+        String country;
 
         public boolean fullProcess() {
-            if (!base.regPage.registrationProcess(login, pass, server, phone, userName)) return false;
+            Base.log(1, "delete user if phone already exist at the server");
+            base.sql.getDelete("Phone", "%" + phone + "%");
+
+            if (!base.regPage.registrationProcess(login, pass, server, phone, "",userName, true)) return false;
             Base.log(1, "error message is not shown");
-            base.validationCodePage.getValidationCodes("Phone", "%" + phone + "%");
+            base.validationPage.validateBy.phone(phone);
+            return registrationResult();
+        }
 
-            smsToken = base.validationCodePage.getTokenMap().get("smsToken").toString();
-            emailToken = base.validationCodePage.getTokenMap().get("emailToken").toString();
+        public boolean withMistakeInEmail(){
+            String fakeEmail = dataWithMistake.get("login").toString();
+            country = countryMap.get("ukr").toString();
 
-            base.validationCodePage.fillTokensValue(smsToken, emailToken);
-            base.nav.confirmIt();
+            Base.log(1, "delete user if phone already exist at the server");
+            base.sql.getDelete("Phone", "%" + phone + "%");
 
+            if (!base.regPage.registrationProcess(fakeEmail, pass, server, phone, country, userName, false)) return false;
+            if (!base.validationPage.resendCode(login, phone, country)) return  false;
+
+            Base.log(1, "error message is not shown");
+            base.validationPage.validateBy.phone(phone);
+            return registrationResult();
+        }
+
+        public boolean withMistakeInPhone(){
+            String fakePhone = dataWithMistake.get("phone").toString();
+            country = countryMap.get("ukr").toString();
+
+            Base.log(1, "delete user if phone already exist at the server");
+            base.sql.getDelete("Phone", "%" + phone + "%");
+
+            Base.log(1, "start registration process with invalid phone");
+            if (!base.regPage.registrationProcess(login, pass, server, fakePhone, country, userName, false)) return false;
+            Base.log(1, "registration process is successfully finished");
+
+            if (!base.validationPage.resendCode(login, phone, country)) return  false;
+            Base.log(1, "error message is not shown");
+
+            base.validationPage.validateBy.phone(phone);
+            return registrationResult();
+        }
+
+        public boolean withMistakeInPhoneAndEmail(){
+            String fakeEmail = dataWithMistake.get("login").toString();
+            String fakePhone = dataWithMistake.get("phone").toString();
+
+            Base.log(1, "delete user if phone already exist at the server");
+            base.sql.getDelete("Phone", "%" + phone + "%");
+            country = countryMap.get("ukr").toString();
+
+            if (!base.regPage.registrationProcess(fakeEmail, pass, server, fakePhone, country, userName, false)) return false;
+            return base.validationPage.resendCode(login, phone, country);
+        }
+
+        public boolean withCredsFromExistingUser(){
+            country = countryMap.get("ukr").toString();
+            return base.regPage.registrationProcess(login, pass, server, phone, country, userName, false);
+        }
+
+        public boolean withResendValidationKeys(){
+            Base.log(1, "delete user if phone already exist at the server");
+            base.sql.getDelete("Phone", "%" + phone + "%");
+            country = countryMap.get("ukr").toString();
+
+            if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, false)) return false;
+            if (!base.validationPage.resendCode(login, phone, country)) return  false;
+
+            Base.log(1, "error message is not shown");
+            base.validationPage.validateBy.phone(phone);
+            return registrationResult();
+        }
+
+        private boolean registrationResult(){
             Base.log(1, "waiting for Welcome Page with dashboard link");
             if (!base.wait.element(base.regPage.getDashboardLink(), 30, true)) return false;
 
@@ -283,16 +344,6 @@ public class User {
             base.regPage.dashboardLinkClick();
             return base.wait.menuIconOrPinPopUp(60);
         }
-
-        public boolean withMistakeInEmail(){return true;}
-
-        public boolean withMistakeInPhone(){return true;}
-
-        public boolean withMistakeInPhoneAndEmail(){return true;}
-
-        public boolean withCredsFromExistingUser(){return true;}
-
-        public boolean withResendValidationKeys(){return true;}
 
     }
 

@@ -606,8 +606,9 @@ public class Navigation {
 
         //logout
         public void Registration() {
-            Base.log(1, "tap Registration Button");
+            Base.log(1, "go to Registration Page", true);
             base.introPage.getRegistrationBtn().click();
+            Base.log(1, "tap Registration Button");
         }
 
         public void Authorization() {

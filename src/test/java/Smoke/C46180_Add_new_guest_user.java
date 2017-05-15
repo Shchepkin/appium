@@ -28,13 +28,7 @@ public class C46180_Add_new_guest_user {
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
         base.loginPage.loginWithPinCancel();
-
         base.nav.gotoPage.userList();
-        base.user.delete.allPending();
-        System.exit(0);
-        base.nav.scroll.toElementWith.text(base.getLocalizeTextForKey("send_invites"), true);
-        base.user.getAddButtonFromContactList().click();
-        System.exit(0);
     }
 
     @Test(priority = 1, enabled = true)
