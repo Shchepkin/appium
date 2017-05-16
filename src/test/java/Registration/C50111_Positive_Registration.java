@@ -1,16 +1,14 @@
 package Registration;
 
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 import pageObjects.Base;
-
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * PRECONDITION
- * - account exist and validated
- * -
  */
 
 public class C50111_Positive_Registration {
@@ -20,7 +18,6 @@ public class C50111_Positive_Registration {
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
-
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
     }
