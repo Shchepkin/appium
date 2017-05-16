@@ -101,12 +101,13 @@ public class Base {
 
     }
 
+//TODO remove resources JSON to out of project folder
+
     public Base(AndroidDriver driver) {
         initPageObjects(driver);
     }
 
     public void initPageObjects(AndroidDriver driver) {
-
         log(4, "init Navigation()");
         nav = new Navigation(this);
 
@@ -268,10 +269,8 @@ public class Base {
 // JSON
 //----------------------------------------------------------------------------------------------------------------------
     public Map getJsonMapCollection(String filePath, String collection) {
-        log(4, "Method is started");
         Map<String, String> jsonCollection = new HashMap<>();
         try {
-
             log(4, "get Application start up path");
             path = getApplicationStartUp();
 
@@ -289,7 +288,6 @@ public class Base {
         } catch (Exception e) {
             log(2, "Exception: " + e);
         }
-        log(4, "Method is finished");
         return jsonCollection;
     }
 
@@ -325,36 +323,30 @@ public class Base {
     }
 
     private Path getApplicationStartUp() throws UnsupportedEncodingException, MalformedURLException {
-        log(4, "Method is started");
         URL startupUrl = getClass().getProtectionDomain().getCodeSource()
                 .getLocation();
         Path path = null;
         try {
             path = Paths.get(startupUrl.toURI());
         } catch (Exception e) {
-
+            log(3, "Exception: \n" + e.getMessage());
             try {
-                log(3, "Exception e");
                 path = Paths.get(new URL(startupUrl.getPath()).getPath());
-
             } catch (Exception ipe) {
-                log(3, "Exception ipe");
+                log(3, "Exception ipe: \n" + ipe.getMessage());
                 path = Paths.get(startupUrl.getPath());
             }
         }
         path = path.getParent();
-        log(4, "Method is finished");
         return path;
     }
 
     private String loadJSON(String path) throws IOException {
-        log(4, "Method is started");
         byte[] buf;
         try (RandomAccessFile f = new RandomAccessFile(path, "r")) {
             buf = new byte[(int) f.length()];
             f.read(buf);
         }
-        log(4, "Method is finished");
         return new String(buf);
     }
 
@@ -422,7 +414,6 @@ public class Base {
 
     private static String logfileName(){
         String fullPathToFile, filename;
-
         try {
             Date currentDate = new Date();
 
@@ -431,14 +422,18 @@ public class Base {
             SimpleDateFormat time = new SimpleDateFormat("HHmmss");
 
             // Creating folder and filename for logfile
+            File folder = new File("logs" + File.separator + date.format(currentDate));
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
             filename = date.format(currentDate) + "_" + time.format(currentDate) + ".log";
-            fullPathToFile = "logs/" + filename;
+            fullPathToFile = "logs" + File.separator + date.format(currentDate) + File.separator + filename;
 
             File file = new File(fullPathToFile);
-            if(file.createNewFile()){
+            if (!file.exists()){
+                file.createNewFile();
                 System.out.println("log: \"" + fullPathToFile + "\"");
-            }else {
-                System.out.println("log File already exist: \"" + fullPathToFile + "\"");
             }
 
         } catch(IOException e) {

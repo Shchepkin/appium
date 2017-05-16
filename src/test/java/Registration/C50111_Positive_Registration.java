@@ -20,29 +20,33 @@ public class C50111_Positive_Registration {
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
+
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
     }
 
-    @Test(enabled = false)
+    @Test()
     public void Full_registration_with_validation () {
         Base.log(1, "START TEST");
         Assert.assertTrue(base.user.registration.fullProcess(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
         Base.log(1, "test finished successfully, dashboard is shown", true);
+        base.getDriver().resetApp();
     }
 
-    @Test(enabled = false)
+    @Test()
     public void With_Mistake_In_Email () {
         Base.log(1, "START TEST");
         Assert.assertTrue(base.user.registration.withMistakeInEmail(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
         Base.log(1, "test finished successfully, dashboard is shown", true);
+        base.getDriver().resetApp();
     }
 
-    @Test(enabled = true)
+    @Test()
     public void With_Mistake_In_Phone () {
         Base.log(1, "START TEST");
         Assert.assertTrue(base.user.registration.withMistakeInPhone(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
         Base.log(1, "test finished successfully, dashboard is shown", true);
+        base.getDriver().resetApp();
     }
 
     @AfterClass

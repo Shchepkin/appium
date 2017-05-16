@@ -14,8 +14,9 @@ import java.util.regex.Pattern;
 
 public class Sql {
 
-    private Formatter f = new Formatter();
-    private ArrayList validationToken, selectList;
+    private Formatter formattedString;
+    private ArrayList validationToken;
+    private ArrayList selectList = new ArrayList();
     private String table;
 
     // JDBC variables for opening and managing connection
@@ -42,21 +43,18 @@ public class Sql {
      *              sql.getDelete("Phone", "%1216815329%");
      */
     public void getDelete(String row, String value) {
-        selectList = new ArrayList();
+        selectList.clear();
         String query = "DELETE FROM " + table + " WHERE " + row + " LIKE '" + value + "'";
 
-        selectList = getSelect(row, value);
-        if (!selectList.get(0).toString().isEmpty()) {
+        getSelect(row, value);
+        if (!selectList.isEmpty()) {
             try {
                 connection = getConnection();
 
                 Base.log(4, "getting Statement object to execute query");
                 stmt = connection.createStatement();
 
-                for (Object sqlResult : selectList) {
-                    Base.log(1, "this objects will be deleted: \"\033[31;49m" + sqlResult + "\"\033[39;49m");
-                }
-                Base.log(4, "delete objects");
+                Base.log(3, "delete object: \n" + selectList.get(0));
                 stmt.executeUpdate(query);
 
             } catch (SQLException sqlEx) {
@@ -73,6 +71,7 @@ public class Sql {
         }else {
             Base.log(1, "this entry is not found in database");
         }
+        selectList.clear();
     }
 
 
@@ -87,10 +86,9 @@ public class Sql {
      * sql.getSelect("Login", "test302@test.com");
      * System.out.println(selectList);
      */
-    public ArrayList getSelect(String row, String value) {
+    private void getSelect(String row, String value) {
         validationToken = new ArrayList();
-        selectList = new ArrayList();
-
+        formattedString = new Formatter();
         validationToken.clear();
         selectList.clear();
 
@@ -99,7 +97,7 @@ public class Sql {
         try {
             connection = getConnection();
 
-            Base.log(1, "getting Statement object to execute query");
+            Base.log(4, "getting Statement object to execute query");
             stmt = connection.createStatement();
 
             Base.log(4, "executing query: [ " + query + " ]");
@@ -114,10 +112,10 @@ public class Sql {
                 String login = rs.getString("Login");
 
                 validationToken.add(confirmationToken);
-                f.format("\n%-5d %-12s %-8s %-20s %-20s %-1s", id, innerID, role, phone, confirmationToken, login);
+                formattedString.format("%-5d %-12s %-8s %-20s %-20s %-1s", id, innerID, role, phone, confirmationToken, login);
             }
 
-            selectList.add(f);
+            selectList.add(formattedString);
 
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -133,7 +131,6 @@ public class Sql {
                 rs.close();
             } catch (SQLException se) { /*can't do anything */ }
         }
-        return selectList;
     }
 
 
@@ -162,11 +159,11 @@ public class Sql {
             Base.log(3, "Try to get Tokens from database. Attempt #" + counter);
             getSelect(row, value);
             try {
-                Thread.sleep(5000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (counter == 5) {
+            if (counter == 10) {
                 break;
             } else {
                 counter++;
@@ -223,7 +220,7 @@ public class Sql {
                 Base.log(3, "opening database connection fail: " + e.getClass());
                 Base.log(3, "cause of problem: " + e.getCause().toString());
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
