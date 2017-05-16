@@ -68,23 +68,56 @@ public class ValidationCodePage{
         return tokenMap;
     }
 
-    public boolean resendCode(String email, String phone, String country){
+    public boolean resendCode (String email, String phone, String country) {
         Base.log(1, "resend validation codes", true);
         codeResend.click();
-        if(!base.wait.element(dialogMessage, 5, true)) return false;
+        if (!base.wait.element(dialogMessage, 5, true)) return false;
+        fillFields(email, phone, country);
+        return checkerPositive();
+    }
+
+    public boolean resendCode (String email, String phone, String country, String whichErrorExpected){
+        Base.log(1, "resend validation codes", true);
+        codeResend.click();
+        if (!base.wait.element(dialogMessage, 5, true)) return false;
+        fillFields(email, phone, country);
+        return checkerNegative (whichErrorExpected);
+    }
+
+    private void fillFields (String email, String phone, String country){
         Base.log(1, "fill email with: \"" + email + "\"", true);
         emailForResend.sendKeys(email);
         Base.log(1, "fill phone with: \"" + phone + "\"", true);
         phoneForResend.sendKeys(phone);
-        if (!country.isEmpty()){base.popUp.setPhoneCountryCode(country);}
+        if (!country.isEmpty()) {
+            base.popUp.setPhoneCountryCode(country);
+        }
         base.nav.confirmIt();
+    }
 
+    private boolean checkerPositive (){
         Base.log(1, "check is error message present on page");
         if (base.check.isPresent.errorMessageOrSnackBar(10)) return false;
 
         Base.log(1, "waiting for Validation Code Page");
         return base.wait.element(base.validationPage.smsCodeField, 60, true);
     }
+
+    private boolean checkerNegative (String whichErrorExpected){
+        Base.log(1, "check is error message present on page");
+        switch (whichErrorExpected){
+            case "snack" :
+                if (base.check.isPresent.snackBar(10)) return true;
+                else return false;
+            case "error" :
+                if (base.check.isPresent.error(10)) return true;
+                else return false;
+            default:
+                Base.log(3, "unknown statement for waiting \"" + whichErrorExpected + "\"");
+                return true;
+        }
+    }
+
 
     public class ValidateBy{
         public void email(String email){

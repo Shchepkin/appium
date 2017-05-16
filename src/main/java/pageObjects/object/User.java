@@ -58,7 +58,7 @@ public class User {
 
     private String sendInvitesButtonText, inviteFailText, adminStatusText, userStatusText;
     private ArrayList<String> usersForContactList, usersForEmailField, usersForMixedAdd;
-    private Map dataWithMistake, countryMap;
+    private Map dataWithMistake, deviceData, countryMap;
 
     public Registration registration;
     public Add add = new Add();
@@ -67,12 +67,13 @@ public class User {
     public User(Base base) {
         this.base = base;
         this.driver = base.getDriver();
+        deviceData = base.getJsonMapCollection("registrationData.json", base.getDeviceName());
+        countryMap = base.getJsonMapCollection("registrationData.json", "country");
         registration = new Registration();
-        countryMap = base.getJsonMapCollection("positiveRegistrationData.json", "country");
         inviteFailText = base.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
         userStatusText = base.getLocalizeTextForKey("user");
         adminStatusText = base.getLocalizeTextForKey("admin");
-        dataWithMistake = base.getJsonMapCollection("positiveRegistrationData.json", "dataWithMistake");
+        dataWithMistake = base.getJsonMapCollection("registrationData.json", "dataWithMistake");
         usersForMixedAdd = base.getJsonStringArray("emails.json", "usersForMixedAdd");
         usersForEmailField = base.getJsonStringArray("emails.json", "usersForEmailField");
         usersForContactList = base.getJsonStringArray("emails.json", "usersForContactList");
@@ -256,18 +257,18 @@ public class User {
 //----------------------------------------------------------------------------------------------------------------------
 
     public class Registration{
-        String login = base.getCredsWithKey("login");
-        String pass = base.getCredsWithKey("password");
-        String server = base.getCredsWithKey("server");
-        String phone = base.getCredsWithKey("phone");
-        String userName = base.getCredsWithKey("userName");
-        String country;
+        String pass = deviceData.get("password").toString();
+        String login = deviceData.get("login").toString();
+        String phone = deviceData.get("phone").toString();
+        String server = deviceData.get("server").toString();
+        String country = deviceData.get("country").toString();
+        String userName = deviceData.get("userName").toString();
 
         public boolean fullProcess() {
             Base.log(1, "delete user if phone already exist at the server");
             base.sql.getDelete("Phone", "%" + phone + "%");
 
-            if (!base.regPage.registrationProcess(login, pass, server, phone, "",userName, true)) return false;
+            if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, true)) return false;
             Base.log(1, "error message is not shown");
             base.validationPage.validateBy.phone(phone);
             return registrationResult();
@@ -275,10 +276,10 @@ public class User {
 
         public boolean withMistakeInEmail(){
             String fakeEmail = dataWithMistake.get("login").toString();
-            country = countryMap.get("ukr").toString();
 
             Base.log(1, "delete user if phone already exist at the server");
             base.sql.getDelete("Phone", "%" + phone + "%");
+            base.sql.getDelete("Login", "%" + fakeEmail + "%");
 
             if (!base.regPage.registrationProcess(fakeEmail, pass, server, phone, country, userName, false)) return false;
             if (!base.validationPage.resendCode(login, phone, country)) return  false;
@@ -290,13 +291,14 @@ public class User {
 
         public boolean withMistakeInPhone(){
             String fakePhone = dataWithMistake.get("phone").toString();
-            country = countryMap.get("ukr").toString();
+            String fakeCountry = dataWithMistake.get("country").toString();
 
             Base.log(1, "delete user if phone already exist at the server");
             base.sql.getDelete("Phone", "%" + phone + "%");
+            base.sql.getDelete("Phone", "%" + fakePhone + "%");
 
             Base.log(1, "start registration process with invalid phone");
-            if (!base.regPage.registrationProcess(login, pass, server, fakePhone, country, userName, false)) return false;
+            if (!base.regPage.registrationProcess(login, pass, server, fakePhone, fakeCountry, userName, false)) return false;
             Base.log(1, "registration process is successfully finished");
 
             if (!base.validationPage.resendCode(login, phone, country)) return  false;
@@ -309,31 +311,28 @@ public class User {
         public boolean withMistakeInPhoneAndEmail(){
             String fakeEmail = dataWithMistake.get("login").toString();
             String fakePhone = dataWithMistake.get("phone").toString();
+            String fakeCountry = dataWithMistake.get("country").toString();
 
-            Base.log(1, "delete user if phone already exist at the server");
+            Base.log(1, "delete users if phone already exist at the server");
             base.sql.getDelete("Phone", "%" + phone + "%");
-            country = countryMap.get("ukr").toString();
+            base.sql.getDelete("Phone", "%" + fakePhone + "%");
 
-            if (!base.regPage.registrationProcess(fakeEmail, pass, server, fakePhone, country, userName, false)) return false;
-            return base.validationPage.resendCode(login, phone, country);
+            if (!base.regPage.registrationProcess(fakeEmail, pass, server, fakePhone, fakeCountry, userName, false)) return false;
+            return base.validationPage.resendCode(login, phone, country, "error");
         }
 
-        public boolean withCredsFromExistingUser(){
-            country = countryMap.get("ukr").toString();
-            return base.regPage.registrationProcess(login, pass, server, phone, country, userName, false);
+        public boolean withPhoneFromExistingUser(){
+            Map existingUser = base.getJsonMapCollection("registrationData.json", "existingUser");
+            country = existingUser.get("country").toString();
+            phone = existingUser.get("phone").toString();
+            return base.regPage.registrationProcess(login, pass, server, phone, country, userName, "error");
         }
 
-        public boolean withResendValidationKeys(){
-            Base.log(1, "delete user if phone already exist at the server");
-            base.sql.getDelete("Phone", "%" + phone + "%");
-            country = countryMap.get("ukr").toString();
-
-            if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, false)) return false;
-            if (!base.validationPage.resendCode(login, phone, country)) return  false;
-
-            Base.log(1, "error message is not shown");
-            base.validationPage.validateBy.phone(phone);
-            return registrationResult();
+        public boolean withEmailFromExistingUser(){
+            Map existingUser = base.getJsonMapCollection("registrationData.json", "existingUser");
+            country = existingUser.get("country").toString();
+            login = existingUser.get("login").toString();
+            return base.regPage.registrationProcess(login, pass, server, phone, country, userName, "error");
         }
 
         private boolean registrationResult(){

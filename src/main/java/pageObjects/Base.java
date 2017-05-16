@@ -38,7 +38,7 @@ public class Base {
 
     public static int TIMEOUT = 3;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW_IN_CONSOLE = true;
+    private static final boolean LOG_VIEW_IN_CONSOLE = false;
     private static final String logFile = logfileName();
     private static final String dataBase = "Develop";
 
@@ -186,6 +186,10 @@ public class Base {
 
     public static String getLogFile() {
         return logFile;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
     }
 
     public String getLocalizeTextForKey(String key) {

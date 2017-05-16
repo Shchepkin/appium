@@ -98,6 +98,28 @@ public class RegistrationPage{
         return base.wait.element(base.validationPage.getSmsCodeField(), 60, true);
     }
 
+    public boolean registrationProcess(String login, String pass, String server, String phone, String country, String userName, String waitFor) {
+        base.introPage.setServer(server);
+        base.nav.gotoPage.Registration();
+
+        fillFields(userName, login, pass, phone, country);
+        confirmAgreementCheckBox();
+        registrationButtonClick();
+
+        Base.log(1, "check is error message present on page");
+        switch (waitFor){
+            case "snack" :
+                if (base.check.isPresent.snackBar(10)) return false;
+                else return true;
+            case "error" :
+                if (base.check.isPresent.error(10)) return false;
+                else return true;
+            default:
+                Base.log(3, "unknown statement for waiting \"" + waitFor + "\"");
+                return true;
+        }
+    }
+
 //----------------------------------------------------------------------------------------------------------------------
 
     private void fillFields(String name, String email, String password, String phone, String country) {

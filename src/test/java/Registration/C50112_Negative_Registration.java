@@ -24,16 +24,25 @@ public class C50112_Negative_Registration {
         base.initPageObjects(base.getDriver());
     }
 
-    @Test()
-    public void With_Creds_From_Existing_User () {
+    @Test(enabled = true)
+    public void With_Email_From_Existing_User () {
         Base.log(1, "START TEST");
-        Assert.assertTrue(base.user.registration.withCredsFromExistingUser());
+        base.getDriver().resetApp();
+        Assert.assertFalse(base.user.registration.withEmailFromExistingUser(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
     }
 
-    @Test()
+    @Test(enabled = true)
+    public void With_Phone_From_Existing_User () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertFalse(base.user.registration.withPhoneFromExistingUser(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+    }
+
+    @Test(enabled = true)
     public void With_Mistake_In_Phone_And_Email () {
         Base.log(1, "START TEST");
-        Assert.assertTrue(base.user.registration.withMistakeInPhoneAndEmail());
+        base.getDriver().resetApp();
+        Assert.assertTrue(base.user.registration.withMistakeInPhoneAndEmail(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
     }
 
     @DataProvider
@@ -42,6 +51,7 @@ public class C50112_Negative_Registration {
     }
     @Test(dataProvider = "dataProviderIterator", enabled = false)
     public void parameters (Map param) {
+        base.getDriver().resetApp();
 
         String comment = param.get("comment").toString();
         String userName = param.get("userName").toString();

@@ -240,6 +240,7 @@ public class Navigation {
                     Base.log(1, "wait for scrollable view");
                     Base.log(1, "scrollable view is found: id = \"" + driver.findElementByAndroidUIAutomator("new UiSelector().scrollable(true)").getAttribute("resourceId") + "\"");
 
+                    Base.log(1, "search element: " + searchingElement);
                     try {
                         elementInScrollList = (RemoteWebElement) driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(" + searchingElement + ");");
                     } catch (Exception e) {
