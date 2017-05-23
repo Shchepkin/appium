@@ -1,6 +1,6 @@
 package pageObjects.pages;
 
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
@@ -40,7 +40,7 @@ public class AccountMenuPage{
 
 //----------------------------------------------------------------------------------------------------------------------
     private Base base;
-    private AppiumDriver driver;
+    private AndroidDriver driver;
 
     public AccountMenuPage(Base base) {
         this.base = base;

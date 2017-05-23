@@ -205,7 +205,6 @@ public class Base {
     }
 
     private Map getLocalizeKeys(String locale) {
-        log(4, "Method is started");
         log(3, "locale: \"" + locale + "\"");
         localizeKeys = new HashMap<>();
         try {
@@ -240,7 +239,6 @@ public class Base {
             log(2, "IOException" + e);
             e.printStackTrace();
         }
-        log(4, "Method is finished");
         return localizeKeys;
     }
 
@@ -318,6 +316,10 @@ public class Base {
         printArray(jsonStringArray);
         log(4, "Method is finished");
         return jsonStringArray;
+    }
+
+    public String getStringValue (Map map, String key){
+        return map.get(key).toString();
     }
 
     private void printArray(ArrayList arrayList) {
@@ -563,7 +565,6 @@ public class Base {
     }
 
     private ArrayList<Map> listOfMapsForDataProvider(String pathToFileWithData){
-        log(4, "Method is started");
         ArrayList<Map> listOfMaps = new ArrayList<>();
         Map map;
         int i = 0;
@@ -571,7 +572,7 @@ public class Base {
             log(4, "get collection from json");
             map = getJsonMapCollection(pathToFileWithData, String.valueOf(i));
             if(map.isEmpty()){
-                log(4, "Method is started");
+                log(4, "can not found data, perhaps it's end of data file");
                 break;
             }
             log(4, "add this Map to the listOfMapsForDataProvider");

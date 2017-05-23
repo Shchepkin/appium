@@ -1,6 +1,6 @@
 package pageObjects.pages;
 
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
@@ -28,7 +28,7 @@ public class MainMenuPage {
 
     //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
-    private final AppiumDriver driver;
+    private final AndroidDriver driver;
 
     public MainMenuPage(Base base) {
         this.base = base;
