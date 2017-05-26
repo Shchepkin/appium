@@ -36,9 +36,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Base {
 
-    public static int TIMEOUT = 3;
+    public static int DEFAULT_TIMEOUT = 5;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW_IN_CONSOLE = false;
+    private static final boolean LOG_VIEW_IN_CONSOLE = true;
     private static final String logFile = logfileName();
     private static final String dataBase = "Develop";
 
@@ -479,7 +479,6 @@ public class Base {
     }
 
     private AndroidDriver initDriver() {
-        log(4, "Method is started");
         try {
             log(4, "get .apk file");
             File app = new File(appPath);
@@ -502,12 +501,11 @@ public class Base {
             log(4, "App Context: " + driver.getContextHandles().toString());
 
             log(4, "set implicitlyWait");
-            driver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
         } catch (MalformedURLException e) {
             log(2, "MalformedURLException\n" + e);
         }
-        log(4, "Method is finished");
         return driver;
     }
 

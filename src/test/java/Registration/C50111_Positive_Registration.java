@@ -22,29 +22,62 @@ public class C50111_Positive_Registration {
         base.initPageObjects(base.getDriver());
     }
 
-    @Test()
+    @Test
     public void Full_registration_with_validation () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
-        Assert.assertTrue(base.user.registration.fullProcess(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Assert.assertTrue(base.user.registration.fullProcess(false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
         Base.log(1, "test finished successfully, dashboard is shown", true);
     }
 
-    @Test()
+    @Test
+    public void Repeat_After_Canceling_Validation () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertTrue(base.user.registration.fullProcess(true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Base.log(1, "test finished successfully, dashboard is shown", true);
+    }
+
+    @Test
+    public void With_validation_from_LoginPage_after_canceling () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertTrue(base.user.registration.validateWithExistingCodes(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Base.log(1, "test finished successfully, dashboard is shown", true);
+    }
+
+    @Test
     public void With_Mistake_In_Email () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
-        Assert.assertTrue(base.user.registration.withMistakeInEmail(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Assert.assertTrue(base.user.registration.withFake.email(false, true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
         Base.log(1, "test finished successfully, dashboard is shown", true);
     }
 
-    @Test()
+    @Test
     public void With_Mistake_In_Phone () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
-        Assert.assertTrue(base.user.registration.withMistakeInPhone(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Assert.assertTrue(base.user.registration.withFake.phone(false, true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
         Base.log(1, "test finished successfully, dashboard is shown", true);
     }
+
+    @Test
+    public void Resend_validation_code_from_login_with_phone_changing () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertTrue(base.user.registration.withFake.phone(true, true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Base.log(1, "test finished successfully, dashboard is shown", true);
+    }
+
+    @Test
+    public void Resend_validation_code_from_login_with_email_changing () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertTrue(base.user.registration.withFake.email(true, false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Base.log(1, "test finished successfully, dashboard is shown", true);
+    }
+
 
     @AfterClass
     public void endSuit() {

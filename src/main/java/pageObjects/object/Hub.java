@@ -61,7 +61,7 @@ public class Hub{
         patrialArmedText = base.getLocalizeTextForKey("partially_armed");
         hubName = base.getCredsWithKey("hubName");
         hubMasterKey = base.getCredsWithKey("hubMasterKey");
-        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.DEFAULT_TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 

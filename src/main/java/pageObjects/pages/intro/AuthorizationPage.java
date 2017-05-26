@@ -30,6 +30,13 @@ public class AuthorizationPage{
     @AndroidFindBy(id = "com.ajaxsystems:id/dialogMessage")
     private WebElement dialogMessage;
 
+    public String getLoginFieldValue(){
+        return loginField.getText();
+    }
+    public WebElement getLoginField() {
+        return loginField;
+    }
+
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -39,14 +46,12 @@ public class AuthorizationPage{
     public AuthorizationPage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
-        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.DEFAULT_TIMEOUT, TimeUnit.SECONDS), this);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     public void loginToTheServer(String login, String password) {
-        Base.log(4, "Method is started");
-
         Base.log(1, "fill the login field with data: \"" + login + "\"");
         loginField.sendKeys(login);
 
@@ -55,8 +60,6 @@ public class AuthorizationPage{
 
         Base.log(1, "click login button");
         loginBtn.click();
-
-        Base.log(4, "Method is finished");
     }
 
     public void loginToTheServer(String login, String password, String server) {

@@ -25,7 +25,7 @@ public class C46174_New_user_registration {
     @Test()
     public void Positive() {
         Base.log(1, "START TEST");
-        Assert.assertTrue(base.user.registration.fullProcess(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Assert.assertTrue(base.user.registration.fullProcess(false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
         Base.log(1, "test finished successfully, dashboard is shown", true);
     }
 
