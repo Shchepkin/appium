@@ -1,6 +1,6 @@
 package pageObjects.pages.dashboard;
 
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
@@ -84,7 +84,7 @@ public class Dashboard{
 
 //----------------------------------------------------------------------------------------------------------------------
     private final Base base;
-    private AppiumDriver driver;
+    private AndroidDriver driver;
 
     public Dashboard(Base base) {
         this.base = base;
@@ -106,7 +106,7 @@ public class Dashboard{
     }
 
     public void goToTheRoomPage() {
-        Base.log(4, "click Rooms button in the footer");
+        Base.log(4, "click rooms button in the footer");
         footerRooms.click();
     }
 

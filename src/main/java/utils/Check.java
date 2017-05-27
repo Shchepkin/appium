@@ -1,6 +1,6 @@
 package utils;
 
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -15,9 +15,8 @@ public class Check{
 
 //----------------------------------------------------------------------------------------------------------------------
     private Base base;
-    private AppiumDriver driver;
-    private boolean result;
-    private int numOfFoundElement;
+    private AndroidDriver driver;
+    private static final int PERIOD = 200;
     public IsEmpty isEmpty= new IsEmpty();
     public IsPresent isPresent = new IsPresent();
     public LocalizedTextFor localizedTextFor = new LocalizedTextFor();
@@ -27,45 +26,6 @@ public class Check{
         this.driver = base.getDriver();
     }
 //----------------------------------------------------------------------------------------------------------------------
-
-    /*******************************************************************************************************************
-     *
-         * @param elements - selectList of locators for checking
-         * @param period   - how many iterations of checking we have to make, each iterations approximately 1.3 sec
-         * @return         - int numOfFoundElement - number of element which was shown (if there is no elements it returns 0)
-
-      example:
-        waitElements(new WebElement[]{element1, element2, element3}, 5)
-      or
-        WebElement[] elements = new WebElement[]{element1, element2, element3};
-        waitElements(elements, 5));
-     */
-    public int waitElements (WebElement[] elements, int period) {
-        numOfFoundElement = 0;
-        result = false;
-        for (int i = 1; i <= period; i++) {
-            int counter = 1;
-            Base.log(4, "start waiting period #" + i);
-
-            for (WebElement el : elements) {
-                try {
-                    Base.log(4, "element is shown with text: \"" + el.getText() + "\", element: " + el);
-                    result = true;
-                    numOfFoundElement = counter;
-                    break;
-                } catch (NoSuchElementException e) {
-                    Base.log(2, "NoSuchElementException, element " + counter + " is not shown");
-                } catch (TimeoutException e) {
-                    Base.log(2, "Timeout Exception, element " + counter + " is not shown");
-                }
-                counter ++;
-            }
-            if (result) {break;}
-        }
-        return numOfFoundElement;
-    }
-
-//======================================================================================================================
 
     public boolean isDeletedBy(String type, String value) {
         if (base.nav.scroll.toElementWith.name(value, false)) {
@@ -83,7 +43,7 @@ public class Check{
         public ElementsWith elementsWith = new ElementsWith();
 
         public boolean errorMessageOrSnackBar(int timer) {
-            WebDriverWait iWait = new WebDriverWait(driver, timer);
+            WebDriverWait iWait = new WebDriverWait(driver, timer, PERIOD);
             try {
                 iWait.until(ExpectedConditions.or(
                         ExpectedConditions.visibilityOf(base.popUp.errorPic),
@@ -136,7 +96,7 @@ public class Check{
 
         public boolean element(WebElement element, int timer) {
             try {
-                WebDriverWait iWait = new WebDriverWait(driver, timer);
+                WebDriverWait iWait = new WebDriverWait(driver, timer, PERIOD);
                 iWait.until(ExpectedConditions.visibilityOf(element));
                 return true;
 
@@ -150,7 +110,7 @@ public class Check{
         public boolean popUpWithConfirmation(int timer) {
             try {
                 Base.log(1, "waiting " + timer + " seconds for Confirmation PopUp");
-                WebDriverWait iWait = new WebDriverWait(driver, timer);
+                WebDriverWait iWait = new WebDriverWait(driver, timer, PERIOD);
                 iWait.until(ExpectedConditions.or(
                         ExpectedConditions.visibilityOf(base.nav.getCancelButton()),
                         ExpectedConditions.visibilityOf(base.nav.getCancel())
@@ -171,11 +131,24 @@ public class Check{
             }
         }
 
+        public boolean loginInEmailField(String login){
+            base.wait.element(base.loginPage.getLoginField(), 10, true);
+            if (base.loginPage.getLoginFieldValue().equalsIgnoreCase(login)) {
+                Base.log(1, "email \"" + login + "\" is present in login field", true);
+                return true;
+
+            } else {
+                Base.log(1, "email \"" + login + "\" is not present in login field (actual: \"" + base.loginPage.getLoginFieldValue() + "\")", true);
+                base.getScreenShot();
+                return false;
+            }
+        }
+
 
         public class Button{
             public boolean addNewDevice(){
                 try {
-                    WebDriverWait iWait = new WebDriverWait(driver, 2);
+                    WebDriverWait iWait = new WebDriverWait(driver, 2, PERIOD);
                     iWait.until(ExpectedConditions.or(
                             ExpectedConditions.visibilityOf(base.devicesPage.getAddDeviceButtonNew()),
                             ExpectedConditions.visibilityOf(base.devicesPage.getAddDeviceButtonOld()),

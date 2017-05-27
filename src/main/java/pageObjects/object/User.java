@@ -58,26 +58,26 @@ public class User {
 
     private String sendInvitesButtonText, inviteFailText, adminStatusText, userStatusText;
     private ArrayList<String> usersForContactList, usersForEmailField, usersForMixedAdd;
-    private Map dataWithMistake, countryMap;
 
+    public Add add;
+    public Delete delete;
     public Registration registration;
-    public Add add = new Add();
-    public Delete delete =new Delete();
 
     public User(Base base) {
         this.base = base;
         this.driver = base.getDriver();
+
+        add = new Add();
+        delete = new Delete();
         registration = new Registration();
-        countryMap = base.getJsonMapCollection("positiveRegistrationData.json", "country");
         inviteFailText = base.getLocalizeTextForKey("invite_has_not_been_sent_to_following_emails");
         userStatusText = base.getLocalizeTextForKey("user");
         adminStatusText = base.getLocalizeTextForKey("admin");
-        dataWithMistake = base.getJsonMapCollection("positiveRegistrationData.json", "dataWithMistake");
         usersForMixedAdd = base.getJsonStringArray("emails.json", "usersForMixedAdd");
         usersForEmailField = base.getJsonStringArray("emails.json", "usersForEmailField");
         usersForContactList = base.getJsonStringArray("emails.json", "usersForContactList");
         sendInvitesButtonText = base.getLocalizeTextForKey("send_invites");
-        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.DEFAULT_TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -112,8 +112,7 @@ public class User {
                 }
             }
 
-            Base.log(1, "tap Save button", true);
-            base.nav.nextButtonClick();
+            base.nav.tapButton.save();
 
             return sendInvitation();
         }
@@ -143,22 +142,19 @@ public class User {
             }
 
             Base.log(1, "tap Save button", true);
-            base.nav.nextButtonClick();
+            base.nav.tapButton.save();
            return sendInvitation();
         }
 
         private boolean sendInvitation(){
-            Base.log(1, "tap Send Invitation button", true);
-            base.nav.nextButtonClick();
-
-            if (base.check.isPresent.snackBar(2)) return false;
+            base.nav.tapButton.sendInvitation();
+            if (base.check.isPresent.snackBar(2)) {return false;}
 
             Base.log(1, "confirm proposition");
             base.nav.confirmIt();
 
             Base.log(1, "check is error snackBar present");
-            if (base.check.isPresent.snackBar(2)) return false;
-
+            if (base.check.isPresent.snackBar(2)) {return false;}
             base.wait.invisibilityOfWaiter();
 
             Base.log(1, "check is UserList opened");
@@ -166,6 +162,7 @@ public class User {
         }
     }
 
+//----------------------------------------------------------------------------------------------------------------------
 
     public class Delete {
         public boolean masterUser(){
@@ -254,86 +251,181 @@ public class User {
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-
     public class Registration{
-        String login = base.getCredsWithKey("login");
-        String pass = base.getCredsWithKey("password");
-        String server = base.getCredsWithKey("server");
-        String phone = base.getCredsWithKey("phone");
-        String userName = base.getCredsWithKey("userName");
-        String country;
+        private String pass, login, phone, server, country, userName;
+        private Map registrationData = base.getJsonMapCollection("registrationData.json", base.getDeviceName());
+        private Map dataWithMistake = base.getJsonMapCollection("registrationData.json", "dataWithMistake");
+        private Map existingUser = base.getJsonMapCollection("registrationData.json", "existingUser");
 
-        public boolean fullProcess() {
+        public WithFake withFake = new WithFake();
+        public WithExisting withExisting = new WithExisting();
+
+        private void initRegistrationData(){
+            pass = registrationData.get("password").toString();
+            login = registrationData.get("login").toString();
+            phone = registrationData.get("phone").toString();
+            server = registrationData.get("server").toString();
+            country = registrationData.get("country").toString();
+            userName = registrationData.get("userName").toString();
+        }
+
+        public boolean validateWithExistingCodes(){ //TODO validateWithExistingCodes()
+            initRegistrationData();
             Base.log(1, "delete user if phone already exist at the server");
             base.sql.getDelete("Phone", "%" + phone + "%");
 
-            if (!base.regPage.registrationProcess(login, pass, server, phone, "",userName, true)) return false;
+            if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, "", false, true)) {return false;}
+            resendFromLoginPage(login, false);
+            base.validationPage.validateBy.phone(phone);
+            return base.wait.menuIconOrPinPopUp(60);
+        }
+
+        public boolean fullProcess(boolean repeatAfterCancel) {
+            initRegistrationData();
+            Base.log(1, "delete user if phone already exist at the server");
+            base.sql.getDelete("Phone", "%" + phone + "%");
+
+            if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, "", true, true)) return false;
+            Base.log(1, "error message is not shown");
+
+            if (repeatAfterCancel){
+                base.nav.cancelIt();
+                Base.log(1, "repeat registration with the same data", true);
+                if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, "", true, true)) return false;
+                Base.log(1, "error message is not shown");
+            }
+            base.validationPage.validateBy.phone(phone);
+            return registrationResult();
+        }
+
+        public boolean withData(String login, String pass, String server, String phone, String country, String userName,  String errorMessage, boolean setUserPic, boolean confirmAgreement) {
+            if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, errorMessage, setUserPic, confirmAgreement)) return false;
             Base.log(1, "error message is not shown");
             base.validationPage.validateBy.phone(phone);
             return registrationResult();
         }
 
-        public boolean withMistakeInEmail(){
+        public class WithFake {
             String fakeEmail = dataWithMistake.get("login").toString();
-            country = countryMap.get("ukr").toString();
-
-            Base.log(1, "delete user if phone already exist at the server");
-            base.sql.getDelete("Phone", "%" + phone + "%");
-
-            if (!base.regPage.registrationProcess(fakeEmail, pass, server, phone, country, userName, false)) return false;
-            if (!base.validationPage.resendCode(login, phone, country)) return  false;
-
-            Base.log(1, "error message is not shown");
-            base.validationPage.validateBy.phone(phone);
-            return registrationResult();
-        }
-
-        public boolean withMistakeInPhone(){
             String fakePhone = dataWithMistake.get("phone").toString();
-            country = countryMap.get("ukr").toString();
+            String fakeCountry = dataWithMistake.get("country").toString();
+            String errorMessage = base.getLocalizeTextForKey("User_reg_not_found0");
 
-            Base.log(1, "delete user if phone already exist at the server");
-            base.sql.getDelete("Phone", "%" + phone + "%");
+            public boolean email(boolean resendFromLoginPage, boolean checkIsLoginPresentInField){
+                initRegistrationData();
+                return withMistakeIn("email", resendFromLoginPage, checkIsLoginPresentInField);
+            }
 
-            Base.log(1, "start registration process with invalid phone");
-            if (!base.regPage.registrationProcess(login, pass, server, fakePhone, country, userName, false)) return false;
-            Base.log(1, "registration process is successfully finished");
+            public boolean phone(boolean resendFromLoginPage, boolean checkIsLoginPresentInField){
+                initRegistrationData();
+                return withMistakeIn("phone", resendFromLoginPage, checkIsLoginPresentInField);
+            }
 
-            if (!base.validationPage.resendCode(login, phone, country)) return  false;
-            Base.log(1, "error message is not shown");
+            public boolean both(boolean resendFromLoginPage, boolean checkIsLoginPresentInField){
+                initRegistrationData();
+                return withMistakeIn("both", resendFromLoginPage, checkIsLoginPresentInField);
+            }
 
-            base.validationPage.validateBy.phone(phone);
-            return registrationResult();
+            private boolean withMistakeIn(String whereIsMistake, boolean resendFromLoginPage, boolean checkIsLoginPresentInField) {
+                Base.log(1, "delete user if users already exist at the server");
+                base.sql.getDelete("Phone", "%" + phone + "%");
+                base.sql.getDelete("Phone", "%" + fakePhone + "%");
+                base.sql.getDelete("Login", "%" + fakeEmail + "%");
+
+                switch (whereIsMistake) {
+                    case "phone":
+                        if (!base.regPage.registrationProcess(login, pass, server, fakePhone, fakeCountry, userName, "", false, true)) {return false;}
+                        if (resendFromLoginPage){ if (!resendFromLoginPage(login, checkIsLoginPresentInField)){return false;}}
+                        break;
+
+                    case "email":
+                        if (!base.regPage.registrationProcess(fakeEmail, pass, server, phone, country, userName, "", false, true)) {return false;}
+                        if (resendFromLoginPage){if (!resendFromLoginPage(fakeEmail, checkIsLoginPresentInField)){return false;}}
+                        break;
+
+                    case "both":
+                        if (!base.regPage.registrationProcess(fakeEmail, pass, server, fakePhone, fakeCountry, userName, "", false, true)) {return true;}
+                        if (resendFromLoginPage){if (!resendFromLoginPage(fakeEmail, checkIsLoginPresentInField)){return true;}}
+                        return base.validationPage.resendCode(login, phone, country, errorMessage);
+
+                    default:
+                        Base.log(3, "wrong data, expected \"phone\", \"email\" or \"both\"");
+                        return false;
+                }
+
+                if (!base.validationPage.resendCode(login, phone, country, "")) return false;
+
+                Base.log(1, "error message is not shown");
+                base.validationPage.validateBy.phone(phone);
+                if (resendFromLoginPage) {return base.wait.menuIconOrPinPopUp(60);}
+                else {return registrationResult();}
+            }
         }
 
-        public boolean withMistakeInPhoneAndEmail(){
-            String fakeEmail = dataWithMistake.get("login").toString();
-            String fakePhone = dataWithMistake.get("phone").toString();
+        public class WithExisting{
+            public boolean email(boolean resendFromLoginPage){
+                initRegistrationData();
+                return withDataFromExistingUser("email", resendFromLoginPage);
+            }
 
-            Base.log(1, "delete user if phone already exist at the server");
-            base.sql.getDelete("Phone", "%" + phone + "%");
-            country = countryMap.get("ukr").toString();
+            public boolean phone(boolean resendFromLoginPage){
+                initRegistrationData();
+                return withDataFromExistingUser("phone", resendFromLoginPage);
+            }
 
-            if (!base.regPage.registrationProcess(fakeEmail, pass, server, fakePhone, country, userName, false)) return false;
-            return base.validationPage.resendCode(login, phone, country);
+            public boolean both(boolean resendFromLoginPage){
+                initRegistrationData();
+                return withDataFromExistingUser("both", resendFromLoginPage);
+            }
+
+            private boolean withDataFromExistingUser(String whichExistingDataUse, boolean resendFromLoginPage){
+                initRegistrationData();
+                String errorMessage = base.getLocalizeTextForKey("User_reg_phone_or_mail_exist0");
+                String existingUserPhone = existingUser.get("phone").toString();
+                String existingUserCountry = existingUser.get("country").toString();
+                String existingUserLogin = existingUser.get("login").toString();
+
+                Base.log(1, "delete users if phone already exist at the server");
+                base.sql.getDelete("Phone", "%" + phone + "%");
+
+                switch (whichExistingDataUse) {
+                    case "phone":
+                        if (resendFromLoginPage) {
+                            return resendWithDataFromExistingUser(login, existingUserPhone, existingUserCountry, errorMessage);
+                        } else {
+                            return base.regPage.registrationProcess(login, pass, server, existingUserPhone, existingUserCountry, userName, errorMessage, false, true);
+                        }
+
+                    case "email":
+                        if (resendFromLoginPage) {
+                            return resendWithDataFromExistingUser(existingUserLogin, phone, country, errorMessage);
+                        } else {
+                            return base.regPage.registrationProcess(existingUserLogin, pass, server, phone, country, userName, errorMessage, false, true);
+                        }
+
+                    case "both":
+                        if (resendFromLoginPage) {
+                            return resendWithDataFromExistingUser(existingUserLogin, existingUserPhone, existingUserCountry, errorMessage);
+                        } else {
+                            return base.regPage.registrationProcess(existingUserLogin, pass, server, existingUserPhone, existingUserCountry, userName, errorMessage, false, true);
+                        }
+
+                    default:
+                        Base.log(3, "wrong data for using, expected \"phone\", \"email\" or \"both\"");
+                        return false;
+                }
+            }
         }
 
-        public boolean withCredsFromExistingUser(){
-            country = countryMap.get("ukr").toString();
-            return base.regPage.registrationProcess(login, pass, server, phone, country, userName, false);
-        }
+        //--------------------------------------------------------------------------------------------------------------
+        // Helpers
+        //--------------------------------------------------------------------------------------------------------------
 
-        public boolean withResendValidationKeys(){
-            Base.log(1, "delete user if phone already exist at the server");
-            base.sql.getDelete("Phone", "%" + phone + "%");
-            country = countryMap.get("ukr").toString();
+        private boolean resendWithDataFromExistingUser(String resendEmail, String resendPhone, String resendCountry, String errorMessage){
+            base.regPage.registrationProcess(login, pass, server, phone, country, userName, "", false, true);
 
-            if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, false)) return false;
-            if (!base.validationPage.resendCode(login, phone, country)) return  false;
-
-            Base.log(1, "error message is not shown");
-            base.validationPage.validateBy.phone(phone);
-            return registrationResult();
+            if (!resendFromLoginPage(login, true)){return true;}
+            return base.validationPage.resendCode(resendEmail, resendPhone, resendCountry, errorMessage);
         }
 
         private boolean registrationResult(){
@@ -345,59 +437,22 @@ public class User {
             return base.wait.menuIconOrPinPopUp(60);
         }
 
+        private boolean resendFromLoginPage(String resendLogin, boolean checkIsLoginPresentInField){
+            base.nav.cancelIt();
+
+            if (checkIsLoginPresentInField){
+                if (!base.check.isPresent.loginInEmailField(login)){return false;}
+            }
+
+            base.loginPage.loginToTheServer(resendLogin, pass);
+            base.wait.invisibilityOfLoaderLogo(true);
+
+            if (!base.wait.text(base.getLocalizeTextForKey("this_account_was_not_yet_validated"), 5, true)) {return false;}
+            base.nav.confirmIt();
+            return true;
+        }
     }
-
 //----------------------------------------------------------------------------------------------------------------------
-//
-//    public boolean checkIsDeleteIconPresent(String pendingUserName) {
-//        String nameElementXpath = "//*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
-//        String deleteElementXpath = "/ancestor::android.widget.LinearLayout[1]//*[@resource-id = 'com.ajaxsystems:id/delete']";
-//
-//        if (base.nav.scroll.toElementWith.name(pendingUserName, false)) {
-//
-//            try {
-//                base.wait.element(driver.findElementByXPath(nameElementXpath + deleteElementXpath), 5, true);
-//                Base.log(1, "new user with email \"" + pendingUserName + "\" has the DELETE button");
-//                result = true;
-//
-//            }catch (Exception e){
-//                Base.log(3, "new user with email \"" + pendingUserName + "\" has no the DELETE button");
-//                result = false;
-//            }
-//        }
-//        return result;
-//    }
 
-//    public boolean isDeleteIconPresent(String pendingUserName) {
-//        WebElement pendingUserForCheck = findPendingFrom("name", pendingUserName);
-//
-//        if (base.nav.scrollToElement(pendingUserForCheck, "up")) {
-//            Base.log(1, "new user with email \"" + pendingUserName + "\" has the DELETE button");
-//            result = true;
-//
-//        } else {
-//            Base.log(3, "new user with email \"" + pendingUserName + "\" has no the DELETE button");
-//            result = false;
-//        }
-//        return result;
-//    }
-
-//    private WebElement findPendingFrom(String from, String pendingUserName){
-//        String nameElementXpath = "*[contains(@resource-id,'com.ajaxsystems:id/name') and @text='" + pendingUserName + "']";
-//        String deleteElementXpath = "*[@resource-id = 'com.ajaxsystems:id/delete']";
-//        String firstLinearLayout = "android.widget.LinearLayout[1]";
-//        String xPath = null;
-//        switch (from){
-//            case "delete": xPath = "//" + deleteElementXpath + "/ancestor::" + firstLinearLayout + "//" + nameElementXpath;
-//                break;
-//            case "name": xPath = "//" + nameElementXpath + "/ancestor::" + firstLinearLayout + "//" + deleteElementXpath;
-//                break;
-//            default: Base.log(3, "invalid parameter");
-//                break;
-//        }
-//        WebElement pendingUserElement = driver.findElementByXPath(xPath);
-////        base.nav.scrollToElement(pendingUserElement, "up");
-//        return pendingUserElement;
-//    }
 
 }

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class ValidationCodePage{
+public class ValidationCodePage {
 
     @AndroidFindBy(id = "com.ajaxsystems:id/smsCode")
     private WebElement smsCodeField;
@@ -41,10 +41,12 @@ public class ValidationCodePage{
     public Map getTokenMap() {
         return tokenMap;
     }
+
     public WebElement getSmsCodeField() {
         return smsCodeField;
     }
-//----------------------------------------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------------------------------------
     private Base base;
     private AndroidDriver driver;
     private Map tokenMap = new HashMap();
@@ -54,12 +56,14 @@ public class ValidationCodePage{
     public ValidationCodePage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
-        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.DEFAULT_TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Map getValidationCodes(String row, String value){
-        if (!tokenMap.isEmpty()){tokenMap.clear();}
+    public Map getValidationCodes(String row, String value) {
+        if (!tokenMap.isEmpty()) {
+            tokenMap.clear();
+        }
         tokenMap = base.sql.getTokenMap(row, value);
         smsToken = tokenMap.get("smsToken").toString();
         emailToken = tokenMap.get("emailToken").toString();
@@ -68,17 +72,30 @@ public class ValidationCodePage{
         return tokenMap;
     }
 
-    public boolean resendCode(String email, String phone, String country){
+    public boolean resendCode(String email, String phone, String country, String expectedErrorText) {
         Base.log(1, "resend validation codes", true);
         codeResend.click();
-        if(!base.wait.element(dialogMessage, 5, true)) return false;
+        if (!base.wait.element(dialogMessage, 5, true)) {return false;}
+        fillFields(email, phone, country);
+
+        if (expectedErrorText.isEmpty()) {
+            return checkerPositive();
+        } else {
+//            base.wait.invisibilityOfWaiter();   //TODO check is necessary use base.wait.invisibilityOfWaiter()
+            return !base.wait.text(expectedErrorText, 20, true);
+        }
+    }
+
+    private void fillFields(String email, String phone, String country) {
         Base.log(1, "fill email with: \"" + email + "\"", true);
         emailForResend.sendKeys(email);
         Base.log(1, "fill phone with: \"" + phone + "\"", true);
         phoneForResend.sendKeys(phone);
-        if (!country.isEmpty()){base.popUp.setPhoneCountryCode(country);}
+        if (!country.isEmpty()) {base.popUp.setPhoneCountryCode(country);}
         base.nav.confirmIt();
+    }
 
+    private boolean checkerPositive() {
         Base.log(1, "check is error message present on page");
         if (base.check.isPresent.errorMessageOrSnackBar(10)) return false;
 
@@ -86,35 +103,40 @@ public class ValidationCodePage{
         return base.wait.element(base.validationPage.smsCodeField, 60, true);
     }
 
-    public class ValidateBy{
-        public void email(String email){
+
+    public class ValidateBy {
+        public void email(String email) {
             getValidationCodes("Login", "%" + email + "%");
             validationProcess(smsToken, emailToken);
         }
-        public void phone(String phone){
+
+        public void phone(String phone) {
             getValidationCodes("Phone", "%" + phone + "%");
             validationProcess(smsToken, emailToken);
         }
-        public void customMethod (String row, String value, String smsToken, String emailToken, boolean withEmptyTokens, boolean changeTokensPlaces ){
+
+        public void customMethod(String row, String value, String smsToken, String emailToken, boolean withEmptyTokens, boolean changeTokensPlaces) {
             tokenMap = getValidationCodes(row, "%" + value + "%");
             if (!withEmptyTokens) {
                 if (smsToken.isEmpty()) smsToken = tokenMap.get("smsToken").toString();
                 if (emailToken.isEmpty()) emailToken = tokenMap.get("emailToken").toString();
             }
-            if(changeTokensPlaces){
+            if (changeTokensPlaces) {
                 validationProcess(emailToken, smsToken);
-            }else {
+            } else {
                 validationProcess(smsToken, emailToken);
             }
         }
-        public void customMethod (String smsToken, String emailToken, boolean changeTokensPlaces ){
-            if(changeTokensPlaces){
+
+        public void customMethod(String smsToken, String emailToken, boolean changeTokensPlaces) {
+            if (changeTokensPlaces) {
                 validationProcess(emailToken, smsToken);
-            }else {
+            } else {
                 validationProcess(smsToken, emailToken);
             }
         }
-        private void validationProcess(String smsToken, String emailToken){
+
+        private void validationProcess(String smsToken, String emailToken) {
             Base.log(1, "fill token \"" + smsToken + "\" to the SMS field", true);
             smsCodeField.sendKeys(smsToken);
             Base.log(1, "fill token \"" + emailToken + "\" to the Email field", true);

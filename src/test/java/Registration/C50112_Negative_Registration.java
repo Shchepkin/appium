@@ -1,11 +1,11 @@
 package Registration;
 
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 import pageObjects.Base;
-
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * PRECONDITION
@@ -24,47 +24,60 @@ public class C50112_Negative_Registration {
         base.initPageObjects(base.getDriver());
     }
 
-    @Test()
-    public void With_Creds_From_Existing_User () {
+    @Test(enabled = true, invocationCount = 1)
+    public void With_Email_From_Existing_User () {
         Base.log(1, "START TEST");
-        Assert.assertTrue(base.user.registration.withCredsFromExistingUser());
+        base.getDriver().resetApp();
+        Assert.assertFalse(base.user.registration.withExisting.email(false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
-    @Test()
+    @Test(enabled = true, invocationCount = 1)
+    public void With_Phone_From_Existing_User () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertFalse(base.user.registration.withExisting.phone(false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
+    }
+
+    @Test(enabled = true, invocationCount = 1)
+    public void With_both_data_from_existing_user () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertFalse(base.user.registration.withExisting.both(false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
+    }
+
+    @Test(enabled = true, invocationCount = 1)
     public void With_Mistake_In_Phone_And_Email () {
         Base.log(1, "START TEST");
-        Assert.assertTrue(base.user.registration.withMistakeInPhoneAndEmail());
+        base.getDriver().resetApp();
+        Assert.assertFalse(base.user.registration.withFake.both(false, false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
-    @DataProvider
-    public Iterator<Object[]> dataProviderIterator() {
-        return base.getDataProviderIterator("negativeRegistrationData.json");
+    @Test(enabled = true, invocationCount = 1)
+    public void Resend_validation_code_from_loginPage_with_email_and_phone_changing () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertFalse(base.user.registration.withFake.both(true, false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
     }
-    @Test(dataProvider = "dataProviderIterator", enabled = false)
-    public void parameters (Map param) {
 
-        String comment = param.get("comment").toString();
-        String userName = param.get("userName").toString();
-        String country = param.get("country").toString();
-        String phone = param.get("phone").toString();
-        String login = param.get("email").toString();
-        String pass = param.get("pass").toString();
-        String expectedText;
+    @Test(enabled = true, invocationCount = 1)
+    public void Resend_validation_code_from_Login_page_with_existing_phone () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertFalse(base.user.registration.withExisting.phone(true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
+    }
 
-        Base.log(1, comment, true);
-        Base.log(1, "login: \"" + login + "\"", true);
-        Base.log(1, "password: \"" + pass + "\"", true);
+    @Test(enabled = true)
+    public void Resend_validation_code_from_Login_page_with_existing_email () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertFalse(base.user.registration.withExisting.email(true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
+    }
 
-        System.out.println("");
-        base.loginPage.loginToTheServer(login, pass);
-
-        if (login.isEmpty() || pass.isEmpty()){
-            expectedText = base.getLocalizeTextForKey("please_fill_in_all_of_the_required_fields");
-        }else {
-            expectedText = base.getLocalizeTextForKey("Login_bad_credentials0");
-        }
-
-        Assert.assertTrue(base.wait.visibilityOfSnackBarWithText(expectedText, 15));
+    @Test(enabled = true)
+    public void Resend_validation_code_from_Login_page_with_existing_email_and_phone () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertFalse(base.user.registration.withExisting.both(true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
     @AfterClass

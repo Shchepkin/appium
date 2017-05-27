@@ -34,7 +34,7 @@ public class C46178_Add_new_device {
     public void add_Device_While_Hub_Armed() {
         Base.log(3, "START TEST");
         base.hub.security.arm();
-        base.nav.gotoPage.Devices();
+        base.nav.gotoPage.devices();
 
         Base.log(1, "check is Add New Device button is shown", true);
         Assert.assertFalse(base.check.isPresent.button.addNewDevice(), "Add New Device button is shown\n");
@@ -46,7 +46,7 @@ public class C46178_Add_new_device {
     public void add_Device_From_Rooms_Page() {
         Base.log(3, "START TEST");
         deviceName = "Motion_Protect";
-        base.nav.gotoPage.Rooms();
+        base.nav.gotoPage.rooms();
 
         imitator.addDevice(203062, 2, 2, deviceName);
 
@@ -61,9 +61,9 @@ public class C46178_Add_new_device {
     public void add_Device_From_Devices_Page() {
         Base.log(3, "START TEST");
         deviceName = "Door_Protect";
-        base.nav.gotoPage.Devices();
+        base.nav.gotoPage.devices();
 
-        Base.log(1, "add device \"" + deviceName + "\" from Devices Page", true);
+        Base.log(1, "add device \"" + deviceName + "\" from devices Page", true);
         imitator.addDevice(203061, 1, 1, deviceName, 2);
 
         Base.log(1, "check is device added to Hub", true);
@@ -74,9 +74,9 @@ public class C46178_Add_new_device {
     public void add_Existing_Device() {
         Base.log(3, "START TEST");
         deviceName = "Existing_Device";
-        base.nav.gotoPage.Devices();
+        base.nav.gotoPage.devices();
 
-        Base.log(1, "add existing device from Devices Page", true);
+        Base.log(1, "add existing device from devices Page", true);
         Assert.assertFalse(imitator.addDevice(203061, 1, 1, deviceName, 2), "");
         Base.log(1, "cannot add existing device", true);
     }

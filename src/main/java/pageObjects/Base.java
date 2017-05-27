@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Base {
 
-    public static int TIMEOUT = 3;
+    public static final int DEFAULT_TIMEOUT = 5;
     private static final int LOG_LEVEL = 5;
     private static final boolean LOG_VIEW_IN_CONSOLE = true;
     private static final String logFile = logfileName();
@@ -101,12 +101,13 @@ public class Base {
 
     }
 
+//TODO remove resources JSON to out of project folder
+
     public Base(AndroidDriver driver) {
         initPageObjects(driver);
     }
 
     public void initPageObjects(AndroidDriver driver) {
-
         log(4, "init Navigation()");
         nav = new Navigation(this);
 
@@ -187,6 +188,10 @@ public class Base {
         return logFile;
     }
 
+    public String getDeviceName() {
+        return deviceName;
+    }
+
     public String getLocalizeTextForKey(String key) {
         return localizeKeys.get(key).toString();
     }
@@ -200,7 +205,6 @@ public class Base {
     }
 
     private Map getLocalizeKeys(String locale) {
-        log(4, "Method is started");
         log(3, "locale: \"" + locale + "\"");
         localizeKeys = new HashMap<>();
         try {
@@ -235,7 +239,6 @@ public class Base {
             log(2, "IOException" + e);
             e.printStackTrace();
         }
-        log(4, "Method is finished");
         return localizeKeys;
     }
 
@@ -268,10 +271,8 @@ public class Base {
 // JSON
 //----------------------------------------------------------------------------------------------------------------------
     public Map getJsonMapCollection(String filePath, String collection) {
-        log(4, "Method is started");
         Map<String, String> jsonCollection = new HashMap<>();
         try {
-
             log(4, "get Application start up path");
             path = getApplicationStartUp();
 
@@ -289,7 +290,6 @@ public class Base {
         } catch (Exception e) {
             log(2, "Exception: " + e);
         }
-        log(4, "Method is finished");
         return jsonCollection;
     }
 
@@ -318,6 +318,10 @@ public class Base {
         return jsonStringArray;
     }
 
+    public String getStringValue (Map map, String key){
+        return map.get(key).toString();
+    }
+
     private void printArray(ArrayList arrayList) {
         for (Object element : arrayList) {
             log(4, element.toString());
@@ -325,36 +329,30 @@ public class Base {
     }
 
     private Path getApplicationStartUp() throws UnsupportedEncodingException, MalformedURLException {
-        log(4, "Method is started");
         URL startupUrl = getClass().getProtectionDomain().getCodeSource()
                 .getLocation();
         Path path = null;
         try {
             path = Paths.get(startupUrl.toURI());
         } catch (Exception e) {
-
+            log(3, "Exception: \n" + e.getMessage());
             try {
-                log(3, "Exception e");
                 path = Paths.get(new URL(startupUrl.getPath()).getPath());
-
             } catch (Exception ipe) {
-                log(3, "Exception ipe");
+                log(3, "Exception ipe: \n" + ipe.getMessage());
                 path = Paths.get(startupUrl.getPath());
             }
         }
         path = path.getParent();
-        log(4, "Method is finished");
         return path;
     }
 
     private String loadJSON(String path) throws IOException {
-        log(4, "Method is started");
         byte[] buf;
         try (RandomAccessFile f = new RandomAccessFile(path, "r")) {
             buf = new byte[(int) f.length()];
             f.read(buf);
         }
-        log(4, "Method is finished");
         return new String(buf);
     }
 
@@ -422,7 +420,6 @@ public class Base {
 
     private static String logfileName(){
         String fullPathToFile, filename;
-
         try {
             Date currentDate = new Date();
 
@@ -431,14 +428,18 @@ public class Base {
             SimpleDateFormat time = new SimpleDateFormat("HHmmss");
 
             // Creating folder and filename for logfile
+            File folder = new File("logs" + File.separator + date.format(currentDate));
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
             filename = date.format(currentDate) + "_" + time.format(currentDate) + ".log";
-            fullPathToFile = "logs/" + filename;
+            fullPathToFile = "logs" + File.separator + date.format(currentDate) + File.separator + filename;
 
             File file = new File(fullPathToFile);
-            if(file.createNewFile()){
+            if (!file.exists()){
+                file.createNewFile();
                 System.out.println("log: \"" + fullPathToFile + "\"");
-            }else {
-                System.out.println("log File already exist: \"" + fullPathToFile + "\"");
             }
 
         } catch(IOException e) {
@@ -478,7 +479,6 @@ public class Base {
     }
 
     private AndroidDriver initDriver() {
-        log(4, "Method is started");
         try {
             log(4, "get .apk file");
             File app = new File(appPath);
@@ -501,12 +501,11 @@ public class Base {
             log(4, "App Context: " + driver.getContextHandles().toString());
 
             log(4, "set implicitlyWait");
-            driver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
         } catch (MalformedURLException e) {
             log(2, "MalformedURLException\n" + e);
         }
-        log(4, "Method is finished");
         return driver;
     }
 
@@ -564,7 +563,6 @@ public class Base {
     }
 
     private ArrayList<Map> listOfMapsForDataProvider(String pathToFileWithData){
-        log(4, "Method is started");
         ArrayList<Map> listOfMaps = new ArrayList<>();
         Map map;
         int i = 0;
@@ -572,7 +570,7 @@ public class Base {
             log(4, "get collection from json");
             map = getJsonMapCollection(pathToFileWithData, String.valueOf(i));
             if(map.isEmpty()){
-                log(4, "Method is started");
+                log(4, "can not found data, perhaps it's end of data file");
                 break;
             }
             log(4, "add this Map to the listOfMapsForDataProvider");

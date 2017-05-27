@@ -48,8 +48,8 @@ public class C46182_Device_delete {
 
         base.wait.menuIconOrPinPopUp(1);
 
-        Assert.assertTrue(base.check.isDeletedBy("name", devName));
-        Base.log(1, "device with name \"" + devName + "\" is deleted successfully and SUCCESS text is shown");
+        Assert.assertFalse(base.check.isPresent.elementWith.name(devName));
+        Base.log(1, "device with name \"" + devName + "\" is deleted successfully");
     }
 
     @Test(priority = 2, enabled = true)
@@ -70,7 +70,7 @@ public class C46182_Device_delete {
         Base.log(1, "SnackBar with error text is successfully shown", true);
 
         Base.log(1, "disarm hub");
-        base.nav.goBack();
+        base.nav.tapButton.back();
         base.hub.security.disarm();
     }
 
@@ -92,7 +92,7 @@ public class C46182_Device_delete {
         Base.log(1, "SnackBar with error text is successfully shown", true);
 
         Base.log(1, "disarm hub");
-        base.nav.goBack();
+        base.nav.tapButton.back();
         base.hub.security.disarm();
     }
 

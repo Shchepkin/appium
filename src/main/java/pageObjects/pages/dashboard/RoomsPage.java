@@ -9,12 +9,10 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import pageObjects.Base;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RoomsPage {
@@ -69,7 +67,7 @@ public class RoomsPage {
     public RoomsPage(Base base) {
         this.base = base;
         this.driver = base.getDriver();
-        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.TIMEOUT, TimeUnit.SECONDS), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Base.DEFAULT_TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -111,8 +109,6 @@ public class RoomsPage {
     }
 
     public void addRoom(String roomName, int roomType) {
-        Base.log(4, "Method is started");
-
         clickAddRoomButton();
 
         Base.log(1, "fill Room name field with: \"" + roomName + "\"");
@@ -136,22 +132,18 @@ public class RoomsPage {
 
         Base.log(1, "check is PIN popUp displayed");
         base.wait.pinPopUp(2, false);
-
-        Base.log(4, "Method is finished");
     }
 
     private void clickAddRoomButton (){
-        Base.log(4, "Method is started");
-        elements = new WebElement[]{addRoomBtn, addRoomPlusBtn};
-
-        Base.log(1, "choice the Add Room button");
-//        base.nav.scrollBottom();
-        switch (base.check.waitElements(elements, 2)){
-            case 1: addRoomBtn.click(); break;
-            case 2: addRoomPlusBtn.click(); break;
-            default: Base.log(3, "Something was wrong!"); break;
+        try {
+            addRoomBtn.click();
+        }catch (Exception e){
+            try {
+                addRoomPlusBtn.click();
+            }catch (Exception e1){
+                Base.log(2, "button Add Room was not found");
+            }
         }
-        Base.log(4, "Method is finished");
     }
 
     public boolean isRoomPresens(String roomName) {
@@ -176,8 +168,8 @@ public class RoomsPage {
     public class Delete {
 
         public boolean one(boolean withLocaleTextCheck) {
-            Base.log(1, "open Rooms page", true);
-            base.nav.gotoPage.Rooms();
+            Base.log(1, "open rooms page", true);
+            base.nav.gotoPage.rooms();
             String roomName;
             if (base.wait.menuIconOrPinPopUp(10)) {
                 base.nav.cancelIt();
@@ -185,7 +177,7 @@ public class RoomsPage {
                     roomName = getFirstRoomName();
 
                     Base.log(1, "open settings page of room with name \"" + roomName + "\"", true);
-                    base.nav.goToSettings();
+                    base.nav.tapButton.settings();
 
                     Base.log(1, "scroll bottom");
 //                    base.nav.scrollBottom();
@@ -213,7 +205,7 @@ public class RoomsPage {
         }
 
         public boolean all() {
-            base.nav.gotoPage.Rooms();
+            base.nav.gotoPage.rooms();
             String roomName = null;
             int counter = 0;
             try {
@@ -227,7 +219,7 @@ public class RoomsPage {
                             roomName = getFirstRoomName();
 
                             Base.log(1, "open settings page of room with name \"" + roomName + "\"", true);
-                            base.nav.goToSettings();
+                            base.nav.tapButton.settings();
 
                         } else if (counter > 0) {
                             Base.log(1, "rooms are not found, number of deleted rooms: " + counter, true);

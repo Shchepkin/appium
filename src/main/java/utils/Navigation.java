@@ -4,7 +4,6 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -19,40 +18,6 @@ import java.util.ArrayList;
 
 public class Navigation {
 
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
-    private WebElement cancelButton;    // PIN
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
-    private WebElement confirmButton;   // PIN
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
-    private WebElement cancel;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/ok")
-    private WebElement okBtn;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/add")
-    private WebElement addButton;
-
-    public WebElement getConfirmButton() {
-        return confirmButton;
-    }
-
-    public WebElement getCancelButton() {
-        return cancelButton;
-    }
-
-    public WebElement getCancel() {
-        return cancel;
-    }
-
-    public WebElement getAddButton() {
-        return addButton;
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-
     @AndroidFindBy(xpath = "//android.widget.TextView")
     private ArrayList<WebElement> allTextObjects;
 
@@ -62,53 +27,6 @@ public class Navigation {
 
     @AndroidFindBy(uiAutomator = "new UiSelector().scrollable(true)")
     private ArrayList<WebElement> scrollableElementList;
-
-//----------------------------------------------------------------------------------------------------------------------
-// Header
-//----------------------------------------------------------------------------------------------------------------------
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/back")
-    private WebElement backButton;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/next")
-    private WebElement nextButton;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/name")
-    private WebElement nameField;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/image")
-    private WebElement image;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/settings")
-    private WebElement settingsButton;
-
-    public WebElement getBackButton() {
-        return backButton;
-    }
-
-    public WebElement getSettingsButton() {
-        return settingsButton;
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// Footer
-//----------------------------------------------------------------------------------------------------------------------
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/devices")
-    private WebElement footerDevices;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/rooms")
-    private WebElement footerRooms;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/notifications")
-    private WebElement footerNotifications;
-
-    @AndroidFindBy(id = "com.ajaxsystems:id/remote")
-    private WebElement footerRemote;
-
-//----------------------------------------------------------------------------------------------------------------------
-// Anchors
-//----------------------------------------------------------------------------------------------------------------------
 
     @AndroidFindBy(id = "com.ajaxsystems:id/spaceControl")
     private WebElement spaceControlImage;
@@ -125,6 +43,7 @@ public class Navigation {
     public Touch touch = new Touch();
     public Scroll scroll = new Scroll();
     public GoToPage gotoPage = new GoToPage();
+    public TapButton tapButton = new TapButton();
 //    public ScrollToElementWith scrollToElementWith = new ScrollToElementWith();
 
     public Navigation(Base base) {
@@ -240,6 +159,7 @@ public class Navigation {
                     Base.log(1, "wait for scrollable view");
                     Base.log(1, "scrollable view is found: id = \"" + driver.findElementByAndroidUIAutomator("new UiSelector().scrollable(true)").getAttribute("resourceId") + "\"");
 
+                    Base.log(1, "search element: " + searchingElement);
                     try {
                         elementInScrollList = (RemoteWebElement) driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(" + searchingElement + ");");
                     } catch (Exception e) {
@@ -522,114 +442,185 @@ public class Navigation {
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// GOTO
+// Tap Button
 //----------------------------------------------------------------------------------------------------------------------
-    public void nextButtonClick() {
-        nextButton.click();
+    @AndroidFindBy(id = "com.ajaxsystems:id/wizard")
+    private WebElement wizardButton;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/back")
+    private WebElement backButton;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/next")
+    private WebElement nextButton;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/settings")
+    private WebElement settingsButton;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/add")
+    private WebElement addButton;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/addDevice")
+    private WebElement addDeviceButton;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/confirm_button")
+    private WebElement confirmButton;   // PIN
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/ok")
+    private WebElement okButton;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/cancel_button")
+    private WebElement cancelButton;    // PIN
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/cancel")
+    private WebElement cancel; // PIN
+
+    public WebElement getCancel() {
+        return cancel;
+    }
+    public WebElement getCancelButton() {
+        return cancelButton;
+    }
+    public WebElement getSettingsButton() {
+        return settingsButton;
     }
 
-    public WebElement getNextButton() {
-        return nextButton;
+    public class TapButton {
+
+        public void back() {
+            Base.log(1, "tap Back button");
+            backButton.click();
+        }
+
+        public void next() {
+            Base.log(1, "tap Next button");
+            nextButton.click();
+        }
+
+        public void addManually() {
+            Base.log(1, "tap Add Manually button", true);
+            nextButton.click();
+        }
+
+        public void useWizard() {
+            Base.log(1, "tap Use Wizard button", true);
+            wizardButton.click();
+        }
+
+        public void sendInvitation() {
+            Base.log(1, "tap Send Invitation button",true);
+            nextButton.click();
+        }
+
+        public void save() {
+            Base.log(1, "tap Save button", true);
+            nextButton.click();
+        }
+
+        public void add() {
+            Base.log(1, "tap Add button", true);
+            try {
+                addButton.click();
+            }catch (Exception e){
+                addDeviceButton.click();
+            }
+        }
+
+        public void ok() {
+            Base.log(1, "tap OK button", true);
+            okButton.click();
+        }
+
+        public void cancel() {
+            Base.log(1, "tap Cancel button", true);
+            try {
+                cancelButton.click();
+            }catch (Exception e){
+                cancel.click();
+            }
+        }
+
+        public void confirm() {
+            Base.log(1, "tap Confirm button", true);
+            confirmButton.click();
+        }
+
+        public void settings() {
+            Base.log(1, "wait for Settings Button");
+            WebDriverWait iWait = new WebDriverWait(driver, 5);
+            iWait.until(ExpectedConditions.visibilityOf(settingsButton));
+            Base.log(1, "tap Settings Button", true);
+            settingsButton.click();
+        }
     }
-
-    public void goBack() {
-        Base.log(4, "tap Back button");
-        backButton.click();
-    }
-
-    public void goToSettings() {
-        WebDriverWait iWait = new WebDriverWait(driver, 5);
-
-        Base.log(1, "wait for Settings Button");
-        iWait.until(ExpectedConditions.visibilityOf(settingsButton));
-
-        Base.log(1, "tap Settings Button", true);
-        settingsButton.click();
-    }
-
 
 //----------------------------------------------------------------------------------------------------------------------
 //  GoToPage
 //----------------------------------------------------------------------------------------------------------------------
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/devices")
+    private WebElement footerDevices;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/rooms")
+    private WebElement footerRooms;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/notifications")
+    private WebElement footerNotifications;
+
+    @AndroidFindBy(id = "com.ajaxsystems:id/remote")
+    private WebElement footerRemote;
+
     public class GoToPage {
-        // dashboard
-        public void Devices() {
+
+        public void devices() {
+            Base.log(1, "go to devices Page", true);
             backToDashboard();
-            Base.log(1, "tap Devices Button");
+            Base.log(1, "tap devices Button");
             footerDevices.click();
         }
 
-        public void Rooms() {
+        public void rooms() {
+            Base.log(1, "go to rooms Page", true);
             backToDashboard();
-            Base.log(1, "tap Rooms Button");
+            Base.log(1, "tap rooms Button");
             footerRooms.click();
         }
 
-        public void Remote() {
+        public void remote() {
+            Base.log(1, "go to Remote Page", true);
             backToDashboard();
             Base.log(1, "tap Remote Button");
             footerRemote.click();
         }
 
-        public void Notifications() {
+        public void notifications() {
+            Base.log(1, "go to Notifications Page", true);
             backToDashboard();
             Base.log(1, "tap Notifications Button");
             footerNotifications.click();
         }
 
-        private void backToDashboard() {
-            Base.log(1, "back to dashboard");
-            while (!base.wait.element(base.header.getMenuDrawer(), 2, true)) {
-                if (base.wait.element(backButton, 1, true)) {
-                    Base.log(1, "tap back button");
-                    backButton.click();
-
-                } else if (base.check.isPresent.popUpWithConfirmation(2)) {
-                    cancelIt();
-
-                } else {
-                    Base.log(3, "Dashboard is not reached");
-                }
-            }
-            Base.log(1, "Dashboard is reached");
-        }
-
-        private void backToDashboard1() {
-            Base.log(1, "back to dashboard");
-            while (base.wait.element(backButton, 2, true)) {
-                Base.log(1, "tap back button");
-                backButton.click();
-            }
-            if (base.wait.menuIconOrPinPopUp(2))
-                Base.log(1, "Dashboard is reached");
-        }
-
-        //logout
-        public void Registration() {
+        public void registration() {
             Base.log(1, "go to Registration Page", true);
-            base.introPage.getRegistrationBtn().click();
-            Base.log(1, "tap Registration Button");
+            base.introPage.clickRegistrationButton();
         }
 
-        public void Authorization() {
-            Base.log(1, "tap Authorization Button");
-            base.introPage.getLoginBtn().click();
+        public void authorization() {
+            Base.log(1, "go to Authorization Page", true);
+            base.introPage.clickAuthorizationButton();
         }
 
-        //login
         public void hubSettings() {
-            gotoPage.Devices();
+            Base.log(1, "go to HUB Settings Page", true);
+            gotoPage.devices();
 
-            Base.log(1, "tap HubImage on Devices Page");
+            Base.log(1, "tap HubImage on devices Page");
             base.hub.getHubImageOnDeviceList().click();
-
-            Base.log(1, "tap HubSettings Button");
-            base.hub.getSettingsButton().click();
+            tapButton.settings();
         }
 
         public void userList() {
             Base.log(1, "go to the Device List page");
-            gotoPage.Devices();
+            gotoPage.devices();
 
             Base.log(1, "tap Hub image on Device List page");
             base.hub.getHubImageOnDeviceList().click();
@@ -657,26 +648,40 @@ public class Navigation {
             Base.log(1, "click the Add From Contact List Button");
             base.user.getAddButtonFromContactList().click();
         }
+
+        private void backToDashboard() {
+            Base.log(1, "back to dashboard");
+            while (!base.wait.element(base.header.getMenuDrawer(), 2, true)) {
+                if (base.wait.element(backButton, 1, true)) {
+                    Base.log(1, "tap back button");
+                    backButton.click();
+
+                } else if (base.check.isPresent.popUpWithConfirmation(2)) {
+                    cancelIt();
+
+                } else {
+                Base.log(3, "Dashboard is not reached");
+                }
+            }
+            Base.log(1, "Dashboard is reached");
+        }
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // CONFIRMATION
 //----------------------------------------------------------------------------------------------------------------------
+
     public void confirmIt() {
         Base.log(1, "Confirm", true);
         try {
-            okBtn.click();
-            Base.log(1, "tap OK button");
+            tapButton.ok();
         } catch (Exception e) {
 
             try {
-                confirmButton.click();
-                Base.log(1, "tap Confirm button");
+                tapButton.confirm();
             } catch (Exception e1) {
-
                 try {
-                    addButton.click();
-                    Base.log(1, "tap Add button");
+                    tapButton.add();
                 } catch (Exception e2) {
                     Base.log(1, "confirm button is not found");
                 }

@@ -13,9 +13,6 @@ import pageObjects.*;
  */
 
 public class C46174_New_user_registration {
-
-    private String userName, login, pass, phone, server;
-
     private Base base;
 
     @Parameters({ "deviceName_" })
@@ -25,10 +22,10 @@ public class C46174_New_user_registration {
         base.initPageObjects(base.getDriver());
     }
 
-    @Test(priority = 1, enabled = true)
+    @Test()
     public void Positive() {
         Base.log(1, "START TEST");
-        Assert.assertTrue(base.user.registration.fullProcess(), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Assert.assertTrue(base.user.registration.fullProcess(false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
         Base.log(1, "test finished successfully, dashboard is shown", true);
     }
 

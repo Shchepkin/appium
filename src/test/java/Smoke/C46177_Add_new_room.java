@@ -28,7 +28,7 @@ public class C46177_Add_new_room {
         base.loginPage.loginWithPinCancel();
 
         Base.log(1, "tap the Room Page button in the footer");
-        base.nav.gotoPage.Rooms();
+        base.nav.gotoPage.rooms();
     }
 
     @Test(priority = 1, enabled = true)
