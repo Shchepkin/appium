@@ -70,7 +70,7 @@ public class C46182_Device_delete {
         Base.log(1, "SnackBar with error text is successfully shown", true);
 
         Base.log(1, "disarm hub");
-        base.nav.goBack();
+        base.nav.tapButton.back();
         base.hub.security.disarm();
     }
 
@@ -92,7 +92,7 @@ public class C46182_Device_delete {
         Base.log(1, "SnackBar with error text is successfully shown", true);
 
         Base.log(1, "disarm hub");
-        base.nav.goBack();
+        base.nav.tapButton.back();
         base.hub.security.disarm();
     }
 

@@ -13,7 +13,6 @@ import pageObjects.Base;
  */
 public class C46176_Add_new_Hub_manually {
 
-    private String hubName, hubMasterKey;
     private Base base;
 
     @Parameters({ "deviceName_" })
@@ -21,9 +20,6 @@ public class C46176_Add_new_Hub_manually {
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-
-        hubName = base.getCredsWithKey("hubName");
-        hubMasterKey = base.getCredsWithKey("hubMasterKey");
 
         Base.log(1, "login to the server", true);
         base.loginPage.loginWithPinCancel();
@@ -36,7 +32,7 @@ public class C46176_Add_new_Hub_manually {
 
     }
 
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 2, enabled = true)
     public void Add_Hub_from_menu() {
         Base.log(3, "START TEST");
         Base.log(1, "delete hub");

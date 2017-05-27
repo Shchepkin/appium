@@ -63,7 +63,7 @@ public class C46179_Virtual_Space_Control {
     public void Click_Alarm_Button() {
 
         Base.log(1, "open Notification page for erasing badge counter");
-        base.nav.gotoPage.Notifications();
+        base.nav.gotoPage.notifications();
         base.hub.security.alarm();
 
         Base.log(1, "wait for badge appear");

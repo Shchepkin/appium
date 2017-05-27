@@ -112,7 +112,6 @@ public class Imitator{
     }
 
     public boolean addDevice(int devId, int devNumber, int devType, String devName){
-        String command;
         Base.log(1, "add device \"" + devName + "\" to Hub");
 
         Base.log(1, "tap first room in the list");
@@ -120,16 +119,16 @@ public class Imitator{
 
         Base.log(1, "tap Add New Device button");
         try {
-            base.nav.getAddButton().click();
-            Base.log(1, "add device \"" + devName + "\" from Empty Rooms Page", true);
+            base.nav.tapButton.add();
+            Base.log(1, "add device \"" + devName + "\" from Empty rooms Page", true);
             deviceNameNew = devName;
 
         }catch (Exception e){
-            base.devicesPage.addDeviceButtonClick();
+            base.nav.tapButton.add();
             devId++;
             devNumber++;
             deviceNameNew = devName + "_1";
-            Base.log(1, "add device \"" + deviceNameNew + "\" from not Empty Rooms Page", true);
+            Base.log(1, "add device \"" + deviceNameNew + "\" from not Empty rooms Page", true);
         }
 
         Base.log(1, "wait for popUp for adding new device", true);
