@@ -168,8 +168,8 @@ public class RoomsPage {
     public class Delete {
 
         public boolean one(boolean withLocaleTextCheck) {
-            Base.log(1, "open Rooms page", true);
-            base.nav.gotoPage.Rooms();
+            Base.log(1, "open rooms page", true);
+            base.nav.gotoPage.rooms();
             String roomName;
             if (base.wait.menuIconOrPinPopUp(10)) {
                 base.nav.cancelIt();
@@ -177,7 +177,7 @@ public class RoomsPage {
                     roomName = getFirstRoomName();
 
                     Base.log(1, "open settings page of room with name \"" + roomName + "\"", true);
-                    base.nav.goToSettings();
+                    base.nav.tapButton.settings();
 
                     Base.log(1, "scroll bottom");
 //                    base.nav.scrollBottom();
@@ -205,7 +205,7 @@ public class RoomsPage {
         }
 
         public boolean all() {
-            base.nav.gotoPage.Rooms();
+            base.nav.gotoPage.rooms();
             String roomName = null;
             int counter = 0;
             try {
@@ -219,7 +219,7 @@ public class RoomsPage {
                             roomName = getFirstRoomName();
 
                             Base.log(1, "open settings page of room with name \"" + roomName + "\"", true);
-                            base.nav.goToSettings();
+                            base.nav.tapButton.settings();
 
                         } else if (counter > 0) {
                             Base.log(1, "rooms are not found, number of deleted rooms: " + counter, true);

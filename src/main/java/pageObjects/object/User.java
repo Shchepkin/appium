@@ -112,8 +112,7 @@ public class User {
                 }
             }
 
-            Base.log(1, "tap Save button", true);
-            base.nav.nextButtonClick();
+            base.nav.tapButton.save();
 
             return sendInvitation();
         }
@@ -143,22 +142,19 @@ public class User {
             }
 
             Base.log(1, "tap Save button", true);
-            base.nav.nextButtonClick();
+            base.nav.tapButton.save();
            return sendInvitation();
         }
 
         private boolean sendInvitation(){
-            Base.log(1, "tap Send Invitation button", true);
-            base.nav.nextButtonClick();
-
-            if (base.check.isPresent.snackBar(2)) return false;
+            base.nav.tapButton.sendInvitation();
+            if (base.check.isPresent.snackBar(2)) {return false;}
 
             Base.log(1, "confirm proposition");
             base.nav.confirmIt();
 
             Base.log(1, "check is error snackBar present");
-            if (base.check.isPresent.snackBar(2)) return false;
-
+            if (base.check.isPresent.snackBar(2)) {return false;}
             base.wait.invisibilityOfWaiter();
 
             Base.log(1, "check is UserList opened");
@@ -275,6 +271,9 @@ public class User {
 
         public boolean validateWithExistingCodes(){ //TODO validateWithExistingCodes()
             initRegistrationData();
+            Base.log(1, "delete user if phone already exist at the server");
+            base.sql.getDelete("Phone", "%" + phone + "%");
+
             if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, "", false, true)) {return false;}
             resendFromLoginPage(login, false);
             base.validationPage.validateBy.phone(phone);
@@ -306,7 +305,6 @@ public class User {
             return registrationResult();
         }
 
-        //use parameters "email", "phone", "both"
         public class WithFake {
             String fakeEmail = dataWithMistake.get("login").toString();
             String fakePhone = dataWithMistake.get("phone").toString();

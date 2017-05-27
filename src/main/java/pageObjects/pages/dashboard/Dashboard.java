@@ -106,7 +106,7 @@ public class Dashboard{
     }
 
     public void goToTheRoomPage() {
-        Base.log(4, "click Rooms button in the footer");
+        Base.log(4, "click rooms button in the footer");
         footerRooms.click();
     }
 

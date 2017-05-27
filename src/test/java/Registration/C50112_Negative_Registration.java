@@ -1,11 +1,11 @@
 package Registration;
 
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 import pageObjects.Base;
-
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * PRECONDITION

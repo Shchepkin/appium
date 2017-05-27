@@ -32,7 +32,7 @@ public class C42098_Login_to_the_existing_account{
         server = base.getCredsWithKey("server");
 
         Base.log(1, "start from IntroPage");
-        base.introPage.goToAuthorization();
+        base.nav.gotoPage.authorization();
         base.loginPage.loginToTheServer(login, pass, server);
 
         base.wait.invisibilityOfLoaderLogo(true);

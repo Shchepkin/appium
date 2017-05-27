@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Base {
 
-    public static int DEFAULT_TIMEOUT = 5;
+    public static final int DEFAULT_TIMEOUT = 5;
     private static final int LOG_LEVEL = 5;
     private static final boolean LOG_VIEW_IN_CONSOLE = true;
     private static final String logFile = logfileName();

@@ -71,7 +71,6 @@ public class DevicesPage {
 //----------------------------------------------------------------------------------------------------------------------
     private Base base;
     private AndroidDriver driver;
-    private boolean result;
 
     public DevicesPage(Base base) {
         this.base = base;
@@ -79,19 +78,6 @@ public class DevicesPage {
         PageFactory.initElements(new AppiumFieldDecorator(driver, Base.DEFAULT_TIMEOUT, TimeUnit.SECONDS), this);
     }
 //----------------------------------------------------------------------------------------------------------------------
-
-    public void addDeviceButtonClick(){
-        Base.log(1, "tap Add Device button", true);
-        try {
-            addDeviceButtonOld.click();
-        }catch (Exception e){
-            try {
-                addDeviceButtonNew.click();
-            }catch (Exception e1){
-                base.nav.getAddButton().click();
-            }
-        }
-    }
 
     public void unpairButtonClick(){
         Base.log(1, "tap Unpair button", true);
@@ -101,7 +87,7 @@ public class DevicesPage {
     public void goToFirstDeviceSettingsPage(){
         Base.log(1, "click on Device tab (room element)", true);
         roomOfDeviceLocator.click();
-        base.nav.goToSettings();
+        base.nav.tapButton.settings();
     }
 
     public void fillFieldsWith(String deviceName, String devID){
@@ -136,7 +122,7 @@ public class DevicesPage {
     }
 
     public boolean deleteAll() {
-        base.nav.gotoPage.Devices();
+        base.nav.gotoPage.devices();
         String devName = null;
         int counter = 0;
         try {

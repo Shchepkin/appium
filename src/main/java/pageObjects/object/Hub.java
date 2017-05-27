@@ -113,9 +113,7 @@ public class Hub{
         }
 
         private boolean manualType(String hubName, String hubMasterKey){
-            Base.log(1, "choose manual Hub adding", true);
-            base.nav.nextButtonClick();
-
+            base.nav.tapButton.addManually();
             base.dashboard.fillFieldsWith(hubName, hubMasterKey);
             base.nav.confirmIt();
 
@@ -126,7 +124,7 @@ public class Hub{
             if (base.wait.element(base.header.getGprsImage(), 10, true)){
                 Base.log(1, "hub successfully added!");
                 return true;
-            }else return false;
+            }else {return false;}
         }
 
         private boolean wizardType(String hubName, String hubMasterKey){return true;}
@@ -156,7 +154,7 @@ public class Hub{
     public class Security {
         public void arm() {
             Base.log(4, "Method is started");
-            base.nav.gotoPage.Remote();
+            base.nav.gotoPage.remote();
             base.remotePage.clickArmButton();
 
             Base.log(1, "confirm if popUp appear");
@@ -173,7 +171,7 @@ public class Hub{
             Base.log(4, "Method is started");
 
             Base.log(1, "goto Remote Page");
-            base.nav.gotoPage.Remote();
+            base.nav.gotoPage.remote();
 
             base.remotePage.clickDisarmButton();
 
@@ -186,7 +184,7 @@ public class Hub{
         }
         public void partialArm() {
             Base.log(4, "Method is started");
-            base.nav.gotoPage.Remote();
+            base.nav.gotoPage.remote();
 
             base.remotePage.clickPartialArmButton();
 
@@ -203,7 +201,7 @@ public class Hub{
         public void alarm(){
             Base.log(4, "Method is started");
             Base.log(1, "go to Remote page");
-            base.nav.gotoPage.Remote();
+            base.nav.gotoPage.remote();
             base.remotePage.clickAlarmButton();
             Base.log(4, "Method is finished");
         }

@@ -25,7 +25,8 @@ public class C52065_Check_Registration_Fields {
 
     @DataProvider
     public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("registrationDataProvider.json");}
-    @Test(dataProvider = "dataProviderIterator", enabled = true)
+
+    @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
         base.getDriver().resetApp();
         String expectedText = "";

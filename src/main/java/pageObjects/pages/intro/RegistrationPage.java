@@ -80,7 +80,7 @@ public class RegistrationPage{
 
     public boolean registrationProcess(String login, String pass, String server, String phone, String country, String userName, boolean setUserPic) {
         base.introPage.setServer(server);
-        base.nav.gotoPage.Registration();
+        base.nav.gotoPage.registration();
 
         if (setUserPic){setUserPic(1);}
 
@@ -97,7 +97,7 @@ public class RegistrationPage{
 
     public boolean registrationProcess(String login, String pass, String server, String phone, String country, String userName, String errorMessage, boolean setUserPic, boolean confirmAgreement) {
         base.introPage.setServer(server);
-        base.nav.gotoPage.Registration();
+        base.nav.gotoPage.registration();
         if (setUserPic){setUserPic(1);}
         fillFields(userName, login, pass, phone, country);
         if (confirmAgreement) {confirmAgreementCheckBox();}
