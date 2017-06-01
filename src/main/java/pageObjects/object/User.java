@@ -252,7 +252,7 @@ public class User {
 
 //----------------------------------------------------------------------------------------------------------------------
     public class Registration{
-        private String pass, login, phone, server, country, userName;
+        private String pass, login, loginConfirm, passConfirm, phone, server, country, userName;
         private Map registrationData = base.getJsonMapCollection("registrationData.json", base.getDeviceName());
         private Map dataWithMistake = base.getJsonMapCollection("registrationData.json", "dataWithMistake");
         private Map existingUser = base.getJsonMapCollection("registrationData.json", "existingUser");
@@ -267,14 +267,16 @@ public class User {
             server = registrationData.get("server").toString();
             country = registrationData.get("country").toString();
             userName = registrationData.get("userName").toString();
+            passConfirm = registrationData.get("passwordConfirm").toString();
+            loginConfirm = registrationData.get("loginConfirm").toString();
         }
 
-        public boolean validateWithExistingCodes(){ //TODO validateWithExistingCodes()
+        public boolean validateWithExistingCodes(){
             initRegistrationData();
             Base.log(1, "delete user if phone already exist at the server");
             base.sql.getDelete("Phone", "%" + phone + "%");
 
-            if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, "", false, true)) {return false;}
+            if (!base.regPage.registrationProcess(login, pass, loginConfirm, passConfirm, server, phone, country, userName, "", false, true)) {return false;}
             resendFromLoginPage(login, false);
             base.validationPage.validateBy.phone(phone);
             return base.wait.menuIconOrPinPopUp(60);
@@ -285,21 +287,33 @@ public class User {
             Base.log(1, "delete user if phone already exist at the server");
             base.sql.getDelete("Phone", "%" + phone + "%");
 
-            if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, "", true, true)) return false;
+            if (!base.regPage.registrationProcess(login, pass, loginConfirm, passConfirm, server, phone, country, userName, "", true, true)) return false;
             Base.log(1, "error message is not shown");
 
             if (repeatAfterCancel){
                 base.nav.cancelIt();
                 Base.log(1, "repeat registration with the same data", true);
-                if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, "", true, true)) return false;
+                if (!base.regPage.registrationProcess(login, pass, loginConfirm, passConfirm, server, phone, country, userName, "", true, true)) return false;
                 Base.log(1, "error message is not shown");
             }
             base.validationPage.validateBy.phone(phone);
             return registrationResult();
         }
 
-        public boolean withData(String login, String pass, String server, String phone, String country, String userName,  String errorMessage, boolean setUserPic, boolean confirmAgreement) {
-            if (!base.regPage.registrationProcess(login, pass, server, phone, country, userName, errorMessage, setUserPic, confirmAgreement)) return false;
+        public boolean withData(String login, String pass, String loginConfirm, String passConfirm, String server, String phone, String country, String userName,  String errorMessage, boolean setUserPic, boolean confirmAgreement) {
+            if (!base.regPage.registrationProcess(login, pass, loginConfirm, passConfirm, server, phone, country, userName, errorMessage, setUserPic, confirmAgreement)) return false;
+            Base.log(1, "error message is not shown");
+            base.validationPage.validateBy.phone(phone);
+            return registrationResult();
+        }
+
+        public boolean withSpecificEmail (String specificEmail, String errorMessage){
+            initRegistrationData();
+            Base.log(1, "delete users if they already exist at the server");
+            base.sql.getDelete("Phone", "%" + phone + "%");
+            base.sql.getDelete("Login","%" + specificEmail + "%");
+
+            if (!base.regPage.registrationProcess(specificEmail, pass, specificEmail, passConfirm, server, phone, country, userName, errorMessage, true, true)) return false;
             Base.log(1, "error message is not shown");
             base.validationPage.validateBy.phone(phone);
             return registrationResult();
@@ -334,17 +348,17 @@ public class User {
 
                 switch (whereIsMistake) {
                     case "phone":
-                        if (!base.regPage.registrationProcess(login, pass, server, fakePhone, fakeCountry, userName, "", false, true)) {return false;}
+                        if (!base.regPage.registrationProcess(login, pass, loginConfirm, passConfirm, server, fakePhone, fakeCountry, userName, "", false, true)) {return false;}
                         if (resendFromLoginPage){ if (!resendFromLoginPage(login, checkIsLoginPresentInField)){return false;}}
                         break;
 
                     case "email":
-                        if (!base.regPage.registrationProcess(fakeEmail, pass, server, phone, country, userName, "", false, true)) {return false;}
+                        if (!base.regPage.registrationProcess(fakeEmail, pass, fakeEmail, passConfirm, server, phone, country, userName, "", false, true)) {return false;}
                         if (resendFromLoginPage){if (!resendFromLoginPage(fakeEmail, checkIsLoginPresentInField)){return false;}}
                         break;
 
                     case "both":
-                        if (!base.regPage.registrationProcess(fakeEmail, pass, server, fakePhone, fakeCountry, userName, "", false, true)) {return true;}
+                        if (!base.regPage.registrationProcess(fakeEmail, pass, fakeEmail, passConfirm, server, fakePhone, fakeCountry, userName, "", false, true)) {return true;}
                         if (resendFromLoginPage){if (!resendFromLoginPage(fakeEmail, checkIsLoginPresentInField)){return true;}}
                         return base.validationPage.resendCode(login, phone, country, errorMessage);
 
@@ -393,21 +407,21 @@ public class User {
                         if (resendFromLoginPage) {
                             return resendWithDataFromExistingUser(login, existingUserPhone, existingUserCountry, errorMessage);
                         } else {
-                            return base.regPage.registrationProcess(login, pass, server, existingUserPhone, existingUserCountry, userName, errorMessage, false, true);
+                            return base.regPage.registrationProcess(login, pass, loginConfirm, passConfirm, server, existingUserPhone, existingUserCountry, userName, errorMessage, false, true);
                         }
 
                     case "email":
                         if (resendFromLoginPage) {
                             return resendWithDataFromExistingUser(existingUserLogin, phone, country, errorMessage);
                         } else {
-                            return base.regPage.registrationProcess(existingUserLogin, pass, server, phone, country, userName, errorMessage, false, true);
+                            return base.regPage.registrationProcess(existingUserLogin, pass, existingUserLogin, passConfirm, server, phone, country, userName, errorMessage, false, true);
                         }
 
                     case "both":
                         if (resendFromLoginPage) {
                             return resendWithDataFromExistingUser(existingUserLogin, existingUserPhone, existingUserCountry, errorMessage);
                         } else {
-                            return base.regPage.registrationProcess(existingUserLogin, pass, server, existingUserPhone, existingUserCountry, userName, errorMessage, false, true);
+                            return base.regPage.registrationProcess(existingUserLogin, pass, existingUserLogin, passConfirm, server, existingUserPhone, existingUserCountry, userName, errorMessage, false, true);
                         }
 
                     default:
@@ -422,7 +436,7 @@ public class User {
         //--------------------------------------------------------------------------------------------------------------
 
         private boolean resendWithDataFromExistingUser(String resendEmail, String resendPhone, String resendCountry, String errorMessage){
-            base.regPage.registrationProcess(login, pass, server, phone, country, userName, "", false, true);
+            base.regPage.registrationProcess(login, pass, loginConfirm, passConfirm, server, phone, country, userName, "", false, true);
 
             if (!resendFromLoginPage(login, true)){return true;}
             return base.validationPage.resendCode(resendEmail, resendPhone, resendCountry, errorMessage);
@@ -434,6 +448,7 @@ public class User {
 
             Base.log(1, "Welcome Page is shown, so go to the dashboard", true);
             base.regPage.dashboardLinkClick();
+            if (base.check.isPresent.snackBar(3)) {return false;}
             return base.wait.menuIconOrPinPopUp(60);
         }
 

@@ -31,6 +31,14 @@ public class C50111_Positive_Registration {
     }
 
     @Test
+    public void Email_contains_64_symbols () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertTrue(base.user.registration.withSpecificEmail("emailwithmistakeqweqweqweq12345678901hgfhghfhfdhjhg23456789@i.ua", ""), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Base.log(1, "test finished successfully, dashboard is shown", true);
+    }
+
+    @Test
     public void Repeat_After_Canceling_Validation () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
