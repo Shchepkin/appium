@@ -27,14 +27,14 @@ public class C46176_Add_new_Hub_manually {
 
     @Test(priority = 1, enabled = true)
     public void Add_first_Hub() {
-        Base.log(3, "START TEST");
+        Base.log(1, "START TEST");
         Assert.assertTrue(base.hub.add.manual.fromPlusButton());
 
     }
 
     @Test(priority = 2, enabled = true)
     public void Add_Hub_from_menu() {
-        Base.log(3, "START TEST");
+        Base.log(1, "START TEST");
         Base.log(1, "delete hub");
         base.hub.deleteFrom.hubSettings(false);
         Assert.assertTrue(base.hub.add.manual.fromMenu());

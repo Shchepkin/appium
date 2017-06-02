@@ -13,7 +13,7 @@
         <classes>
             <class name="Registration.C50111_Positive_Registration"/>
             <class name="Registration.C50112_Negative_Registration"/>
-            <class name="Registration.C52065_Check_Registration_Fields"/>
+            <class name="Fields.Negative.C52259_Email"/>
             <!--<class name="Smoke.C46174_New_user_registration"/>-->
             <!--<class name="Smoke.C46176_Add_new_Hub_manually"/>-->
             <!--<class name="Smoke.C46180_Add_new_guest_user"/>-->
@@ -24,8 +24,8 @@
 
     <test name="LG - Login">
         <classes>
-            <class name="Login.C46225_Negative_Login"/>
-            <class name="Login.C46224_Positive_Login"/>
+            <!--<class name="Login.C46225_Negative_Login"/>-->
+            <!--<class name="Login.C46224_Positive_Login"/>-->
         </classes>
     </test>
 

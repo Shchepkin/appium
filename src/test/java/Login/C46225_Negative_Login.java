@@ -19,7 +19,6 @@ public class C46225_Negative_Login {
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
-        Base.log(3, "\nSTART TEST\n");
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
         String server = base.getCredsWithKey("server");
@@ -35,7 +34,7 @@ public class C46225_Negative_Login {
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
-
+        Base.log(1, "START TEST");
         String comment = param.get("comment").toString();
         String login = param.get("login").toString();
         String pass = param.get("pass").toString();

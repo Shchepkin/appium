@@ -24,56 +24,56 @@ public class C50112_Negative_Registration {
         base.initPageObjects(base.getDriver());
     }
 
-    @Test(enabled = true, invocationCount = 1)
+    @Test
     public void With_Email_From_Existing_User () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
         Assert.assertFalse(base.user.registration.withExisting.email(false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
-    @Test(enabled = true, invocationCount = 1)
+    @Test
     public void With_Phone_From_Existing_User () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
         Assert.assertFalse(base.user.registration.withExisting.phone(false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
-    @Test(enabled = true, invocationCount = 1)
+    @Test
     public void With_both_data_from_existing_user () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
         Assert.assertFalse(base.user.registration.withExisting.both(false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
-    @Test(enabled = true, invocationCount = 1)
+    @Test
     public void With_Mistake_In_Phone_And_Email () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
         Assert.assertFalse(base.user.registration.withFake.both(false, false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
-    @Test(enabled = true, invocationCount = 1)
+    @Test
     public void Resend_validation_code_from_loginPage_with_email_and_phone_changing () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
         Assert.assertFalse(base.user.registration.withFake.both(true, false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
     }
 
-    @Test(enabled = true, invocationCount = 1)
+    @Test
     public void Resend_validation_code_from_Login_page_with_existing_phone () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
         Assert.assertFalse(base.user.registration.withExisting.phone(true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
-    @Test(enabled = true)
+    @Test
     public void Resend_validation_code_from_Login_page_with_existing_email () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
         Assert.assertFalse(base.user.registration.withExisting.email(true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
-    @Test(enabled = true)
+    @Test
     public void Resend_validation_code_from_Login_page_with_existing_email_and_phone () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();

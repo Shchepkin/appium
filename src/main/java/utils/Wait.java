@@ -67,7 +67,7 @@ public class Wait {
             if (makeScreenShot) {base.getScreenShot();}
             return false;
         }finally {
-            Base.log(2, "set implicitlyWait to default");
+            Base.log(4, "set implicitlyWait to default");
             driver.manage().timeouts().implicitlyWait(Base.DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         }
     }
@@ -95,16 +95,12 @@ public class Wait {
             iWait.until(ExpectedConditions.visibilityOf(base.popUp.getSnackBarElement()));
 
             String actualSnackBarText = base.popUp.getSnackBarText();
-            Base.log(1, "Actual SnackBar text: \"" + actualSnackBarText + "\"");
-            Base.log(1, "Expected SnackBar text: \"" + expectedText + "\"");
+            Base.log(1, "Expected SnackBar text: \"" + expectedText + "\"", true);
+            Base.log(1, "Actual SnackBar text: \"" + actualSnackBarText + "\"", true);
             return actualSnackBarText.equalsIgnoreCase(expectedText);
 
-        } catch (NoSuchElementException e) {
-            Base.log(4, "No Such Element Exception, element is not shown:\n\n" + e + "\n");
-            base.getScreenShot();
-
-        } catch (TimeoutException e) {
-            Base.log(4, "Timeout Exception, element is not shown:\n\n" + e + "\n");
+        } catch (Exception e) {
+            Base.log(4, "element is not shown:\n\n" + e + "\n");
             base.getScreenShot();
         }
         return false;

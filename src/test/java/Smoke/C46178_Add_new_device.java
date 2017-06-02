@@ -51,7 +51,6 @@ public class C46178_Add_new_device {
         imitator.addDevice(203062, 2, 2, deviceName);
 
         Base.log(1, "check is device added to Hub", true);
-
         deviceName = imitator.getDeviceNameNew();
         Assert.assertTrue(base.check.isPresent.elementWith.name(deviceName), "device with name \"" + deviceName + "\" is not added\n");
         Base.log(1, "new device with name \"" + deviceName + "\" is added successfully", true);
