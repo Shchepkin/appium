@@ -11,14 +11,21 @@
 
     <test name="LG - Registration and adding artifacts">
         <classes>
-            <class name="Registration.C50111_Positive_Registration"/>
-            <class name="Registration.C50112_Negative_Registration"/>
-            <class name="Fields.Negative.C52259_Email"/>
+            <!--<class name="Registration.C50111_Positive_Registration"/>-->
+            <!--<class name="Registration.C50112_Negative_Registration"/>-->
             <!--<class name="Smoke.C46174_New_user_registration"/>-->
             <!--<class name="Smoke.C46176_Add_new_Hub_manually"/>-->
             <!--<class name="Smoke.C46180_Add_new_guest_user"/>-->
             <!--<class name="Smoke.C46177_Add_new_room"/>-->
             <!--<class name="Smoke.C46178_Add_new_device"/>-->
+        </classes>
+    </test>
+
+    <test name="LG - Fields checking on Registration page - Negative">
+        <classes>
+            <class name="Fields.Negative.Registration.C52261_All_fields_are_empty"/>
+            <class name="Fields.Negative.Registration.C52258_Password"/>
+            <class name="Fields.Negative.Registration.C52259_Email"/>
         </classes>
     </test>
 

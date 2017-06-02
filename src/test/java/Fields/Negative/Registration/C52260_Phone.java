@@ -1,4 +1,4 @@
-package Fields.Negative;
+package Fields.Negative.Registration;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
