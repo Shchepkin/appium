@@ -20,7 +20,7 @@ public class C52261_All_fields_are_empty {
     }
 
     @Test
-    public void Agreement_checkbox_is_confirmed () {
+    public void Agreement_checkbox_is_confirmed() {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
         boolean actualResult = base.user.registration.withData("", "", "", "", "", "", "", "", expectedText, false, true);
@@ -28,7 +28,7 @@ public class C52261_All_fields_are_empty {
     }
 
     @Test
-    public void Agreement_checkbox_is_not_confirmed () {
+    public void Agreement_checkbox_is_not_confirmed() {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
         boolean actualResult = base.user.registration.withData("", "", "", "", "", "", "", "", expectedText, false, false);
