@@ -1,4 +1,4 @@
-package Fields.Negative;
+package Fields.Negative.Registration;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -15,14 +15,20 @@ import java.util.Map;
 
 public class C52259_Email {
     private Base base;
-    private String server;
+    private String server, country, phone, pass, passConfirm, name;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-        server = base.getJsonMapCollection("fieldsEmailNegative.json", "settings").get("server").toString();
+        Map settings = base.getJsonMapCollection("fieldsEmailNegative.json", "settings");
+        name = base.getStringValue(settings, "name");
+        phone = base.getStringValue(settings, "phone");
+        server = base.getStringValue(settings, "server");
+        country = base.getStringValue(settings, "country");
+        pass = base.getStringValue(settings, "pass");
+        passConfirm = pass;
     }
 
     @DataProvider
@@ -31,26 +37,16 @@ public class C52259_Email {
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
         base.getDriver().resetApp();
-        String loginConfirm, passConfirm;
-        String expectedText = "";
+        String login, loginConfirm;
 
-        String expectedTextKey = base.getStringValue(param, "key");
+        String expectedText = base.getLocalizeTextForKey(base.getStringValue(param, "key"));
         String notification = base.getStringValue(param, "notification");
-        String country = base.getStringValue(param, "country");
-        String login = base.getStringValue(param, "login");
-        String phone = base.getStringValue(param, "phone");
-        String pass = base.getStringValue(param, "pass");
-        String name = base.getStringValue(param, "name");
         boolean expectedResult = (boolean)param.get("expected");
         boolean confirmAgreement = (boolean) param.get("agreement");
 
+        login = base.getStringValue(param, "login");
         try {loginConfirm = base.getStringValue(param, "login2");
         }catch (Exception e){loginConfirm = login;}
-
-        try {passConfirm = base.getStringValue(param, "pass2");
-        }catch (Exception e){passConfirm = pass;}
-
-        if (!expectedTextKey.isEmpty()) { expectedText = base.getLocalizeTextForKey(expectedTextKey); }
 
         Base.log(1, notification, true);
         Base.log(1, "Test data:", true);
