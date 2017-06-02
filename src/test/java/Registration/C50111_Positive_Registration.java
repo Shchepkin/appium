@@ -63,6 +63,14 @@ public class C50111_Positive_Registration {
     }
 
     @Test
+    public void Resend_validation_code_from_login_with_email_changing () {
+        Base.log(1, "START TEST");
+        base.getDriver().resetApp();
+        Assert.assertTrue(base.user.registration.withFake.email(true, false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
+        Base.log(1, "test finished successfully, dashboard is shown", true);
+    }
+
+    @Test
     public void With_Mistake_In_Phone () {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
@@ -75,14 +83,6 @@ public class C50111_Positive_Registration {
         Base.log(1, "START TEST");
         base.getDriver().resetApp();
         Assert.assertTrue(base.user.registration.withFake.phone(true, true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
-        Base.log(1, "test finished successfully, dashboard is shown", true);
-    }
-
-    @Test
-    public void Resend_validation_code_from_login_with_email_changing () {
-        Base.log(1, "START TEST");
-        base.getDriver().resetApp();
-        Assert.assertTrue(base.user.registration.withFake.email(true, false), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"");
         Base.log(1, "test finished successfully, dashboard is shown", true);
     }
 

@@ -11,9 +11,9 @@
 
     <test name="LG - Registration and adding artifacts">
         <classes>
-            <!--<class name="Registration.C50111_Positive_Registration"/>-->
-            <!--<class name="Registration.C50112_Negative_Registration"/>-->
-            <class name="Registration.C52065_Check_Registration_Fields_Negative"/>
+            <class name="Registration.C50111_Positive_Registration"/>
+            <class name="Registration.C50112_Negative_Registration"/>
+            <class name="Fields.Negative.C52259_Email"/>
             <!--<class name="Smoke.C46174_New_user_registration"/>-->
             <!--<class name="Smoke.C46176_Add_new_Hub_manually"/>-->
             <!--<class name="Smoke.C46180_Add_new_guest_user"/>-->

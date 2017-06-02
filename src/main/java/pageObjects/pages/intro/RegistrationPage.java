@@ -79,7 +79,7 @@ public class RegistrationPage{
     }
 
     public boolean registrationProcess(String login, String pass, String loginConfirm, String passConfirm, String server, String phone, String country, String userName, String errorMessage, boolean setUserPic, boolean confirmAgreement) {
-        base.introPage.setServer(server);
+        if (!server.isEmpty()) {base.introPage.setServer(server);}
         base.nav.gotoPage.registration();
         if (setUserPic){setUserPic(1);}
         fillFields(userName, login, pass, loginConfirm, passConfirm, phone, country);

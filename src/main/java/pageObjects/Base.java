@@ -38,7 +38,7 @@ public class Base {
 
     public static final int DEFAULT_TIMEOUT = 5;
     private static final int LOG_LEVEL = 5;
-    private static final boolean LOG_VIEW_IN_CONSOLE = true;
+    private static final boolean LOG_VIEW_IN_CONSOLE = false;
     private static final String logFile = logfileName();
     private static final String dataBase = "Develop";
 

@@ -1,4 +1,4 @@
-package Registration;
+package Fields.Positive;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -13,7 +13,7 @@ import java.util.Map;
  * -
  */
 
-public class C52065_Check_Registration_Fields_Negative {
+public class C52253_Name {
     private Base base;
     private String server;
 
@@ -22,11 +22,11 @@ public class C52065_Check_Registration_Fields_Negative {
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-        server = base.getJsonMapCollection("checkRegistrationFieldsNegative.json", "settings").get("server").toString();
+        server = base.getJsonMapCollection("fieldsEmailNegative.json", "settings").get("server").toString();
     }
 
     @DataProvider
-    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("checkRegistrationFieldsNegative.json");}
+    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsEmailNegative.json");}
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
