@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
@@ -34,9 +35,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static io.appium.java_client.remote.MobileCapabilityType.AUTOMATION_NAME;
+
 public class Base {
 
-    public static final int DEFAULT_TIMEOUT = 5;
+    public static final int DEFAULT_TIMEOUT = 15;
     private static final int LOG_LEVEL = 5;
     private static final boolean LOG_VIEW_IN_CONSOLE = false;
     private static final String logFile = logfileName();

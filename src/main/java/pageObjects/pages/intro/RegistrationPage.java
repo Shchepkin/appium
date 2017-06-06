@@ -78,6 +78,10 @@ public class RegistrationPage{
         dashboardLink.click();
     }
 
+    public WebElement getPasswordField() {
+        return passwordField;
+    }
+
     public boolean registrationProcess(String login, String pass, String loginConfirm, String passConfirm, String server, String phone, String country, String userName, String errorMessage, boolean setUserPic, boolean confirmAgreement) {
         if (!server.isEmpty()) {base.introPage.setServer(server);}
         base.nav.gotoPage.registration();
@@ -96,7 +100,7 @@ public class RegistrationPage{
 
 //----------------------------------------------------------------------------------------------------------------------
 
-    private void fillFields(String name, String email, String password, String emailConfirm, String passwordConfirm, String phone, String country) {
+    public void fillFields(String name, String email, String password, String emailConfirm, String passwordConfirm, String phone, String country) {
 
         if (!name.isEmpty()) {
             Base.log(1, "fill name with: \"" + name + "\"", true);
@@ -138,7 +142,7 @@ public class RegistrationPage{
         }
     }
 
-    private void confirmAgreementCheckBox() {
+    public void confirmAgreementCheckBox() {
         Base.log(1, "confirm agreement check box", true);
         base.nav.scroll.toElementWith.id(userAgreementCheckboxId, true);
     }
