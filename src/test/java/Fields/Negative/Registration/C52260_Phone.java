@@ -15,14 +15,28 @@ import java.util.Map;
 
 public class C52260_Phone {
     private Base base;
-    private String server;
+    private Map settings, contryMap;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-        server = base.getJsonMapCollection("fieldsPhoneNegative.json", "settings").get("server").toString();
+
+        //init data
+        settings = base.getJsonMapCollection("fieldsPhoneNegative.json", "settings");
+        contryMap = base.getJsonMapCollection("deviceData.json", "country");
+        String pass = base.getStringValue(settings, "pass");
+        String name = base.getStringValue(settings, "name");
+        String login = base.getStringValue(settings, "login");
+        String server = base.getStringValue(settings, "server");
+
+        //actions
+        base.introPage.setServer(server);
+        base.nav.gotoPage.registration();
+        base.regPage.fillFields(name, login, pass, login, pass, "", "");
+        base.regPage.confirmAgreementCheckBox();
+        base.sql.getDelete("Login", login);
     }
 
     @DataProvider
@@ -30,40 +44,22 @@ public class C52260_Phone {
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
-        base.getDriver().resetApp();
-        String loginConfirm, passConfirm;
-        String expectedText = "";
-
-        String expectedTextKey = base.getStringValue(param, "key");
-        String notification = base.getStringValue(param, "notification");
-        String country = base.getStringValue(param, "country");
-        String login = base.getStringValue(param, "login");
         String phone = base.getStringValue(param, "phone");
-        String pass = base.getStringValue(param, "pass");
-        String name = base.getStringValue(param, "name");
-        boolean expectedResult = (boolean)param.get("expected");
-        boolean confirmAgreement = (boolean) param.get("agreement");
+        String country = contryMap.get(base.getStringValue(param, "country")).toString();
+        String notification = base.getStringValue(param, "notification");
+        String expectedText = base.getLocalizeTextForKey(base.getStringValue(param, "key"));
 
-        try {loginConfirm = base.getStringValue(param, "login2");
-        }catch (Exception e){loginConfirm = login;}
-
-        try {passConfirm = base.getStringValue(param, "pass2");
-        }catch (Exception e){passConfirm = pass;}
-
-        if (!expectedTextKey.isEmpty()) { expectedText = base.getLocalizeTextForKey(expectedTextKey); }
-        if (expectedResult){
-            base.sql.getDelete("Login", login);
-            base.sql.getDelete("Phone", phone);
-        }
+        base.sql.getDelete("Phone", phone);
 
         Base.log(1, notification, true);
         Base.log(1, "Test data:", true);
-        Base.log(1, "country: \"" + country + "\"", true);
         Base.log(1, "phone: \"" + phone + "\"", true);
+        Base.log(1, "country: \"" + country + "\"", true);
 
         Base.log(1, "START TEST", true);
-        boolean actualResult = base.user.registration.withData(login, pass, loginConfirm, passConfirm, server, phone, country, name, expectedText, false, confirmAgreement);
-        Assert.assertEquals(expectedResult, actualResult, "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
+        base.regPage.fillFields("", "", "", "", "", phone, country);
+        base.nav.tapButton.next();
+        Assert.assertTrue(base.wait.text(expectedText, 20, true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
     @AfterClass
