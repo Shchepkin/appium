@@ -6,7 +6,6 @@
  -->
 
 <suite name = "Suite" parallel= "false">
-
     <parameter name="deviceName_" value="LG"/>
 
     <test name="LG - Registration and adding artifacts">
@@ -23,7 +22,7 @@
 
     <test name="LG - Fields checking on Registration page - Negative">
         <classes>
-            <class name="Fields.Negative.Registration.C52261_All_fields_are_empty"/>
+            <!--<class name="Fields.Negative.Registration.C52261_All_fields_are_empty"/>-->
             <class name="Fields.Negative.Registration.C52258_Password"/>
             <class name="Fields.Negative.Registration.C52259_Email"/>
         </classes>

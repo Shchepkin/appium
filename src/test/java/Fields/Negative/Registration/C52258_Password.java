@@ -16,19 +16,29 @@ import java.util.Map;
 public class C52258_Password {
     private Base base;
     private String server, country, phone, login, loginConfirm, name;
+    private Map settings;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-        Map settings = base.getJsonMapCollection("fieldsPasswordNegative.json", "settings");
+
+        //init data
+        settings = base.getJsonMapCollection("fieldsPasswordNegative.json", "settings");
         name = base.getStringValue(settings, "name");
         phone = base.getStringValue(settings, "phone");
         server = base.getStringValue(settings, "server");
         country = base.getStringValue(settings, "country");
-        login = base.getStringValue(settings, "pass");
+        login = base.getStringValue(settings, "login");
         loginConfirm = login;
+
+        //actions
+        base.introPage.setServer(server);
+        base.nav.gotoPage.registration();
+        base.regPage.fillFields(name, login, "", loginConfirm, "", phone, country);
+        base.regPage.confirmAgreementCheckBox();
+        base.sql.getDelete("Login", login);
     }
 
     @DataProvider
@@ -36,13 +46,9 @@ public class C52258_Password {
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
-        base.getDriver().resetApp();
         String pass, passConfirm;
-
         String expectedText = base.getLocalizeTextForKey(base.getStringValue(param, "key"));
         String notification = base.getStringValue(param, "notification");
-        boolean expectedResult = (boolean)param.get("expected");
-        boolean confirmAgreement = (boolean) param.get("agreement");
 
         pass = base.getStringValue(param, "pass");
         try {passConfirm = base.getStringValue(param, "pass2");
@@ -54,8 +60,10 @@ public class C52258_Password {
         Base.log(1, "pass confirm: \"" + passConfirm + "\"", true);
 
         Base.log(1, "START TEST", true);
-        boolean actualResult = base.user.registration.withData(login, pass, loginConfirm, passConfirm, server, phone, country, name, expectedText, false, confirmAgreement);
-        Assert.assertEquals(expectedResult, actualResult, "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
+        base.regPage.fillFields("", "", pass, "", passConfirm, "", "");
+        base.nav.tapButton.next();
+
+        Assert.assertTrue(base.wait.text(expectedText, 20, true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
     @AfterClass

@@ -22,11 +22,11 @@ public class C52257_Name {
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-        server = base.getJsonMapCollection("fieldsEmailNegative.json", "settings").get("server").toString();
+        server = base.getJsonMapCollection(".json", "settings").get("server").toString();
     }
 
     @DataProvider
-    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsEmailNegative.json");}
+    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator(".json");}
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
@@ -51,20 +51,9 @@ public class C52257_Name {
         }catch (Exception e){passConfirm = pass;}
 
         if (!expectedTextKey.isEmpty()) { expectedText = base.getLocalizeTextForKey(expectedTextKey); }
-        if (expectedResult){
-            base.sql.getDelete("Login", login);
-            base.sql.getDelete("Phone", phone);
-        }
 
         Base.log(1, notification, true);
         Base.log(1, "Test data:", true);
-        Base.log(1, "server: \"" + server + "\"", true);
-        Base.log(1, "country: \"" + country + "\"", true);
-        Base.log(1, "login: \"" + login + "\"", true);
-        Base.log(1, "login confirm: \"" + loginConfirm + "\"", true);
-        Base.log(1, "phone: \"" + phone + "\"", true);
-        Base.log(1, "pass: \"" + pass + "\"", true);
-        Base.log(1, "pass confirm: \"" + passConfirm + "\"", true);
         Base.log(1, "name: \"" + name + "\"", true);
 
         Base.log(1, "START TEST", true);

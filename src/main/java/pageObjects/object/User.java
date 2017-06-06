@@ -303,6 +303,7 @@ public class User {
         public boolean withData(String login, String pass, String loginConfirm, String passConfirm, String server, String phone, String country, String userName,  String errorMessage, boolean setUserPic, boolean confirmAgreement) {
             if (!base.regPage.registrationProcess(login, pass, loginConfirm, passConfirm, server, phone, country, userName, errorMessage, setUserPic, confirmAgreement)) return false;
             Base.log(1, "error message is not shown");
+            if (!errorMessage.isEmpty()){return true;}
             base.validationPage.validateBy.phone(phone);
             return registrationResult();
         }

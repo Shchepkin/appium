@@ -17,6 +17,7 @@ public class Check{
     private Base base;
     private AndroidDriver driver;
     private static final int PERIOD = 200;
+    public Fields fields = new Fields();
     public IsEmpty isEmpty= new IsEmpty();
     public IsPresent isPresent = new IsPresent();
     public LocalizedTextFor localizedTextFor = new LocalizedTextFor();
@@ -366,6 +367,13 @@ public class Check{
         public boolean pendingUsersList() {
             return !base.nav.scroll.toElementWith.id("com.ajaxsystems:id/delete", false);
         }
+    }
+
+    public class Fields {
+        public boolean name(boolean isPositive, String nameValue){return true;}
+        public boolean email(boolean isPositive, String email, String confirmEmail){return true;}
+        public boolean phone(boolean isPositive, String phone, String country){return true;}
+        public boolean password(boolean isPositive, String password, String confirmPassword){return true;}
     }
 
 }
