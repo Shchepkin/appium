@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class C52260_Phone {
     private Base base;
-    private Map settings;
+    private Map settings, contryMap;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
@@ -25,6 +25,7 @@ public class C52260_Phone {
 
         //init data
         settings = base.getJsonMapCollection("fieldsPhoneNegative.json", "settings");
+        contryMap = base.getJsonMapCollection("deviceData.json", "country");
         String pass = base.getStringValue(settings, "pass");
         String name = base.getStringValue(settings, "name");
         String login = base.getStringValue(settings, "login");
@@ -44,12 +45,11 @@ public class C52260_Phone {
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
         String phone = base.getStringValue(param, "phone");
-        String country = base.getStringValue(param, "country");
+        String country = contryMap.get(base.getStringValue(param, "country")).toString();
         String notification = base.getStringValue(param, "notification");
         String expectedText = base.getLocalizeTextForKey(base.getStringValue(param, "key"));
 
         base.sql.getDelete("Phone", phone);
-
 
         Base.log(1, notification, true);
         Base.log(1, "Test data:", true);
