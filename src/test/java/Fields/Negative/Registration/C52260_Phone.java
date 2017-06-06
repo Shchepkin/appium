@@ -15,14 +15,30 @@ import java.util.Map;
 
 public class C52260_Phone {
     private Base base;
-    private String server;
+    private Map settings;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-        server = base.getJsonMapCollection("fieldsPhoneNegative.json", "settings").get("server").toString();
+
+        //init data
+        settings = base.getJsonMapCollection("fieldsPasswordNegative.json", "settings");
+        String name = base.getStringValue(settings, "name");
+        String pass = base.getStringValue(settings, "pass");
+        String server = base.getStringValue(settings, "server");
+        String country = base.getStringValue(settings, "country");
+        String login = base.getStringValue(settings, "login");
+        String loginConfirm = login;
+        String passConfirm = pass;
+
+        //actions
+        base.introPage.setServer(server);
+        base.nav.gotoPage.registration();
+        base.regPage.fillFields(name, login, "", loginConfirm, "", phone, country);
+        base.regPage.confirmAgreementCheckBox();
+        base.sql.getDelete("Login", login);
     }
 
     @DataProvider
@@ -33,16 +49,12 @@ public class C52260_Phone {
         base.getDriver().resetApp();
         String loginConfirm, passConfirm;
         String expectedText = "";
+        String phone = base.getStringValue(param, "phone");
 
         String expectedTextKey = base.getStringValue(param, "key");
         String notification = base.getStringValue(param, "notification");
         String country = base.getStringValue(param, "country");
-        String login = base.getStringValue(param, "login");
-        String phone = base.getStringValue(param, "phone");
-        String pass = base.getStringValue(param, "pass");
-        String name = base.getStringValue(param, "name");
-        boolean expectedResult = (boolean)param.get("expected");
-        boolean confirmAgreement = (boolean) param.get("agreement");
+        base.sql.getDelete("Phone", phone);
 
         try {loginConfirm = base.getStringValue(param, "login2");
         }catch (Exception e){loginConfirm = login;}
@@ -52,8 +64,7 @@ public class C52260_Phone {
 
         if (!expectedTextKey.isEmpty()) { expectedText = base.getLocalizeTextForKey(expectedTextKey); }
         if (expectedResult){
-            base.sql.getDelete("Login", login);
-            base.sql.getDelete("Phone", phone);
+
         }
 
         Base.log(1, notification, true);
