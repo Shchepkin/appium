@@ -28,38 +28,34 @@ public class C52257_Name {
         String login = base.getStringValue(settings, "login");
         String phone = base.getStringValue(settings, "phone");
         String server = base.getStringValue(settings, "server");
+        String country = base.getStringValue(settings, "country");
 
         //actions
         base.introPage.setServer(server);
         base.nav.gotoPage.registration();
-        base.regPage.fillFields("", login, pass, login, pass, phone, "");
+        base.regPage.fillFields("", login, pass, login, pass, phone, country);
         base.regPage.confirmAgreementCheckBox();
         base.sql.getDelete("Login", login);
     }
 
     @DataProvider
-    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator(".json");}
+    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsNegativeName.json");}
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
-        String expectedText = "";
-
-        String expectedTextKey = base.getStringValue(param, "key");
+        String expectedText = base.getLocalizeTextForKey(base.getStringValue(param, "key"));
         String notification = base.getStringValue(param, "notification");
-        String name = base.getStringValue(param, "name");
-        boolean expectedResult = (boolean)param.get("expected");
-        boolean confirmAgreement = (boolean) param.get("agreement");
-
-
-        if (!expectedTextKey.isEmpty()) { expectedText = base.getLocalizeTextForKey(expectedTextKey); }
 
         Base.log(1, notification, true);
         Base.log(1, "Test data:", true);
         Base.log(1, "name: \"" + name + "\"", true);
+        Base.log(1, "pass confirm: \"" + passConfirm + "\"", true);
 
         Base.log(1, "START TEST", true);
-        boolean actualResult = base.user.registration.withData(login, pass, loginConfirm, passConfirm, server, phone, country, name, expectedText, false, confirmAgreement);
-        Assert.assertEquals(expectedResult, actualResult, "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
+        base.regPage.fillFields("", "", pass, "", passConfirm, "", "");
+        base.nav.tapButton.next();
+
+        Assert.assertTrue(base.wait.text(expectedText, 20, true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
     @AfterClass
