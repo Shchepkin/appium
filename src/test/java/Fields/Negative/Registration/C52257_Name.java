@@ -15,14 +15,26 @@ import java.util.Map;
 
 public class C52257_Name {
     private Base base;
-    private String server;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-        server = base.getJsonMapCollection(".json", "settings").get("server").toString();
+
+        //init data
+        Map settings = base.getJsonMapCollection("fieldsNegativeName.json", "settings");
+        String pass = base.getStringValue(settings, "pass");
+        String login = base.getStringValue(settings, "login");
+        String phone = base.getStringValue(settings, "phone");
+        String server = base.getStringValue(settings, "server");
+
+        //actions
+        base.introPage.setServer(server);
+        base.nav.gotoPage.registration();
+        base.regPage.fillFields("", login, pass, login, pass, phone, "");
+        base.regPage.confirmAgreementCheckBox();
+        base.sql.getDelete("Login", login);
     }
 
     @DataProvider
@@ -30,25 +42,14 @@ public class C52257_Name {
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
-        base.getDriver().resetApp();
-        String loginConfirm, passConfirm;
         String expectedText = "";
 
         String expectedTextKey = base.getStringValue(param, "key");
         String notification = base.getStringValue(param, "notification");
-        String country = base.getStringValue(param, "country");
-        String login = base.getStringValue(param, "login");
-        String phone = base.getStringValue(param, "phone");
-        String pass = base.getStringValue(param, "pass");
         String name = base.getStringValue(param, "name");
         boolean expectedResult = (boolean)param.get("expected");
         boolean confirmAgreement = (boolean) param.get("agreement");
 
-        try {loginConfirm = base.getStringValue(param, "login2");
-        }catch (Exception e){loginConfirm = login;}
-
-        try {passConfirm = base.getStringValue(param, "pass2");
-        }catch (Exception e){passConfirm = pass;}
 
         if (!expectedTextKey.isEmpty()) { expectedText = base.getLocalizeTextForKey(expectedTextKey); }
 

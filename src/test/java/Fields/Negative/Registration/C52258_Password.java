@@ -25,7 +25,7 @@ public class C52258_Password {
         base.initPageObjects(base.getDriver());
 
         //init data
-        settings = base.getJsonMapCollection("fieldsPasswordNegative.json", "settings");
+        settings = base.getJsonMapCollection("fieldsNegativePassword.json", "settings");
         name = base.getStringValue(settings, "name");
         phone = base.getStringValue(settings, "phone");
         server = base.getStringValue(settings, "server");
@@ -42,7 +42,7 @@ public class C52258_Password {
     }
 
     @DataProvider
-    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsPasswordNegative.json");}
+    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsNegativePassword.json");}
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {

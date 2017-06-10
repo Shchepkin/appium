@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class C52260_Phone {
     private Base base;
-    private Map settings, contryMap;
+    private Map countryMap;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
@@ -24,8 +24,8 @@ public class C52260_Phone {
         base.initPageObjects(base.getDriver());
 
         //init data
-        settings = base.getJsonMapCollection("fieldsPhoneNegative.json", "settings");
-        contryMap = base.getJsonMapCollection("deviceData.json", "country");
+        Map settings = base.getJsonMapCollection("fieldsNegativePhone.json", "settings");
+        countryMap = base.getJsonMapCollection("deviceData.json", "country");
         String pass = base.getStringValue(settings, "pass");
         String name = base.getStringValue(settings, "name");
         String login = base.getStringValue(settings, "login");
@@ -40,12 +40,12 @@ public class C52260_Phone {
     }
 
     @DataProvider
-    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsPhoneNegative.json");}
+    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsNegativePhone.json");}
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
         String phone = base.getStringValue(param, "phone");
-        String country = contryMap.get(base.getStringValue(param, "country")).toString();
+        String country = countryMap.get(base.getStringValue(param, "country")).toString();
         String notification = base.getStringValue(param, "notification");
         String expectedText = base.getLocalizeTextForKey(base.getStringValue(param, "key"));
 
