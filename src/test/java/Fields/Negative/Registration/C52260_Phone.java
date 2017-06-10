@@ -49,7 +49,7 @@ public class C52260_Phone {
         String notification = base.getStringValue(param, "notification");
         String expectedText = base.getLocalizeTextForKey(base.getStringValue(param, "key"));
 
-        base.sql.getDelete("Phone", phone);
+        base.sql.getDelete("Phone", "%" + phone + "%");
 
         Base.log(1, notification, true);
         Base.log(1, "Test data:", true);
