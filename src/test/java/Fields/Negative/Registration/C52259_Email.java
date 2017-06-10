@@ -25,7 +25,7 @@ public class C52259_Email {
         base.initPageObjects(base.getDriver());
 
         //init data
-        settings = base.getJsonMapCollection("fieldsEmailNegative.json", "settings");
+        settings = base.getJsonMapCollection("fieldsNegativeEmail.json", "settings");
         name = base.getStringValue(settings, "name");
         phone = base.getStringValue(settings, "phone");
         server = base.getStringValue(settings, "server");
@@ -42,7 +42,7 @@ public class C52259_Email {
     }
 
     @DataProvider
-    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsEmailNegative.json");}
+    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsNegativeEmail.json");}
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {

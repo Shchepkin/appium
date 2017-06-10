@@ -1,4 +1,4 @@
-package Fields.Positive;
+package Fields.Positive.Registration;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -13,7 +13,7 @@ import java.util.Map;
  * -
  */
 
-public class C52254_Password {
+public class C52256_Phone {
     private Base base;
     private String server;
 
@@ -22,11 +22,11 @@ public class C52254_Password {
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-        server = base.getJsonMapCollection("fieldsEmailNegative.json", "settings").get("server").toString();
+        server = base.getJsonMapCollection("fieldsNegativeEmail.json", "settings").get("server").toString();
     }
 
     @DataProvider
-    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsEmailNegative.json");}
+    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsNegativeEmail.json");}
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
