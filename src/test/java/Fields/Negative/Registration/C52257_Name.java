@@ -43,19 +43,24 @@ public class C52257_Name {
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
-        String expectedText = base.getLocalizeTextForKey(base.getStringValue(param, "key"));
+        String key = base.getStringValue(param, "key");
+        String expectedText = base.getLocalizeTextForKey(key);
         String notification = base.getStringValue(param, "notification");
+        String name = base.getStringValue(param, "name");
 
         Base.log(1, notification, true);
         Base.log(1, "Test data:", true);
         Base.log(1, "name: \"" + name + "\"", true);
-        Base.log(1, "pass confirm: \"" + passConfirm + "\"", true);
 
         Base.log(1, "START TEST", true);
-        base.regPage.fillFields("", "", pass, "", passConfirm, "", "");
-        base.nav.tapButton.next();
+        base.regPage.fillFields(name, "", "", "", "", "", "");
 
-        Assert.assertTrue(base.wait.text(expectedText, 20, true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
+        if (key.equalsIgnoreCase("character_limit_exceeded")){
+            Assert.assertTrue(base.wait.text(expectedText, 10, true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
+        }else {
+            base.nav.tapButton.next();
+            Assert.assertTrue(base.wait.text(expectedText, 20, true), "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
+        }
     }
 
     @AfterClass
