@@ -101,6 +101,7 @@ public class RegistrationPage{
 //----------------------------------------------------------------------------------------------------------------------
 
     public void fillFields(String name, String email, String password, String emailConfirm, String passwordConfirm, String phone, String country) {
+        base.hideKeyboard();
 
         if (!name.isEmpty()) {
             Base.log(1, "fill name with: \"" + name + "\"", true);
@@ -112,7 +113,6 @@ public class RegistrationPage{
             Base.log(1, "fill email with: \"" + email + "\"", true);
             emailField.sendKeys(email);
             base.hideKeyboard();
-
         }
 
         if (!emailConfirm.isEmpty()) {
@@ -127,7 +127,9 @@ public class RegistrationPage{
             base.hideKeyboard();
         }
 
-        if (!country.isEmpty()){base.popUp.setPhoneCountryCode(country);}
+        if (!country.isEmpty()){
+            base.popUp.setPhoneCountryCode(country);
+        }
 
         if (!password.isEmpty()) {
             Base.log(1, "fill password with: \"" + password + "\"", true);

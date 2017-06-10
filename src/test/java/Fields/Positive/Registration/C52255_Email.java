@@ -15,40 +15,31 @@ import java.util.Map;
 
 public class C52255_Email {
     private Base base;
-    private String server;
+    private String server, phone, pass, name;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
     public void init(String deviceName_){
         base = new Base(deviceName_);
         base.initPageObjects(base.getDriver());
-        server = base.getJsonMapCollection("fieldsNegativeEmail.json", "settings").get("server").toString();
+        Map setting = base.getJsonMapCollection("fieldsPositiveEmail.json", "settings");
+        server = base.getStringValue(setting, "server");
+        phone = base.getStringValue(setting, "phone");
+        pass = base.getStringValue(setting, "pass");
+        name = base.getStringValue(setting, "name");
     }
 
     @DataProvider
-    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsNegativeEmail.json");}
+    public Iterator<Object[]> dataProviderIterator() {return base.getDataProviderIterator("fieldsPositiveEmail.json");}
 
     @Test(dataProvider = "dataProviderIterator")
     public void parameters (Map param) {
         base.getDriver().resetApp();
-        String loginConfirm, passConfirm;
-        String expectedText = "";
 
         String expectedTextKey = base.getStringValue(param, "key");
         String notification = base.getStringValue(param, "notification");
-        String country = base.getStringValue(param, "country");
         String login = base.getStringValue(param, "login");
-        String phone = base.getStringValue(param, "phone");
-        String pass = base.getStringValue(param, "pass");
-        String name = base.getStringValue(param, "name");
         boolean expectedResult = (boolean)param.get("expected");
-        boolean confirmAgreement = (boolean) param.get("agreement");
-
-        try {loginConfirm = base.getStringValue(param, "login2");
-        }catch (Exception e){loginConfirm = login;}
-
-        try {passConfirm = base.getStringValue(param, "pass2");
-        }catch (Exception e){passConfirm = pass;}
 
         if (!expectedTextKey.isEmpty()) { expectedText = base.getLocalizeTextForKey(expectedTextKey); }
         if (expectedResult){
@@ -58,17 +49,10 @@ public class C52255_Email {
 
         Base.log(1, notification, true);
         Base.log(1, "Test data:", true);
-        Base.log(1, "server: \"" + server + "\"", true);
-        Base.log(1, "country: \"" + country + "\"", true);
         Base.log(1, "login: \"" + login + "\"", true);
-        Base.log(1, "login confirm: \"" + loginConfirm + "\"", true);
-        Base.log(1, "phone: \"" + phone + "\"", true);
-        Base.log(1, "pass: \"" + pass + "\"", true);
-        Base.log(1, "pass confirm: \"" + passConfirm + "\"", true);
-        Base.log(1, "name: \"" + name + "\"", true);
 
         Base.log(1, "START TEST", true);
-        boolean actualResult = base.user.registration.withData(login, pass, loginConfirm, passConfirm, server, phone, country, name, expectedText, false, confirmAgreement);
+        boolean actualResult = base.user.registration.withData(login, pass, login, pass, server, phone, "", name, "", false, true);
         Assert.assertEquals(expectedResult, actualResult, "Test failed, more info you can find in logFile: \"" + Base.getLogFile() + "\"\n");
     }
 
