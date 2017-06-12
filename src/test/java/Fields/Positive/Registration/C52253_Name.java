@@ -10,12 +10,11 @@ import java.util.Map;
 /**
  * PRECONDITION
  * - account exist and validated
- * -
  */
 
 public class C52253_Name {
     private Base base;
-    private String server, phone, login, name;
+    private String server, phone, login, pass;
 
     @Parameters({ "deviceName_" })
     @BeforeClass
@@ -26,7 +25,7 @@ public class C52253_Name {
         server = base.getStringValue(setting, "server");
         login = base.getStringValue(setting, "login");
         phone = base.getStringValue(setting, "phone");
-        name = base.getStringValue(setting, "name");
+        pass = base.getStringValue(setting, "pass");
         base.sql.getDelete("Phone", "%" + phone + "%");
     }
 
@@ -37,11 +36,11 @@ public class C52253_Name {
     public void parameters (Map param) {
         base.getDriver().resetApp();
         String notification = base.getStringValue(param, "notification");
-        String pass = base.getStringValue(param, "pass");
+        String name = base.getStringValue(param, "name");
 
         Base.log(1, notification, true);
         Base.log(1, "Test data:", true);
-        Base.log(1, "password: \"" + login + "\"", true);
+        Base.log(1, "name: \"" + login + "\"", true);
 
         Base.log(1, "START TEST", true);
         boolean actualResult = base.regPage.registrationProcess(login, pass, login, pass, server, phone, "", name, "", false, true);
